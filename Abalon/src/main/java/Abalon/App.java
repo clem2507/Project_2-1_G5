@@ -4,8 +4,8 @@
 package Abalon;
 
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
+    public char getGreeting() {
+    	return 'B' - 1;
     }
 
     public static void main(String[] args) {
