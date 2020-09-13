@@ -1,0 +1,7 @@
+the Marbles will be stored in a HashTable with Position as the key.
+To access a marble, enter a position on the board. If the HashTable returns null, the position is empty.
+Positions will be in the form of a letter from A to I and a number from 1 to 9.
+The letter indicates a y coordinate and the number an x coordinate.
+
+From there, if a move is made by the player this will be executed by the Move class.
+This class also handles selection and validity of moves.
