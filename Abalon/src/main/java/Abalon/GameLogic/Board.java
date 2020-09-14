@@ -8,3 +8,4 @@ public class Board {
         //TODO create a regular size board and initialize 14 marbles on each side.
     }
 }
+test
