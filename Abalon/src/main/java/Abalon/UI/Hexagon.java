@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 
 public class Hexagon extends Application {
 
-    private final double WIDTH = 1000;
-    private final double HEIGHT = 700;
+    private final double WIDTH = 1400;
+    private final double HEIGHT = 750;
 
 
     @Override
@@ -26,11 +26,11 @@ public class Hexagon extends Application {
 
         //Adding coordinates to the hexagon
         hexagon.getPoints().addAll(new Double[]{
-                300.0, 50.0, //1
-                700.0, 50.0, //1
+                300.0, 12.0, //1
+                700.0, 12.0, //1
                 850.0, 350.0, //2
-                700.0, 650.0, //3
-                300.0, 650.0, //3
+                700.0, 688.0, //3
+                300.0, 688.0, //3
                 150.0, 350.0, //2
         });
 
