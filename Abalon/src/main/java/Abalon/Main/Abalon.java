@@ -1,4 +1,4 @@
-package Abalon;
+package Abalon.Main;
 
 public class Abalon {
 	/*public static void main(String[] args) {

@@ -1,3 +1,5 @@
+package Abalon.Main;
+
 public enum MoveDirection {
 	TOP_LEFT,
 	LEFT,

@@ -1,4 +1,4 @@
-package Abalon;
+package Abalon.Main;
 
 import javafx.util.Pair;
 
@@ -6,8 +6,9 @@ public class Notation {
 	private char raw;
 	private int column;
 
-
-	private static int[] columns_boundaries = new int[]{0, 5, 6, 7, 8, 9, 8, 7, 6, 5};
+	private static int[] columnsLeftBoundary  = new int[]{1, 1, 1, 1, 1, 2, 3, 4, 5};
+	private static int[] columnsRightBoundary = new int[]{5, 6, 7, 8, 9, 9, 9, 9, 9};
+	private static int numberOfColumns = 10;
 
 	public Notation(char raw, int column) throws IllegalArgumentException {
 		if (isValid(raw, column)) {
@@ -16,12 +17,14 @@ public class Notation {
 		} else
 			throw new IllegalArgumentException();
 	}
-
+	
 	public boolean move(MoveDirection dir) {
-		switch (dir) {
+		/*switch (dir) {
 			case TOP_LEFT: raw++;
-						   if ()
+			               if (raw > 
+						   
 		}
+		return true;*/
 	}
 
 	public Pair<Character, Integer> getPair() {
@@ -30,9 +33,9 @@ public class Notation {
 
 	public static boolean isValid(char _raw, int _column) {	
 		int id = (int)(_raw - 'A');
-		if (id < 0 || id >= columns_boundaries.length)
+		if (id < 0 || id >= columnsLeftBoundary.length)
 			return false;
-		if (_column <= 0 || columns_boundaries[id] < _column)
+		if (_column < columnsLeftBoundary[id] || columnsRightBoundary[id] < _column)
 			return false;
 		return true;
 	}
