@@ -34,9 +34,10 @@ public class Hexagon extends Application {
                 150.0, 350.0, //2
         });
 
-        hexagon.setFill(Color.BISQUE);
+        hexagon.setFill(Color.ORANGE);
         Group root = new Group(hexagon);
-
+         Board board = new Board();
+         root.getChildren().addAll(Board.circles);
 
         Scene scene = new Scene(root ,WIDTH, HEIGHT);
         primaryStage.setTitle("Sample Application");
