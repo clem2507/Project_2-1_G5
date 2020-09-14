@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -34,13 +35,8 @@ public class Hexagon extends Application {
         });
 
         hexagon.setFill(Color.BISQUE);
-
-        //Creation of the different Text of the board
-        Text text = new Text("Player 1 points: ");
-        text.setX(50.0);
-        text.setY(50.0);
-
         Group root = new Group(hexagon);
+
 
         Scene scene = new Scene(root ,WIDTH, HEIGHT);
         primaryStage.setTitle("Sample Application");
