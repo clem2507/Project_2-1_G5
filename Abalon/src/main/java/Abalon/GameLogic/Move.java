@@ -6,6 +6,7 @@ public class Move {
      Position secondMarble;
      Position thirdMarble;
      Position moveTo;
+
      boolean validMove;
 
     public void select(Position position, Hashtable<Position, Marble>) {
