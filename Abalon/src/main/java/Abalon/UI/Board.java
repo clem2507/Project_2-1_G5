@@ -85,10 +85,10 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS;
+            x_coord += RADIUS*2 + 15;
         }
         y_coord += RADIUS*2+15;
-
+        x_coord = 245;
         for(int i=0; i<8;i++){
             Circle circle = new Circle(RADIUS);
             circle.setFill(Color.BISQUE);
@@ -96,7 +96,7 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS;
+            x_coord += RADIUS*2 + 15;
         }
         y_coord += RADIUS*2+15;
         x_coord = 275;
@@ -120,7 +120,7 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS;
+            x_coord += RADIUS*2 + 15;
         }
         y_coord += RADIUS*2+15;
         x_coord = 335;

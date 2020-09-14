@@ -17,12 +17,12 @@ public class Notation {
 			throw new IllegalArgumentException();
 	}
 
-	public boolean move(MoveDirection dir) {
-		switch (dir) {
-			case TOP_LEFT: raw++;
-						   if ()
-		}
-	}
+//	public boolean move(MoveDirection dir) {
+//		switch (dir) {
+//			case TOP_LEFT: raw++;
+//						   if ()
+//		}
+//	}
 
 	public Pair<Character, Integer> getPair() {
 		return new Pair<Character, Integer>(raw, column);
