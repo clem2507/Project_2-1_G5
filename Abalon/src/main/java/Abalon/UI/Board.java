@@ -2,12 +2,17 @@ package Abalon.UI;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
 import java.util.ArrayList;
 
 public class Board {
 
     private int[] values;
     public static ArrayList<Circle> circles;
+    public static ArrayList<Text> texts;
+
     private final double RADIUS =30;
 
     public Board(){
@@ -136,7 +141,62 @@ public class Board {
         }
         y_coord += RADIUS*2+10;
 
+        //Creation of the circles for the score FOR PLAYER 1
+        Circle c1 = createCircleForScore(25, 1200,150, Color.BISQUE);
+        Circle c2 = createCircleForScore(25, 1175,200, Color.BISQUE);
+        Circle c3 = createCircleForScore(25, 1225,200, Color.BISQUE);
+        Circle c4 = createCircleForScore(25, 1150,250, Color.BISQUE);
+        Circle c5 = createCircleForScore(25, 1200,250, Color.BISQUE);
+        Circle c6 = createCircleForScore(25, 1250,250, Color.BISQUE);
+
+        circles.add(c1);
+        circles.add(c2);
+        circles.add(c3);
+        circles.add(c4);
+        circles.add(c5);
+        circles.add(c6);
+
+        //Creation of the circles for the score FOR PLAYER 2
+        Circle c11 = createCircleForScore(25, 1200,500, Color.BISQUE);
+        Circle c21 = createCircleForScore(25, 1175,550, Color.BISQUE);
+        Circle c31 = createCircleForScore(25, 1225,550, Color.BISQUE);
+        Circle c41 = createCircleForScore(25, 1150,600, Color.BISQUE);
+        Circle c51 = createCircleForScore(25, 1200,600, Color.BISQUE);
+        Circle c61 = createCircleForScore(25, 1250,600, Color.BISQUE);
+
+        circles.add(c11);
+        circles.add(c21);
+        circles.add(c31);
+        circles.add(c41);
+        circles.add(c51);
+        circles.add(c61);
+
+        //Creation of the text in the scene
+        Text player1 = scoreText("Player 1", 1200 ,100, 20);
+        Text player2 = scoreText("Player 2", 1200 ,700, 20);
+
+//        texts.add(player1);
+//        texts.add(player2);
+
         return circles;
+    }
+
+    //Method to create a circle
+    public Circle createCircleForScore(double radius, double posX, double posY, Color color){
+        Circle circle = new Circle(radius);
+        circle.setFill(color);
+        circle.setCenterX(posX);
+        circle.setCenterY(posY);
+
+        return circle;
+    }
+
+    public Text scoreText(String text, double posX, double posY, double size){
+        Text player = new Text(text);
+        player.setX(posX);
+        player.setY(posY);
+        player.setFont(Font.font(size));
+        return player;
     }
 
  /*
