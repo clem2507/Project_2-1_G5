@@ -36,8 +36,9 @@ public class Hexagon extends Application {
 
         hexagon.setFill(Color.ORANGE);
         Group root = new Group(hexagon);
-         Board board = new Board();
-         root.getChildren().addAll(Board.circles);
+        Board board = new Board();
+        root.getChildren().addAll(Board.circles);
+        //root.getChildren().addAll(Board.scoreCircles);
 
         Scene scene = new Scene(root ,WIDTH, HEIGHT);
         primaryStage.setTitle("Sample Application");
