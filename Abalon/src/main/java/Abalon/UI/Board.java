@@ -8,7 +8,7 @@ public class Board {
 
     private int[] values;
     public static ArrayList<Circle> circles;
-    private final double RADIUS =38;
+    private final double RADIUS =30;
 
     public Board(){
         values = createValues();
@@ -22,8 +22,8 @@ public class Board {
         ArrayList<Circle> circles = new ArrayList<Circle>();
 
         // 9 loops to create all circles (define position)
-        double x_coord = 330;
-        double y_coord = 100;
+        double x_coord = 335;
+        double y_coord = 62;
         int index=0;
 
         for(int i=0; i<5;i++){
@@ -33,11 +33,12 @@ public class Board {
             circle.setFill(Color.BISQUE);
             circles.add(circle);
 
-            x_coord += RADIUS*2 + 10;
+            x_coord += RADIUS*2 + 15;
             index++;
         }
+        System.out.println(x_coord);
         y_coord += RADIUS*2+10;
-        x_coord -= (index+1) *(RADIUS*2 + 3);
+        x_coord = 305;
 
         for(int i=0; i<6;i++){
             Circle circle = new Circle(RADIUS);
@@ -46,38 +47,37 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS*2 + 10;
+            x_coord += RADIUS*2 + 15;
         }
-        System.out.println(index);
         y_coord += RADIUS*2+10;
-        x_coord -= (index+2) *(RADIUS*2 + 3);
+        x_coord = 275;
 
         for(int i=0; i<7;i++){
             Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BLACK);
+            circle.setFill(Color.BISQUE);
             circle.setCenterX(x_coord);
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS*2 + 10;
+            x_coord += RADIUS*2 + 15;
 
         }
         y_coord += RADIUS*2+10;
-        x_coord -= (index+3) *(RADIUS*2 + 3);
+        x_coord = 245;
 
 
         for(int i=0; i<8;i++){
             Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.RED);
+            circle.setFill(Color.BISQUE);
             circle.setCenterX(x_coord);
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS*2 + 10;
+            x_coord += RADIUS*2 + 15;
             index++;
         }
         y_coord += RADIUS*2+10;
-        x_coord -= (index+1) *(RADIUS*2 + 3);
+        x_coord = 205;
 
         for(int i=0; i<9;i++){
             Circle circle = new Circle(RADIUS);
@@ -86,10 +86,11 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS;
+            x_coord += RADIUS*2 + 15;
+
         }
         y_coord += RADIUS*2+10;
-
+        x_coord = 245;
         for(int i=0; i<8;i++){
             Circle circle = new Circle(RADIUS);
             circle.setFill(Color.BISQUE);
@@ -97,10 +98,10 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS;
+            x_coord += RADIUS*2 + 15;
         }
         y_coord += RADIUS*2+10;
-
+        x_coord = 275;
         for(int i=0; i<7;i++){
             Circle circle = new Circle(RADIUS);
             circle.setFill(Color.BISQUE);
@@ -108,9 +109,10 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS;
+            x_coord += RADIUS*2 + 15;
         }
         y_coord += RADIUS*2+10;
+        x_coord = 305;
 
         for(int i=0; i<6;i++){
             Circle circle = new Circle(RADIUS);
@@ -119,10 +121,10 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS;
+            x_coord += RADIUS*2 + 15;
         }
         y_coord += RADIUS*2+10;
-
+        x_coord = 335;
         for(int i=0; i<5;i++){
             Circle circle = new Circle(RADIUS);
             circle.setFill(Color.BISQUE);
@@ -130,20 +132,10 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS;
+            x_coord += RADIUS * 2 + 15;
         }
         y_coord += RADIUS*2+10;
 
-        for(int i=0; i<4;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BISQUE);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circles.add(circle);
-
-            x_coord += RADIUS;
-        }
-        y_coord += RADIUS*2+10;
 
         return circles;
     }
