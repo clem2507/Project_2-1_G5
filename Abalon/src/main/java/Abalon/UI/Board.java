@@ -22,9 +22,10 @@ public class Board {
         ArrayList<Circle> circles = new ArrayList<Circle>();
 
         // 9 loops to create all circles (define position)
+        // 1 loop per line of circles in the board
         double x_coord = 330;
         double y_coord = 100;
-        int index=0;
+        int index=5;
 
         for(int i=0; i<5;i++){
             Circle circle = new Circle(RADIUS);
@@ -34,7 +35,6 @@ public class Board {
             circles.add(circle);
 
             x_coord += RADIUS*2 + 10;
-            index++;
         }
         y_coord += RADIUS*2+10;
         x_coord -= (index+1) *(RADIUS*2 + 3);
@@ -149,7 +149,9 @@ public class Board {
     }
 
  /*
-    define which circle is empty (0), red (1) or blue (2)
+    define which circle is empty (0), red (1) or black (2)
+    red is for player 1
+    black is for player 2
   */
     private int[] createValues() {
         int[] values = {
