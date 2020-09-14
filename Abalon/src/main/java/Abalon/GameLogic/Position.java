@@ -1,3 +1,4 @@
+package Abalon.GameLogic;
 public class Position {
     char xPos;
     int yPos;

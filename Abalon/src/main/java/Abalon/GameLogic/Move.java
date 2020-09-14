@@ -1,3 +1,4 @@
+package Abalon.GameLogic;
 public class Move {
 
     //the codes of the three selected marbles and the square to move to

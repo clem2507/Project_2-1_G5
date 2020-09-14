@@ -1,4 +1,6 @@
+package Abalon.GameLogic;
 import java.util.HashTable;
+
 
 public class Board {
     //TODO store Marble object in the HashTable using a Position object as the key.
