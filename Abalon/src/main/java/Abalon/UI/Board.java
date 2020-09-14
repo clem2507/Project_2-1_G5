@@ -22,9 +22,10 @@ public class Board {
         ArrayList<Circle> circles = new ArrayList<Circle>();
 
         // 9 loops to create all circles (define position)
+        // 1 loop per line of circles in the board
         double x_coord = 335;
         double y_coord = 62;
-        int index=0;
+        int index=5;
 
         for(int i=0; i<5;i++){
             Circle circle = new Circle(RADIUS);
@@ -34,9 +35,7 @@ public class Board {
             circles.add(circle);
 
             x_coord += RADIUS*2 + 15;
-            index++;
         }
-        System.out.println(x_coord);
         y_coord += RADIUS*2+10;
         x_coord = 305;
 
@@ -86,11 +85,10 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS*2 + 15;
-
+            x_coord += RADIUS;
         }
-        y_coord += RADIUS*2+10;
-        x_coord = 245;
+        y_coord += RADIUS*2+15;
+
         for(int i=0; i<8;i++){
             Circle circle = new Circle(RADIUS);
             circle.setFill(Color.BISQUE);
@@ -98,10 +96,11 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS*2 + 15;
+            x_coord += RADIUS;
         }
-        y_coord += RADIUS*2+10;
+        y_coord += RADIUS*2+15;
         x_coord = 275;
+
         for(int i=0; i<7;i++){
             Circle circle = new Circle(RADIUS);
             circle.setFill(Color.BISQUE);
@@ -121,10 +120,11 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS*2 + 15;
+            x_coord += RADIUS;
         }
-        y_coord += RADIUS*2+10;
+        y_coord += RADIUS*2+15;
         x_coord = 335;
+
         for(int i=0; i<5;i++){
             Circle circle = new Circle(RADIUS);
             circle.setFill(Color.BISQUE);
@@ -132,16 +132,17 @@ public class Board {
             circle.setCenterY(y_coord);
             circles.add(circle);
 
-            x_coord += RADIUS * 2 + 15;
+            x_coord += RADIUS*2 + 15;
         }
         y_coord += RADIUS*2+10;
-
 
         return circles;
     }
 
  /*
-    define which circle is empty (0), red (1) or blue (2)
+    define which circle is empty (0), red (1) or black (2)
+    red is for player 1
+    black is for player 2
   */
     private int[] createValues() {
         int[] values = {
