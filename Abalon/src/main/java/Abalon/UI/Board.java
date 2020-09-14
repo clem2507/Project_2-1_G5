@@ -2,20 +2,13 @@ package Abalon.UI;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
-
 import java.util.ArrayList;
 
 public class Board {
 
     private int[] values;
     public static ArrayList<Circle> circles;
-    public static ArrayList<Circle> scoreCircles;
-    public static ArrayList<Text> scoreTexts;
     private final double RADIUS =30;
-
-    public Text player1;
-    public Text player2;
 
     public Board(){
         values = createValues();
@@ -143,12 +136,6 @@ public class Board {
         }
         y_coord += RADIUS*2+10;
 
-        Circle c1 = new Circle(40);
-        c1.setCenterY(900);
-        c1.setCenterX(10);
-        c1.setFill(Color.BLACK);
-        circles.add(c1);
-
 
         return circles;
     }
@@ -171,6 +158,5 @@ public class Board {
 
         return values;
     }
-
 
 }
