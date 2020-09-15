@@ -142,12 +142,12 @@ public class Board {
         y_coord += RADIUS*2+10;
 
         //Creation of the circles for the score FOR PLAYER 1
-        Circle c1 = createCircleForScore(25, 1200,150, Color.BISQUE);
-        Circle c2 = createCircleForScore(25, 1175,200, Color.BISQUE);
-        Circle c3 = createCircleForScore(25, 1225,200, Color.BISQUE);
-        Circle c4 = createCircleForScore(25, 1150,250, Color.BISQUE);
-        Circle c5 = createCircleForScore(25, 1200,250, Color.BISQUE);
-        Circle c6 = createCircleForScore(25, 1250,250, Color.BISQUE);
+        Circle c1 = createCircleForScore(25, 1100,150, Color.BISQUE);
+        Circle c2 = createCircleForScore(25, 1075,200, Color.BISQUE);
+        Circle c3 = createCircleForScore(25, 1125,200, Color.BISQUE);
+        Circle c4 = createCircleForScore(25, 1050,250, Color.BISQUE);
+        Circle c5 = createCircleForScore(25, 1100,250, Color.BISQUE);
+        Circle c6 = createCircleForScore(25, 1150,250, Color.BISQUE);
 
         circles.add(c1);
         circles.add(c2);
@@ -157,12 +157,12 @@ public class Board {
         circles.add(c6);
 
         //Creation of the circles for the score FOR PLAYER 2
-        Circle c11 = createCircleForScore(25, 1200,500, Color.BISQUE);
-        Circle c21 = createCircleForScore(25, 1175,550, Color.BISQUE);
-        Circle c31 = createCircleForScore(25, 1225,550, Color.BISQUE);
-        Circle c41 = createCircleForScore(25, 1150,600, Color.BISQUE);
-        Circle c51 = createCircleForScore(25, 1200,600, Color.BISQUE);
-        Circle c61 = createCircleForScore(25, 1250,600, Color.BISQUE);
+        Circle c11 = createCircleForScore(25, 1100,500, Color.BISQUE);
+        Circle c21 = createCircleForScore(25, 1075,550, Color.BISQUE);
+        Circle c31 = createCircleForScore(25, 1125,550, Color.BISQUE);
+        Circle c41 = createCircleForScore(25, 1050,600, Color.BISQUE);
+        Circle c51 = createCircleForScore(25, 1100,600, Color.BISQUE);
+        Circle c61 = createCircleForScore(25, 1150,600, Color.BISQUE);
 
         circles.add(c11);
         circles.add(c21);
