@@ -10,6 +10,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * TODO Add marbles to the board and create Home page
+ * Home Page: Aaron
+ * Marbles: Aaron + Adèle 
+ */
+
 import java.util.ArrayList;
 
 public class Hexagon extends Application {
