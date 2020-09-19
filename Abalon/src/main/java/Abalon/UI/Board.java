@@ -11,6 +11,8 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
+import static javafx.scene.paint.Color.*;
+
 public class Board {
 
     private int[] values;
@@ -26,6 +28,7 @@ public class Board {
     public Board(){
         values = createValues();
         circles = createCircles();
+        updateColorCircles();
         hexagon = createHexagon();
         player1 = new Text("test");
     }
@@ -63,7 +66,6 @@ public class Board {
                 Circle circle = new Circle(RADIUS);
                 circle.setCenterX(x_coord);
                 circle.setCenterY(y_coord);
-                circle.setFill(Color.BISQUE); // to remove later because the array defines the color
                 circles.add(circle);
                 x_coord += RADIUS*2 + 15;
             }
@@ -125,7 +127,7 @@ public class Board {
         circlesPlayer2.add(c41);
         circlesPlayer2.add(c51);
         circlesPlayer2.add(c61);
-        
+
          */
 
         return circles;
@@ -160,6 +162,23 @@ public class Board {
         };
 
         return values;
+    }
+
+    private void updateColorCircles() {
+        Color c = null;
+        // define color
+        for(int i=0;i<values.length;i++){
+            if(values[i] ==0){
+                c = BISQUE;
+            }else if(values[i] ==1){
+                c = RED;
+            }else if(values[i] ==2){
+                c = BLACK;
+            }
+
+            // fill circle with the correct color
+            circles.get(i).setFill(c);
+        }
     }
 
 }
