@@ -15,6 +15,8 @@ public class Board {
 
     private int[] values;
     public static ArrayList<Circle> circles;
+    public static ArrayList<Circle> circlesPlayer1;
+    public static ArrayList<Circle> circlesPlayer2;
     public Polygon hexagon;
     public Text player1;
     public Text player2;
@@ -51,119 +53,47 @@ public class Board {
     private ArrayList<Circle> createCircles() {
         ArrayList<Circle> circles = new ArrayList<Circle>();
 
-        // 9 loops to create all circles (define position)
-        // 1 loop per line of circles in the board
+        int nc = 5; // nc: number of circles
         double x_coord = 485;
         double y_coord = 62;
 
-        for(int i=0; i<5;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circle.setFill(Color.BISQUE);
-            circles.add(circle);
+        for (int i=0; i<9; i++){ // 9 loops for the 9 levels of the hexagon
 
-            x_coord += RADIUS*2 + 15;
+            for(int j=0; j<nc; j++){
+                Circle circle = new Circle(RADIUS);
+                circle.setCenterX(x_coord);
+                circle.setCenterY(y_coord);
+                circle.setFill(Color.BISQUE); // to remove later because the array defines the color
+                circles.add(circle);
+                x_coord += RADIUS*2 + 15;
+            }
+            // update the number of circles per level
+            if(i<4){ // less than 9 holes at that level
+                nc = nc+1; // increase number of holes
+            }else{
+                nc = nc-1; // diminish number of holes
+            }
+
+            // update y_coord
+            if(i==0 | i==1 || i==2 || i==3 || i==6){
+                y_coord += RADIUS*2+10;
+            }else{
+                y_coord += RADIUS*2+15;
+            }
+
+            //update x_coord
+            if(i==0 || i==6){
+                x_coord = 455;
+            }else if(i==1 || i==5){
+                x_coord = 415;
+            }else if(i==2 || i==4){
+                x_coord = 380;
+            }else if(i==3){
+                x_coord = 340;
+            }else{ // i==7
+                x_coord = 485;
+            }
         }
-        y_coord += RADIUS*2+10;
-        x_coord = 455;
-
-        for(int i=0; i<6;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BISQUE);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circles.add(circle);
-
-            x_coord += RADIUS*2 + 15;
-        }
-        y_coord += RADIUS*2+10;
-        x_coord = 415;
-
-        for(int i=0; i<7;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BISQUE);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circles.add(circle);
-
-            x_coord += RADIUS*2 + 15;
-
-        }
-        y_coord += RADIUS*2+10;
-        x_coord = 380;
-
-
-        for(int i=0; i<8;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BISQUE);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circles.add(circle);
-
-            x_coord += RADIUS*2 + 15;
-
-        }
-        y_coord += RADIUS*2+10;
-        x_coord = 340;
-
-        for(int i=0; i<9;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BISQUE);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circles.add(circle);
-
-            x_coord += RADIUS*2 + 15;
-        }
-        y_coord += RADIUS*2+15;
-        x_coord = 380;
-        for(int i=0; i<8;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BISQUE);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circles.add(circle);
-
-            x_coord += RADIUS*2 + 15;
-        }
-        y_coord += RADIUS*2+15;
-        x_coord = 415;
-
-        for(int i=0; i<7;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BISQUE);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circles.add(circle);
-
-            x_coord += RADIUS*2 + 15;
-        }
-        y_coord += RADIUS*2+10;
-        x_coord = 455;
-
-        for(int i=0; i<6;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BISQUE);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circles.add(circle);
-
-            x_coord += RADIUS*2 + 15;
-        }
-        y_coord += RADIUS*2+15;
-        x_coord = 485;
-
-        for(int i=0; i<5;i++){
-            Circle circle = new Circle(RADIUS);
-            circle.setFill(Color.BISQUE);
-            circle.setCenterX(x_coord);
-            circle.setCenterY(y_coord);
-            circles.add(circle);
-
-            x_coord += RADIUS*2 + 15;
-        }
-        y_coord += RADIUS*2+10;
 
         //Creation of the circles for the score FOR PLAYER 1
         Circle c1 = createCircleForScore(25, 150,250, Color.BISQUE);
@@ -173,12 +103,12 @@ public class Board {
         Circle c5 = createCircleForScore(25, 150,350, Color.BISQUE);
         Circle c6 = createCircleForScore(25, 200,350, Color.BISQUE);
 
-        circles.add(c1);
-        circles.add(c2);
-        circles.add(c3);
-        circles.add(c4);
-        circles.add(c5);
-        circles.add(c6);
+        circlesPlayer1.add(c1);
+        circlesPlayer1.add(c2);
+        circlesPlayer1.add(c3);
+        circlesPlayer1.add(c4);
+        circlesPlayer1.add(c5);
+        circlesPlayer1.add(c6);
 
         //Creation of the circles for the score FOR PLAYER 2
         Circle c11 = createCircleForScore(25, 1130,250, Color.BISQUE);
@@ -188,12 +118,12 @@ public class Board {
         Circle c51 = createCircleForScore(25, 1130,350, Color.BISQUE);
         Circle c61 = createCircleForScore(25, 1180,350, Color.BISQUE);
 
-        circles.add(c11);
-        circles.add(c21);
-        circles.add(c31);
-        circles.add(c41);
-        circles.add(c51);
-        circles.add(c61);
+        circlesPlayer2.add(c11);
+        circlesPlayer2.add(c21);
+        circlesPlayer2.add(c31);
+        circlesPlayer2.add(c41);
+        circlesPlayer2.add(c51);
+        circlesPlayer2.add(c61);
 
         return circles;
     }
