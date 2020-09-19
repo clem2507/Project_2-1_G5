@@ -6,4 +6,5 @@ package Abalon.Main;
  */
 public interface Player {
 	void performMove();
+	void setBoard(Board board);
 }

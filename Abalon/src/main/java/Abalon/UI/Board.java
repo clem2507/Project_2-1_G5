@@ -7,13 +7,7 @@ public class Board {
 
     private List<List<Marble> > marbles;
 
-    /*public Board(){
-        // empty grid
-        for (int i=0; i<grid.length;i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                grid[i][j] = 0;
-            }
-        }
-        // actually need to already place 1's and 2's for the basic position of the amrbles
-    }*/
+    public Board(){
+        
+    }
 }
