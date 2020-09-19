@@ -2,12 +2,12 @@ package Abalon.UI;
 
 public class Board {
 
-    /*private HashMap<Marble
+    //Hashmap is not needed
+    //We can split the board horizontally and calculate the number of a marble in 2d list exclusively based on its absolute position
 
-    private int[][] grid;
-    // grid of holes, 0 is for empty, 1 for player 1 and 2 for player 2
+    private List<List<Marble> > marbles;
 
-    public Board(){
+    /*public Board(){
         // empty grid
         for (int i=0; i<grid.length;i++) {
             for (int j = 0; j < grid[0].length; j++) {
