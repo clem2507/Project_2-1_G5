@@ -2,6 +2,8 @@ package Abalon.UI;
 
 public class Board {
 
+    /*private HashMap<Marble
+
     private int[][] grid;
     // grid of holes, 0 is for empty, 1 for player 1 and 2 for player 2
 
@@ -13,5 +15,5 @@ public class Board {
             }
         }
         // actually need to already place 1's and 2's for the basic position of the amrbles
-    }
+    }*/
 }

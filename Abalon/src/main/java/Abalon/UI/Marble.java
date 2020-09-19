@@ -2,23 +2,29 @@ package Abalon.UI;
 
 import java.awt.*;
 
+/**
+ * Class-list, stores values about marble only and has setters/getters to edit them
+ */
 public class Marble {
 
     private Color color;
-    private int[] position;
+    private int[] absPosition;
+    private Notation position;
 
-    public Marble(Color color, int[] position) {
+    // changed
+
+    public Marble(Color color, Notation position, int[] absPosition) {
         this.color = color;
         this.position = position;
-
+        this.absPosition = absPosition;
     }
 
     public boolean hasMoved(){
         return false;
     }
 
-    public void editPosition (int[] newPosition){
-        this.position = newPosition;
+    public void setAbsPosition (int[] absPosition){
+        this.absPosition = absPosition;
     }
 
     public void remove(){

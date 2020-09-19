@@ -2,6 +2,9 @@ package Abalon.Main;
 
 import javafx.util.Pair;
 
+/** 
+ * Notation class representing notation for marbles positions
+ */
 public class Notation {
 	private char row;
 	private int column;
@@ -11,6 +14,12 @@ public class Notation {
 	private static int numberOfColumns = 9;
 	private static int numberOfRows = 9;
 
+	/**
+	 * Returns a new object of class Notation
+	 * @param row first symbol in notation
+	 * @param column second symbol in notation
+	 * @throws IllegalArgumentException throws an exception if the passed notation is not valid 
+	 */
 	public Notation(char row, int column) throws IllegalArgumentException {
 		if (isValid(row, column)) {
 			this.row = row;
@@ -19,6 +28,21 @@ public class Notation {
 			throw new IllegalArgumentException();
 	}
 	
+	/** 
+	 * Copy constructor
+	 * @param other object of class Notation to be copied 
+	 */
+	public Notation(Notation other) {
+		row = other.row;
+		column = other.column;
+	}
+
+	/**
+	 * Shift current notation by 1 in one of 6 directions (see MoveDirection)
+	 * @param dir variable of type MoveDirection
+	 * @param IllegalArgumentException throws an exception if the passed direction is not valid 
+	 * @return true if the respective marble is still within the board, false otherwise
+	 */
 	public boolean move(MoveDirection dir) throws IllegalArgumentException {
 		switch (dir) {
 			case TOP_LEFT:     row++;           break;
@@ -34,10 +58,20 @@ public class Notation {
 		return true;
 	}
 
+	/**
+	 * Return current notation in a form of Pair<Character, Integer> 
+	 * @return current notation 
+	 */
 	public Pair<Character, Integer> getPair() {
 		return new Pair<Character, Integer>(row, column);
 	}
 
+	/**
+	 * Checks whether the passed notation is valid
+	 * @param _row first symbol of notation
+	 * @param _column second symbol of notation
+	 * @return true is notation is valid, false otherwise
+	 */
 	public static boolean isValid(char _row, int _column) {	
 		int id = (int)(_row - 'A');
 		if (id < 0 || id >= numberOfRows)
@@ -47,5 +81,12 @@ public class Notation {
 		return true;
 	}
 
-	
+	@Override 
+	/**
+	 * Returns current notation in a form of string
+	 * @return current notation 
+	 */
+	public String toString() {
+		return row + column;
+	}
 }
