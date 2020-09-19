@@ -7,19 +7,13 @@ import java.awt.*;
  */
 public class Marble {
     private Color color; // sure to use this color type?
-    private int absPositionX, absPositionY; // absolute coordinates on stage
     private Notation notation; 
     private boolean selected; 
     private int outsideFlag = 0; // specifies whether the ball is on the board, or to the left/to the right (in one of triangles); 
 
     // NOW IM GONNA MOVE ABSOLUTE POSITION TO NOTATION
 
-    // changed array to 2 variables, for the following reason:
-    // java is passed-by value, the value that is passed for objects are references to their positions
-    // in java static arrays are objects as well
-    // so if we store coordinates in array there's more risk to accidentially edit it it from another place 
-    // if we store it in primitive types we wont risk 
-    public Marble(Color color, Notation notation, int absPositionX, int absPositionY) {
+    public Marble(Color color, Notation notation) {
         this.color = color;
         this.position = position;
         this.absPositionX = absPositionX;
@@ -55,32 +49,6 @@ public class Marble {
      */
     public Color getColor() {
         return color;
-    }
-
-    /** 
-     * Sets the absolute position of the marble center on the stage
-     * @param absPositionX X
-     * @param absPositionY Y
-     */
-    public void setAbsPosition (int absPositionX, int absPositionY) {
-        this.absPositionX = absPositionX;
-        this.absPositionY = absPositionY;
-    }
-
-    /** 
-     * Returns absolute X of the marble center on the stage
-     * @return X coordinate
-     */
-    public int getX() {
-        return absPositionX;
-    }
-
-    /** 
-     * Returns absolute Y of the marble center on the stage
-     * @return Y coordinate
-     */
-    public int getY() {
-        return absPositionY;
     }
 
     /** 

@@ -8,11 +8,14 @@ import javafx.util.Pair;
 public class Notation {
 	private char row;
 	private int column;
+	private int absPositionX, absPositionY;
 
 	private static int[] columnsLeftBoundary  = new int[]{1, 1, 1, 1, 1, 2, 3, 4, 5};
 	private static int[] columnsRightBoundary = new int[]{5, 6, 7, 8, 9, 9, 9, 9, 9};
 	private static int numberOfColumns = 9;
 	private static int numberOfRows = 9;
+
+	private int[][][] absoluteCoordinates = new int[9][9][2];
 
 	/**
 	 * Returns a new object of class Notation
@@ -24,6 +27,8 @@ public class Notation {
 		if (isValid(row, column)) {
 			this.row = row;
 			this.column = column;
+			readAbsoluteCoordinates();
+			updateAbsolutePosition();
 		} else
 			throw new IllegalArgumentException();
 	}
@@ -35,6 +40,24 @@ public class Notation {
 	public Notation(Notation other) {
 		row = other.row;
 		column = other.column;
+		updateAbsolutePosition();
+	}
+
+	private void readAbsoluteCoordinates() throws IOException, FileNotFoundException {
+		BufferedReader inp = new BufferedReader("./res/marbles_board_coordinates.txt");
+		String cur = "";
+		int counter = 0;
+		while ((cur = inp.readLine()) != null) {
+			cur.replace("[", " ").replace("]", " ");
+			String[] substrings = cur.split("\\s+");
+			
+			int n = substrings.length;
+			for (int i = 0; i < n; i += 2) {
+				absoluteCoordinates[counter][i / 2][0] = Integer.parseInteger(substrings[i]);
+				absoluteCoordinates[counter][i / 2][1] = Integer.parseInteger(substrings[i + 1]);
+			}
+			counter++;
+		}
 	}
 
 	/**
@@ -53,8 +76,9 @@ public class Notation {
 			case BOTTOM_RIGHT: row--;           break;
 			default: throw new IllegalArgumentException();
 		}
-		if (isValid(row, column))
+		if (!isValid(row, column))
 			return false;
+		updateAbsolutePosition();
 		return true;
 	}
 
@@ -80,6 +104,39 @@ public class Notation {
 			return false;
 		return true;
 	}
+
+	private void updateAbsolutePosition() {
+		int id1 = (int)(row - 'A');
+		int id2 = column - columnsLeftBoundary[id1];
+		absPositionX = absoluteCoordinates[id1][id2][0];
+		absPositionY = absoluteCoordinates[id1][id2][1];
+	}
+
+	/** 
+     * Sets the absolute position of the marble center on the stage
+     * @param absPositionX X
+     * @param absPositionY Y
+     */
+    public void setAbsPosition (int absPositionX, int absPositionY) {
+        this.absPositionX = absPositionX;
+        this.absPositionY = absPositionY;
+    }
+
+    /** 
+     * Returns absolute X of the marble center on the stage
+     * @return X coordinate
+     */
+    public int getX() {
+        return absPositionX;
+    }
+
+    /** 
+     * Returns absolute Y of the marble center on the stage
+     * @return Y coordinate
+     */
+    public int getY() {
+        return absPositionY;
+    }
 
 	@Override 
 	/**
