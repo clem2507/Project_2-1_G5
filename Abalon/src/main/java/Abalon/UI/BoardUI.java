@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import static javafx.scene.paint.Color.*;
 
-public class Board {
+public class BoardUI {
 
     private int[] values;
     public static ArrayList<Circle> circles;
@@ -25,7 +25,7 @@ public class Board {
 
     private final double RADIUS =30;
 
-    public Board(){
+    public BoardUI(){
         values = createValues();
         circles = createCircles();
         updateColorCircles();
