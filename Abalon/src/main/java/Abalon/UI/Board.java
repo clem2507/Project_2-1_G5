@@ -95,6 +95,7 @@ public class Board {
             }
         }
 
+        /*
         //Creation of the circles for the score FOR PLAYER 1
         Circle c1 = createCircleForScore(25, 150,250, Color.BISQUE);
         Circle c2 = createCircleForScore(25, 125,300, Color.BISQUE);
@@ -124,6 +125,8 @@ public class Board {
         circlesPlayer2.add(c41);
         circlesPlayer2.add(c51);
         circlesPlayer2.add(c61);
+        
+         */
 
         return circles;
     }
