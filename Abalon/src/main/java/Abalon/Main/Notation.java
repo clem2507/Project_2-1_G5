@@ -1,5 +1,13 @@
 package Abalon.Main;
 
+import Abalon.Main.MoveDirection;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
 import javafx.util.Pair;
 
 /** 
@@ -27,7 +35,15 @@ public class Notation {
 		if (isValid(row, column)) {
 			this.row = row;
 			this.column = column;
-			readAbsoluteCoordinates();
+			
+			try {		
+				readAbsoluteCoordinates();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("File with coordinates not found");
+				System.exit(0);
+			}
+
 			updateAbsolutePosition();
 		} else
 			throw new IllegalArgumentException();
@@ -44,7 +60,8 @@ public class Notation {
 	}
 
 	private void readAbsoluteCoordinates() throws IOException, FileNotFoundException {
-		BufferedReader inp = new BufferedReader("./res/marbles_board_coordinates.txt");
+		File file = new File("./res/marbles_board_coordinates.txt");
+		BufferedReader inp = new BufferedReader(new FileReader(file));
 		String cur = "";
 		int counter = 0;
 		while ((cur = inp.readLine()) != null) {
@@ -53,8 +70,8 @@ public class Notation {
 			
 			int n = substrings.length;
 			for (int i = 0; i < n; i += 2) {
-				absoluteCoordinates[counter][i / 2][0] = Integer.parseInteger(substrings[i]);
-				absoluteCoordinates[counter][i / 2][1] = Integer.parseInteger(substrings[i + 1]);
+				absoluteCoordinates[counter][i / 2][0] = Integer.parseInt(substrings[i]);
+				absoluteCoordinates[counter][i / 2][1] = Integer.parseInt(substrings[i + 1]);
 			}
 			counter++;
 		}
@@ -144,6 +161,6 @@ public class Notation {
 	 * @return current notation 
 	 */
 	public String toString() {
-		return row + column;
+		return "" + row + column;
 	}
 }

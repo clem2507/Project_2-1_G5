@@ -1,5 +1,7 @@
 package Abalon.UI;
 
+import Abalon.Main.Notation;
+
 import java.awt.*;
 
 /**
@@ -9,17 +11,15 @@ public class Marble {
     private Color color; // sure to use this color type?
     private Notation notation; 
     private boolean selected; 
-    private int outsideFlag = 0; // specifies whether the ball is on the board, or to the left/to the right (in one of triangles); 
+    private int outsideFlag; // specifies whether the ball is on the board, or to the left/to the right (in one of triangles); 
 
     // NOW IM GONNA MOVE ABSOLUTE POSITION TO NOTATION
 
     public Marble(Color color, Notation notation) {
         this.color = color;
-        this.position = position;
-        this.absPositionX = absPositionX;
-        this.absPositionY = absPositionY;
-        this.isSelected = false;
-        this.outsideFlag = false;
+        this.notation = notation;
+        this.selected = false;
+        this.outsideFlag = 0;
     }
 
     /** 
@@ -29,9 +29,7 @@ public class Marble {
     public Marble(Marble other) {
         this.color = other.getColor();
         this.notation = other.getNotation();
-        this.absPositionX = other.getX();
-        this.absPositionY = other.getY();
-        this.isSelected = other.isSelected();
+        this.selected = other.isSelected();
         this.outsideFlag = other.getOutsideFlag();
     }
 
@@ -95,7 +93,7 @@ public class Marble {
      * Returns the state of the marble: outside of the board or in one side of triangles
      * @return integer flag
      */
-    public int getOutside() {
+    public int getOutsideFlag() {
         return outsideFlag;
     }
 }

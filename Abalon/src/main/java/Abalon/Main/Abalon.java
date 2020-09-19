@@ -1,5 +1,9 @@
 package Abalon.Main;
 
+import Abalon.Main.Board;
+
+import java.awt.EventQueue;
+
 /**
  * Abalon class that serves to run a new game
  */
@@ -36,18 +40,17 @@ public class Abalon {
 	 * Runs a new game
 	 * All moves are performed consecutively in EventQueue
 	 */
-	public runGame() {
-		playMove(0);
+	public void runGame() {
+		playMove(false);
 	}
 
 	private void playMove(boolean flag) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				performMove(flag);
-				if (!victory) {
-					int id = (int)flag;
-					player[id].performMove();
-				}
+				int id = (flag ? 1 : 0);
+				player[id].performMove();
+				if (victory == 0) 
+					playMove(flag ^ false);
 			}
 		});
 	}

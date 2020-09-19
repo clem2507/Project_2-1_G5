@@ -7,7 +7,7 @@ public enum MoveDirection {
 	TOP_LEFT,
 	LEFT,
 	BOTTOM_LEFT,
-	TOP_RIGTH,
+	TOP_RIGHT,
 	RIGHT,
 	BOTTOM_RIGHT
 }
