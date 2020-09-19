@@ -20,13 +20,13 @@ import java.util.ArrayList;
 
 public class Hexagon extends Application {
 
-    private final double WIDTH = 1400;
-    private final double HEIGHT = 750;
+    private final double WIDTH = 1270;
+    private final double HEIGHT = 700;
 
     // Hexagon should access Board to obtain Marbles positions, color, etc 
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
 
-    
+
     @Override
     public void start(Stage primaryStage) {
         //Creating an object of Board, which construct a board

@@ -38,12 +38,12 @@ public class BoardUI {
 
         //Adding coordinates to the hexagon
         hexagon.getPoints().addAll(new Double[]{
-                300.0, 12.0, //1
-                700.0, 12.0, //1
-                850.0, 350.0, //2
-                700.0, 688.0, //3
-                300.0, 688.0, //3
-                150.0, 350.0, //2
+                285.0, 12.0, //1
+                685.0, 12.0, //1
+                840.0, 350.0, //2
+                685.0, 688.0, //3
+                285.0, 688.0, //3
+                140.0, 350.0, //2
         });
         hexagon.setFill(Color.ORANGE);
 
