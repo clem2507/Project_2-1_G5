@@ -55,7 +55,6 @@ public class Board {
         // 1 loop per line of circles in the board
         double x_coord = 485;
         double y_coord = 62;
-        int index=5;
 
         for(int i=0; i<5;i++){
             Circle circle = new Circle(RADIUS);
@@ -103,7 +102,7 @@ public class Board {
             circles.add(circle);
 
             x_coord += RADIUS*2 + 15;
-            index++;
+
         }
         y_coord += RADIUS*2+10;
         x_coord = 340;
