@@ -34,7 +34,7 @@ public class Hexagon extends Application {
         //Creation of a Border pane to make our scene easier to construct
         BorderPane pane = new BorderPane();
         pane.setCenter(board.hexagon);
-        pane.getChildren().addAll(Board.circles);
+        pane.getChildren().addAll(board.circles);
         
         Text player1 = new Text("Player 1");
         player1.setTranslateX(110);
