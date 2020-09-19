@@ -26,6 +26,7 @@ public class Hexagon extends Application {
     // Hexagon should access Board to obtain Marbles positions, color, etc 
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
 
+    
     @Override
     public void start(Stage primaryStage) {
         //Creating an object of Board, which construct a board
