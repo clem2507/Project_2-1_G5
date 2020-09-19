@@ -18,6 +18,22 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/*
+==================================================================================================================
+                                                   TODO
+==================================================================================================================
+
+    1) I already created separate Board in backend. Its gonna be pretty messy if we keep things in one place, 
+    so I suggest splitting it
+    2) Use Notation. It will store absolute positions of marbles. You can set coordinates manually 
+    if the marble is outside of the board or just pass notation and Notation will calculate absolute
+    coordinates authomatically.   
+    3) BoardUI should be responsible for UI only. I'll move all backend-related stuff from there myself soon.
+    4) Marbles is just a list-like class. It contains only data about marbles and getters/setters for them, 
+    I dont think wee need anything else to be done there
+==================================================================================================================
+*/
+
 public class Hexagon extends Application {
 
     private final double WIDTH = 1270;
