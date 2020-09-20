@@ -16,7 +16,6 @@ import javafx.stage.Stage;
  * Marbles: Aaron + Adèle 
  */
 
-import java.util.ArrayList;
 
 public class Hexagon extends Application {
 
