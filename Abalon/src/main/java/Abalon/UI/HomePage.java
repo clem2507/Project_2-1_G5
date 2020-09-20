@@ -1,11 +1,16 @@
 package Abalon.UI;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -19,6 +24,7 @@ public class HomePage extends Application {
 
     private final double WIDTH = 1260;
     private final double HEIGHT = 700;
+    Hexagon hexagon;
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,7 +58,30 @@ public class HomePage extends Application {
         play.setTextFill(Color.ORANGE);
         play.setFont(Font.font("ayuthaya", FontWeight.BOLD, FontPosture.REGULAR, 30));
         pane.getChildren().add(play);
-        
+
+        //Button listener
+        play.setOnAction(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                hexagon = new Hexagon();
+                System.out.println("Start Button clicked, game is gonna start!");
+                hexagon.start(primaryStage);
+            }
+        });
+
+        //Creation of a combo box to choose the game Mode
+        ComboBox gameChoice = new ComboBox();
+        gameChoice.getItems().addAll(
+                "PLAYER VS PLAYER" ,
+                "AI CHOICE 1",
+                "AI CHOICE 2",
+                "PRACTICE MODE");
+
+        gameChoice.setTranslateX(560);
+        gameChoice.setTranslateY(270);
+        gameChoice.setPrefSize(150, 35);
+        pane.getChildren().add(gameChoice);
+
         Scene scene = new Scene(pane ,WIDTH, HEIGHT);
         primaryStage.setTitle("Abalone");
         primaryStage.setScene(scene);
