@@ -1,9 +1,7 @@
 package Abalon.GameLogic;
 import java.util.HashTable;
-
-
 public class Board {
-    Hashtable<Position, Marble> marblePositions;
+    private Hashtable<Position, Marble> marblePositions;
 
     /*
         a constructor for the Board class.
@@ -34,7 +32,7 @@ public class Board {
             Marble marble = new Marble(2, pos);
             marblePositions.put(pos, marble);
         }
-        //create and store marbles for player 2
+        //create and store marbles for player 1
         for (int i = 1; i < 6; i++) {
             Position pos = new Position('I', i);
             Marble marble = new Marble(1, pos);
@@ -50,5 +48,8 @@ public class Board {
             Marble marble = new Marble(1, pos);
             marblePositions.put(pos, marble);
         }
+    }
+    public Marble marbleAtPosition(Position pos) {
+        return marblePositions.get(pos);
     }
 }
