@@ -15,22 +15,18 @@ import static javafx.scene.paint.Color.*;
 
 public class BoardUI {
 
-    private int[][] values;
-    public static ArrayList<Circle> circles;
-    public static ArrayList<Circle> circlesPlayer1;
-    public static ArrayList<Circle> circlesPlayer2;
+    private int[][] cellColor;
+    public Circle[][] circles;
     public Polygon hexagon;
 
     private final double RADIUS =30;
     public BoardUI(){
-        circlesPlayer1 = new ArrayList<Circle>();
-        circlesPlayer2 = new ArrayList<Circle>();
-        values = createValues();
-        circles = createCircles();
-        colorizeCircles();
+        createCircles();
+        createColors();
+        drawAllCells();
         hexagon = createHexagon();
     }
-
+    
     public static Polygon createHexagon(){
         Polygon hexagon = new Polygon();
 
@@ -48,141 +44,96 @@ public class BoardUI {
         return hexagon;
     }
 
- /*
-    Create all circles of the board + define their position
-  */
-    private ArrayList<Circle> createCircles() {
-        ArrayList<Circle> circles = new ArrayList<Circle>();
+    /*
+        Create all circles of the board + define their position
+    */
+    private void createCircles() {
+        circles = new Circle[9][9];
+        for (int i = 0; i < 9; i++)
+            for (int j = 0; j < 9; j++)
+                circles[i][j] = null;
 
         int nc = 5; // nc: number of circles
         double x_coord = 485;
         double y_coord = 62;
 
-        for (int i=0; i<9; i++){ // 9 loops for the 9 levels of the hexagon
+        for (int i = 0; i < 9; i++) { // 9 loops for the 9 levels of the hexagon
 
-            for(int j=0; j<nc; j++){
+            for (int j = 0; j < nc; j++) 
+            {
                 Circle circle = new Circle(RADIUS);
                 circle.setCenterX(x_coord);
                 circle.setCenterY(y_coord);
-                circles.add(circle);
-                x_coord += RADIUS*2 + 15;
+                circles[i][j] = circle;
+                x_coord += RADIUS * 2 + 15;
             }
             // update the number of circles per level
-            if(i<4){ // less than 9 holes at that level
-                nc = nc+1; // increase number of holes
-            }else{
-                nc = nc-1; // diminish number of holes
+            if (i < 4) { // less than 9 holes at that level
+                nc = nc + 1; // increase number of holes
+            } else {
+                nc = nc - 1; // diminish number of holes
             }
 
             // update y_coord
-            if(i==0 | i==1 || i==2 || i==3 || i==6){
-                y_coord += RADIUS*2+10;
-            }else{
-                y_coord += RADIUS*2+15;
+            if ((i == 0) || (i == 1) || (i == 2) || (i == 3) || (i == 6)) {
+                y_coord += RADIUS * 2 + 10;
+            } else {
+                y_coord += RADIUS * 2 + 15;
             }
 
             //update x_coord
-            if(i==0 || i==6){
+            if (i == 0 || i == 6) {
                 x_coord = 455;
-            }else if(i==1 || i==5){
+            } else if (i == 1 || i == 5) {
                 x_coord = 415;
-            }else if(i==2 || i==4){
+            } else if (i == 2 || i == 4) {
                 x_coord = 380;
-            }else if(i==3){
+            } else if (i == 3) {
                 x_coord = 340;
-            }else{ // i==7
+            } else { // i==7
                 x_coord = 485;
             }
         }
-
-
-        //Creation of the circles for the score FOR PLAYER 1
-        Circle c1 = createCircleForScore(25, 150,250, Color.BISQUE);
-        Circle c2 = createCircleForScore(25, 125,300, Color.BISQUE);
-        Circle c3 = createCircleForScore(25, 175,300, Color.BISQUE);
-        Circle c4 = createCircleForScore(25, 100,350, Color.BISQUE);
-        Circle c5 = createCircleForScore(25, 150,350, Color.BISQUE);
-        Circle c6 = createCircleForScore(25, 200,350, Color.BISQUE);
-
-        circlesPlayer1.add(c1);
-        circlesPlayer1.add(c2);
-        circlesPlayer1.add(c3);
-        circlesPlayer1.add(c4);
-        circlesPlayer1.add(c5);
-        circlesPlayer1.add(c6);
-
-        //Creation of the circles for the score FOR PLAYER 2
-        Circle c11 = createCircleForScore(25, 1130,250, Color.BISQUE);
-        Circle c21 = createCircleForScore(25, 1105,300, Color.BISQUE);
-        Circle c31 = createCircleForScore(25, 1155,300, Color.BISQUE);
-        Circle c41 = createCircleForScore(25, 1080,350, Color.BISQUE);
-        Circle c51 = createCircleForScore(25, 1130,350, Color.BISQUE);
-        Circle c61 = createCircleForScore(25, 1180,350, Color.BISQUE);
-
-        circlesPlayer2.add(c11);
-        circlesPlayer2.add(c21);
-        circlesPlayer2.add(c31);
-        circlesPlayer2.add(c41);
-        circlesPlayer2.add(c51);
-        circlesPlayer2.add(c61);
-
-        return circles;
     }
 
-    //Method to create a circle
-    public Circle createCircleForScore(double radius, double posX, double posY, Color color){
-        Circle circle = new Circle(radius);
-        circle.setFill(color);
-        circle.setCenterX(posX);
-        circle.setCenterY(posY);
+    /*
+        define which circle is empty (0), red (1) or black (2)
+        red is for player 1
+        black is for player 2
+        -1 is for "out of the board"
+    */
 
-        return circle;
-    }
-
- /*
-    define which circle is empty (0), red (1) or black (2)
-    red is for player 1
-    black is for player 2
-    -1 is for "out of the board"
-  */
-    private int[][] createValues() {
-        int[][] values = {
-                {1,1,1,1,1,-1,-1,-1,-1},
-                {1,1,1,1,1,1,-1,-1,-1},
-                {0,0,1,1,1,0,0,-1,-1},
-                {0,0,0,0,0,0,0,0,-1},
-                {0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,-1},
-                {0,0,2,2,2,0,0,-1,-1},
-                {2,2,2,2,2,2,-1,-1,-1},
-                {2,2,2,2,2,-1,-1,-1,-1}
+    private void createColors() {
+        int[][] cellColor = {
+                {1, 1, 1, 1, 1, -1, -1, -1, -1},
+                {1, 1, 1, 1, 1,  1, -1, -1, -1},
+                {0, 0, 1, 1, 1,  0,  0, -1, -1},
+                {0, 0, 0, 0, 0,  0,  0,  0, -1},
+                {0, 0, 0, 0, 0,  0,  0,  0,  0},
+                {0, 0, 0, 0, 0,  0,  0,  0, -1},
+                {0, 0, 2, 2, 2,  0,  0, -1, -1},
+                {2, 2, 2, 2, 2,  2, -1, -1, -1},
+                {2, 2, 2, 2, 2, -1, -1, -1, -1}
         };
-
-        return values;
     }
 
-    private void colorizeCircles(){
-        Color c = null;
-        int index=-1;
-
-        // define color
-        for(int i=0;i<values.length;i++){
-            for(int j=0;j<values[0].length;j++){
-                index++;
-                if(values[i][j] == 0){
-                    c = BISQUE;
-                    circles.get(index).setFill(c);
-                }else if(values[i][j] == 1){
-                    c = MEDIUMBLUE;
-                    circles.get(index).setFill(c);
-                }else if(values[i][j] == 2){
-                    c = LIGHTSKYBLUE;
-                    circles.get(index).setFill(c);
-                }else if(values[i][j] == -1){
-                    index--;
-                }
+    private void drawAllCells() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                drawCell(i, j);
             }
         }
     }
 
+    private void drawCell(int i, int j) {
+        Color c = null;
+        switch (cellColor[i][j]) {
+            case 0:  c = BISQUE;       break;
+            case 1:  c = MEDIUMBLUE;   break;
+            case 2:  c = LIGHTSKYBLUE; break; 
+            default: break;
+        }
+        if (c != null)
+            circles[i][j].setFill(c);
+    }
 }

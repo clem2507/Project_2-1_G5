@@ -16,7 +16,6 @@ import javafx.stage.Stage;
  * Marbles: Aaron + Adèle 
  */
 
-
 /*
 ==================================================================================================================
                                                    TODO
@@ -41,7 +40,6 @@ public class Hexagon extends Application {
     // Hexagon should access Board to obtain Marbles positions, color, etc 
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
 
-
     @Override
     public void start(Stage primaryStage) {
         //Creating an object of Board, which construct a board
@@ -50,9 +48,16 @@ public class Hexagon extends Application {
         //Creation of a Border pane to make our scene easier to construct
         BorderPane pane = new BorderPane();
         pane.setCenter(board.hexagon);
-        pane.getChildren().addAll(board.circles);
-        pane.getChildren().addAll(board.circlesPlayer1);
-        pane.getChildren().addAll(board.circlesPlayer2);
+        
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++)
+                if (board.circles[i][j] != null)
+                    pane.getChildren().add(board.circles[i][j]);
+        }
+
+        //pane.getChildren().addAll(board.circles);
+        //pane.getChildren().addAll(board.circlesPlayer1);
+        //pane.getChildren().addAll(board.circlesPlayer2);
 
         Text player1 = new Text("Player 1");
         player1.setTranslateX(110);
@@ -80,5 +85,4 @@ public class Hexagon extends Application {
         primaryStage.show();
 
     }
-
 }
