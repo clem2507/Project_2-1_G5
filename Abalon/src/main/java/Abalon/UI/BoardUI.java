@@ -27,7 +27,7 @@ public class BoardUI {
         circlesPlayer2 = new ArrayList<Circle>();
         values = createValues();
         circles = createCircles();
-        updateColorCircles();
+        colorizeCircles();
         hexagon = createHexagon();
     }
 
@@ -160,7 +160,7 @@ public class BoardUI {
         return values;
     }
 
-    private void updateColorCircles() {
+    private void colorizeCircles() {
         Color c = null;
         // define color
         for(int i=0;i<values.length;i++){
