@@ -15,7 +15,7 @@ import static javafx.scene.paint.Color.*;
 
 public class BoardUI {
 
-    private int[] values;
+    private int[][] values;
     public static ArrayList<Circle> circles;
     public static ArrayList<Circle> circlesPlayer1;
     public static ArrayList<Circle> circlesPlayer2;
@@ -143,37 +143,45 @@ public class BoardUI {
     define which circle is empty (0), red (1) or black (2)
     red is for player 1
     black is for player 2
+    -1 is for "out of the board"
   */
-    private int[] createValues() {
-        int[] values = {
-                1,1,1,1,1,
-                1,1,1,1,1,1,
-                0,0,1,1,1,0,0,
-                0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,
-                0,0,2,2,2,0,0,
-                2,2,2,2,2,2,
-                2,2,2,2,2
+    private int[][] createValues() {
+        int[][] values = {
+                {1,1,1,1,1,-1,-1,-1,-1},
+                {1,1,1,1,1,1,-1,-1,-1},
+                {0,0,1,1,1,0,0,-1,-1},
+                {0,0,0,0,0,0,0,0,-1},
+                {0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,-1},
+                {0,0,2,2,2,0,0,-1,-1},
+                {2,2,2,2,2,2,-1,-1,-1},
+                {2,2,2,2,2,-1,-1,-1,-1}
         };
 
         return values;
     }
 
-    private void colorizeCircles() {
+    private void colorizeCircles(){
         Color c = null;
+        int index=-1;
+
         // define color
         for(int i=0;i<values.length;i++){
-            if(values[i] ==0){
-                c = BISQUE;
-            }else if(values[i] ==1){
-                c = RED;
-            }else if(values[i] ==2){
-                c = BLACK;
+            for(int j=0;j<values[0].length;j++){
+                index++;
+                if(values[i][j] == 0){
+                    c = BISQUE;
+                    circles.get(index).setFill(c);
+                }else if(values[i][j] == 1){
+                    c = MEDIUMBLUE;
+                    circles.get(index).setFill(c);
+                }else if(values[i][j] == 2){
+                    c = LIGHTSKYBLUE;
+                    circles.get(index).setFill(c);
+                }else if(values[i][j] == -1){
+                    index--;
+                }
             }
-
-            // fill circle with the correct color
-            circles.get(i).setFill(c);
         }
     }
 
