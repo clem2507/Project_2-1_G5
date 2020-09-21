@@ -20,17 +20,15 @@ public class BoardUI {
     public static ArrayList<Circle> circlesPlayer1;
     public static ArrayList<Circle> circlesPlayer2;
     public Polygon hexagon;
-    public Text player1;
-    public Text player2;
 
     private final double RADIUS =30;
-
     public BoardUI(){
+        circlesPlayer1 = new ArrayList<Circle>();
+        circlesPlayer2 = new ArrayList<Circle>();
         values = createValues();
         circles = createCircles();
         updateColorCircles();
         hexagon = createHexagon();
-        player1 = new Text("test");
     }
 
     public static Polygon createHexagon(){
@@ -97,7 +95,7 @@ public class BoardUI {
             }
         }
 
-        /*
+
         //Creation of the circles for the score FOR PLAYER 1
         Circle c1 = createCircleForScore(25, 150,250, Color.BISQUE);
         Circle c2 = createCircleForScore(25, 125,300, Color.BISQUE);
@@ -127,8 +125,6 @@ public class BoardUI {
         circlesPlayer2.add(c41);
         circlesPlayer2.add(c51);
         circlesPlayer2.add(c61);
-
-         */
 
         return circles;
     }
