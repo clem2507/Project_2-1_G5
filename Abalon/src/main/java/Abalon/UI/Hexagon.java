@@ -55,10 +55,6 @@ public class Hexagon extends Application {
                     pane.getChildren().add(board.circles[i][j]);
         }
 
-        //pane.getChildren().addAll(board.circles);
-        //pane.getChildren().addAll(board.circlesPlayer1);
-        //pane.getChildren().addAll(board.circlesPlayer2);
-
         Text player1 = new Text("Player 1");
         player1.setTranslateX(110);
         player1.setTranslateY(200);
