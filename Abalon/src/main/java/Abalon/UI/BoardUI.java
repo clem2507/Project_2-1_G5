@@ -75,11 +75,7 @@ public class BoardUI {
             }
 
             // update y_coord
-            if ((i == 0) || (i == 1) || (i == 2) || (i == 3) || (i == 6)) {
-                y_coord += RADIUS * 2 + 10;
-            } else {
-                y_coord += RADIUS * 2 + 15;
-            }
+                y_coord += RADIUS * 2 + 12;
 
             //update x_coord
             if (i == 0 || i == 6) {
