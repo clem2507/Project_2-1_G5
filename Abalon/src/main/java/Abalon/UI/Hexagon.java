@@ -75,6 +75,10 @@ public class Hexagon extends Application {
         player2.setStrokeWidth(2);
         pane.getChildren().add(player2);
 
+        //Write the scores in the board
+        board.writeScore(100, 340, pane, 20);
+        board.writeScore(1080, 340, pane, 20);
+
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         primaryStage.setTitle("Abalone");
         primaryStage.setScene(scene);

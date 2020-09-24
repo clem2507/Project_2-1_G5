@@ -1,15 +1,13 @@
 package Abalon.UI;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
-import java.util.ArrayList;
 
 import static javafx.scene.paint.Color.*;
 
@@ -75,7 +73,7 @@ public class BoardUI {
             }
 
             // update y_coord
-                y_coord += RADIUS * 2 + 12;
+            y_coord += RADIUS * 2 + 12;
 
             //update x_coord
             if (i == 0 || i == 6) {
@@ -132,4 +130,34 @@ public class BoardUI {
         if (c != null)
             circles[i][j].setFill(c);
     }
+
+    private void scoreCircles(){
+
+    }
+
+    //Write the score label in the pane and write the actual score next to it
+    public void writeScore(double x_coord, double y_coord, Pane pane, int score){
+        Text scoreText = new Text("SCORE: ");
+        scoreText.setTranslateX(x_coord);
+        scoreText.setTranslateY(y_coord);
+        scoreText.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+        //Setting the color
+        scoreText.setFill(Color.ORANGE);
+        //Setting the Stroke
+        scoreText.setStrokeWidth(2);
+        pane.getChildren().add(scoreText);
+
+        Text scoreValue = new Text();
+        scoreValue.setText(Integer.toString(score));
+        scoreValue.setTranslateX(x_coord + 70);
+        scoreValue.setTranslateY(y_coord);
+        scoreValue.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+        //Setting the color
+        scoreValue.setFill(Color.ORANGE);
+        //Setting the Stroke
+        scoreValue.setStrokeWidth(2);
+        pane.getChildren().add(scoreValue);
+    }
+
+
 }
