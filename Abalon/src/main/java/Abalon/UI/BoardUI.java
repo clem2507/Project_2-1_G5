@@ -19,12 +19,13 @@ public class BoardUI {
     public Circle[][] circlesScore;
     public Polygon hexagon;
 
-    private final double RADIUS =30;
+    private final double RADIUS = 30;
     public BoardUI(){
         createCircles();
         createScoreCircles();
         createColors();
-        createColorsScoreCircle();
+        createColorsScoreCirclePlayer1();
+        createColorsScoreCirclePlayer2();
         drawAllCells();
         drawAllCellsScoreCircles();
         hexagon = createHexagon();
@@ -151,7 +152,15 @@ public class BoardUI {
     }
 
     //Create the colors for the score circles
-    private void createColorsScoreCircle(){
+    private void createColorsScoreCirclePlayer1(){
+        cellColorScore = new int[][]{
+                {1, -1, -1},
+                {1, 1, -1},
+                {1, 1, 1}
+        };
+    }
+
+    private void createColorsScoreCirclePlayer2(){
         cellColorScore = new int[][]{
                 {1, -1, -1},
                 {1, 1, -1},
@@ -171,7 +180,7 @@ public class BoardUI {
     private void drawAllCellsScoreCircles(){
         for(int i = 0; i<3; i++){
             for(int j = 0; j<3; j++){
-                drawCell(i, j);
+                drawCellScoreCircles(i, j);
             }
         }
     }
@@ -186,6 +195,18 @@ public class BoardUI {
         }
         if (c != null)
             circles[i][j].setFill(c);
+    }
+
+    private void drawCellScoreCircles(int i, int j) {
+        Color c = null;
+        switch (cellColorScore[i][j]) {
+            case 0:  c = BISQUE;       break;
+            case 1:  c = MEDIUMBLUE;   break;
+            case 2:  c = LIGHTSKYBLUE; break;
+            default: break;
+        }
+        if (c != null)
+            circlesScore[i][j].setFill(c);
     }
 
 
