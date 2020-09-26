@@ -104,10 +104,12 @@ public class BoardUI {
 
         int nc = 1; // nc: number of circles
         double x_coord = 150;
-        double y_coord = 200;
+        double y_coord = 250;
 
         int counter = 0;
         int player = 0;
+
+        //Circles for player
         for (int i = 0; i < 3; i++) { // 3 loops for the 3 levels of the 'pyramid'
             for (int j = 0; j < nc; j++)
             {
@@ -121,15 +123,45 @@ public class BoardUI {
             nc += 1;
 
             // update y_coord
-            y_coord += RADIUS * 2;
+            y_coord += RADIUS * 2 - 5;
 
             //update x_coord
-            if (i == 1) {
-                x_coord = 125;
-            } else if (i == 2) {
-                x_coord = 100;
+            if (i == 0) {
+                x_coord = 120;
+            } else if (i == 1) {
+                x_coord = 90;
             }
         }
+
+        nc = 1; // nc: number of circles
+        x_coord = 930;
+        y_coord = 250;
+
+        counter = 0;
+        player = 1;
+        for (int i = 0; i < 3; i++) { // 3 loops for the 3 levels of the 'pyramid'
+            for (int j = 0; j < nc; j++)
+            {
+                Circle circle = new Circle(RADIUS);
+                circle.setCenterX(x_coord);
+                circle.setCenterY(y_coord);
+                scoredCircles[counter++][player] = circle;
+                x_coord += RADIUS * 2;
+            }
+            // update the number of circles per level
+            nc += 1;
+
+            // update y_coord
+            y_coord += RADIUS * 2 - 5;
+
+            //update x_coord
+            if (i == 0) {
+                x_coord = 900;
+            } else if (i == 1) {
+                x_coord = 870;
+            }
+        }
+
     }
 
     /*
@@ -169,7 +201,7 @@ public class BoardUI {
     private void drawAllScoredCells() {
         for (int i = 0; i < 6; i++) {
             drawScoredCell(i, 0);
-            //drawScoredCell(i, 1); uncomment when done with the second player side marbles
+            drawScoredCell(i, 1); //uncomment when done with the second player side marbles
         }
     }
 
