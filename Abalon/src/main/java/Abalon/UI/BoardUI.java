@@ -1,36 +1,31 @@
 package Abalon.UI;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
-import java.util.ArrayList;
 
 import static javafx.scene.paint.Color.*;
 
 public class BoardUI {
 
-    private int[] values;
-    public static ArrayList<Circle> circles;
-    public static ArrayList<Circle> circlesPlayer1;
-    public static ArrayList<Circle> circlesPlayer2;
+    private int[][] cellColor;
+    public Circle[][] circles;
     public Polygon hexagon;
-    public Text player1;
-    public Text player2;
 
     private final double RADIUS =30;
-
     public BoardUI(){
-        values = createValues();
-        circles = createCircles();
-        updateColorCircles();
+        createCircles();
+        createScoreCircles();
+        createColors();
+        createColorsScoreCircle();
+        drawAllCells();
+        drawAllCellsScoreCircles();
         hexagon = createHexagon();
-        player1 = new Text("test");
     }
 
     public static Polygon createHexagon(){
@@ -38,147 +33,184 @@ public class BoardUI {
 
         //Adding coordinates to the hexagon
         hexagon.getPoints().addAll(new Double[]{
-                300.0, 12.0, //1
-                700.0, 12.0, //1
-                850.0, 350.0, //2
-                700.0, 688.0, //3
-                300.0, 688.0, //3
-                150.0, 350.0, //2
+                285.0, 12.0, //1
+                685.0, 12.0, //1
+                840.0, 350.0, //2
+                685.0, 688.0, //3
+                285.0, 688.0, //3
+                140.0, 350.0, //2
         });
         hexagon.setFill(Color.ORANGE);
 
         return hexagon;
     }
 
- /*
-    Create all circles of the board + define their position
-  */
-    private ArrayList<Circle> createCircles() {
-        ArrayList<Circle> circles = new ArrayList<Circle>();
+    /*
+        Create all circles of the board + define their position
+    */
+    private void createCircles() {
+        circles = new Circle[9][9];
+        for (int i = 0; i < 9; i++)
+            for (int j = 0; j < 9; j++)
+                circles[i][j] = null;
 
         int nc = 5; // nc: number of circles
         double x_coord = 485;
         double y_coord = 62;
 
-        for (int i=0; i<9; i++){ // 9 loops for the 9 levels of the hexagon
+        for (int i = 0; i < 9; i++) { // 9 loops for the 9 levels of the hexagon
 
-            for(int j=0; j<nc; j++){
+            for (int j = 0; j < nc; j++)
+            {
                 Circle circle = new Circle(RADIUS);
                 circle.setCenterX(x_coord);
                 circle.setCenterY(y_coord);
-                circles.add(circle);
-                x_coord += RADIUS*2 + 15;
+                circles[i][j] = circle;
+                x_coord += RADIUS * 2 + 15;
             }
             // update the number of circles per level
-            if(i<4){ // less than 9 holes at that level
-                nc = nc+1; // increase number of holes
-            }else{
-                nc = nc-1; // diminish number of holes
+            if (i < 4) { // less than 9 holes at that level
+                nc = nc + 1; // increase number of holes
+            } else {
+                nc = nc - 1; // diminish number of holes
             }
 
             // update y_coord
-            if(i==0 | i==1 || i==2 || i==3 || i==6){
-                y_coord += RADIUS*2+10;
-            }else{
-                y_coord += RADIUS*2+15;
-            }
+            y_coord += RADIUS * 2 + 12;
 
             //update x_coord
-            if(i==0 || i==6){
+            if (i == 0 || i == 6) {
                 x_coord = 455;
-            }else if(i==1 || i==5){
+            } else if (i == 1 || i == 5) {
                 x_coord = 415;
-            }else if(i==2 || i==4){
+            } else if (i == 2 || i == 4) {
                 x_coord = 380;
-            }else if(i==3){
+            } else if (i == 3) {
                 x_coord = 340;
-            }else{ // i==7
+            } else { // i==7
                 x_coord = 485;
             }
         }
-
-        /*
-        //Creation of the circles for the score FOR PLAYER 1
-        Circle c1 = createCircleForScore(25, 150,250, Color.BISQUE);
-        Circle c2 = createCircleForScore(25, 125,300, Color.BISQUE);
-        Circle c3 = createCircleForScore(25, 175,300, Color.BISQUE);
-        Circle c4 = createCircleForScore(25, 100,350, Color.BISQUE);
-        Circle c5 = createCircleForScore(25, 150,350, Color.BISQUE);
-        Circle c6 = createCircleForScore(25, 200,350, Color.BISQUE);
-
-        circlesPlayer1.add(c1);
-        circlesPlayer1.add(c2);
-        circlesPlayer1.add(c3);
-        circlesPlayer1.add(c4);
-        circlesPlayer1.add(c5);
-        circlesPlayer1.add(c6);
-
-        //Creation of the circles for the score FOR PLAYER 2
-        Circle c11 = createCircleForScore(25, 1130,250, Color.BISQUE);
-        Circle c21 = createCircleForScore(25, 1105,300, Color.BISQUE);
-        Circle c31 = createCircleForScore(25, 1155,300, Color.BISQUE);
-        Circle c41 = createCircleForScore(25, 1080,350, Color.BISQUE);
-        Circle c51 = createCircleForScore(25, 1130,350, Color.BISQUE);
-        Circle c61 = createCircleForScore(25, 1180,350, Color.BISQUE);
-
-        circlesPlayer2.add(c11);
-        circlesPlayer2.add(c21);
-        circlesPlayer2.add(c31);
-        circlesPlayer2.add(c41);
-        circlesPlayer2.add(c51);
-        circlesPlayer2.add(c61);
-
-         */
-
-        return circles;
     }
 
-    //Method to create a circle
-    public Circle createCircleForScore(double radius, double posX, double posY, Color color){
-        Circle circle = new Circle(radius);
-        circle.setFill(color);
-        circle.setCenterX(posX);
-        circle.setCenterY(posY);
+    private void createScoreCircles(){
+        circles = new Circle[3][3];
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                circles[i][j] = null;
 
-        return circle;
-    }
+        int nc = 1; // nc: number of circles
+        double x_coord = 150;
+        double y_coord = 200;
 
- /*
-    define which circle is empty (0), red (1) or black (2)
-    red is for player 1
-    black is for player 2
-  */
-    private int[] createValues() {
-        int[] values = {
-                1,1,1,1,1,
-                1,1,1,1,1,1,
-                0,0,1,1,1,0,0,
-                0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,
-                0,0,2,2,2,0,0,
-                2,2,2,2,2,2,
-                2,2,2,2,2
-        };
-
-        return values;
-    }
-
-    private void updateColorCircles() {
-        Color c = null;
-        // define color
-        for(int i=0;i<values.length;i++){
-            if(values[i] ==0){
-                c = BISQUE;
-            }else if(values[i] ==1){
-                c = RED;
-            }else if(values[i] ==2){
-                c = BLACK;
+        for (int i = 0; i < 3; i++) { // 3 loops for the 3 levels of the 'pyramid'
+            for (int j = 0; j < nc; j++)
+            {
+                Circle circle = new Circle(RADIUS);
+                circle.setCenterX(x_coord);
+                circle.setCenterY(y_coord);
+                circles[i][j] = circle;
+                x_coord += RADIUS * 2;
             }
+            // update the number of circles per level
+            nc += 1;
 
-            // fill circle with the correct color
-            circles.get(i).setFill(c);
+            // update y_coord
+            y_coord += RADIUS * 2;
+
+            //update x_coord
+            if (i == 1) {
+                x_coord = 125;
+            } else if (i == 2) {
+                x_coord = 100;
+            }
         }
     }
+
+    /*
+        define which circle is empty (0), red (1) or black (2)
+        red is for player 1
+        black is for player 2
+        -1 is for "out of the board"
+    */
+
+    private void createColors() {
+        cellColor = new int[][]{
+                {1, 1, 1, 1, 1, -1, -1, -1, -1},
+                {1, 1, 1, 1, 1,  1, -1, -1, -1},
+                {0, 0, 1, 1, 1,  0,  0, -1, -1},
+                {0, 0, 0, 0, 0,  0,  0,  0, -1},
+                {0, 0, 0, 0, 0,  0,  0,  0,  0},
+                {0, 0, 0, 0, 0,  0,  0,  0, -1},
+                {0, 0, 2, 2, 2,  0,  0, -1, -1},
+                {2, 2, 2, 2, 2,  2, -1, -1, -1},
+                {2, 2, 2, 2, 2, -1, -1, -1, -1}
+        };
+    }
+
+    //Create the colors for the score circles
+    private void createColorsScoreCircle(){
+        cellColor = new int[][]{
+                {1, -1, -1},
+                {1, 1, -1},
+                {1, 1, 1}
+        };
+    }
+
+    private void drawAllCells() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                drawCell(i, j);
+            }
+        }
+    }
+
+    //Draw cells for the score circles
+    private void drawAllCellsScoreCircles(){
+        for(int i = 0; i<3; i++){
+            for(int j = 0; j<3; j++){
+                drawCell(i, j);
+            }
+        }
+    }
+
+    private void drawCell(int i, int j) {
+        Color c = null;
+        switch (cellColor[i][j]) {
+            case 0:  c = BISQUE;       break;
+            case 1:  c = MEDIUMBLUE;   break;
+            case 2:  c = LIGHTSKYBLUE; break;
+            default: break;
+        }
+        if (c != null)
+            circles[i][j].setFill(c);
+    }
+
+
+
+    //Write the score label in the pane and write the actual score next to it
+    public void writeScore(double x_coord, double y_coord, Pane pane, int score){
+        Text scoreText = new Text("SCORE: ");
+        scoreText.setTranslateX(x_coord);
+        scoreText.setTranslateY(y_coord);
+        scoreText.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+        //Setting the color
+        scoreText.setFill(Color.ORANGE);
+        //Setting the Stroke
+        scoreText.setStrokeWidth(2);
+        pane.getChildren().add(scoreText);
+
+        Text scoreValue = new Text();
+        scoreValue.setText(Integer.toString(score));
+        scoreValue.setTranslateX(x_coord + 70);
+        scoreValue.setTranslateY(y_coord);
+        scoreValue.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+        //Setting the color
+        scoreValue.setFill(Color.ORANGE);
+        //Setting the Stroke
+        scoreValue.setStrokeWidth(2);
+        pane.getChildren().add(scoreValue);
+    }
+
 
 }
