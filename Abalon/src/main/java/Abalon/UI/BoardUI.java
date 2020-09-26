@@ -13,22 +13,36 @@ import static javafx.scene.paint.Color.*;
 
 public class BoardUI {
 
-    private int[][] cellColor;
-    private int[][] cellColorScore;
+    private int[][] cellColors;
     public Circle[][] circles;
-    public Circle[][] circlesScore;
+
+    private int[] scoredCirclesColors1;
+    public Circle[] scoredCircles1;
+
+    private int[] scoredCirclesColors2;
+    public Circle[] scoredCircles2;
+
     public Polygon hexagon;
 
     private final double RADIUS = 30;
     public BoardUI(){
+        hexagon = createHexagon();
+
         createCircles();
-        createScoreCircles();
+        createColors();
+        drawAllCells();
+
+        createScoredCircles();
+        createColorsScoreCirclePlayer1();
+        drawAllScoredCells();
+
+        /*createScoredCircles();
         createColors();
         createColorsScoreCirclePlayer1();
         createColorsScoreCirclePlayer2();
         drawAllCells();
         drawAllCellsScoreCircles();
-        hexagon = createHexagon();
+        *///hexagon = createHexagon();
     }
 
     public static Polygon createHexagon(){
@@ -96,23 +110,22 @@ public class BoardUI {
         }
     }
 
-    private void createScoreCircles(){
-        circlesScore = new Circle[3][3];
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
-                circlesScore[i][j] = null;
+    private void createScoredCircles(){
+        scoredCircles1 = new Circle[6];
+        scoredCircles2 = new Circle[6];
 
         int nc = 1; // nc: number of circles
         double x_coord = 150;
         double y_coord = 200;
 
+        int counter = 0;
         for (int i = 0; i < 3; i++) { // 3 loops for the 3 levels of the 'pyramid'
             for (int j = 0; j < nc; j++)
             {
                 Circle circle = new Circle(RADIUS);
                 circle.setCenterX(x_coord);
                 circle.setCenterY(y_coord);
-                circlesScore[i][j] = circle;
+                scoredCircles1[counter++] = circle;
                 x_coord += RADIUS * 2;
             }
             // update the number of circles per level
@@ -138,7 +151,7 @@ public class BoardUI {
     */
 
     private void createColors() {
-        cellColor = new int[][]{
+        cellColors = new int[][]{
                 {1, 1, 1, 1, 1, -1, -1, -1, -1},
                 {1, 1, 1, 1, 1,  1, -1, -1, -1},
                 {0, 0, 1, 1, 1,  0,  0, -1, -1},
@@ -153,19 +166,11 @@ public class BoardUI {
 
     //Create the colors for the score circles
     private void createColorsScoreCirclePlayer1(){
-        cellColorScore = new int[][]{
-                {1, -1, -1},
-                {1, 1, -1},
-                {1, 1, 1}
-        };
+        scoredCirclesColors1 = new int[]{0, 0, 0, 0, 0, 0};
     }
 
     private void createColorsScoreCirclePlayer2(){
-        cellColorScore = new int[][]{
-                {1, -1, -1},
-                {1, 1, -1},
-                {1, 1, 1}
-        };
+        scoredCirclesColors2 = new int[]{0, 0, 0, 0, 0, 0};
     }
 
     private void drawAllCells() {
@@ -176,18 +181,16 @@ public class BoardUI {
         }
     }
 
-    //Draw cells for the score circles
-    private void drawAllCellsScoreCircles(){
-        for(int i = 0; i<3; i++){
-            for(int j = 0; j<3; j++){
-                drawCellScoreCircles(i, j);
-            }
-        }
+    private void drawAllScoredCells() {
+        for (int i = 0; i < 6; i++)
+            drawScoredCell(i, 1);
+        //for (int i = 0; i < 6; i++) 
+        //    drawScoredCell(i, 2);
     }
 
     private void drawCell(int i, int j) {
         Color c = null;
-        switch (cellColor[i][j]) {
+        switch (cellColors[i][j]) {
             case 0:  c = BISQUE;       break;
             case 1:  c = MEDIUMBLUE;   break;
             case 2:  c = LIGHTSKYBLUE; break;
@@ -197,19 +200,18 @@ public class BoardUI {
             circles[i][j].setFill(c);
     }
 
-    private void drawCellScoreCircles(int i, int j) {
+    private void drawScoredCell(int i, int player) {
         Color c = null;
-        switch (cellColorScore[i][j]) {
+        switch (scoredCirclesColors1[i]) {
             case 0:  c = BISQUE;       break;
             case 1:  c = MEDIUMBLUE;   break;
             case 2:  c = LIGHTSKYBLUE; break;
             default: break;
         }
-        if (c != null)
-            circlesScore[i][j].setFill(c);
+        if (c != null) {
+            scoredCircles1[i].setFill(c);
+        }
     }
-
-
 
     //Write the score label in the pane and write the actual score next to it
     public void writeScore(double x_coord, double y_coord, Pane pane, int score){
@@ -234,6 +236,4 @@ public class BoardUI {
         scoreValue.setStrokeWidth(2);
         pane.getChildren().add(scoreValue);
     }
-
-
 }
