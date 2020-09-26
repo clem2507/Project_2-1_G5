@@ -15,16 +15,20 @@ public class BoardUI {
 
     private int[][] cellColor;
     public Circle[][] circles;
+    public Circle[][] circlesScore;
     public Polygon hexagon;
 
     private final double RADIUS =30;
     public BoardUI(){
         createCircles();
+        createScoreCircles();
         createColors();
+        createColorsScoreCircle();
         drawAllCells();
+        drawAllCellsScoreCircles();
         hexagon = createHexagon();
     }
-    
+
     public static Polygon createHexagon(){
         Polygon hexagon = new Polygon();
 
@@ -57,7 +61,7 @@ public class BoardUI {
 
         for (int i = 0; i < 9; i++) { // 9 loops for the 9 levels of the hexagon
 
-            for (int j = 0; j < nc; j++) 
+            for (int j = 0; j < nc; j++)
             {
                 Circle circle = new Circle(RADIUS);
                 circle.setCenterX(x_coord);
@@ -90,6 +94,40 @@ public class BoardUI {
         }
     }
 
+    private void createScoreCircles(){
+        circlesScore = new Circle[3][3];
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                circlesScore[i][j] = null;
+
+        int nc = 1; // nc: number of circles
+        double x_coord = 150;
+        double y_coord = 200;
+
+        for (int i = 0; i < 3; i++) { // 3 loops for the 3 levels of the 'pyramid'
+            for (int j = 0; j < nc; j++)
+            {
+                Circle circle = new Circle(RADIUS);
+                circle.setCenterX(x_coord);
+                circle.setCenterY(y_coord);
+                circlesScore[i][j] = circle;
+                x_coord += RADIUS * 2;
+            }
+            // update the number of circles per level
+            nc += 1;
+
+            // update y_coord
+            y_coord += RADIUS * 2;
+
+            //update x_coord
+            if (i == 1) {
+                x_coord = 125;
+            } else if (i == 2) {
+                x_coord = 100;
+            }
+        }
+    }
+
     /*
         define which circle is empty (0), red (1) or black (2)
         red is for player 1
@@ -111,9 +149,27 @@ public class BoardUI {
         };
     }
 
+    //Create the colors for the score circles
+    private void createColorsScoreCircle(){
+        cellColor = new int[][]{
+                {1, -1, -1},
+                {1, 1, -1},
+                {1, 1, 1}
+        };
+    }
+
     private void drawAllCells() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
+                drawCell(i, j);
+            }
+        }
+    }
+
+    //Draw cells for the score circles
+    private void drawAllCellsScoreCircles(){
+        for(int i = 0; i<3; i++){
+            for(int j = 0; j<3; j++){
                 drawCell(i, j);
             }
         }
@@ -124,16 +180,14 @@ public class BoardUI {
         switch (cellColor[i][j]) {
             case 0:  c = BISQUE;       break;
             case 1:  c = MEDIUMBLUE;   break;
-            case 2:  c = LIGHTSKYBLUE; break; 
+            case 2:  c = LIGHTSKYBLUE; break;
             default: break;
         }
         if (c != null)
             circles[i][j].setFill(c);
     }
 
-    private void scoreCircles(){
 
-    }
 
     //Write the score label in the pane and write the actual score next to it
     public void writeScore(double x_coord, double y_coord, Pane pane, int score){
