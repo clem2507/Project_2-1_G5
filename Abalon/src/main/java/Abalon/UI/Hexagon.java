@@ -56,7 +56,7 @@ public class Hexagon extends Application {
         }
 
         for (int i = 0; i < 6; i++)
-            pane.getChildren().add(board.scoredCircles1[i]);
+            pane.getChildren().add(board.scoredCircles[i][0]);
 
         Text player1 = new Text("Player 1");
         player1.setTranslateX(110);
@@ -77,10 +77,6 @@ public class Hexagon extends Application {
         //Setting the Stroke
         player2.setStrokeWidth(2);
         pane.getChildren().add(player2);
-
-        //Write the scores in the board
-        board.writeScore(100, 340, pane, 20);
-        board.writeScore(1080, 340, pane, 20);
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         primaryStage.setTitle("Abalone");

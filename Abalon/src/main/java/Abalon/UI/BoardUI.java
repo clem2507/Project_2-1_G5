@@ -16,11 +16,8 @@ public class BoardUI {
     private int[][] cellColors;
     public Circle[][] circles;
 
-    private int[] scoredCirclesColors1;
-    public Circle[] scoredCircles1;
-
-    private int[] scoredCirclesColors2;
-    public Circle[] scoredCircles2;
+    private int[][] scoredCirclesColors; //player
+    public Circle[][] scoredCircles; //first index is the number of the marble, second is the number of the player
 
     public Polygon hexagon;
 
@@ -33,16 +30,8 @@ public class BoardUI {
         drawAllCells();
 
         createScoredCircles();
-        createColorsScoreCirclePlayer1();
+        createScoredCirclesColors();
         drawAllScoredCells();
-
-        /*createScoredCircles();
-        createColors();
-        createColorsScoreCirclePlayer1();
-        createColorsScoreCirclePlayer2();
-        drawAllCells();
-        drawAllCellsScoreCircles();
-        *///hexagon = createHexagon();
     }
 
     public static Polygon createHexagon(){
@@ -111,21 +100,21 @@ public class BoardUI {
     }
 
     private void createScoredCircles(){
-        scoredCircles1 = new Circle[6];
-        scoredCircles2 = new Circle[6];
+        scoredCircles = new Circle[6][2];
 
         int nc = 1; // nc: number of circles
         double x_coord = 150;
         double y_coord = 200;
 
         int counter = 0;
+        int player = 0;
         for (int i = 0; i < 3; i++) { // 3 loops for the 3 levels of the 'pyramid'
             for (int j = 0; j < nc; j++)
             {
                 Circle circle = new Circle(RADIUS);
                 circle.setCenterX(x_coord);
                 circle.setCenterY(y_coord);
-                scoredCircles1[counter++] = circle;
+                scoredCircles[counter++][player] = circle;
                 x_coord += RADIUS * 2;
             }
             // update the number of circles per level
@@ -165,12 +154,8 @@ public class BoardUI {
     }
 
     //Create the colors for the score circles
-    private void createColorsScoreCirclePlayer1(){
-        scoredCirclesColors1 = new int[]{0, 0, 0, 0, 0, 0};
-    }
-
-    private void createColorsScoreCirclePlayer2(){
-        scoredCirclesColors2 = new int[]{0, 0, 0, 0, 0, 0};
+    private void createScoredCirclesColors(){
+        scoredCirclesColors = new int[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
     private void drawAllCells() {
@@ -182,10 +167,10 @@ public class BoardUI {
     }
 
     private void drawAllScoredCells() {
-        for (int i = 0; i < 6; i++)
-            drawScoredCell(i, 1);
-        //for (int i = 0; i < 6; i++) 
-        //    drawScoredCell(i, 2);
+        for (int i = 0; i < 6; i++) {
+            drawScoredCell(i, 0);
+            //drawScoredCell(i, 1); uncomment when done with the second player side marbles
+        }
     }
 
     private void drawCell(int i, int j) {
@@ -202,38 +187,14 @@ public class BoardUI {
 
     private void drawScoredCell(int i, int player) {
         Color c = null;
-        switch (scoredCirclesColors1[i]) {
+        switch (scoredCirclesColors[i][player]) {
             case 0:  c = BISQUE;       break;
             case 1:  c = MEDIUMBLUE;   break;
             case 2:  c = LIGHTSKYBLUE; break;
             default: break;
         }
         if (c != null) {
-            scoredCircles1[i].setFill(c);
+            scoredCircles[i][player].setFill(c);
         }
-    }
-
-    //Write the score label in the pane and write the actual score next to it
-    public void writeScore(double x_coord, double y_coord, Pane pane, int score){
-        Text scoreText = new Text("SCORE: ");
-        scoreText.setTranslateX(x_coord);
-        scoreText.setTranslateY(y_coord);
-        scoreText.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        //Setting the color
-        scoreText.setFill(Color.ORANGE);
-        //Setting the Stroke
-        scoreText.setStrokeWidth(2);
-        pane.getChildren().add(scoreText);
-
-        Text scoreValue = new Text();
-        scoreValue.setText(Integer.toString(score));
-        scoreValue.setTranslateX(x_coord + 70);
-        scoreValue.setTranslateY(y_coord);
-        scoreValue.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        //Setting the color
-        scoreValue.setFill(Color.ORANGE);
-        //Setting the Stroke
-        scoreValue.setStrokeWidth(2);
-        pane.getChildren().add(scoreValue);
     }
 }
