@@ -15,6 +15,7 @@ public class BoardUI {
 
     private int[][] cellColor;
     public Circle[][] circles;
+    public Circle[][] circlesScore;
     public Polygon hexagon;
 
     private final double RADIUS =30;
@@ -94,10 +95,10 @@ public class BoardUI {
     }
 
     private void createScoreCircles(){
-        circles = new Circle[3][3];
+        circlesScore = new Circle[3][3];
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
-                circles[i][j] = null;
+                circlesScore[i][j] = null;
 
         int nc = 1; // nc: number of circles
         double x_coord = 150;
@@ -109,7 +110,7 @@ public class BoardUI {
                 Circle circle = new Circle(RADIUS);
                 circle.setCenterX(x_coord);
                 circle.setCenterY(y_coord);
-                circles[i][j] = circle;
+                circlesScore[i][j] = circle;
                 x_coord += RADIUS * 2;
             }
             // update the number of circles per level
