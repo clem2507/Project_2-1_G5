@@ -14,6 +14,7 @@ import static javafx.scene.paint.Color.*;
 public class BoardUI {
 
     private int[][] cellColor;
+    private int[][] cellColorScore;
     public Circle[][] circles;
     public Circle[][] circlesScore;
     public Polygon hexagon;
@@ -151,7 +152,7 @@ public class BoardUI {
 
     //Create the colors for the score circles
     private void createColorsScoreCircle(){
-        cellColor = new int[][]{
+        cellColorScore = new int[][]{
                 {1, -1, -1},
                 {1, 1, -1},
                 {1, 1, 1}
