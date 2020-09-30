@@ -1,4 +1,37 @@
 public class Rules {
+
+
+    private int[][] board;
+    private int playerTurn;
+    private MoveDirection direction; //stores the target direction of the current move
+    private ArrayList<int[]> marblesSelected = new ArrayList<>(); //stores the coordinates of the selected marbles
+    private static int nbSelected; //keeps track of how many marbles have been selected
+
+    public Rules(MoveDirection moveTo, ArrayList<int[]> selectedMarbles, int selectedNb, int[][] currentBoard){
+        playerTurn = 1;
+        direction=moveTo;
+        marblesSelected=selectedMarbles;
+        nbSelected=selectedNb;
+        this.board=currentBoard;
+    }
+
+    public void move(){
+        if(nbSelected == 1) {
+            if(checkMove(null,null,board)) //TODO checkMove still needs to be correctly implemented to check the different types of moves ( direction and nb of marbles)
+            { performMoveOne(marblesSelected.get(0),direction,board); }
+        }
+        else if(nbSelected == 2){
+            if(checkMove(null,null,board))
+            { performMoveTwo(marblesSelected.get(0),marblesSelected.get(1),direction,board); }
+        }
+        else if(nbSelected == 3){
+            if (checkMove(null,null,board))
+            { performMoveThree(marblesSelected.get(0),marblesSelected.get(1), marblesSelected.get(2),direction,board); }
+        }
+    }
+
+
+
     public static boolean checkMove(List<int[][]> pushing, List<int[][]> pushed, int[][] board, MoveDirection direction) {
         switch(board.length) {
             case "1":
@@ -105,5 +138,166 @@ public class Rules {
 
 
         }
+    public void performMoveOne(int[] marble, MoveDirection direction, int[][] board)
+    { moveMarble(marble, direction, board); }
+    public void performMoveTwo(int[] marble1, int[] marble2, MoveDirection direction, int[][] board) {
+        //TODO Check if the move is in the direction of the selected marbles, if it's not, then the move is a sideway movement --> particular case)
+        /*
+        if(checkSidewayMovement){ moveSideways(...);}
+        else if(target direction is empty){
+        */
+        moveMarble(marble2,direction,board); /** QUESTION: What happens if marble1 is in top part of board but marble2 in bottom? Is this valid? maybe need to implement a specific method to move 2 and move 3*/
+        /*
+        else if(target direction is occupied by an opponent marble){pushOpponentOne(...)}
+        */
     }
+    public void performMoveThree(int[] marble1, int[] marble2, int[] marble3, MoveDirection direction, int[][] board) {
+        //TODO Check if the move is in the direction of the selected marbles, if it's not, then the move is a sideway movement --> particular case)
+        /*
+        if(checkSidewayMovement){ moveSideways(...);}
+        else if(target direction is empty){
+        */
+        moveMarble(marble3,direction,board); /** QUESTION: Same question but with 3 marbles..*/
+        //else if(target direction is occupied by an opponent marble){pushOpponentTwo(...)}
+    }
+
+
+    public void moveMarble(int[] marble, MoveDirection direction, int[][] board) {
+        switch (direction)
+        {
+            case TOP_LEFT:
+                //Check if bottom or top part of the board
+                // Then replace value of target direction to player's number
+                if (marble[0] >= 5)
+                {
+                    if(playerTurn == 1)
+                    {
+                        board[marble[0]-1][marble[1]] = 1; // Then replace value of target direction to player's number. So here 1 because it is player 1 turn
+                        board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
+                    }
+                    else if(playerTurn == 2)
+                    {
+                        board[marble[0]-1][marble[1]] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
+                        board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
+                    }
+                }
+                else
+                {
+                    if(playerTurn == 1)
+                    {
+                        board[marble[0]-1][marble[1]-1] = 1; // Then replace value of target direction to player's number. So here 1 because it is player 1 turn
+                        board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
+                    }
+                    else if(playerTurn == 2)
+                    {
+                        board[marble[0]-1][marble[1]-1] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
+                        board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
+                    }
+                }
+            case TOP_RIGHT:
+                if (marble[0] >= 5)
+                {
+                    if(playerTurn == 1)
+                    {
+                        board[marble[0]-1][marble[1]+1] = 1;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                    else if(playerTurn == 2)
+                    {
+                        board[marble[0]-1][marble[1]+1] = 2;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                }
+                else
+                {
+                    if(playerTurn == 1)
+                    {
+                        board[marble[0]-1][marble[1]] = 1;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                    else if(playerTurn == 2)
+                    {
+                        board[marble[0]-1][marble[1]] = 2;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                }
+            case BOTTOM_RIGHT:
+                if (marble[0] >= 5)
+                {
+                    if(playerTurn == 1)
+                    {
+                        board[marble[0]+1][marble[1]] = 1;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                    else if(playerTurn == 2)
+                    {
+                        board[marble[0]+1][marble[1]] = 2;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                }
+                else
+                {
+                    if(playerTurn == 1)
+                    {
+                        board[marble[0]+1][marble[1]+1] = 1;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                    else if(playerTurn == 2)
+                    {
+                        board[marble[0]+1][marble[1]+1] = 2;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                }
+            case BOTTOM_LEFT:
+                if (marble[0] >= 5)
+                {
+                    if(playerTurn==1)
+                    {
+                        board[marble[0]+1][marble[1]-1] = 1;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                    else if(playerTurn==2)
+                    {
+                        board[marble[0]+1][marble[1]-1] = 2;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                }
+                else
+                {
+                    if(playerTurn == 1)
+                    {
+                        board[marble[0]+1][marble[1]] = 1;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                    else if(playerTurn == 2)
+                    {
+                        board[marble[0]+1][marble[1]] = 2;
+                        board[marble[0]][marble[1]] = 0;
+                    }
+                }
+            case RIGHT:
+                if(playerTurn == 1)
+                {
+                    board[marble[0]][marble[1]+1] = 1;
+                    board[marble[0]][marble[1]] = 0;
+                }
+                else if(playerTurn == 2)
+                {
+                    board[marble[0]][marble[1]+1] = 2;
+                    board[marble[0]][marble[1]] = 0;
+                }
+            case LEFT:
+                if(playerTurn == 1)
+                {
+                    board[marble[0]][marble[1]-1] = 1;
+                    board[marble[0]][marble[1]] = 0;
+                }
+                else if(playerTurn == 2)
+                {
+                    board[marble[0]][marble[1]-1] = 2;
+                    board[marble[0]][marble[1]] = 0;
+                };
+        }
+    }
+
 }
