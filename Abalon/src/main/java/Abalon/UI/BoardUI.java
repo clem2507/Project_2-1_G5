@@ -1,13 +1,6 @@
-package Abalon.UI;
-
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 
 import static javafx.scene.paint.Color.*;
 
@@ -21,6 +14,7 @@ public class BoardUI {
 
     public Polygon hexagon;
 
+    public int counter = 0;
     private final double RADIUS = 30;
     public BoardUI(){
         hexagon = createHexagon();
@@ -73,6 +67,8 @@ public class BoardUI {
                 circle.setCenterY(y_coord);
                 circles[i][j] = circle;
                 x_coord += RADIUS * 2 + 15;
+                marbleSelecting(circle, (Color)circle.getFill(), BROWN); //For some reason, the getFIll returns black as color which is wrong
+                marbleHovering(circle, (Color)circle.getFill(), BROWN);
             }
             // update the number of circles per level
             if (i < 4) { // less than 9 holes at that level
@@ -229,4 +225,40 @@ public class BoardUI {
             scoredCircles[i][player].setFill(c);
         }
     }
+
+    private void marbleSelecting(Circle circle, Color originalColor, Color selectionColor){
+
+        circle.setOnMouseClicked(e -> {
+            counter++;
+            if(counter %2 != 0){ //if the count is odd, it means the marbke has been selected and changes its color
+                System.out.println("Marble is selected");
+                circle.setFill(selectionColor);
+            }
+            else{
+                circle.setFill(originalColor);
+            }
+
+        });
+    }
+
+
+    private void marbleHovering(Circle circle, Color originalColor, Color hoveringColor) {
+        circle.setOnMouseEntered( e -> circle.setFill(hoveringColor));
+        circle.setOnMouseExited(e -> circle.setFill(originalColor));
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
