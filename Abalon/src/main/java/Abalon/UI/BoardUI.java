@@ -17,7 +17,7 @@ public class BoardUI {
     public Polygon hexagon;
 
     public int counter = 0;
-    private final double RADIUS = 30;
+    private final double RADIUS = 22;
     public BoardUI(){
         hexagon = createHexagon();
 
@@ -35,13 +35,14 @@ public class BoardUI {
 
         //Adding coordinates to the hexagon
         hexagon.getPoints().addAll(new Double[]{
-                285.0, 12.0, //1
-                685.0, 12.0, //1
-                840.0, 350.0, //2
-                685.0, 688.0, //3
-                285.0, 688.0, //3
-                140.0, 350.0, //2
+                315.0, 90.0, //1
+                640.0, 90.0, //1
+                820.0, 350.0, //2
+                640.0, 610.0, //3
+                315.0, 610.0, //3
+                150.0, 350.0, //2
         });
+
         hexagon.setFill(Color.ORANGE);
 
         return hexagon;
@@ -57,8 +58,8 @@ public class BoardUI {
                 circles[i][j] = null;
 
         int nc = 5; // nc: number of circles
-        double x_coord = 485;
-        double y_coord = 62;
+        double x_coord = 490;
+        double y_coord = 125;
 
         for (int i = 0; i < 9; i++) { // 9 loops for the 9 levels of the hexagon
 
@@ -68,7 +69,7 @@ public class BoardUI {
                 circle.setCenterX(x_coord);
                 circle.setCenterY(y_coord);
                 circles[i][j] = circle;
-                x_coord += RADIUS * 2 + 15;
+                x_coord += RADIUS * 2 + 25;
                 //drawCell(circle[i][j]);
                 marbleSelecting(circle, (Color)circle.getFill(), BROWN); //For some reason, the getFIll returns black as color which is wrong
                 marbleHovering(circle, (Color)circle.getFill(), BROWN);
@@ -87,13 +88,13 @@ public class BoardUI {
             if (i == 0 || i == 6) {
                 x_coord = 455;
             } else if (i == 1 || i == 5) {
-                x_coord = 415;
+                x_coord = 420;
             } else if (i == 2 || i == 4) {
-                x_coord = 380;
+                x_coord = 385;
             } else if (i == 3) {
-                x_coord = 340;
+                x_coord = 352;
             } else { // i==7
-                x_coord = 485;
+                x_coord = 490;
             }
         }
     }

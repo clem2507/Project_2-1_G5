@@ -20,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.Collections;
@@ -43,21 +44,13 @@ public class HomePage extends Application {
         Text title = new Text("ABALONE");
         title.setTranslateX(460);
         title.setTranslateY(180);
-        title.setFont(Font.font("ayuthaya", FontWeight.BOLD, FontPosture.REGULAR, 90));
+        title.setFont(Font.font("Monospaced", FontWeight.BOLD, FontPosture.REGULAR, 90));
         //Setting the color
         title.setFill(Color.BLACK);
         //Setting the Stroke
         pane.getChildren().add(title);
 
-        //Creation of the text for the group number
-        Text groupNumber = new Text("GROUP 5");
-        groupNumber.setTranslateX(530);
-        groupNumber.setTranslateY(480);
-        groupNumber.setFont(Font.font("ayuthaya", FontWeight.BOLD, FontPosture.REGULAR, 50));
-        //Setting the color
-        groupNumber.setFill(Color.BLACK);
-        //Setting the Stroke
-        pane.getChildren().add(groupNumber);
+        // System.out.println(javafx.scene.text.Font.getFamilies());
 
         //Creation of a combo box to choose the game Mode
         ComboBox gameChoice = new ComboBox();
@@ -68,9 +61,9 @@ public class HomePage extends Application {
                 "PRACTICE MODE");
 
         gameChoice.getSelectionModel().selectFirst();
-        gameChoice.setTranslateX(560);
+        gameChoice.setTranslateX(548);
         gameChoice.setTranslateY(250);
-        gameChoice.setPrefSize(150, 35);
+        gameChoice.setPrefSize(180, 35);
         pane.getChildren().add(gameChoice);
 
         //Creation of a button to access the game
@@ -79,7 +72,7 @@ public class HomePage extends Application {
         play.setTranslateX(570);
         play.setTranslateY(330);
         play.setTextFill(Color.BLACK);
-        play.setFont(Font.font("ayuthaya", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        play.setFont(Font.font("American Typewriter", FontWeight.BOLD, FontPosture.REGULAR, 35));
         pane.getChildren().add(play);
 
         //Button listener
@@ -93,6 +86,58 @@ public class HomePage extends Application {
                 System.out.println("Please select PLAYER VS PLAYER game mode!");
             }
         });
+
+        Button rules = new Button();
+        rules.setText("Rules");
+        rules.setTranslateX(570);
+        rules.setTranslateY(440);
+        rules.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.REGULAR, 13));
+        rules.setOnAction(
+                event -> {
+                    final Stage dialog = new Stage();
+                    dialog.initModality(Modality.APPLICATION_MODAL);
+                    dialog.initOwner(primaryStage);
+                    VBox dialogVbox = new VBox(20);
+                    Text text = new Text("This is the rules");
+                    text.setFont(Font.font("Arial", 13));
+                    dialogVbox.getChildren().add(text);
+                    Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                    dialog.setScene(dialogScene);
+                    dialog.setResizable(false);
+                    dialog.show();
+                });
+        pane.getChildren().addAll(rules);
+
+        Button contact = new Button();
+        contact.setText("Contact");
+        contact.setTranslateX(642);
+        contact.setTranslateY(440);
+        contact.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.REGULAR, 13));
+        contact.setOnAction(
+                event -> {
+                    final Stage dialog = new Stage();
+                    dialog.initModality(Modality.APPLICATION_MODAL);
+                    dialog.initOwner(primaryStage);
+                    Text text = new Text(
+                            "\n \tGroup 5:\n \n" +
+                                    "\tDetry Clément\n" +
+                                    "\tImperato Adèle\n" +
+                                    "\tPodevyn Loris\n" +
+                                    "\tPoliakov Ivan\n" +
+                                    "\tSchapira Aaron\n" +
+                                    "\tThirion Guillaume\n" +
+                                    "\tYap Mathias"
+
+                    );
+                    text.setFont(Font.font("Arial", 13));
+                    VBox dialogVbox = new VBox(20);
+                    dialogVbox.getChildren().add(text);
+                    Scene dialogScene = new Scene(dialogVbox, 150, 180);
+                    dialog.setScene(dialogScene);
+                    dialog.setResizable(false);
+                    dialog.show();
+                });
+        pane.getChildren().addAll(contact);
 
         Scene scene = new Scene(pane ,WIDTH, HEIGHT);
         primaryStage.setResizable(false);

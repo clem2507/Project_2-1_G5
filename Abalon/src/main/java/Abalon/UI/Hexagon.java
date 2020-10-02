@@ -2,6 +2,8 @@ package Abalon.UI;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -42,11 +44,16 @@ public class Hexagon extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //Creating an object of Board, which construct a board
-        BoardUI board = new BoardUI();
 
         //Creation of a Border pane to make our scene easier to construct
         BorderPane pane = new BorderPane();
+
+        Image background = new Image("Abalon/game-background.jpg");
+        ImageView view = new ImageView(background);
+        pane.getChildren().addAll(view);
+
+        //Creating an object of Board, which construct a board
+        BoardUI board = new BoardUI();
         pane.setCenter(board.hexagon);
         
         for (int i = 0; i < 9; i++) {
@@ -79,6 +86,7 @@ public class Hexagon extends Application {
         pane.getChildren().add(player2);
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Abalone");
         primaryStage.setScene(scene);
         primaryStage.show();
