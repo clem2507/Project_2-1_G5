@@ -67,6 +67,7 @@ public class BoardUI {
                 circle.setCenterY(y_coord);
                 circles[i][j] = circle;
                 x_coord += RADIUS * 2 + 15;
+                drawCell(circle[i][j]);
                 marbleSelecting(circle, (Color)circle.getFill(), BROWN); //For some reason, the getFIll returns black as color which is wrong
                 marbleHovering(circle, (Color)circle.getFill(), BROWN);
             }
