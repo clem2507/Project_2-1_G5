@@ -1,20 +1,18 @@
 package Abalon.AI;
 
-import java.util.Arrays;
-
 public class Test {
 
     public static int[][] cellColor = new int[][]{
 
             {1, 1, 1, 1, 1, -1, -1, -1, -1},
-            {1, 1, 1, 1, 1,  1, -1, -1, -1},
-            {0, 0, 1, 1, 1,  0,  0, -1, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0,  0},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 2, 2, 2,  0,  0, -1, -1},
-            {2, 2, 2, 2, 2,  2, -1, -1, -1},
-            {2, 2, 2, 2, 2, -1, -1, -1, -1}
+            {0, 1, 1, 1, 1,  0, -1, -1, -1},
+            {0, 0, 1, 0, 1,  0,  0, -1, -1},
+            {1, 0, 0, 0, 0,  0,  0,  0, -1},
+            {0, 2, 0, 0, 0,  2,  1,  0,  0},
+            {0, 1, 0, 0, 0,  0,  2,  0, -1},
+            {0, 0, 2, 0, 2,  0,  0, -1, -1},
+            {0, 0, 2, 0, 2,  0, -1, -1, -1},
+            {0, 2, 2, 2, 2, -1, -1, -1, -1}
 
     };
 
@@ -29,5 +27,9 @@ public class Test {
         else {
             // Else, backtrack the search because the move has already been visited
         }
+
+        EvaluationFunction evaluation = new EvaluationFunction();
+        int score = evaluation.evaluate(1, cellColor, 100, 5, 1, 1, 1, 1, 1);
+        System.out.println("score = " + score);
     }
 }
