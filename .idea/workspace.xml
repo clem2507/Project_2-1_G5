@@ -22,7 +22,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38210eae-fd5e-4a46-95a0-b06da393825a" name="Default Changelist" comment="" />
+    <list default="true" id="38210eae-fd5e-4a46-95a0-b06da393825a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/BoardUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/BoardUI.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,21 +79,34 @@
     </option>
   </component>
   <component name="ProjectId" id="1hSQWV6t5krU1POoRT84LsXEaQg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager" selected="Application.Hexagon">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Abalon.App" />
       <module name="Project2-1.main" />
@@ -126,17 +142,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -194,6 +199,10 @@
     </state>
     <state x="104" y="35" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.800@0.0.1280.800" timestamp="1600006856043" />
     <state x="104" y="55" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1280.741@0.23.1280.741" timestamp="1600002981919" />
+    <state x="422" y="306" key="DetectedRootsChooserDialog" timestamp="1601639145895">
+      <screen x="0" y="23" width="1440" height="811" />
+    </state>
+    <state x="422" y="306" key="DetectedRootsChooserDialog/0.23.1440.811@0.23.1440.811" timestamp="1601639145895" />
     <state x="121" y="51" key="DiffContextDialog" timestamp="1600521216744">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
@@ -238,6 +247,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="1238" height="264" key="GridCell.Tab.1.right/0.0.1280.800@0.0.1280.800" timestamp="1600161199386" />
+    <state x="0" y="170" width="1440" height="526" key="IDE.errors.dialog" timestamp="1601639046315">
+      <screen x="0" y="23" width="1440" height="811" />
+    </state>
+    <state x="0" y="170" width="1440" height="526" key="IDE.errors.dialog/0.23.1440.811@0.23.1440.811" timestamp="1601639046315" />
     <state x="255" y="100" width="801" height="587" key="NewModule_or_Project.wizard" timestamp="1600002596211">
       <screen x="0" y="23" width="1280" height="741" />
     </state>
@@ -247,12 +260,13 @@
     </state>
     <state x="332" y="109" key="RollbackChangesDialog/0.0.1280.800@0.0.1280.800" timestamp="1600521349922" />
     <state x="498" y="147" key="RollbackChangesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1600103632026" />
-    <state x="192" y="0" key="SettingsEditor" timestamp="1600103710189">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="144" y="23" key="SettingsEditor" timestamp="1601639192176">
+      <screen x="0" y="23" width="1440" height="811" />
     </state>
     <state x="128" y="0" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1600004048102" />
     <state x="192" y="0" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1600103710189" />
     <state x="128" y="23" key="SettingsEditor/0.23.1280.741@0.23.1280.741" timestamp="1600002899833" />
+    <state x="144" y="23" key="SettingsEditor/0.23.1440.811@0.23.1440.811" timestamp="1601639192176" />
     <state x="8" y="23" key="new project wizard" timestamp="1600002567473">
       <screen x="0" y="23" width="1280" height="741" />
     </state>
