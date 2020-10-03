@@ -32,10 +32,102 @@ public class Rules {
 
 
 
-    public static boolean checkMove(List<int[][]> pushing, List<int[][]> pushed, int[][] board, MoveDirection direction) {
-        
+    public static boolean checkMove(List<int[][]> pushing, List<int[][]> pushed, int[][] board, MoveDirection direction, int playerTurn) {
+
+            switch(pushing.length) {
+
+                case 1:
+                    if (checkOutOfBounds(pushing[0][], direction, board)) { return false; }
+                    return checkSingleMarble(pushing[0][], direction, board, playerTurn);
+
         }
     }
+    private static boolean checkSingleMarble(int[] marble, MoveDirection direction, int[][] board, int playerTurn) {
+
+        if(checkOutOfBounds(marble, direction, board)) { return false; }
+        switch(direction) {
+
+            case TOP_LEFT:
+
+                if(marble[0] >= 5) {
+                    switch(board[marble[0]-1][marble[1]]) {
+                        case 0: return true;
+                        case 1: return (playerTurn == 2);
+                        case 2: return (playerTurn == 1);
+                    }
+                }
+                else {
+                    switch(board[marble[0]-1][marble[1]-1]) {
+                        case 0: return true;
+                        case 1: return (playerTurn == 2);
+                        case 2: return (playerTurn == 1);
+                    }
+                }
+            case LEFT:
+                switch(board[marble[0]][marble[1]-1]) {
+                    case 0: return true;
+                    case 1: return (playerTurn == 2);
+                    case 2: return (playerTurn == 1);
+                }
+
+            case BOTTOM_LEFT:
+                if(marble[0] >= 5) {
+                    switch(board[marble[0]+1][marble[1]-1]) {
+                        case 0: return true;
+                        case 1: return (playerTurn == 2);
+                        case 2: return (playerTurn == 1);
+                    }
+                }
+                else {
+                    switch(board[marble[0]+1][marble[1]]) {
+                        case 0: return true;
+                        case 1: return (playerTurn == 2);
+                        case 2: return (playerTurn == 1);
+                    }
+                }
+            case BOTTOM_RIGHT:
+                if(marble[0] >= 5) {
+                    switch(board[marble[0]+1][marble[1]-1]) {
+                        case 0: return true;
+                        case 1: return (playerTurn == 2);
+                        case 2: return (playerTurn == 1);
+                    }
+                }
+                else {
+                    switch(board[marble[0]+1][marble[1]+1]) {
+                        case 0: return true;
+                        case 1: return (playerTurn == 2);
+                        case 2: return (playerTurn == 1);
+                    }
+                }
+            case RIGHT:
+                switch(board[marble[0]][marble[1]+1]) {
+                    case 0: return true;
+                    case 1: return (playerTurn == 2);
+                    case 2: return (playerTurn == 1);
+                }
+
+            case TOP_RIGHT:
+                if (marble[0] >= 5) {
+                    switch(board[marble[0]-1][marble[1]+1]) {
+                        case 0: return true;
+                        case 1: return (playerTurn == 2);
+                        case 2: return (playerTurn == 1);
+                    }
+                }
+                else {
+                    switch(board[marble[0]-1][marble[1]]) {
+                        case 0: return true;
+                        case 1: return (playerTurn == 2);
+                        case 2: return (playerTurn == 1);
+                    }
+                }
+        }
+        return false;
+    }
+}
+
+
     /*
         checks if a suggested move will leave a marble out of bounds
 
@@ -100,37 +192,35 @@ public class Rules {
                 } else {
                     return false;
                 }
+
+
+            case RIGHT:
+                //check if the marble is on the far right.
+                if (board[marble[0]][marble[1] + 1] == -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            case BOTTOM_RIGHT:
+                //check if a marble is on the bottom half.
+                if (marble[0] >= 5) {
+                    //check if that marble is at the absolute bottom.
+                    if (marble[0] == 9) {
+                        return true;
+                    }
+                    //check if the marble is on the far right.
+                    int rowBelow = marble[0] + 1;
+                    if (board[rowBelow][marble[1]] == -1) {
+                        return true;
+                    }
+                } else {
+                    return false;
+                }
         }
+        return true;
+    }
 
-        case RIGHT:
-        //check if the marble is on the far right.
-        if (board[marble[0]][marble[1] + 1] == -1) {
-            return true;
-        } else {
-            return false;
-        }
-
-        case BOTTOM_RIGHT:
-        //check if a marble is on the bottom half.
-        if (marble[0] >= 5) {
-            //check if that marble is at the absolute bottom.
-            if (marble[0] == 9) {
-                return true;
-            }
-            //check if the marble is on the far right.
-            int rowBelow = marble[0] + 1;
-            if (board[rowBelow][marble[1]] == -1) {
-                return true;
-            }
-        } else {
-            return false;
-        }
-
-
-
-
-
-        }
     public void performMoveOne(int[] marble, MoveDirection direction, int[][] board)
     { moveMarble(marble, direction, board); }
     public void performMoveTwo(int[] marble1, int[] marble2, MoveDirection direction, int[][] board) {
