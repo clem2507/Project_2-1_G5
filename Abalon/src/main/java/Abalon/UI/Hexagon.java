@@ -79,7 +79,7 @@ public class Hexagon extends Application {
         Text player1 = new Text("Player 1");
         player1.setTranslateX(110);
         player1.setTranslateY(170);
-        player1.setFont(Font.font("Monospaced", FontWeight.BOLD, FontPosture.REGULAR, 26));
+        player1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color
         player1.setFill(Color.BLACK);
         //Setting the Stroke
@@ -89,7 +89,7 @@ public class Hexagon extends Application {
         Text player2 = new Text("Player 2");
         player2.setTranslateX(1070);
         player2.setTranslateY(170);
-        player2.setFont(Font.font("Monospaced", FontWeight.BOLD, FontPosture.REGULAR, 26));
+        player2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color
         player2.setFill(Color.BLACK);
         //Setting the Stroke
