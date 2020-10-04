@@ -23,8 +23,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.io.File; 
+import javafx.embed.swing.SwingFXUtils;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import java.util.Collections;
-
 
 public class HomePage extends Application {
 
@@ -36,9 +40,15 @@ public class HomePage extends Application {
     public void start(Stage primaryStage) {
         Group pane = new Group();
 
-        Image background = new Image("Abalon/background.jpg");
-        ImageView view = new ImageView(background);
-        pane.getChildren().addAll(view);
+        try {
+            BufferedImage buffer = ImageIO.read(new File("./res/background.jpg"));
+            Image background = SwingFXUtils.toFXImage(buffer, null);
+            ImageView view = new ImageView(background);
+            pane.getChildren().addAll(view);
+        } catch (Exception e) {
+            System.out.println("file not found");
+            System.exit(0);
+        }
 
         //Creation of the title of the project
         Text title = new Text("ABALONE");
@@ -152,3 +162,4 @@ public class HomePage extends Application {
     }
 }
 
+    
