@@ -1,5 +1,10 @@
+package Abalon.Main;
+
 import java.util.ArrayList;
-import Abalon.Main.MoveDirection;
+
+/**
+ * This class tests the class Rules
+ */
 public class TestRules {
 
     public static void main(String[] args) {

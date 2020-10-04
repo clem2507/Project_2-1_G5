@@ -1,15 +1,28 @@
+package Abalon.Main;
+
 import java.util.Arrays;
 import java.util.ArrayList;
-import Abalon.Main.MoveDirection;
+
+/**
+ This class defines the rules of how to move marbles
+ */
+
 public class Rules {
 
 
     private int[][] board;
     private int playerTurn;
     private MoveDirection direction; //stores the target direction of the current move
-    private ArrayList<int[]> marblesSelected = new ArrayList<>(); //stores the coordinates of the selected marbles
+    private ArrayList<int[]> marblesSelected; //stores the coordinates of the selected marbles
     private static int nbSelected; //keeps track of how many marbles have been selected
 
+    /**
+     *  The constructor with parameters:
+     *  @param moveTo the direction where to move the selected marbles
+     *  @param selectedMarbles the selected marbles that need to move (stored in a list of marble's coordinates)
+     *  @param selectedNb the number of marbles selected (1, 2 or 3)
+     *  @param currentBoard the board which defines the positions of the marbles
+     */
     public Rules(MoveDirection moveTo, ArrayList<int[]> selectedMarbles, int selectedNb, int[][] currentBoard){
         playerTurn = 1;
         direction=moveTo;
@@ -35,12 +48,12 @@ public class Rules {
 
 
 
-    /*
-        checks whether or not a suggested move is legal.
-        @param pushing A 2d array that contains the positions of the selected marbles
-        @param direction A direction of the MoveDirection enum
-        @param playerTurn an integer that checks if it is the turn of player 1 or player 2.
-    */
+    /**
+     checks whether or not a suggested move is legal.
+     @param pushing A 2d array that contains the positions of the selected marbles
+     @param direction A direction of the MoveDirection enum
+     @param playerTurn an integer that checks if it is the turn of player 1 or player 2.
+     */
     public static boolean checkMove(ArrayList<int[]> pushing, MoveDirection direction, int[][] board,  int playerTurn) {
 
         switch(pushing.size()) {
@@ -53,20 +66,21 @@ public class Rules {
         }
         return false;
     }
-    /*
-        checks if a suggested move will leave a marble out of bounds
 
-        @param board A 2D integer array that contains the colors of every position on the hexagon.
-               1 = a marble that belongs to player 1.
-               2 = a marble that belongs to player 2.
-               0 = a position that does not contain a marble.
-               -1 = a position in the array that is out of bounds.
+    /**
+     checks if a suggested move will leave a marble out of bounds
 
-        @param direction an enum that contains the direction of the suggested move.
-        @param marble An integer array with length 2. The first int is the row the marble is at and the second int
-               is the column the marble is at.
+     @param board A 2D integer array that contains the colors of every position on the hexagon.
+     1 = a marble that belongs to player 1.
+     2 = a marble that belongs to player 2.
+     0 = a position that does not contain a marble.
+     -1 = a position in the array that is out of bounds.
 
-       @returns a boolean. True if the move will leave the marble out of bounds, false if it will not.
+     @param direction an enum that contains the direction of the suggested move.
+     @param marble An integer array with length 2. The first int is the row the marble is at and the second int
+     is the column the marble is at.
+
+     @returns a boolean. True if the move will leave the marble out of bounds, false if it will not.
      */
     private static boolean checkOutOfBounds(int[] marble, MoveDirection direction, int[][] board) {
 
@@ -146,17 +160,16 @@ public class Rules {
         return true;
     }
 
-    /*
-        returns the position in the array of colors where a move from a selected marble will end up.
+    /**
+     Returns the position in the array of colors where a move from a selected marble will end up.
 
-        @param board A 2D integer array that contains the colors of every position on the hexagon.
-        @param direction an enum that contains the direction of the suggested move.
-        @param marble An integer array with length 2. The first int is the row the marble is at and the second int
-               is the column the marble is at.
-        @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
+     @param board A 2D integer array that contains the colors of every position on the hexagon.
+     @param direction an enum that contains the direction of the suggested move.
+     @param marble An integer array with length 2. The first int is the row the marble is at and the second int
+     is the column the marble is at.
 
-       @returns an integer of size 2 containing the row and column the move will leave you at.
-        */
+     @returns an integer of size 2 containing the row and column the move will leave you at.
+     */
     public static int[] checkSquareForLocation(int[] marble, MoveDirection direction, int[][] board) {
         int[] location;
         if (checkOutOfBounds(marble, direction, board)) {
@@ -215,21 +228,20 @@ public class Rules {
         return location;
     }
 
-    /*
-        returns the color of the square a marble has been suggested to mvoe to.
+    /**
+     Returns the color of the square a marble has been suggested to mvoe to.
 
-        @param board A 2D integer array that contains the colors of every position on the hexagon.
-        @param direction an enum that contains the direction of the suggested move.
-        @param marble An integer array with length 2. The first int is the row the marble is at and the second int
-               is the column the marble is at.
-        @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
+     @param board A 2D integer array that contains the colors of every position on the hexagon.
+     @param direction an enum that contains the direction of the suggested move.
+     @param marble An integer array with length 2. The first int is the row the marble is at and the second int
+     is the column the marble is at.
 
-       @returns an integer:
-                            1 = a marble that belongs to player 1.
-                            2 = a marble that belongs to player 2.
-                            0 = a position that does not contain a marble.
-                           -1 = a position in the array that is out of bounds.
-        */
+     @returns an integer:
+     1 = a marble that belongs to player 1.
+     2 = a marble that belongs to player 2.
+     0 = a position that does not contain a marble.
+     -1 = a position in the array that is out of bounds.
+     */
     public static int checkSquareForColor(int[] marble, MoveDirection direction, int[][] board) {
         if (checkOutOfBounds(marble, direction, board)) { System.out.println("out of bounds"); return -1; }
         switch(direction) {
@@ -289,15 +301,15 @@ public class Rules {
         return true;
     }
 
-    /*
-        checks if a row of 2 or 3 marbles is moving sideways.
-        @param marble 1 a marble in the selected row.
-        @param marble 2 a marble connected to marble 1 that is also in the selected row.
-        @param direction the direction the row is moving in.
-        @param board A 2D integer array that contains the colors of every position on the hexagon.
+    /**
+     Checks if a row of 2 or 3 marbles is moving sideways.
+     @param marble1 a marble in the selected row.
+     @param marble2 a marble connected to marble 1 that is also in the selected row.
+     @param direction the direction the row is moving in.
+     @param board A 2D integer array that contains the colors of every position on the hexagon.
 
-        @returns a boolean. True if the marbles are moving sideways. False if they are not.
-    */
+     @returns a boolean. True if the marbles are moving sideways. False if they are not.
+     */
     public static boolean checkSideWays(int[] marble1, int[] marble2, MoveDirection direction, int[][] board) {
         int[] moveFromMarble1 = checkSquareForLocation(marble1, direction, board);
         int[] moveFromMarble2 = checkSquareForLocation(marble2, direction, board);
@@ -305,14 +317,14 @@ public class Rules {
         return true;
     }
 
-    /*
-        checks if a move is permitted for a single marble.
-        @param direction the direction the row is moving in.
-        @param board A 2D integer array that contains the colors of every position on the hexagon.
-        @param marble An integer array with length 2. The first int is the row the marble is at and the second int
-                      is the column the marble is at.
-        @returns a boolean. True if the marble is moving to an empty spot. False if it is not.
-    */
+    /**
+     Checks if a move is permitted for a single marble.
+     @param direction the direction the row is moving in.
+     @param board A 2D integer array that contains the colors of every position on the hexagon.
+     @param marble An integer array with length 2. The first int is the row the marble is at and the second int
+     is the column the marble is at.
+     @returns a boolean. True if the marble is moving to an empty spot. False if it is not.
+     */
     private static boolean checkSingleMarble(int[]marble, MoveDirection direction, int[][] board) {
         //if a single marble does not move out of bounds and moves to an empty spot it is a legal move. return false in any other case
         if (checkOutOfBounds(marble, direction, board)) { return false; }
@@ -320,13 +332,13 @@ public class Rules {
         return false;
     }
 
-    /*
-        searches for and returns the leading marble of the selected row.
-        @param pushing a 2d array containing up to three 2 value rows with marble positions
-        @param board A 2D integer array that contains the colors of every position on the hexagon.
-        @param direction an enum that contains the direction of the suggested move.
-        @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
-    */
+    /**
+     Searches for and returns the leading marble of the selected row.
+     @param pushing a 2d array containing up to three 2 value rows with marble positions
+     @param board A 2D integer array that contains the colors of every position on the hexagon.
+     @param direction an enum that contains the direction of the suggested move.
+     @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
+     */
     public static int[] findLeadingMarble(ArrayList<int[]> pushing, MoveDirection direction, int[][] board, int playerTurn) {
 
         for(int i = 0; i<pushing.size(); i++) {
