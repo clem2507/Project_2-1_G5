@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.ArrayList;
+import Abalon.Main.MoveDirection;
 public class Rules {
 
 
@@ -15,7 +18,7 @@ public class Rules {
         this.board=currentBoard;
     }
 
-    public void move(){
+   /* public void move(){
         if(nbSelected == 1) {
             if(checkMove(null,null,board)) //TODO checkMove still needs to be correctly implemented to check the different types of moves ( direction and nb of marbles)
             { performMoveOne(marblesSelected.get(0),direction,board); }
@@ -28,7 +31,7 @@ public class Rules {
             if (checkMove(null,null,board))
             { performMoveThree(marblesSelected.get(0),marblesSelected.get(1), marblesSelected.get(2),direction,board); }
         }
-    }
+    }*/
 
 
 
@@ -38,11 +41,11 @@ public class Rules {
         @param direction A direction of the MoveDirection enum
         @param playerTurn an integer that checks if it is the turn of player 1 or player 2.
     */
-    public static boolean checkMove(int[][] pushing, MoveDirection direction, int[][] board,  int playerTurn) {
+    public static boolean checkMove(ArrayList<int[]> pushing, MoveDirection direction, int[][] board,  int playerTurn) {
 
-        switch(pushing.length) {
+        switch(pushing.size()) {
 
-            case 1: return checkSingleMarble(pushing[0], direction, board);
+            case 1: return checkSingleMarble(pushing.get(0), direction, board);
 
 
             case 2: return checkTwoMarbles(pushing, direction, board, playerTurn);
@@ -50,97 +53,6 @@ public class Rules {
         }
         return false;
     }
-
-    private static boolean checkSingleMarble(int[] marble, MoveDirection direction, int[][] board, int playerTurn) {
-
-        if(checkOutOfBounds(marble, direction, board)) { return false; }
-        switch(direction) {
-
-            case TOP_LEFT:
-
-                if(marble[0] >= 5) {
-                    switch(board[marble[0]-1][marble[1]]) {
-                        case 0: return true;
-                        case 1: return (playerTurn == 2);
-                        case 2: return (playerTurn == 1);
-                    }
-                }
-                else {
-                    switch(board[marble[0]-1][marble[1]-1]) {
-                        case 0: return true;
-                        case 1: return (playerTurn == 2);
-                        case 2: return (playerTurn == 1);
-                    }
-                }
-            case LEFT:
-                switch(board[marble[0]][marble[1]-1]) {
-                    case 0: return true;
-                    case 1: return (playerTurn == 2);
-                    case 2: return (playerTurn == 1);
-                }
-
-            case BOTTOM_LEFT:
-                if(marble[0] >= 5) {
-                    switch(board[marble[0]+1][marble[1]-1]) {
-                        case 0: return true;
-                        case 1: return (playerTurn == 2);
-                        case 2: return (playerTurn == 1);
-                    }
-                }
-                else {
-                    switch(board[marble[0]+1][marble[1]]) {
-                        case 0: return true;
-                        case 1: return (playerTurn == 2);
-                        case 2: return (playerTurn == 1);
-                    }
-                }
-            case BOTTOM_RIGHT:
-                if(marble[0] >= 5) {
-                    switch(board[marble[0]+1][marble[1]-1]) {
-                        case 0: return true;
-                        case 1: return (playerTurn == 2);
-                        case 2: return (playerTurn == 1);
-                    }
-                }
-                else {
-                    switch(board[marble[0]+1][marble[1]+1]) {
-                        case 0: return true;
-                        case 1: return (playerTurn == 2);
-                        case 2: return (playerTurn == 1);
-                    }
-                }
-            case RIGHT:
-                switch(board[marble[0]][marble[1]+1]) {
-                    case 0: return true;
-                    case 1: return (playerTurn == 2);
-                    case 2: return (playerTurn == 1);
-                }
-
-            case TOP_RIGHT:
-                if (marble[0] >= 5) {
-                    switch(board[marble[0]-1][marble[1]+1]) {
-                        case 0: return true;
-                        case 1: return (playerTurn == 2);
-                        case 2: return (playerTurn == 1);
-                    }
-                }
-                else {
-                    switch(board[marble[0]-1][marble[1]]) {
-                        case 0: return true;
-                        case 1: return (playerTurn == 2);
-                        case 2: return (playerTurn == 1);
-                    }
-                }
-        }
-        return false;
-    }
-
-    private static boolean checkDoubleMarble(int[] marble1, int[] marble2, MoveDirection direction, int[][] board, int playerTurn) {
-
-    }
-
-
-
     /*
         checks if a suggested move will leave a marble out of bounds
 
@@ -362,11 +274,11 @@ public class Rules {
         return -1;
     }
 
-    private static boolean checkTwoMarbles(int[][] pushing,  MoveDirection direction, int[][] board, int playerTurn) {
+    private static boolean checkTwoMarbles(ArrayList<int[]> pushing,  MoveDirection direction, int[][] board, int playerTurn) {
 
-        if(checkSideways(pushing[0], pushing[1], direction, board, playerTurn)) {
+        if(checkSideWays(pushing.get(0), pushing.get(1), direction, board)) {
             //if the marbles move sideways they cannot push anything. Check if all marbles move to a free spot.
-            if(checkSingleMarble(pushing[0], direction, board)  && checkSingleMarble(pushing[1], direction, board)) {
+            if(checkSingleMarble(pushing.get(0), direction, board)  && checkSingleMarble(pushing.get(1), direction, board)) {
                 return true;
             }
             return false;
@@ -374,6 +286,7 @@ public class Rules {
         int[] leadingMarble = findLeadingMarble(pushing, direction, board, playerTurn);
         //TODO check the color of the square starting at the leading marble. Then see if you can push a single marble from there.
         //
+        return true;
     }
 
     /*
@@ -414,16 +327,16 @@ public class Rules {
         @param direction an enum that contains the direction of the suggested move.
         @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
     */
-    public static int[] findLeadingMarble(int[][] pushing, MoveDirection direction, int[][] board, int playerTurn) {
+    public static int[] findLeadingMarble(ArrayList<int[]> pushing, MoveDirection direction, int[][] board, int playerTurn) {
 
-        for(int i = 0; i<pushing.length; i++) {
+        for(int i = 0; i<pushing.size(); i++) {
             boolean equalFound = false;
-            for(int j = 0; j<pushing.length; j++) {
-                if(Arrays.equals(checkSquareForLocation(pushing[i],direction,board),pushing[j])){
+            for(int j = 0; j<pushing.size(); j++) {
+                if(Arrays.equals(checkSquareForLocation(pushing.get(i),direction,board),pushing.get(j))){
                     equalFound = true;
                 }
             }
-            if(!equalFound) { return pushing[i];}
+            if(!equalFound) { return pushing.get(i);}
         }
         int[] problem = {-1,-1};
         return problem;
