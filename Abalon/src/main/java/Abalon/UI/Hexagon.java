@@ -54,7 +54,7 @@ public class Hexagon extends Application {
         BorderPane pane = new BorderPane();
 
         try {
-            BufferedImage buffer = ImageIO.read(new File("./res/game-background.jpg"));
+            BufferedImage buffer = ImageIO.read(new File("./res/grey2.jpg"));
             Image background = SwingFXUtils.toFXImage(buffer, null);
             ImageView view = new ImageView(background);
             pane.getChildren().addAll(view);
