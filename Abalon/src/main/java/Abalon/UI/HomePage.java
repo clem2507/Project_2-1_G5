@@ -23,7 +23,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.io.File; 
 import javafx.embed.swing.SwingFXUtils;
 import java.awt.image.BufferedImage;

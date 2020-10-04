@@ -12,6 +12,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File; 
+import javafx.embed.swing.SwingFXUtils;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
 /**
  * TODO Add marbles to the board and create Home page
  * Home Page: Aaron
@@ -48,9 +53,15 @@ public class Hexagon extends Application {
         //Creation of a Border pane to make our scene easier to construct
         BorderPane pane = new BorderPane();
 
-        Image background = new Image("Abalon/game-background.jpg");
-        ImageView view = new ImageView(background);
-        pane.getChildren().addAll(view);
+        try {
+            BufferedImage buffer = ImageIO.read(new File("./res/game-background.jpg"));
+            Image background = SwingFXUtils.toFXImage(buffer, null);
+            ImageView view = new ImageView(background);
+            pane.getChildren().addAll(view);
+        } catch (Exception e) {
+            System.out.println("file not found");
+            System.exit(0);
+        }
 
         //Creating an object of Board, which construct a board
         BoardUI board = new BoardUI();
