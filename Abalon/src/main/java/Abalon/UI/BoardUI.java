@@ -127,9 +127,9 @@ public class BoardUI {
 
             //update x_coord
             if (i == 0) {
-                x_coord = 120;
+                x_coord = 127;
             } else if (i == 1) {
-                x_coord = 90;
+                x_coord = 104;
             }
         }
 
@@ -252,17 +252,3 @@ public class BoardUI {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -98,7 +98,7 @@ public class HomePage extends Application {
                     dialog.initModality(Modality.APPLICATION_MODAL);
                     dialog.initOwner(primaryStage);
                     VBox dialogVbox = new VBox(20);
-                    Text text = new Text("This is the rules");
+                    Text text = new Text("These are the rules");
                     text.setFont(Font.font("Arial", 13));
                     dialogVbox.getChildren().add(text);
                     Scene dialogScene = new Scene(dialogVbox, 300, 200);
