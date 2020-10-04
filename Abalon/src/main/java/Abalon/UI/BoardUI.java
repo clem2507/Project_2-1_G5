@@ -21,8 +21,8 @@ public class BoardUI {
     public BoardUI(){
         hexagon = createHexagon();
 
-        createCircles();
         createColors();
+        createCircles();
         drawAllCells();
 
         createScoredCircles();
@@ -70,8 +70,8 @@ public class BoardUI {
                 circle.setCenterY(y_coord);
                 circles[i][j] = circle;
                 x_coord += RADIUS * 2 + 25;
-                //drawCell(circle[i][j]);
-                marbleSelecting(circle, (Color)circle.getFill(), BROWN); //For some reason, the getFIll returns black as color which is wrong
+                drawCell(i,j);
+                marbleSelecting(circle, (Color)circle.getFill(), BROWN);
                 marbleHovering(circle, (Color)circle.getFill(), BROWN);
             }
             // update the number of circles per level
@@ -164,7 +164,7 @@ public class BoardUI {
 
     }
 
-    /*
+    /**
         define which circle is empty (0), red (1) or black (2)
         red is for player 1
         black is for player 2
@@ -206,6 +206,7 @@ public class BoardUI {
     }
 
     private void drawCell(int i, int j) {
+
         Color c = null;
         switch (cellColors[i][j]) {
             case 0:  c = BISQUE;       break;
@@ -234,7 +235,7 @@ public class BoardUI {
 
         circle.setOnMouseClicked(e -> {
             counter++;
-            if(counter %2 != 0){ //if the count is odd, it means the marbke has been selected and changes its color
+            if(counter %2 != 0){ //if the count is odd, it means the marble has been selected and changes its color
                 System.out.println("Marble is selected");
                 circle.setFill(selectionColor);
             }
