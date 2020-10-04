@@ -1,7 +1,6 @@
 package Abalon.Main;
 
 import Abalon.Main.Board;
-
 import java.awt.EventQueue;
 
 /**
