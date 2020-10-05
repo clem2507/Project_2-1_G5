@@ -16,9 +16,9 @@ public class BoardUI {
 
     public Polygon hexagon;
 
-    private final boolean[][] selected = new boolean[9][9];
+    private boolean[][] selected = new boolean[9][9];
+    private int[][] counter = new int[9][9];
 
-    public int counter = 0;
     private final double RADIUS = 22;
     public BoardUI(){
         hexagon = createHexagon();
@@ -235,12 +235,10 @@ public class BoardUI {
     }
 
     private void marbleSelecting(Circle circle, Color originalColor, Color selectionColor, int i, int j){
-        //System.out.println("select open");
         circle.setOnMouseClicked(e -> {
-            counter++;
-            if(counter %2 != 0){ //if the count is odd, it means the marble has been selected and changes of color
+            counter[i][j]++;
+            if(counter[i][j] %2 != 0){ //if the count is odd, it means the marble has been selected and changes of color
                 selected[i][j] = true;
-                System.out.println("Marble is selected");
                 circle.setFill(selectionColor);
             }
             else{
@@ -251,14 +249,13 @@ public class BoardUI {
         });
     }
 
-
-    private void marbleHovering(Circle circle, Color originalColor, Color hoveringColor, int i, int j) {
+    /*private void marbleHovering(Circle circle, Color originalColor, Color hoveringColor, int i, int j) {
         circle.setOnMouseEntered( e -> circle.setFill(hoveringColor));
 
         if(!isSelected(i,j)) {
             circle.setOnMouseExited(e -> circle.setFill(originalColor));
         }
-    }
+    }*/
 
     private boolean isSelected(int i, int j){
         return selected[i][j];
