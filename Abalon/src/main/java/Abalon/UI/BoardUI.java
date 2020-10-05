@@ -16,6 +16,8 @@ public class BoardUI {
 
     public Polygon hexagon;
 
+    private boolean[][] selected = new boolean[9][9];
+
     public int counter = 0;
     private final double RADIUS = 22;
     public BoardUI(){
@@ -71,8 +73,9 @@ public class BoardUI {
                 circles[i][j] = circle;
                 x_coord += RADIUS * 2 + 25;
                 drawCell(i,j);
-                marbleSelecting(circle, (Color)circle.getFill(), BROWN);
-                marbleHovering(circle, (Color)circle.getFill(), BROWN);
+
+                marbleSelecting(circle, (Color)circle.getFill(), BROWN, i, j);
+                marbleHovering(circle, (Color)circle.getFill(), BROWN, i, j);
             }
             // update the number of circles per level
             if (i < 4) { // less than 9 holes at that level
@@ -231,15 +234,17 @@ public class BoardUI {
         }
     }
 
-    private void marbleSelecting(Circle circle, Color originalColor, Color selectionColor){
-
+    private void marbleSelecting(Circle circle, Color originalColor, Color selectionColor, int i, int j){
+        System.out.println("select open");
         circle.setOnMouseClicked(e -> {
             counter++;
-            if(counter %2 != 0){ //if the count is odd, it means the marble has been selected and changes its color
+            if(counter %2 != 0){ //if the count is odd, it means the marble has been selected and changes of color
+                selected[i][j] = true;
                 System.out.println("Marble is selected");
                 circle.setFill(selectionColor);
             }
             else{
+                selected[i][j] = false;
                 circle.setFill(originalColor);
             }
 
@@ -247,9 +252,15 @@ public class BoardUI {
     }
 
 
-    private void marbleHovering(Circle circle, Color originalColor, Color hoveringColor) {
+    private void marbleHovering(Circle circle, Color originalColor, Color hoveringColor, int i, int j) {
         circle.setOnMouseEntered( e -> circle.setFill(hoveringColor));
-        circle.setOnMouseExited(e -> circle.setFill(originalColor));
 
+        if(!isSelected(i,j)) {
+            circle.setOnMouseExited(e -> circle.setFill(originalColor));
+        }
+    }
+
+    private boolean isSelected(int i, int j){
+        return selected[i][j];
     }
 }
