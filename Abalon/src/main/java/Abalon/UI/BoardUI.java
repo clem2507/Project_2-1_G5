@@ -16,7 +16,7 @@ public class BoardUI {
 
     public Polygon hexagon;
 
-    private boolean[][] selected = new boolean[9][9];
+    private final boolean[][] selected = new boolean[9][9];
 
     public int counter = 0;
     private final double RADIUS = 22;
@@ -36,14 +36,14 @@ public class BoardUI {
         Polygon hexagon = new Polygon();
 
         //Adding coordinates to the hexagon
-        hexagon.getPoints().addAll(new Double[]{
+        hexagon.getPoints().addAll(
                 315.0, 90.0, //1
                 640.0, 90.0, //1
                 820.0, 350.0, //2
                 640.0, 610.0, //3
                 315.0, 610.0, //3
-                150.0, 350.0, //2
-        });
+                150.0, 350.0 //2
+        );
 
         hexagon.setFill(Color.ORANGE);
 
@@ -75,7 +75,7 @@ public class BoardUI {
                 drawCell(i,j);
 
                 marbleSelecting(circle, (Color)circle.getFill(), BROWN, i, j);
-                marbleHovering(circle, (Color)circle.getFill(), BROWN, i, j);
+                //marbleHovering(circle, (Color)circle.getFill(), BROWN, i, j);
             }
             // update the number of circles per level
             if (i < 4) { // less than 9 holes at that level
@@ -137,7 +137,7 @@ public class BoardUI {
         }
 
         nc = 1; // nc: number of circles
-        x_coord = 930;
+        x_coord = 1100;
         y_coord = 250;
 
         counter = 0;
@@ -159,9 +159,9 @@ public class BoardUI {
 
             //update x_coord
             if (i == 0) {
-                x_coord = 900;
+                x_coord = 1077;
             } else if (i == 1) {
-                x_coord = 870;
+                x_coord = 1053;
             }
         }
 
@@ -224,7 +224,7 @@ public class BoardUI {
     private void drawScoredCell(int i, int player) {
         Color c = null;
         switch (scoredCirclesColors[i][player]) {
-            case 0:  c = BISQUE;       break;
+            case 0:  c = ORANGE;       break;
             case 1:  c = MEDIUMBLUE;   break;
             case 2:  c = LIGHTSKYBLUE; break;
             default: break;
@@ -235,7 +235,7 @@ public class BoardUI {
     }
 
     private void marbleSelecting(Circle circle, Color originalColor, Color selectionColor, int i, int j){
-        System.out.println("select open");
+        //System.out.println("select open");
         circle.setOnMouseClicked(e -> {
             counter++;
             if(counter %2 != 0){ //if the count is odd, it means the marble has been selected and changes of color
