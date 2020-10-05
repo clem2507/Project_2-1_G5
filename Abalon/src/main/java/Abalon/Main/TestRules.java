@@ -39,10 +39,6 @@ public class TestRules {
         pushing2.add(marble1);
         pushing2.add(marble2);
         pushing2.add(marble3);
-        System.out.println("are they sideways? " + Rules.checkSideWays(pushing2.get(0), pushing2.get(1), direction, board));
-
-        int[] leadingMarble = Rules.findLeadingMarble(pushing2, direction, board, playerTurn);
-        System.out.println(leadingMarble[0] + " " + leadingMarble[1]);
     }
 
 
