@@ -1,5 +1,8 @@
 package Abalon.UI;
 
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -74,6 +77,43 @@ public class BoardUI {
                 x_coord += RADIUS * 2 + 25;
                 drawCell(i,j);
 
+                // add light effect on marbles
+                if(circle.getFill() == MEDIUMBLUE || circle.getFill() == LIGHTSKYBLUE){
+                    //instantiating the Light.Point class
+                    Light.Point light = new Light.Point();
+
+                    //Setting the color of the light
+                    light.setColor(Color.WHITE);
+
+                    //Setting the position of the light
+                    light.setX(70);
+                    light.setY(55);
+                    light.setZ(45);
+
+                    //Instantiating the Lighting class
+                    Lighting lighting = new Lighting();
+
+                    //Setting the light
+                    lighting.setLight(light);
+
+                    //Applying the Lighting effect to the circle
+                    circle.setEffect(lighting);
+
+                }else if(circle.getFill() == BISQUE){ //add light effect on holes
+                    //Instantiating the InnerShadow class
+                    InnerShadow innerShadow = new InnerShadow();
+
+                    //Setting the offset values of the inner shadow
+                    innerShadow.setOffsetX(4);
+                    innerShadow.setOffsetY(4);
+
+                    //Setting the color of the inner shadow
+                    innerShadow.setColor(Color.GRAY);
+
+                    //Applying inner shadow effect to the circle
+                    circle.setEffect(innerShadow);
+                }
+
                 marbleSelecting(circle, (Color)circle.getFill(), BROWN, i, j);
                 //marbleHovering(circle, (Color)circle.getFill(), BROWN, i, j);
             }
@@ -105,64 +145,61 @@ public class BoardUI {
     private void createScoredCircles(){
         scoredCircles = new Circle[6][2];
 
-        int nc = 1; // nc: number of circles
         double x_coord = 150;
         double y_coord = 250;
-
-        int counter = 0;
         int player = 0;
 
-        //Circles for player
-        for (int i = 0; i < 3; i++) { // 3 loops for the 3 levels of the 'pyramid'
-            for (int j = 0; j < nc; j++)
-            {
-                Circle circle = new Circle(RADIUS);
-                circle.setCenterX(x_coord);
-                circle.setCenterY(y_coord);
-                scoredCircles[counter++][player] = circle;
-                x_coord += RADIUS * 2;
+        while(player<2) {
+            int nc = 1; // nc: number of circles
+            int counter = 0;
+
+            for (int i = 0; i < 3; i++) { // 3 loops for the 3 levels of the 'pyramid'
+                for (int j = 0; j < nc; j++) {
+                    Circle circle = new Circle(RADIUS);
+                    circle.setCenterX(x_coord);
+                    circle.setCenterY(y_coord);
+                    scoredCircles[counter++][player] = circle;
+
+                    //add light effect on holes:
+                    //Instantiating the InnerShadow class
+                    InnerShadow innerShadow = new InnerShadow();
+
+                    //Setting the offset values of the inner shadow
+                    innerShadow.setOffsetX(4);
+                    innerShadow.setOffsetY(4);
+
+                    //Setting the color of the inner shadow
+                    innerShadow.setColor(Color.GRAY);
+
+                    //Applying inner shadow effect to the circle
+                    circle.setEffect(innerShadow);
+
+                    x_coord += RADIUS * 2;
+                }
+                // update the number of circles per level
+                nc += 1;
+
+                // update y_coord
+                y_coord += RADIUS * 2 - 5;
+
+                //update x_coord
+                if (player == 0) {
+                    if (i == 0) {
+                        x_coord = 127;
+                    } else if (i == 1) {
+                        x_coord = 104;
+                    }
+                } else {
+                    if (i == 0) {
+                        x_coord = 1077;
+                    } else if (i == 1) {
+                        x_coord = 1053;
+                    }
+                }
             }
-            // update the number of circles per level
-            nc += 1;
-
-            // update y_coord
-            y_coord += RADIUS * 2 - 5;
-
-            //update x_coord
-            if (i == 0) {
-                x_coord = 127;
-            } else if (i == 1) {
-                x_coord = 104;
-            }
-        }
-
-        nc = 1; // nc: number of circles
-        x_coord = 1100;
-        y_coord = 250;
-
-        counter = 0;
-        player = 1;
-        for (int i = 0; i < 3; i++) { // 3 loops for the 3 levels of the 'pyramid'
-            for (int j = 0; j < nc; j++)
-            {
-                Circle circle = new Circle(RADIUS);
-                circle.setCenterX(x_coord);
-                circle.setCenterY(y_coord);
-                scoredCircles[counter++][player] = circle;
-                x_coord += RADIUS * 2;
-            }
-            // update the number of circles per level
-            nc += 1;
-
-            // update y_coord
-            y_coord += RADIUS * 2 - 5;
-
-            //update x_coord
-            if (i == 0) {
-                x_coord = 1077;
-            } else if (i == 1) {
-                x_coord = 1053;
-            }
+            x_coord = 1100;
+            y_coord = 250;
+            player += 1;
         }
 
     }
