@@ -79,10 +79,8 @@ public class Hexagon extends Application {
         }
 
 
-
-
         Text player1 = new Text("Player 1");
-        player1.setTranslateX(110);
+        player1.setTranslateX(100);
         player1.setTranslateY(170);
         player1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color
@@ -92,7 +90,7 @@ public class Hexagon extends Application {
         pane.getChildren().add(player1);
 
         Text player2 = new Text("Player 2");
-        player2.setTranslateX(1070);
+        player2.setTranslateX(1036);
         player2.setTranslateY(170);
         player2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color

@@ -1,12 +1,9 @@
 package Abalon.UI;
 
-import javafx.scene.effect.InnerShadow;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
+import javafx.scene.effect.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-
 import static javafx.scene.paint.Color.*;
 
 public class BoardUI {
@@ -48,7 +45,17 @@ public class BoardUI {
                 150.0, 350.0 //2
         );
 
-        hexagon.setFill(Color.ORANGE);
+        Color hexagonColor = ORANGE;
+        hexagon.setFill(hexagonColor);
+
+        //Shadow effect on hexagon:
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setColor(hexagonColor.darker());
+        dropShadow.setRadius(3);
+        dropShadow.setOffsetX(2);
+        dropShadow.setOffsetY(2);
+        dropShadow.setSpread(20);
+        hexagon.setEffect(dropShadow);
 
         return hexagon;
     }
@@ -79,38 +86,22 @@ public class BoardUI {
 
                 // add light effect on marbles
                 if(circle.getFill() == MEDIUMBLUE || circle.getFill() == LIGHTSKYBLUE){
-                    //instantiating the Light.Point class
-                    Light.Point light = new Light.Point();
-
-                    //Setting the color of the light
-                    light.setColor(Color.WHITE);
-
+                    Light.Point light = new Light.Point(); //point of light on marbles
+                    light.setColor(Color.WHITE); // color of the light
                     //Setting the position of the light
                     light.setX(70);
                     light.setY(55);
                     light.setZ(45);
-
-                    //Instantiating the Lighting class
                     Lighting lighting = new Lighting();
-
-                    //Setting the light
                     lighting.setLight(light);
-
                     //Applying the Lighting effect to the circle
                     circle.setEffect(lighting);
 
-                }else if(circle.getFill() == BISQUE){ //add light effect on holes
-                    //Instantiating the InnerShadow class
+                }else if(circle.getFill() == BISQUE){ //add shadow effect on holes
                     InnerShadow innerShadow = new InnerShadow();
-
-                    //Setting the offset values of the inner shadow
                     innerShadow.setOffsetX(4);
                     innerShadow.setOffsetY(4);
-
-                    //Setting the color of the inner shadow
-                    innerShadow.setColor(Color.GRAY);
-
-                    //Applying inner shadow effect to the circle
+                    innerShadow.setColor(Color.GRAY); //color of the shadow
                     circle.setEffect(innerShadow);
                 }
 
@@ -160,18 +151,11 @@ public class BoardUI {
                     circle.setCenterY(y_coord);
                     scoredCircles[counter++][player] = circle;
 
-                    //add light effect on holes:
-                    //Instantiating the InnerShadow class
+                    //add shadow effect on holes:
                     InnerShadow innerShadow = new InnerShadow();
-
-                    //Setting the offset values of the inner shadow
                     innerShadow.setOffsetX(4);
                     innerShadow.setOffsetY(4);
-
-                    //Setting the color of the inner shadow
-                    innerShadow.setColor(Color.GRAY);
-
-                    //Applying inner shadow effect to the circle
+                    innerShadow.setColor(Color.GRAY); //color of the shadow
                     circle.setEffect(innerShadow);
 
                     x_coord += RADIUS * 2;
