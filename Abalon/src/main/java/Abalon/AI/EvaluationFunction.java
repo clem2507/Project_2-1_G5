@@ -2,7 +2,7 @@ package Abalon.AI;
 
 public class EvaluationFunction {
 
-/*
+/**
     ==================================================================================================================
 
     Evaluation function is important to be able to give a correct score for a given game board.

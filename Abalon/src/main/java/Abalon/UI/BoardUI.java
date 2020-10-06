@@ -6,20 +6,28 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import static javafx.scene.paint.Color.*;
 
+/**
+ * This class takes care of the UI by defining the look of the marbles, the holes and the board
+ */
+
 public class BoardUI {
 
-    private int[][] cellColors;
-    public Circle[][] circles;
+    private int[][] cellColors; // each cell of the board is associated to an integer which defines whether it
+                               // is a marble, a hole or out of the board
+    public Circle[][] circles; // array of all the Circles of the board (might be a hole or a marble)
 
-    private int[][] scoredCirclesColors; //player
-    public Circle[][] scoredCircles; //first index is the number of the marble, second is the number of the player
+    private int[][] scoredCirclesColors; // player
+    public Circle[][] scoredCircles; // first index is the number of the marble, second is the number of the player
 
-    public Polygon hexagon;
+    public Polygon hexagon; // the board shaped like an hexagon
 
-    private boolean[][] selected = new boolean[9][9];
-    private int[][] counter = new int[9][9];
+    private boolean[][] selected = new boolean[9][9]; // array of boolean associated to each cell (used to know
+                                                      // whether a marble is selected (true) or not (false)
+    private int[][] counter = new int[9][9]; // counters associated to each cell, used to check how much time a cell
+                                            // has been clicked by the mouse
 
-    private final double RADIUS = 22;
+    private final double RADIUS = 22; // radius of the circles (marbles & holes)
+
     public BoardUI(){
         hexagon = createHexagon();
 
@@ -32,6 +40,10 @@ public class BoardUI {
         drawAllScoredCells();
     }
 
+    /**
+     * Creates the board itself shaped like a hexagon
+     * @return the hexagon (representing the board)
+     */
     public static Polygon createHexagon(){
         Polygon hexagon = new Polygon();
 
@@ -45,6 +57,7 @@ public class BoardUI {
                 150.0, 350.0 //2
         );
 
+        //define the color of the hexagon
         Color hexagonColor = ORANGE;
         hexagon.setFill(hexagonColor);
 
@@ -60,8 +73,8 @@ public class BoardUI {
         return hexagon;
     }
 
-    /*
-        Create all circles of the board + define their position
+    /**
+     * Create all circles of the board (a circle can be either a hole, or a marble)
     */
     private void createCircles() {
         circles = new Circle[9][9];
@@ -133,6 +146,10 @@ public class BoardUI {
         }
     }
 
+    /**
+     * Creates six holes for each player
+     * This is where the ejected marbles will be displayed
+     */
     private void createScoredCircles(){
         scoredCircles = new Circle[6][2];
 
@@ -189,10 +206,10 @@ public class BoardUI {
     }
 
     /**
-        define which circle is empty (0), red (1) or black (2)
-        red is for player 1
-        black is for player 2
-        -1 is for "out of the board"
+     * Defines which circle is empty (0) (=hole, in bisque), medium_blue (1) or light_sky_blue (2)
+     * Medium_blue represents the marbles of player 1
+     * Light_sky_blue represents the marbles of player 2
+     * -1 is for "out of the board"
     */
 
     private void createColors() {
@@ -209,26 +226,18 @@ public class BoardUI {
         };
     }
 
-    //Create the colors for the score circles
+    /**
+     * Creates the score circles
+     */
     private void createScoredCirclesColors(){
         scoredCirclesColors = new int[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 
-    private void drawAllCells() {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                drawCell(i, j);
-            }
-        }
-    }
-
-    private void drawAllScoredCells() {
-        for (int i = 0; i < 6; i++) {
-            drawScoredCell(i, 0);
-            drawScoredCell(i, 1); //uncomment when done with the second player side marbles
-        }
-    }
-
+    /**
+     * Colours a circle of the board in its color
+     * @param i the index of the circle
+     * @param j the second index of the circle
+     */
     private void drawCell(int i, int j) {
 
         Color c = null;
@@ -242,6 +251,22 @@ public class BoardUI {
             circles[i][j].setFill(c);
     }
 
+    /**
+     * Colours all the circles of the board
+     */
+    private void drawAllCells() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                drawCell(i, j);
+            }
+        }
+    }
+
+    /**
+     * Colours the circle of a player in its colour
+     * @param i the index of the circle to be coloured
+     * @param player the "id" of the player (0 or 1)
+     */
     private void drawScoredCell(int i, int player) {
         Color c = null;
         switch (scoredCirclesColors[i][player]) {
@@ -255,6 +280,25 @@ public class BoardUI {
         }
     }
 
+    /**
+     * Colours all the circles for both players
+     */
+    private void drawAllScoredCells() {
+        for (int i = 0; i < 6; i++) {
+            drawScoredCell(i, 0);
+            drawScoredCell(i, 1); //uncomment when done with the second player side marbles
+        }
+    }
+
+    /**
+     * Enables the option of selecting a marble
+     * The selected marbles get highlighted in the selectionColor
+     * @param circle the circle to be selected
+     * @param originalColor the initial colour of the circle
+     * @param selectionColor the colour of the circled once selected
+     * @param i the index of the circle to be selected
+     * @param j the second index of the circle to be selected
+     */
     private void marbleSelecting(Circle circle, Color originalColor, Color selectionColor, int i, int j){
         circle.setOnMouseClicked(e -> {
             counter[i][j]++;
@@ -278,6 +322,12 @@ public class BoardUI {
         }
     }*/
 
+    /**
+     * Checks whether a marble is selected or not
+     * @param i index of the circle (=marble)
+     * @param j second index of the circle (=marble)
+     * @return boolean true if the marble selected and false if the marble is not selected
+     */
     private boolean isSelected(int i, int j){
         return selected[i][j];
     }
