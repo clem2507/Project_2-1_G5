@@ -1,20 +1,15 @@
 package Abalon.Main;
-
-import java.util.Arrays;
 import java.util.ArrayList;
-
-/**
- * This class defines the rules of how to move marbles (it is the game logic)
- */
-
 public class Rules {
 
 
     private int[][] board;
     private int playerTurn;
     private MoveDirection direction; //stores the target direction of the current move
-    private ArrayList<int[]> marblesSelected; //stores the coordinates of the selected marbles
-    private static int nbSelected; //keeps track of how many marbles have been selected
+    private int[][] marblesSelected; //stores the coordinates of the selected marbles
+    private ArrayList<int[]> marblesToBePushed = new ArrayList<>(); // Will store the coordinates of marbles that has to be pushed
+    private int nbSelected; //keeps track of how many marbles have been selected
+    private boolean pushingMove; // true if the move to be performed is a pushing move
 
     /**
      *  The constructor with parameters:
@@ -31,26 +26,27 @@ public class Rules {
         this.board=currentBoard;
     }
 
-   /* public void move(){
+    public void move(){
         if(nbSelected == 1) {
-            if(checkMove(null,null,board)) //TODO checkMove still needs to be correctly implemented to check the different types of moves ( direction and nb of marbles)
-            { performMoveOne(marblesSelected.get(0),direction,board); }
+            if(checkMove(marblesSelected,direction,board))
+            { performMoveOne(marblesSelected[0],direction,board); }
         }
         else if(nbSelected == 2){
-            if(checkMove(null,null,board))
-            { performMoveTwo(marblesSelected.get(0),marblesSelected.get(1),direction,board); }
+            if(checkMove(marblesSelected,direction,board))
+            { performMoveTwo(marblesSelected[0]),marblesSelected[1],direction,board); }
         }
         else if(nbSelected == 3){
-            if (checkMove(null,null,board))
-            { performMoveThree(marblesSelected.get(0),marblesSelected.get(1), marblesSelected.get(2),direction,board); }
+            if (checkMove(marblesSelected,direction,board))
+            { performMoveThree(marblesSelected[0],marblesSelected[1], marblesSelected[2],direction,board); }
         }
-    }*/
+    }
+
 
 
     /**
      checks whether or not a suggested move is legal.
      @param pushing An ArrayList that contains the marbles. MAKE SURE THAT THE CONNECTED MARBLES ARE PLACED IN ORDER.
-            IE. index 0 is connected to index 1. index 1 is connected to index 2. index 3 is NOT connected to index 0.
+     IE. index 0 is connected to index 1. index 1 is connected to index 2. index 3 is NOT connected to index 0.
      @param direction A direction of the MoveDirection enum
      @param board A 2D integer array that contains the colors of every position on the hexagon.
      1 = a marble that belongs to player 1.
@@ -60,19 +56,269 @@ public class Rules {
      @param playerTurn an integer that checks if it is the turn of player 1 or player 2.
      @returns a boolean. True if the move is legal. False if it is not.
      */
-    public static boolean checkMove(ArrayList<int[]> pushing, MoveDirection direction, int[][] board,  int playerTurn) {
 
-        switch(pushing.size()) {
+    public static boolean checkMove(int[][] pushing, MoveDirection direction, int[][] board,  int playerTurn) {
 
-            case 1: return checkSingleMarble(pushing.get(0), direction, board);
+        switch(pushing.length) {
+
+            case 1: return checkSingleMarble(pushing[0], direction, board);
 
             case 2: return checkTwoMarbles(pushing, direction, board, playerTurn);
 
-            case 3: return checkThreeMarbles(pushing, direction, board, playerTurn);
+            case 3: return checkThreeMarbles(pushing,direction,board,playerTurn); //TODO: method to be implemented
 
         }
         return false;
     }
+
+    private static boolean checkSingleMarble(int[] marble, MoveDirection direction, int[][] board, int playerTurn) {
+
+        if(checkOutOfBounds(marble, direction, board)) { return false; }
+        switch(direction) {
+
+            case TOP_LEFT:
+
+                if(marble[0] >= 5) {
+                    switch(board[marble[0]-1][marble[1]]) {
+                        case 0: return true;
+                        case 1: return false;
+                        case 2: return false;
+                    }
+                }
+                else {
+                    switch(board[marble[0]-1][marble[1]-1]) {
+                        case 0: return true;
+                        case 1: return false;
+                        case 2: return false;
+                    }
+                }
+            case LEFT:
+                switch(board[marble[0]][marble[1]-1]) {
+                    case 0: return true;
+                    case 1: return false;
+                    case 2: return false;
+                }
+
+            case BOTTOM_LEFT:
+                if(marble[0] >= 5) {
+                    switch(board[marble[0]+1][marble[1]-1]) {
+                        case 0: return true;
+                        case 1: return false;
+                        case 2: return false;
+                    }
+                }
+                else {
+                    switch(board[marble[0]+1][marble[1]]) {
+                        case 0: return true;
+                        case 1: return false;
+                        case 2: return false;
+                    }
+                }
+            case BOTTOM_RIGHT:
+                if(marble[0] >= 5) {
+                    switch(board[marble[0]+1][marble[1]-1]) {
+                        case 0: return true;
+                        case 1: return false;
+                        case 2: return false;
+                    }
+                }
+                else {
+                    switch(board[marble[0]+1][marble[1]+1]) {
+                        case 0: return true;
+                        case 1: return false;
+                        case 2: return false;
+                    }
+                }
+            case RIGHT:
+                switch(board[marble[0]][marble[1]+1]) {
+                    case 0: return true;
+                    case 1: return false;
+                    case 2: return false;
+                }
+
+            case TOP_RIGHT:
+                if (marble[0] >= 5) {
+                    switch(board[marble[0]-1][marble[1]+1]) {
+                        case 0: return true;
+                        case 1: return false;
+                        case 2: return false;
+                    }
+                }
+                else {
+                    switch(board[marble[0]-1][marble[1]]) {
+                        case 0: return true;
+                        case 1: return false;
+                        case 2: return false;
+                    }
+                }
+        }
+        return false;
+    }
+
+    private boolean checkTwoMarbles(int[][] pushing,  MoveDirection direction, int[][] board, int playerTurn) {
+
+        if(checkSideways(pushing[0], pushing[1], direction, board, playerTurn)) {
+            //if the marbles move sideways they cannot push anything. Check if all marbles move to a free spot.
+            if(checkEmptySpots(pushing[0], direction, board)  && checkEmptySpots(pushing[1], direction, board)) {
+                return true;
+            }
+            return false;
+        }
+        int[] leadingMarble = findLeadingMarble(pushing, direction, board, playerTurn);
+        //Check what is in the moving direction of the leading marble
+        switch (checkSquareForColor(leadingMarble,direction,board)) {
+            case -1: return false;  //move not valid if out of bounds
+            case 0: return true;    //move valid if empty spot
+            case 1:
+                if(playerTurn == 1){ return false; } //NOT valid if trying to push own marble
+                int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
+                else {
+                //If spot behind pushedMarble is not empty, the move is not valid as two marbles can only push 1.
+                if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0)
+                    return false;
+                else{
+                    pushingMove = true;
+                    marblesToBePushed.add(pushedMarbleLocation);
+                    return true;
+                }
+            }
+
+            case 2:
+                if(playerTurn == 2){ return false; }
+                int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
+                else {
+                if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0) //If spot behind pushedMarble is not empty, the move is not valid.
+                    return false;
+                else{
+                    pushingMove = true; // set the move as a pushing move
+                    marblesToBePushed.add(pushedMarbleLocation); //Add the location of the To-Be-Pushed marble to the arraylist storing them
+                }
+            }
+
+        }
+
+    }
+
+    public boolean checkThreeMarbles(int[][] pushing,  MoveDirection direction, int[][] board, int playerTurn){
+        if(checkSideways(pushing[0], pushing[1], pushing[2], direction, board, playerTurn)) {
+            //if the marbles move sideways they cannot push anything. Check if all marbles move to a free spot.
+            if(checkEmptySpots(pushing[0], direction, board)  && checkEmptySpots(pushing[1], direction, board) && checkEmptySpots(pushing[2])) {
+                return true;
+            }
+            return false;
+        }
+        int[] leadingMarble = findLeadingMarble(pushing, direction, board, playerTurn);
+        switch (checkSquareForColor(leadingMarble,direction,board)) {
+            case -1: return false;  //move not valid if out of bounds
+            case 0: return true;    //move valid if empty spot
+            case 1:
+                if(playerTurn == 1){ return false; } //NOT valid if trying to push own marble
+                else {
+
+                    int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
+                    if(checkSquareForColor(pushedMarbleLocation,direction,board) == 2)
+                        return false;
+
+                    else if(checkSquareForColor(pushedMarbleLocation,direction,board) == 0){
+                        pushingMove=true;
+                        marblesToBePushed.add(pushedMarbleLocation);
+                        return true;
+                    }
+                    else if(checkSquareForColor(pushedMarbleLocation,direction,board) == 1){
+
+                        int[] pushedMarble2Location = checkSquareForLocation(pushedMarbleLocation,direction,board);
+                        if(checkSquareForColor(pushedMarble2Location,direction,board) == 0){
+                            pushingMove = true;
+                            marblesToBePushed.add(pushedMarbleLocation);
+                            marblesToBePushed.add(pushedMarble2Location);
+                            return true;
+                        }
+                        else
+                            return false;
+                    }
+                    else
+                        return false;
+                }
+
+
+            case 2:
+                if(playerTurn == 2){ return false; } //NOT valid if trying to push own marble
+                int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
+                else {
+
+                if(checkSquareForColor(pushedMarbleLocation,direction,board) == 1)
+                    return false;
+                else if(checkSquareForColor(pushedMarbleLocation,direction,board) == 0){
+                    pushingMove=true;
+                    marblesToBePushed.add(pushedMarbleLocation);
+                    return true;
+                }
+                else if(checkSquareForColor(pushedMarbleLocation,direction,board) == 2){
+
+                    int[] pushedMarble2Location = checkSquareForLocation(pushedMarbleLocation,direction,board);
+                    if(checkSquareForColor(pushedMarble2Location,direction,board) == 0){
+                        pushingMove = true;
+                        marblesToBePushed.add(pushedMarbleLocation);
+                        marblesToBePushed.add(pushedMarble2Location);
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+
+            }
+
+        }
+    }
+
+    /**
+     checks what is behind a certain marble to be pushed
+     @param marblePushed An array storing the coordinates of the marble going to be pushed
+     @param direction A direction of the MoveDirection enum, Direction in which the selected marbles are going to push
+     @returns an int. 1 if there is a marble of player 1, 2 if it's player 2 marble, etc.
+     */
+//    public int checkSpotBehindPushedMarble(int[] marblePushed, MoveDirection direction, int[][] board, int playerTurn){
+//        switch (direction){
+//            case TOP_LEFT: return checkSquareForColor(marblePushed,MoveDirection.BOTTOM_RIGHT, board);
+//
+//            case TOP_RIGHT: return checkSquareForColor(marblePushed,MoveDirection.BOTTOM_LEFT,board);
+//
+//            case LEFT: return checkSquareForColor(marblePushed,MoveDirection.RIGHT,board);
+//
+//            case RIGHT: return checkSquareForColor(marblePushed,MoveDirection.LEFT,board);
+//
+//            case BOTTOM_LEFT: return checkSquareForColor(marblePushed,MoveDirection.TOP_RIGHT,board);
+//
+//            case BOTTOM_RIGHT: return checkSquareForColor(marblePushed,MoveDirection.TOP_LEFT,board);
+//
+//
+//        }
+//    }
+
+//    public MoveDirection getOppositeDirection(MoveDirection) {
+//        switch (direction) {
+//            case TOP_LEFT:
+//                return MoveDirection.BOTTOM_RIGHT;
+//
+//            case TOP_RIGHT:
+//                return MoveDirection.BOTTOM_LEFT;
+//
+//            case LEFT:
+//                return MoveDirection.RIGHT;
+//
+//            case RIGHT:
+//                return ,MoveDirection.LEFT;
+//
+//            case BOTTOM_LEFT:
+//                return MoveDirection.TOP_RIGHT;
+//
+//            case BOTTOM_RIGHT:
+//                return MoveDirection.TOP_LEFT;
+//
+//        }
+//    }
+
+
 
     /**
      checks if a suggested move will leave a marble out of bounds
@@ -168,14 +414,15 @@ public class Rules {
     }
 
     /**
-     Returns the position in the array of colors where a move from a selected marble will end up.
+     returns the position in the array of colors where a move from a selected marble will end up.
 
      @param board A 2D integer array that contains the colors of every position on the hexagon.
      @param direction an enum that contains the direction of the suggested move.
      @param marble An integer array with length 2. The first int is the row the marble is at and the second int
      is the column the marble is at.
+     @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
 
-     @returns an integer of size 2 containing the row and column the move will leave you at.
+     @returns an integer array of size 2 containing the row and column the move will leave you at.
      */
     public static int[] checkSquareForLocation(int[] marble, MoveDirection direction, int[][] board) {
         int[] location;
@@ -293,32 +540,40 @@ public class Rules {
         return -1;
     }
 
-
     /**
-     Checks if a row of 2 or 3 marbles is moving sideways. ONLY WORKS IF THE TWO MARBLES ENTERED ARE CONNECTED.
-     @param marble1 a marble in the selected row.
-     @param marble2 a marble connected to marble 1 that is also in the selected row.
+     checks if a row of 2 or 3 marbles is moving sideways.
+     @param marble 1 a marble in the selected row.
+     @param marble 2 a marble connected to marble 1 that is also in the selected row.
      @param direction the direction the row is moving in.
      @param board A 2D integer array that contains the colors of every position on the hexagon.
 
      @returns a boolean. True if the marbles are moving sideways. False if they are not.
      */
-    private static boolean checkSideWays(int[] marble1, int[] marble2, MoveDirection direction, int[][] board) {
+    public static boolean checkSideWays(int[] marble1, int[] marble2, MoveDirection direction, int[][] board) {
         int[] moveFromMarble1 = checkSquareForLocation(marble1, direction, board);
         int[] moveFromMarble2 = checkSquareForLocation(marble2, direction, board);
         if(Arrays.equals(moveFromMarble1, marble2) || Arrays.equals(moveFromMarble2, marble1)) { return false; }
+        else
+            return true;
+    }
+
+    public static boolean checkSideWays(int[] marble1, int[] marble2, int[] marble3 MoveDirection direction, int[][] board) {
+        int[] moveFromMarble1 = checkSquareForLocation(marble1, direction, board);
+        int[] moveFromMarble2 = checkSquareForLocation(marble2, direction, board);
+        int[] moveFromMarble3 = checkSquareForLocation(marble3,direction,board);
+        if(Arrays.equals(moveFromMarble1, marble2) || Arrays.equals(moveFromMarble2, marble1) || Arrays.equals(moveFromMarble3, marble2) || Arrays.equals(moveFromMarble2, marble3) ) { return false; }
         return true;
     }
 
     /**
-     Checks if a move is permitted for a single marble.
+     checks if a move is permitted for a single marble.
      @param direction the direction the row is moving in.
      @param board A 2D integer array that contains the colors of every position on the hexagon.
      @param marble An integer array with length 2. The first int is the row the marble is at and the second int
      is the column the marble is at.
      @returns a boolean. True if the marble is moving to an empty spot. False if it is not.
      */
-    private static boolean checkSingleMarble(int[]marble, MoveDirection direction, int[][] board) {
+    private static boolean checkEmptySpots(int[]marble, MoveDirection direction, int[][] board) {
         //if a single marble does not move out of bounds and moves to an empty spot it is a legal move. return false in any other case
         if (checkOutOfBounds(marble, direction, board)) { return false; }
         if(checkSquareForColor(marble, direction, board) == 0) { return true; }
@@ -326,317 +581,159 @@ public class Rules {
     }
 
     /**
-     Checks if a move is permitted for two marbles.
-     @param direction the direction the row is moving in.
+     searches for and returns the leading marble of the selected row.
+     @param pushing a 2d array containing up to three 2 value rows with marble positions
      @param board A 2D integer array that contains the colors of every position on the hexagon.
+     @param direction an enum that contains the direction of the suggested move.
      @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
-     @returns a boolean. True if the marble is moving to an empty spot. False if it is not.
      */
-    private static boolean checkTwoMarbles(ArrayList<int[]> pushing,  MoveDirection direction, int[][] board, int playerTurn) {
+    public static int[] findLeadingMarble(int[][] pushing, MoveDirection direction, int[][] board, int playerTurn) {
 
-        if(checkSideWays(pushing.get(0), pushing.get(1), direction, board)) {
-            //if the marbles move sideways they cannot push anything. Check if all marbles move to a free spot.
-            if(checkSingleMarble(pushing.get(0), direction, board)  && checkSingleMarble(pushing.get(1), direction, board)) {
-                return true;
-            }
-            return false;
-        }
-        int[] leadingMarble = findLeadingMarble(pushing, direction, board, playerTurn);
-        //check what's in the square the leading marble is about to move to.
-        int[] locationOfMove = checkSquareForLocation(leadingMarble, direction, board); //the location the row of marbles is moving towards.
-
-        switch(checkSquareForColor(leadingMarble, direction, board)) {
-
-            case -1:
-                return true;
-
-            case 0:
-                return true;
-
-            case 1:
-                //if the two marbles are moving towards a marble of the same team return false
-                if(playerTurn==1) {
-                    return false;
-                }
-                //if the marble is the opponent's the move is only legal if the space after is empty
-                if(checkSquareForColor(locationOfMove, direction, board) == 0) {
-                    return true;
-                }
-                return false;
-
-            case 2:
-                //if the two marbles are moving towards a marble of the same team return false
-                if(playerTurn==2) {
-                    return false;
-                }
-                //if the marble is the opponent's the move is only legal if the space after is empty
-                if(checkSquareForColor(locationOfMove, direction, board) == 0) {
-                    return true;
-                }
-                return false;
-        }
-        return false;
-    }
-
-    /**
-     Checks if a move is permitted for three marbles.
-     @param direction the direction the row is moving in.
-     @param board A 2D integer array that contains the colors of every position on the hexagon.
-     @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
-     @returns a boolean. True if the marble is moving to an empty spot. False if it is not.
-     */
-    private static boolean checkThreeMarbles(ArrayList<int[]> pushing,  MoveDirection direction, int[][] board, int playerTurn){
-        if(checkSideWays(pushing.get(0), pushing.get(1), direction, board)) {
-            //if the marbles move sideways they cannot push anything. Check if all marbles move to a free spot
-            if(checkSingleMarble(pushing.get(0), direction, board)  && checkSingleMarble(pushing.get(1), direction, board) && checkSingleMarble(pushing.get(2), direction, board)) {
-                return true;
-            }
-            return false;
-        }
-        int[] leadingMarble = findLeadingMarble(pushing, direction, board, playerTurn);
-        //check what's in the square the leading marble is about to move to.
-        int[] locationOfMove = checkSquareForLocation(leadingMarble, direction, board); //the location the row of marbles is moving towards.
-
-        switch(checkSquareForColor(leadingMarble, direction, board)) {
-
-            case -1:
-                System.out.println(-1);
-                return false;
-
-            case 0:
-                System.out.println(0);
-                return true;
-
-            case 1:
-                System.out.println(1);
-                //if the three marbles are moving towards a marble of the same team return false
-                if(playerTurn == 1) {
-                    return false;
-                }
-                //check what's beyond the pushed marble.
-                int colorAfterPushedMarble = checkSquareForColor(locationOfMove, direction, board);
-                switch (colorAfterPushedMarble) {
-                    case -1: return true;
-                    case 0: return true;
-                    case 1:
-                        //if it's another marble that belongs to the opponent, check what's beyond that one.
-                        int[] secondPushedMarble = checkSquareForLocation(locationOfMove, direction, board);
-                        //return true if there's an empty space beyond it it or the marble is pushed off the board. False if there is anything else.
-                        if(checkSquareForColor(secondPushedMarble, direction, board) == 0 || checkSquareForColor(secondPushedMarble, direction, board) == -1) {
-                            return true;
-                        }
-                        return false;
-
-                    case 2: return false;
-                }
-
-            case 2:
-                System.out.println(2);
-                //if the three marbles are moving towards a marble of the same team return false
-                if(playerTurn == 2) {
-                    return false;
-                }
-                //check what's beyond the pushed marble.
-                colorAfterPushedMarble = checkSquareForColor(locationOfMove, direction, board);
-                switch (colorAfterPushedMarble) {
-                    case -1: return true;
-                    case 0: return true;
-                    case 1: return false;
-                    case 2:
-                        //if it's another marble that belongs to the opponent, check what's beyond that one.
-                        int[] secondPushedMarble = checkSquareForLocation(locationOfMove, direction, board);
-                        //return true if there's an empty space beyond it it or the marble is pushed off the board. False if there is anything else.
-                        if(checkSquareForColor(secondPushedMarble, direction, board) == 0 || checkSquareForColor(secondPushedMarble, direction, board) == -1) {
-                        }
-                        return false;
-
-                }
-        }
-        return false;
-    }
-    /**
-     * Searches for and returns the leading marble of the selected row.
-     * @param pushing a 2d array containing up to three 2 value rows with marble positions
-     * @param board A 2D integer array that contains the colors of every position on the hexagon.
-     * @param direction an enum that contains the direction of the suggested move.
-     * @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
-     *
-     * @returns //TODO
-     */
-    private static int[] findLeadingMarble(ArrayList<int[]> pushing, MoveDirection direction, int[][] board, int playerTurn) {
-
-        for(int i = 0; i<pushing.size(); i++) {
+        for(int i = 0; i<pushing.length; i++) {
             boolean equalFound = false;
-            for(int j = 0; j<pushing.size(); j++) {
-                if(Arrays.equals(checkSquareForLocation(pushing.get(i),direction,board),pushing.get(j))){
+            for(int j = 0; j<pushing.length; j++) {
+                if(Arrays.equals(checkSquareForLocation(pushing[i],direction,board),pushing[j])){
                     equalFound = true;
                 }
             }
-            if(!equalFound) { return pushing.get(i);}
+            if(!equalFound) { return pushing[i];}
         }
         int[] problem = {-1,-1};
         return problem;
     }
 
     public void performMoveOne(int[] marble, MoveDirection direction, int[][] board)
-    { moveMarble(marble, direction, board); }
+    {
+        int[] location = checkSquareForLocation(marble,direction,board);
+        moveMarble(marble,location, board);
+    }
     public void performMoveTwo(int[] marble1, int[] marble2, MoveDirection direction, int[][] board) {
-        //TODO Check if the move is in the direction of the selected marbles, if it's not, then the move is a sideway movement --> particular case)
-        /*
-        if(checkSidewayMovement){ moveSideways(...);}
-        else if(target direction is empty){
-        */
-        moveMarble(marble2,direction,board); /** QUESTION: What happens if marble1 is in top part of board but marble2 in bottom? Is this valid? maybe need to implement a specific method to move 2 and move 3*/
-        /*
-        else if(target direction is occupied by an opponent marble){pushOpponentOne(...)}
-        */
-    }
-    public void performMoveThree(int[] marble1, int[] marble2, int[] marble3, MoveDirection direction, int[][] board) {
-        //TODO Check if the move is in the direction of the selected marbles, if it's not, then the move is a sideway movement --> particular case)
-        /*
-        if(checkSidewayMovement){ moveSideways(...);}
-        else if(target direction is empty){
-        */
-        moveMarble(marble3,direction,board); /** QUESTION: Same question but with 3 marbles..*/
-        //else if(target direction is occupied by an opponent marble){pushOpponentTwo(...)}
-    }
 
+        if(!pushingMove){
+            int[] location1 = checkSquareForLocation(marble1,direction,board);
+            moveMarble(marble1,location1,board);
+            int[] location2=checkSquareForLocation(marble2,direction,board);
+            moveMarble(marble2,location2,board);
+        }
+        else if(pushingMove){
+            int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),direction, board);
+            moveMarble(marblesToBePushed.get(0),nLocation,board);
+            int[] location1 = checkSquareForLocation(marble1,direction,board);
+            moveMarble(marble1,location1,board);
+            int[] location2 = checkSquareForLocation(marble2,direction,board);
+            moveMarble(marble2,location2,direction,board);
 
-    public void moveMarble(int[] marble, MoveDirection direction, int[][] board) {
-        switch (direction)
-        {
-            case TOP_LEFT:
-                //Check if bottom or top part of the board
-                // Then replace value of target direction to player's number
-                if (marble[0] >= 5)
-                {
-                    if(playerTurn == 1)
-                    {
-                        board[marble[0]-1][marble[1]] = 1; // Then replace value of target direction to player's number. So here 1 because it is player 1 turn
-                        board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
-                    }
-                    else if(playerTurn == 2)
-                    {
-                        board[marble[0]-1][marble[1]] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
-                        board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
-                    }
-                }
-                else
-                {
-                    if(playerTurn == 1)
-                    {
-                        board[marble[0]-1][marble[1]-1] = 1; // Then replace value of target direction to player's number. So here 1 because it is player 1 turn
-                        board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
-                    }
-                    else if(playerTurn == 2)
-                    {
-                        board[marble[0]-1][marble[1]-1] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
-                        board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
-                    }
-                }
-            case TOP_RIGHT:
-                if (marble[0] >= 5)
-                {
-                    if(playerTurn == 1)
-                    {
-                        board[marble[0]-1][marble[1]+1] = 1;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                    else if(playerTurn == 2)
-                    {
-                        board[marble[0]-1][marble[1]+1] = 2;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                }
-                else
-                {
-                    if(playerTurn == 1)
-                    {
-                        board[marble[0]-1][marble[1]] = 1;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                    else if(playerTurn == 2)
-                    {
-                        board[marble[0]-1][marble[1]] = 2;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                }
-            case BOTTOM_RIGHT:
-                if (marble[0] >= 5)
-                {
-                    if(playerTurn == 1)
-                    {
-                        board[marble[0]+1][marble[1]] = 1;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                    else if(playerTurn == 2)
-                    {
-                        board[marble[0]+1][marble[1]] = 2;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                }
-                else
-                {
-                    if(playerTurn == 1)
-                    {
-                        board[marble[0]+1][marble[1]+1] = 1;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                    else if(playerTurn == 2)
-                    {
-                        board[marble[0]+1][marble[1]+1] = 2;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                }
-            case BOTTOM_LEFT:
-                if (marble[0] >= 5)
-                {
-                    if(playerTurn == 1)
-                    {
-                        board[marble[0]+1][marble[1]-1] = 1;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                    else if(playerTurn == 2)
-                    {
-                        board[marble[0]+1][marble[1]-1] = 2;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                }
-                else
-                {
-                    if(playerTurn == 1)
-                    {
-                        board[marble[0]+1][marble[1]] = 1;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                    else if(playerTurn == 2)
-                    {
-                        board[marble[0]+1][marble[1]] = 2;
-                        board[marble[0]][marble[1]] = 0;
-                    }
-                }
-            case RIGHT:
-                if(playerTurn == 1)
-                {
-                    board[marble[0]][marble[1]+1] = 1;
-                    board[marble[0]][marble[1]] = 0;
-                }
-                else if(playerTurn == 2)
-                {
-                    board[marble[0]][marble[1]+1] = 2;
-                    board[marble[0]][marble[1]] = 0;
-                }
-            case LEFT:
-                if(playerTurn == 1)
-                {
-                    board[marble[0]][marble[1]-1] = 1;
-                    board[marble[0]][marble[1]] = 0;
-                }
-                else if(playerTurn == 2)
-                {
-                    board[marble[0]][marble[1]-1] = 2;
-                    board[marble[0]][marble[1]] = 0;
-                };
         }
     }
+    /** I used it because I thought I had to push/move the marbles in opposite directions but it is actually the same*/
+//    /** Perform the push of the marble that has to be pushed*/
+//    public void pushOneMarble(MoveDirection direction, int[][] board){
+//        switch (direction){
+//            case TOP_LEFT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.BOTTOM_RIGHT, board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//
+//            case TOP_RIGHT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.BOTTOM_LEFT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//
+//            case LEFT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.RIGHT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//
+//            case RIGHT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.LEFT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//
+//            case BOTTOM_LEFT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.TOP_RIGHT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//
+//            case BOTTOM_RIGHT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.TOP_LEFT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//        }
+//    }
+
+    public void performMoveThree(int[] marble1, int[] marble2, int[] marble3, MoveDirection direction, int[][] board) {
+
+        if(!pushingMove){
+            int[] location1 = checkSquareForLocation(marble1,board);
+            moveMarble(marble1,location1,direction,board);
+            int[] location2=checkSquareForLocation(marble2,board);
+            moveMarble(marble2,location2,direction,board);
+            int[] location3 = checkSquareForLocation(marble3,board);
+            moveMarble(marble3,location3,board);
+        }
+        else if(pushingMove){
+            int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),direction, board);
+            moveMarble(marblesToBePushed.get(1),nLocation2,board);
+            int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),direction, board);
+            moveMarble(marblesToBePushed.get(0),nLocation,board);
+            int[] location1 = checkSquareForLocation(marble1,board);
+            moveMarble(marble1,location1,direction,board);
+            int[] location2=checkSquareForLocation(marble2,board);
+            moveMarble(marble2,location2,direction,board);
+            int[] location3 = checkSquareForLocation(marble3,board);
+            moveMarble(marble3,location3,board);
+        }
+    }
+
+    /** I used it because I thought I had to push/move the marbles in opposite directions but it is actually the same*/
+//    public void pushTwoMarble(MoveDirection direction, int[][] board){
+//        switch (direction){
+//            case TOP_LEFT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.BOTTOM_RIGHT, board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.BOTTOM_RIGHT, board);
+//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
+//
+//
+//            case TOP_RIGHT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.BOTTOM_LEFT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.BOTTOM_LEFT, board);
+//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
+//
+//
+//            case LEFT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.RIGHT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.RIGHT, board);
+//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
+//
+//            case RIGHT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.LEFT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.LEFT, board);
+//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
+//
+//            case BOTTOM_LEFT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.TOP_RIGHT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.TOP_RIGHT, board);
+//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
+//
+//            case BOTTOM_RIGHT:
+//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.TOP_LEFT,board);
+//                moveMarble(marblesToBePushed.get(0),nLocation,board);
+//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.TOP_LEFT board);
+//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
+//        }
+//    }
+
+
+    public void moveMarble(int[] marble, int[] location, int[][] board) {
+        if(playerTurn == 1)
+        {
+            board[location[0]][location[1]] = 1; // Then replace value of target direction to player's number. So here 1 because it is player 1 turn
+            board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
+        }
+        else if(playerTurn == 2)
+        {
+            board[location[0]][location[1]] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
+            board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
+        }
+    }
+
 }
