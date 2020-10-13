@@ -36,7 +36,16 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
-application {
-    // Define the main class for the application.
+run {
     mainClassName = 'Abalon.UI.HomePage'
+    standardInput = System.in
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task(runRulesTest, dependsOn: 'classes', type: JavaExec) {
+    main = 'Abalon.Main.TestRules'
+}
+
+task(testCollect, dependsOn: 'classes', type: JavaExec) {
+    main = 'Abalon.Main.PlayerH'
 }

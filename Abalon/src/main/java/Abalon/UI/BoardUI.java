@@ -40,6 +40,10 @@ public class BoardUI {
         drawAllScoredCells();
     }
 
+    public int[][] getBoard() {
+        return cellColors;
+    }
+
     /**
      * Creates the board itself shaped like a hexagon
      * @return the hexagon (representing the board)
@@ -118,7 +122,7 @@ public class BoardUI {
                     circle.setEffect(innerShadow);
                 }
 
-                marbleSelecting(circle, (Color)circle.getFill(), BROWN, i, j);
+                //marbleSelecting(circle, (Color)circle.getFill(), BROWN, i, j);
                 //marbleHovering(circle, (Color)circle.getFill(), BROWN, i, j);
             }
             // update the number of circles per level
@@ -247,14 +251,34 @@ public class BoardUI {
             case 2:  c = LIGHTSKYBLUE; break;
             default: break;
         }
-        if (c != null)
+        if (c != null) {
             circles[i][j].setFill(c);
+            if(circles[i][j].getFill() == MEDIUMBLUE || circles[i][j].getFill() == LIGHTSKYBLUE){
+                Light.Point light = new Light.Point(); //point of light on marbles
+                light.setColor(Color.WHITE); // color of the light
+                //Setting the position of the light
+                light.setX(70);
+                light.setY(55);
+                light.setZ(45);
+                Lighting lighting = new Lighting();
+                lighting.setLight(light);
+                //Applying the Lighting effect to the circle
+                circles[i][j].setEffect(lighting);
+
+            }else if(circles[i][j].getFill() == BISQUE){ //add shadow effect on holes
+                InnerShadow innerShadow = new InnerShadow();
+                innerShadow.setOffsetX(4);
+                innerShadow.setOffsetY(4);
+                innerShadow.setColor(Color.GRAY); //color of the shadow
+                circles[i][j].setEffect(innerShadow);
+            }            
+        }
     }
 
     /**
      * Colours all the circles of the board
      */
-    private void drawAllCells() {
+    public void drawAllCells() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 drawCell(i, j);
@@ -277,6 +301,25 @@ public class BoardUI {
         }
         if (c != null) {
             scoredCircles[i][player].setFill(c);
+            
+            if (c == ORANGE) {
+                InnerShadow innerShadow = new InnerShadow();
+                innerShadow.setOffsetX(4);
+                innerShadow.setOffsetY(4);
+                innerShadow.setColor(Color.GRAY); //color of the shadow
+                scoredCircles[i][player].setEffect(innerShadow);
+            } else {
+                Light.Point light = new Light.Point(); //point of light on marbles
+                light.setColor(Color.WHITE); // color of the light
+                //Setting the position of the light
+                light.setX(70);
+                light.setY(55);
+                light.setZ(45);
+                Lighting lighting = new Lighting();
+                lighting.setLight(light);
+                //Applying the Lighting effect to the circle
+                scoredCircles[i][player].setEffect(lighting);
+            }
         }
     }
 
@@ -299,7 +342,7 @@ public class BoardUI {
      * @param i the index of the circle to be selected
      * @param j the second index of the circle to be selected
      */
-    private void marbleSelecting(Circle circle, Color originalColor, Color selectionColor, int i, int j){
+    /*private void marbleSelecting(Circle circle, Color originalColor, Color selectionColor, int i, int j){
         circle.setOnMouseClicked(e -> {
             counter[i][j]++;
             if(counter[i][j] %2 != 0){ //if the count is odd, it means the marble has been selected and changes of color

@@ -28,13 +28,13 @@ public class TestRules {
         System.out.println(direction);
         int playerTurn = 1;
 
-        Rules testMove = new Rules(direction, pushing,1,board,playerTurn); // Example of the use of the constructor
+        //Rules testMove = new Rules(direction, pushing,1,board,playerTurn); // Example of the use of the constructor
 
 
 
-        System.out.println("check move: " + testMove.checkMove(pushing, direction, board, playerTurn));
-        System.out.println("check location: " + testMove.checkSquareForLocation(pushing[0], direction, board)[0] + ", " + testMove.checkSquareForLocation(pushing[0], direction, board)[1]);
-        System.out.println(testMove.checkSquareForColor(pushing[0], direction, board));
+        //System.out.println("check move: " + testMove.checkMove(pushing, direction, board, playerTurn));
+        //System.out.println("check location: " + testMove.checkSquareForLocation(pushing[0], direction, board)[0] + ", " + testMove.checkSquareForLocation(pushing[0], direction, board)[1]);
+        //System.out.println(testMove.checkSquareForColor(pushing[0], direction, board));
 
         /*
         ArrayList<int[]> pushing2 = new ArrayList<int[]>();
@@ -45,6 +45,4 @@ public class TestRules {
         pushing2.add(marble2);
         pushing2.add(marble3); */
     }
-
-
 }

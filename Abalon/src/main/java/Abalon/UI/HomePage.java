@@ -153,12 +153,9 @@ public class HomePage extends Application {
         primaryStage.setTitle("Abalone");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {
         launch();
     }
 }
-
-    

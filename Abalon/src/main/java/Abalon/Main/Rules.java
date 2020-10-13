@@ -1,4 +1,5 @@
 package Abalon.Main;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,7 +10,6 @@ import java.util.Arrays;
  * move.move(); > are lines similar to the ones that should be after the selection of marbles
  * */
 public class Rules {
-
 
     private int[][] board;
     private int playerTurn;
@@ -26,12 +26,12 @@ public class Rules {
      *  @param selectedNb the number of marbles selected (1, 2 or 3)
      *  @param currentBoard the board which defines the positions of the marbles
      */
-    public Rules(MoveDirection moveTo, int[][] selectedMarbles, int selectedNb, int[][] currentBoard, int turn){
-        playerTurn = turn;
-        direction=moveTo;
-        marblesSelected=selectedMarbles;
-        nbSelected=selectedNb;
-        this.board=currentBoard;
+    public Rules(Move mv){
+        playerTurn = mv.turn;
+        direction= mv.dir;
+        marblesSelected=mv.pushing;
+        nbSelected=mv.pushing.length;
+        board=mv.board;
     }
 
     public void move(){

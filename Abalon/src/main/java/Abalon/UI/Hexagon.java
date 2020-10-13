@@ -17,27 +17,15 @@ import javafx.embed.swing.SwingFXUtils;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
+import Abalon.Main.Abalon;
+import Abalon.Main.Player;
+import Abalon.Main.PlayerH;
+
 /**
  * TODO Add marbles to the board and create Home page
  * Home Page: Aaron
  * Marbles: Aaron + Adèle 
  */
-
-/*
-==================================================================================================================
-                                                   TODO
-==================================================================================================================
-
-    1) I already created separate Board in backend. Its gonna be pretty messy if we keep things in one place, 
-    so I suggest splitting it
-    2) Use Notation. It will store absolute positions of marbles. You can set coordinates manually 
-    if the marble is outside of the board or just pass notation and Notation will calculate absolute
-    coordinates authomatically.   
-    3) BoardUI should be responsible for UI only. I'll move all backend-related stuff from there myself soon.
-    4) Marbles is just a list-like class. It contains only data about marbles and getters/setters for them, 
-    I dont think wee need anything else to be done there
-==================================================================================================================
-*/
 
 public class Hexagon extends Application {
 
@@ -104,6 +92,19 @@ public class Hexagon extends Application {
         primaryStage.setTitle("Abalone");
         primaryStage.setScene(scene);
         primaryStage.show();
+    
+        Player p1 = new PlayerH();
+        Player p2 = new PlayerH();
 
+        Thread gameThread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                Abalon game = new Abalon(board, p1, p2);
+            game.runGame();
+            }
+        });
+        gameThread.setDaemon(false);
+        gameThread.start();
     }
 }
