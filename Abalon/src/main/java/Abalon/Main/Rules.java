@@ -83,18 +83,22 @@ public class Rules {
 
         switch(pushing.length) {
 
-            case 1: return checkSingleMarble(pushing[0], direction, board,playerTurn);
+            case 1: System.out.println(checkSingleMarble(pushing[0], direction, board,playerTurn)); return checkSingleMarble(pushing[0], direction, board,playerTurn);
 
-            case 2: return checkTwoMarbles(pushing, direction, board, playerTurn);
+            case 2: System.out.println(checkTwoMarbles(pushing, direction, board, playerTurn)); return checkTwoMarbles(pushing, direction, board, playerTurn);
 
-            case 3: return checkThreeMarbles(pushing,direction,board,playerTurn); //TODO: method to be implemented
+            case 3: System.out.println(checkThreeMarbles(pushing,direction,board,playerTurn)); return checkThreeMarbles(pushing,direction,board,playerTurn); //TODO: method to be implemented
 
         }
         return false;
     }
+    private boolean checkSingleMarble(int[] marble, MoveDirection direction, int[][] board, int playerTurn) {
+        if(checkSquareForColor(marble, direction, board) == 0) { return true; }
+        return false;
 
-    private  boolean checkSingleMarble(int[] marble, MoveDirection direction, int[][] board, int playerTurn) {
+    }
 
+    /*private  boolean checkSingleMarble(int[] marble, MoveDirection direction, int[][] board, int playerTurn) {
         if(checkOutOfBounds(marble, direction, board)) { return false; }
         switch(direction) {
 
@@ -122,7 +126,7 @@ public class Rules {
                 }
 
             case BOTTOM_LEFT:
-                if(marble[0] >= 5) {
+                if(marble[0] >= 4) {
                     switch(board[marble[0]+1][marble[1]-1]) {
                         case 0: return true;
                         case 1: return false;
@@ -137,8 +141,8 @@ public class Rules {
                     }
                 }
             case BOTTOM_RIGHT:
-                if(marble[0] >= 5) {
-                    switch(board[marble[0]+1][marble[1]-1]) {
+                if(marble[0] >= 4) {
+                    switch(board[marble[0]+1][marble[1]]) {
                         case 0: return true;
                         case 1: return false;
                         case 2: return false;
@@ -175,7 +179,7 @@ public class Rules {
                 }
         }
         return false;
-    }
+    }*/
 
     private boolean checkTwoMarbles(int[][] pushing,  MoveDirection direction, int[][] board, int playerTurn) {
 
@@ -430,7 +434,7 @@ public class Rules {
                     return false;
                 }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -466,7 +470,7 @@ public class Rules {
                 return location;
 
             case BOTTOM_LEFT:
-                if(marble[0] >= 5) {
+                if(marble[0] >= 4) {
                     location = new int[] {marble[0]+1, marble[1]-1};
                     return location;
                 }
@@ -476,8 +480,8 @@ public class Rules {
                 }
 
             case BOTTOM_RIGHT:
-                if(marble[0] >= 5) {
-                    location = new int[] {marble[0]+1, marble[1]-1};
+                if(marble[0] >= 4) {
+                    location = new int[] {marble[0]+1, marble[1]};
                     return location;
                 }
                 else {
@@ -532,7 +536,7 @@ public class Rules {
                 return board[marble[0]][marble[1]-1];
 
             case BOTTOM_LEFT:
-                if(marble[0] >= 5) {
+                if(marble[0] >= 4) {
                     return board[marble[0]+1][marble[1]-1];
                 }
                 else {
@@ -540,8 +544,8 @@ public class Rules {
                 }
 
             case BOTTOM_RIGHT:
-                if(marble[0] >= 5) {
-                    return board[marble[0]+1][marble[1]-1];
+                if(marble[0] >= 4) {
+                    return board[marble[0]+1][marble[1]];
                 }
                 else {
                     return board[marble[0]+1][marble[1]+1];
@@ -616,7 +620,7 @@ public class Rules {
                     equalFound = true;
                 }
             }
-            if(!equalFound) { return pushing[i];}
+            if(!equalFound) { System.out.println("leading marble: " + pushing[i][0] + " " + pushing[i][1]); return pushing[i];}
         }
         int[] problem = {-1,-1};
         return problem;
@@ -624,6 +628,7 @@ public class Rules {
 
     public void performMoveOne(int[] marble, MoveDirection direction, int[][] board) {
         int[] location = checkSquareForLocation(marble,direction,board);
+        System.out.println(location[0] + " " + location[1]);
         new_board[marble[0]][marble[1]] = 0;
         moveMarble(marble,location, board);
     }
@@ -633,6 +638,7 @@ public class Rules {
         new_board[marble2[0]][marble2[1]] = 0;
             
         if(!pushingMove) {
+            System.out.println("heyo");
             int[] location1 = checkSquareForLocation(marble1,direction,board);
             moveMarble(marble1,location1,board);
             int[] location2=checkSquareForLocation(marble2,direction,board);
