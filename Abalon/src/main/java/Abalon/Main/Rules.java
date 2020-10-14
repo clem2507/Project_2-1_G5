@@ -773,7 +773,7 @@ public class Rules {
 
 
     public void moveMarble(int[] marble, int[] location, int[][] board) {
-        if(playerTurn == 1)
+        /*if(playerTurn == 1)
         {
             new_board[location[0]][location[1]] = 1; // Then replace value of target direction to player's number. So here 1 because it is player 1 turn
             //board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
@@ -782,7 +782,8 @@ public class Rules {
         {
             new_board[location[0]][location[1]] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
             //board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
-        }
+        }*/
+        new_board[location[0]][location[1]] = board[marble[0]][marble[1]];
     }
 
 }
