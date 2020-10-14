@@ -196,8 +196,9 @@ public class Rules {
                 else {
                     int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
                     //If spot behind pushedMarble is not empty, the move is not valid as two marbles can only push 1.
-                    if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0)
+                    if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0 || checkSquareForColor(pushedMarbleLocation,direction,board) != -1) {
                         return false;
+                    }
                     else{
                         pushingMove = true;
                         marblesToBePushed.add(pushedMarbleLocation);
@@ -209,7 +210,7 @@ public class Rules {
                 if(playerTurn == 2){ return false; }
                 else {
                     int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
-                    if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0) //If spot behind pushedMarble is not empty, the move is not valid.
+                    if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0 || checkSquareForColor(pushedMarbleLocation,direction,board) != -1) //If spot behind pushedMarble is not empty, the move is not valid.
                         return false;
                     else{
                         pushingMove = true; // set the move as a pushing move

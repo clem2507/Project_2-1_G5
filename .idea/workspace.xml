@@ -22,7 +22,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38210eae-fd5e-4a46-95a0-b06da393825a" name="Default Changelist" comment="" />
+    <list default="true" id="38210eae-fd5e-4a46-95a0-b06da393825a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/Main/Rules.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/Main/Rules.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,17 +45,7 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Project_2-1_G5" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Project_2-1_G5" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
@@ -91,6 +85,17 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager" selected="Application.Hexagon">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Abalon.App" />
       <module name="Project2-1.main" />
@@ -130,17 +135,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.App" />
       <item itemvalue="Application.ExampleJavaFx" />
@@ -155,6 +149,9 @@
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="38210eae-fd5e-4a46-95a0-b06da393825a" name="Default Changelist" comment="" />
@@ -181,12 +178,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="104" y="35" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600006856043">
@@ -253,6 +251,10 @@
     <state x="128" y="0" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1600004048102" />
     <state x="192" y="0" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1600103710189" />
     <state x="128" y="23" key="SettingsEditor/0.23.1280.741@0.23.1280.741" timestamp="1600002899833" />
+    <state x="1919" y="372" key="com.intellij.ide.util.TipDialog" timestamp="1602673024724">
+      <screen x="1280" y="0" width="1920" height="1080" />
+    </state>
+    <state x="1919" y="372" key="com.intellij.ide.util.TipDialog/0.0.1280.800/1280.0.1920.1080@1280.0.1920.1080" timestamp="1602673024724" />
     <state x="8" y="23" key="new project wizard" timestamp="1600002567473">
       <screen x="0" y="23" width="1280" height="741" />
     </state>
