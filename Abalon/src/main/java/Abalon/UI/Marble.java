@@ -3,7 +3,9 @@ package Abalon.UI;
 import javafx.scene.shape.Circle;
 
 public class Marble extends Circle {
-	public int x, y;
+	public Marble(double radius) {
+		super(radius);
+	}
 
-	int color = 0;
+	public int x, y;
 }

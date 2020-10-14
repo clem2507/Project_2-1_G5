@@ -4,6 +4,8 @@ import Abalon.UI.BoardUI;
 import java.awt.EventQueue;
 import javafx.application.Platform;
 
+import java.lang.InterruptedException;
+
 /**
  * Abalon class that serves to run a new game
  */
@@ -48,10 +50,15 @@ public class Abalon {
 		System.out.println("kek");
 
 		for (int i = 0; i < 100; i++) {
-			Move mv = player[i & 1].collectMove();
-			mv.board = board.getBoard();
-			Rules checkRules = new Rules(mv);
-			checkRules.move();
+			try {
+				Move mv = player[i & 1].collectMove();
+				mv.board = board.getBoard();
+				Rules checkRules = new Rules(mv);
+				checkRules.move();
+			} catch (InterruptedException e) {
+				System.out.println("concurrency problem, aborting...");
+				System.exit(0);
+			}
 
 			Platform.runLater(new Runnable() {
 				@Override

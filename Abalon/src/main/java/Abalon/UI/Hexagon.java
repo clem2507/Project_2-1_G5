@@ -32,6 +32,8 @@ public class Hexagon extends Application {
     private final double WIDTH = 1270;
     private final double HEIGHT = 700;
 
+    public static Scene accessableScene;
+
     // Hexagon should access Board to obtain Marbles positions, color, etc 
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
 
@@ -93,6 +95,8 @@ public class Hexagon extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     
+        accessableScene = scene;
+
         Player p1 = new PlayerH();
         Player p2 = new PlayerH();
 
@@ -101,7 +105,7 @@ public class Hexagon extends Application {
             @Override
             public void run() {
                 Abalon game = new Abalon(board, p1, p2);
-            game.runGame();
+                game.runGame();
             }
         });
         gameThread.setDaemon(false);

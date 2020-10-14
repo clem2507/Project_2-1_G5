@@ -6,6 +6,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import static javafx.scene.paint.Color.*;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+
 /**
  * This class takes care of the UI by defining the look of the marbles, the holes and the board
  */
@@ -13,17 +16,17 @@ import static javafx.scene.paint.Color.*;
 public class BoardUI {
 
     private int[][] cellColors; // each cell of the board is associated to an integer which defines whether it
+    private boolean[][] selected;
+
                                // is a marble, a hole or out of the board
-    public Circle[][] circles; // array of all the Circles of the board (might be a hole or a marble)
+    public Marble[][] circles; // array of all the Circles of the board (might be a hole or a marble)
 
     private int[][] scoredCirclesColors; // player
     public Circle[][] scoredCircles; // first index is the number of the marble, second is the number of the player
 
     public Polygon hexagon; // the board shaped like an hexagon
 
-    private boolean[][] selected = new boolean[9][9]; // array of boolean associated to each cell (used to know
-                                                      // whether a marble is selected (true) or not (false)
-    private int[][] counter = new int[9][9]; // counters associated to each cell, used to check how much time a cell
+        private int[][] counter = new int[9][9]; // counters associated to each cell, used to check how much time a cell
                                             // has been clicked by the mouse
 
     private final double RADIUS = 22; // radius of the circles (marbles & holes)
@@ -33,10 +36,9 @@ public class BoardUI {
 
         createColors();
         createCircles();
-        drawAllCells();
-
         createScoredCircles();
         createScoredCirclesColors();
+        drawAllCells();
         drawAllScoredCells();
     }
 
@@ -77,14 +79,53 @@ public class BoardUI {
         return hexagon;
     }
 
+    public int[][] getSelected() {
+        int[][] ans;
+        int cnt = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (selected[i][j]) {
+                    cnt++;
+                }
+            }
+        }
+
+        ans = new int[cnt][2];
+        cnt = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (selected[i][j]) {
+                    ans[cnt][0] = i;
+                    ans[cnt][1] = j;
+                    cnt++;
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    public void unselect() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                selected[i][j] = false;
+            }
+        }
+    }
+
     /**
      * Create all circles of the board (a circle can be either a hole, or a marble)
     */
     private void createCircles() {
-        circles = new Circle[9][9];
+        circles = new Marble[9][9];
         for (int i = 0; i < 9; i++)
             for (int j = 0; j < 9; j++)
                 circles[i][j] = null;
+
+        selected = new boolean[9][9];
+        for (int i = 0; i < 9; i++) 
+            for (int j = 0; j < 9; j++)
+                selected[i][j] = false;
 
         int nc = 5; // nc: number of circles
         double x_coord = 490;
@@ -94,9 +135,20 @@ public class BoardUI {
 
             for (int j = 0; j < nc; j++)
             {
-                Circle circle = new Circle(RADIUS);
+                Marble circle = new Marble(RADIUS);
                 circle.setCenterX(x_coord);
                 circle.setCenterY(y_coord);
+                circle.x = i;
+                circle.y = j;
+
+                circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        selected[circle.x][circle.y] ^= true;
+                        drawAllCells();
+                    }
+                });
+
                 circles[i][j] = circle;
                 x_coord += RADIUS * 2 + 25;
                 drawCell(i,j);
@@ -251,9 +303,12 @@ public class BoardUI {
             case 2:  c = LIGHTSKYBLUE; break;
             default: break;
         }
+        if (selected[i][j])
+            c = GREEN;
+
         if (c != null) {
             circles[i][j].setFill(c);
-            if(circles[i][j].getFill() == MEDIUMBLUE || circles[i][j].getFill() == LIGHTSKYBLUE){
+            if(c == MEDIUMBLUE || c == LIGHTSKYBLUE || c == GREEN){
                 Light.Point light = new Light.Point(); //point of light on marbles
                 light.setColor(Color.WHITE); // color of the light
                 //Setting the position of the light
@@ -265,7 +320,7 @@ public class BoardUI {
                 //Applying the Lighting effect to the circle
                 circles[i][j].setEffect(lighting);
 
-            }else if(circles[i][j].getFill() == BISQUE){ //add shadow effect on holes
+            }else if(c == BISQUE){ //add shadow effect on holes
                 InnerShadow innerShadow = new InnerShadow();
                 innerShadow.setOffsetX(4);
                 innerShadow.setOffsetY(4);
@@ -284,6 +339,7 @@ public class BoardUI {
                 drawCell(i, j);
             }
         }
+        drawAllScoredCells();
     }
 
     /**
@@ -327,6 +383,21 @@ public class BoardUI {
      * Colours all the circles for both players
      */
     private void drawAllScoredCells() {
+        int cnt1 = 14, cnt2 = 14;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (cellColors[i][j] == 1)
+                    cnt1--;
+                else if (cellColors[i][j] == 2)
+                    cnt2--;
+            }
+        }
+
+        for (int i = 0; i < cnt1; i++)
+            scoredCirclesColors[i][0] = 1;
+        for (int i = 0; i < cnt2; i++) 
+            scoredCirclesColors[i][1] = 2;
+
         for (int i = 0; i < 6; i++) {
             drawScoredCell(i, 0);
             drawScoredCell(i, 1); //uncomment when done with the second player side marbles

@@ -49,8 +49,6 @@ public class Rules {
         }
     }
 
-
-
     /**
      checks whether or not a suggested move is legal.
      @param pushing An ArrayList that contains the marbles. MAKE SURE THAT THE CONNECTED MARBLES ARE PLACED IN ORDER.
