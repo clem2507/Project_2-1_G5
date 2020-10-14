@@ -47,8 +47,6 @@ public class Abalon {
 	public void runGame() {
 		//playMove(false);
 
-		System.out.println("kek");
-
 		for (int i = 0; i < 100; i++) {
 			try {
 				Move mv = player[i & 1].collectMove();

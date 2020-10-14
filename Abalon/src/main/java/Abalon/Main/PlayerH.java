@@ -32,6 +32,8 @@ import javafx.scene.input.KeyCode;
 
 import java.lang.InterruptedException;
 
+import java.awt.EventQueue;
+
 public class PlayerH implements Player {
 	private BoardUI board;
 	public int turn;
@@ -66,27 +68,40 @@ public class PlayerH implements Player {
                 case E: dir = MoveDirection.TOP_RIGHT; break;
                 case D: dir = MoveDirection.RIGHT; break;
                 case C: dir = MoveDirection.BOTTOM_RIGHT; break; 
-                case ENTER: flag_inputObtained = true;
-                			System.out.println("enter pressed");
-                            //notify();
-                            break;
+                case ENTER: setDone(); break;
             }
         } 
     };
+
+    public synchronized void setDone() {
+    	flag_inputObtained = true;
+        System.out.println("enter pressed");
+        this.notifyAll();
+    } 
+
+    public synchronized void waitUntilDone() {
+    	while (!flag_inputObtained) {
+    		try {
+    			this.wait();
+    		} catch (InterruptedException e) {
+
+    		}
+    	}
+    }
 
 	@Override
 	public Move collectMove() {//throws InterruptedException {
 		Move ans = new Move();
 		ans.turn = turn;
 		
-		Hexagon.accessableScene.addEventHandler(KeyEvent.KEY_PRESSED, keyHandler);
-		while (!flag_inputObtained) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
+		Thread inpThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Hexagon.accessableScene.addEventHandler(KeyEvent.KEY_PRESSED, keyHandler);				
 			}
-		}
+		});
+		inpThread.start();
+		waitUntilDone();
 
 		/*try { 
 			waitForInput();
