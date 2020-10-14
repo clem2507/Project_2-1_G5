@@ -694,11 +694,21 @@ public class Rules {
         }
         else if(pushingMove) {
             int[] marblet1 = marblesToBePushed.get(0);
-            int[] marblet2 = marblesToBePushed.get(1);
             new_board[marblet1[0]][marblet1[1]] = 0;
-            new_board[marblet2[0]][marblet2[1]] = 0;
-            int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),direction, board);
-            moveMarble(marblesToBePushed.get(1),nLocation2,board);
+            
+            try { 
+                int[] marblet2 = marblesToBePushed.get(1);
+                new_board[marblet2[0]][marblet2[1]] = 0;
+            } catch (Exception ignore) {
+
+            }
+            try {
+                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),direction, board);
+                moveMarble(marblesToBePushed.get(1),nLocation2,board);
+            } catch (Exception ignore) {
+                
+            }
+
             int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),direction, board);
             moveMarble(marblesToBePushed.get(0),nLocation,board);
             int[] location1 = checkSquareForLocation(marble1,direction,board);
