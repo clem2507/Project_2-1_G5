@@ -199,8 +199,9 @@ public class Rules {
                 if(playerTurn == 1){ return false; } //NOT valid if trying to push own marble
                 else {
                     int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
+                    System.out.println("pushedMarbleLocation: " + pushedMarbleLocation[0] + " " + pushedMarbleLocation[1]);
                     //If spot behind pushedMarble is not empty, the move is not valid as two marbles can only push 1.
-                    if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0 || checkSquareForColor(pushedMarbleLocation,direction,board) != -1) {
+                    if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0 && checkSquareForColor(pushedMarbleLocation,direction,board) != -1) {
                         return false;
                     }
                     else{
@@ -214,7 +215,7 @@ public class Rules {
                 if(playerTurn == 2){ return false; }
                 else {
                     int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
-                    if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0 || checkSquareForColor(pushedMarbleLocation,direction,board) != -1) //If spot behind pushedMarble is not empty, the move is not valid.
+                    if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0 && checkSquareForColor(pushedMarbleLocation,direction,board) != -1) //If spot behind pushedMarble is not empty, the move is not valid.
                         return false;
                     else{
                         pushingMove = true; // set the move as a pushing move
@@ -422,7 +423,7 @@ public class Rules {
                 //check if a marble is on the bottom half.
                 if (marble[0] >= 5) {
                     //check if that marble is at the absolute bottom.
-                    if (marble[0] == 9) {
+                    if (marble[0] == 8) {
                         return true;
                     }
                     //check if the marble is on the far right.
