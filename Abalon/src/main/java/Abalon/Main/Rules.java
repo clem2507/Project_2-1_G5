@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class Rules {
 
     private int[][] board;
+    private int[][] new_board = new int[9][9];
     private int playerTurn;
     private MoveDirection direction; //stores the target direction of the current move
     private int[][] marblesSelected; //stores the coordinates of the selected marbles
@@ -32,21 +33,36 @@ public class Rules {
         marblesSelected=mv.pushing;
         nbSelected=mv.pushing.length;
         board=mv.board;
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++)
+                new_board[i][j] = board[i][j];
+        }
     }
 
     public void move(){
-        if(nbSelected == 1) {
-            if(checkMove(marblesSelected,direction,board,playerTurn))
-            { performMoveOne(marblesSelected[0],direction,board); }
+        if (nbSelected == 1) {
+            if (checkMove(marblesSelected,direction,board,playerTurn)) { 
+                performMoveOne(marblesSelected[0],direction,board); 
+                replaceBoard();
+            }   
+        } else if (nbSelected == 2) {
+            if (checkMove(marblesSelected,direction,board,playerTurn)) { 
+                performMoveTwo(marblesSelected[0],marblesSelected[1],direction,board); 
+                replaceBoard();
+            }
+        } else if (nbSelected == 3) {
+            if (checkMove(marblesSelected,direction,board,playerTurn)) { 
+                performMoveThree(marblesSelected[0],marblesSelected[1], marblesSelected[2],direction,board); 
+                replaceBoard();
+            }
         }
-        else if(nbSelected == 2){
-            if(checkMove(marblesSelected,direction,board,playerTurn))
-            { performMoveTwo(marblesSelected[0],marblesSelected[1],direction,board); }
-        }
-        else if(nbSelected == 3){
-            if (checkMove(marblesSelected,direction,board,playerTurn))
-            { performMoveThree(marblesSelected[0],marblesSelected[1], marblesSelected[2],direction,board); }
-        }
+    }
+
+    public void replaceBoard() {
+        for (int i = 0; i < 9; i++) 
+            for (int j = 0; j < 9; j++) 
+                board[i][j] = new_board[i][j];
     }
 
     /**
@@ -605,27 +621,31 @@ public class Rules {
         return problem;
     }
 
-    public void performMoveOne(int[] marble, MoveDirection direction, int[][] board)
-    {
+    public void performMoveOne(int[] marble, MoveDirection direction, int[][] board) {
         int[] location = checkSquareForLocation(marble,direction,board);
+        new_board[marble[0]][marble[1]] = 0;
         moveMarble(marble,location, board);
     }
-    public void performMoveTwo(int[] marble1, int[] marble2, MoveDirection direction, int[][] board) {
 
-        if(!pushingMove){
+    public void performMoveTwo(int[] marble1, int[] marble2, MoveDirection direction, int[][] board) {
+        new_board[marble1[0]][marble1[1]] = 0;
+        new_board[marble2[0]][marble2[1]] = 0;
+            
+        if(!pushingMove) {
             int[] location1 = checkSquareForLocation(marble1,direction,board);
             moveMarble(marble1,location1,board);
             int[] location2=checkSquareForLocation(marble2,direction,board);
             moveMarble(marble2,location2,board);
         }
-        else if(pushingMove){
-            int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),direction, board);
-            moveMarble(marblesToBePushed.get(0),nLocation,board);
-            int[] location1 = checkSquareForLocation(marble1,direction,board);
-            moveMarble(marble1,location1,board);
-            int[] location2 = checkSquareForLocation(marble2,direction,board);
-            moveMarble(marble2,location2,board);
-
+        else if(pushingMove) {
+            int[] marblet = marblesToBePushed.get(0);
+            new_board[marblet[0]][marblet[1]] = 0;
+            int[] nLocation = checkSquareForLocation(marblet,direction, board);
+            moveMarble(marblesToBePushed.get(0), nLocation, board);
+            int[] location1 = checkSquareForLocation(marble1, direction, board);
+            moveMarble(marble1, location1, board);
+            int[] location2 = checkSquareForLocation(marble2, direction, board);
+            moveMarble(marble2, location2, board);
         }
     }
     /** I used it because I thought I had to push/move the marbles in opposite directions but it is actually the same*/
@@ -659,7 +679,10 @@ public class Rules {
 //    }
 
     public void performMoveThree(int[] marble1, int[] marble2, int[] marble3, MoveDirection direction, int[][] board) {
-
+        new_board[marble1[0]][marble1[1]] = 0;
+        new_board[marble2[0]][marble2[1]] = 0;
+        new_board[marble3[0]][marble3[1]] = 0;
+        
         if(!pushingMove){
             int[] location1 = checkSquareForLocation(marble1,direction,board);
             moveMarble(marble1,location1,board);
@@ -668,7 +691,11 @@ public class Rules {
             int[] location3 = checkSquareForLocation(marble3,direction,board);
             moveMarble(marble3,location3,board);
         }
-        else if(pushingMove){
+        else if(pushingMove) {
+            int[] marblet1 = marblesToBePushed.get(0);
+            int[] marblet2 = marblesToBePushed.get(1);
+            new_board[marblet1[0]][marblet1[1]] = 0;
+            new_board[marblet2[0]][marblet2[1]] = 0;
             int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),direction, board);
             moveMarble(marblesToBePushed.get(1),nLocation2,board);
             int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),direction, board);
@@ -729,13 +756,13 @@ public class Rules {
     public void moveMarble(int[] marble, int[] location, int[][] board) {
         if(playerTurn == 1)
         {
-            board[location[0]][location[1]] = 1; // Then replace value of target direction to player's number. So here 1 because it is player 1 turn
-            board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
+            new_board[location[0]][location[1]] = 1; // Then replace value of target direction to player's number. So here 1 because it is player 1 turn
+            //board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
         }
         else if(playerTurn == 2)
         {
-            board[location[0]][location[1]] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
-            board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
+            new_board[location[0]][location[1]] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
+            //board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
         }
     }
 
