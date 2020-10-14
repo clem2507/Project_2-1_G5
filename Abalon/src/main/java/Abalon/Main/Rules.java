@@ -220,11 +220,12 @@ public class Rules {
                     else{
                         pushingMove = true; // set the move as a pushing move
                         marblesToBePushed.add(pushedMarbleLocation); //Add the location of the To-Be-Pushed marble to the arraylist storing them
+                        return true;
                     }
                 }
 
         }
-        return false;
+        System.out.println("?"); return false;
     }
 
     public boolean checkThreeMarbles(int[][] pushing,  MoveDirection direction, int[][] board, int playerTurn){
