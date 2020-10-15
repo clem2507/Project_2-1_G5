@@ -22,10 +22,7 @@ public class Rules {
 
     /**
      *  The constructor with parameters:
-     *  @param moveTo the direction where to move the selected marbles
-     *  @param selectedMarbles the selected marbles that need to move (stored in a list of marble's coordinates)
-     *  @param selectedNb the number of marbles selected (1, 2 or 3)
-     *  @param currentBoard the board which defines the positions of the marbles
+     *  @param mv the direction where to move the selected marbles
      */
     public Rules(Move mv){
         playerTurn = mv.turn;
@@ -406,7 +403,6 @@ public class Rules {
      @param direction an enum that contains the direction of the suggested move.
      @param marble An integer array with length 2. The first int is the row the marble is at and the second int
      is the column the marble is at.
-     @param playerTurn an integer that specifies what player is moving the marbles. 1 for player 1, 2 for player 2.
 
      @returns an integer array of size 2 containing the row and column the move will leave you at.
      */
@@ -529,8 +525,8 @@ public class Rules {
     /**
      checks if a row of 2 or 3 marbles is moving sideways.
      @returns a boolean. True if the marbles are moving sideways. False if they are not.
-      * @param marble 1 a marble in the selected row.
-     * @param marble 2 a marble connected to marble 1 that is also in the selected row.
+      * @param marble1 a marble in the selected row.
+     * @param marble2 a marble connected to marble 1 that is also in the selected row.
      * @param direction the direction the row is moving in.
      * @param board A 2D integer array that contains the colors of every position on the hexagon.
      * @param playerTurn
