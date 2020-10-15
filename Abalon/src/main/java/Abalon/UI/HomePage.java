@@ -114,13 +114,13 @@ public class HomePage extends Application {
                             "Thus, he can displace maximum \n two of the opponents' marbles because he can \n only move maximum" +
                             "three marbles at the \n same time. A marble is ejected when it \n gets pushed out of the board." +
                             "To \n move the marbles, the user first needs to select \n the marbles to move and then press:" +
-                            "\n - Q to go TOP_LEFT \n" +
-                            "- A or W to go LEFT\n" +
-                            "- D or S to go RIGHT \n" +
+                            "\n- Q to go TOP_LEFT \n" +
+                            "- A to go LEFT\n" +
+                            "- D to go RIGHT \n" +
                             "- Z to go BOTTOM_LEFT \n" +
-                            "- X to go BOTTOM_LEFT or LEFT \n" +
                             "- C to go BOTTOM_RIGHT \n" +
-                            "- E to go TOP_RIGHT ");
+                            "- E to go TOP_RIGHT " +
+                            "\nThen press enter to confirm the move.");
                     text.setFont(Font.font("Arial", 13));
                     dialogVbox.getChildren().add(text);
                     Scene dialogScene = new Scene(dialogVbox, 280, 400);
