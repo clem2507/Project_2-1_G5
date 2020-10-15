@@ -107,10 +107,23 @@ public class HomePage extends Application {
                     dialog.initModality(Modality.APPLICATION_MODAL);
                     dialog.initOwner(primaryStage);
                     VBox dialogVbox = new VBox(20);
-                    Text text = new Text("These are the rules");
+                    Text text = new Text("The goal of the game is to eject 6 marbles of the \n opponent. " +
+                            "Each player waits for his turn to play. \n When it is its turn the player has three options: \n" +
+                            " moving 1, 2 or 3 marbles at the same \n time. Knowing that to displace opponent's \n marble," +
+                            "he needs to push them with more \n than the number of marbles that are going to \n be displaced." +
+                            "Thus, he can displace maximum \n two of the opponents' marbles because he can \n only move maximum" +
+                            "three marbles at the \n same time. A marble is ejected when it \n gets pushed out of the board." +
+                            "To \n move the marbles, the user first needs to select \n the marbles to move and then press:" +
+                            "\n - Q to go TOP_LEFT \n" +
+                            "- A or W to go LEFT\n" +
+                            "- D or S to go RIGHT \n" +
+                            "- Z to go BOTTOM_LEFT \n" +
+                            "- X to go BOTTOM_LEFT or LEFT \n" +
+                            "- C to go BOTTOM_RIGHT \n" +
+                            "- E to go TOP_RIGHT ");
                     text.setFont(Font.font("Arial", 13));
                     dialogVbox.getChildren().add(text);
-                    Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                    Scene dialogScene = new Scene(dialogVbox, 280, 400);
                     dialog.setScene(dialogScene);
                     dialog.setResizable(false);
                     dialog.show();
@@ -130,7 +143,7 @@ public class HomePage extends Application {
                     Text text = new Text(
                             "\n \tGroup 5:\n \n" +
                                     "\tDetry Clément\n" +
-                                    "\tImperato Adèle\n" +
+                                    "\tImparato Adèle\n" +
                                     "\tPodevyn Loris\n" +
                                     "\tPoliakov Ivan\n" +
                                     "\tSchapira Aaron\n" +
