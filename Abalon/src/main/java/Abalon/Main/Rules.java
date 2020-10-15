@@ -38,6 +38,14 @@ public class Rules {
     }
 
     public void move(){
+
+        for (int i = 0; i < marblesSelected.length; i++) {
+            int x = marblesSelected[i][0], y = marblesSelected[i][1];
+            if (board[x][y] != playerTurn) {
+                return;
+            }
+        }
+
         if (nbSelected == 1) {
             if (checkMove(marblesSelected,direction,board,playerTurn)) { 
                 performMoveOne(marblesSelected[0],direction,board); 
@@ -231,65 +239,38 @@ public class Rules {
             return checkEmptySpots(pushing[0], direction, board) && checkEmptySpots(pushing[1], direction, board) && checkEmptySpots(pushing[2], direction, board);
         }
         int[] leadingMarble = findLeadingMarble(pushing, direction, board, playerTurn);
-        switch (checkSquareForColor(leadingMarble,direction,board)) {
-            case -1: return false;  //move not valid if out of bounds
-            case 0: return true;    //move valid if empty spot
-            case 1:
-                if(playerTurn == 1){ return false; } //NOT valid if trying to push own marble
-                else {
+        
+        int leadingColor = checkSquareForColor(leadingMarble, direction, board);
+            
+        int currentPlayerColor = playerTurn;
+        int oppositePlayerColor = (playerTurn == 1 ? 2 : 1);
+            
+        if (leadingColor == -1) {
+            return false;
+        } else if (leadingColor == 0) {
+            return true;
+        } else if (leadingColor != currentPlayerColor) {
+            int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
+            int pushedColor = checkSquareForColor(pushedMarbleLocation,direction,board);
 
-                    int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
-                    if(checkSquareForColor(pushedMarbleLocation,direction,board) == 2)
-                        return false;
-
-                    else if(checkSquareForColor(pushedMarbleLocation,direction,board) == 0){
-                        pushingMove=true;
-                        marblesToBePushed.add(pushedMarbleLocation);
-                        return true;
-                    }
-                    else if(checkSquareForColor(pushedMarbleLocation,direction,board) == 1){
-
-                        int[] pushedMarble2Location = checkSquareForLocation(pushedMarbleLocation,direction,board);
-                        if(checkSquareForColor(pushedMarble2Location,direction,board) == 0){
-                            pushingMove = true;
-                            marblesToBePushed.add(pushedMarbleLocation);
-                            marblesToBePushed.add(pushedMarble2Location);
-                            return true;
-                        }
-                        else
-                            return false;
-                    }
-                    else
-                        return false;
-                }
-
-
-            case 2:
-                if(playerTurn == 2){ return false; } //NOT valid if trying to push own marble
-                else {
-                    int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
-                    if(checkSquareForColor(pushedMarbleLocation,direction,board) == 1)
-                        return false;
-                    else if(checkSquareForColor(pushedMarbleLocation,direction,board) == 0){
-                        pushingMove=true;
-                        marblesToBePushed.add(pushedMarbleLocation);
-                        return true;
-                    }
-                    else if(checkSquareForColor(pushedMarbleLocation,direction,board) == 2){
-
-                        int[] pushedMarble2Location = checkSquareForLocation(pushedMarbleLocation,direction,board);
-                        if(checkSquareForColor(pushedMarble2Location,direction,board) == 0){
-                            pushingMove = true;
-                            marblesToBePushed.add(pushedMarbleLocation);
-                            marblesToBePushed.add(pushedMarble2Location);
-                            return true;
-                        }
-                        else
-                            return false;
-                    }
-
-                }
-
+            if (pushedColor == currentPlayerColor)
+                return false;
+            else if (pushedColor == 0 || pushedColor == -1) {
+                pushingMove = true;
+                marblesToBePushed.add(pushedMarbleLocation);
+                return true;
+            } else if (pushedColor == oppositePlayerColor) {
+                int[] pushedMarble2Location = checkSquareForLocation(pushedMarbleLocation,direction,board);
+                int pushedColor1 = checkSquareForColor(pushedMarble2Location, direction, board);
+                if (pushedColor1 == 0 || pushedColor1 == -1) {
+                    pushingMove = true;
+                    marblesToBePushed.add(pushedMarbleLocation);
+                    marblesToBePushed.add(pushedMarble2Location);
+                    return true;
+                } else
+                    return false;
+            } else
+                return false;
         }
         return false;
     }
@@ -656,7 +637,7 @@ public class Rules {
         new_board[marble1[0]][marble1[1]] = 0;
         new_board[marble2[0]][marble2[1]] = 0;
         new_board[marble3[0]][marble3[1]] = 0;
-        if(!pushingMove) {
+        if (!pushingMove) {
             int[] location1 = checkSquareForLocation(marble1, direction, board);
             moveMarble(marble1, location1, board);
             int[] location2 = checkSquareForLocation(marble2, direction, board);
@@ -664,25 +645,30 @@ public class Rules {
             int[] location3 = checkSquareForLocation(marble3, direction, board);
             moveMarble(marble3, location3, board);
         }
-        else if(pushingMove) {
+        else if (pushingMove) {
             int[] marblet1 = marblesToBePushed.get(0);
             new_board[marblet1[0]][marblet1[1]] = 0;
             
-            try { 
-                int[] marblet2 = marblesToBePushed.get(1);
-                new_board[marblet2[0]][marblet2[1]] = 0;
-            } catch (Exception ignore) {
+            int[] marblet2 = marblesToBePushed.get(1);
+            new_board[marblet2[0]][marblet2[1]] = 0;
+            
+            System.out.println(marblet1[0] + " " + marblet1[1]);
+            System.out.println(marblet2[0] + " " + marblet2[1]);
 
-            }
-            try {
-                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),direction, board);
-                moveMarble(marblesToBePushed.get(1),nLocation2,board);
-            } catch (Exception ignore) {
-                
+            if (marblet1[0] == marblet2[0] && marblet1[1] == marblet2[1]) { // 1 Marble is pushed
+                if (!checkOutOfBounds(marblet1, direction, board)) {    
+                    int[] t1Location = checkSquareForLocation(marblet1, direction, board);
+                    moveMarble(marblet1, t1Location, board);
+                }
+            } else {
+                if (!checkOutOfBounds(marblet2, direction, board)) {
+                    int[] t2Location = checkSquareForLocation(marblet2, direction, board);
+                    moveMarble(marblet2, t2Location, board);
+                } 
+                int[] t1Location = checkSquareForLocation(marblet1, direction, board);
+                moveMarble(marblet1, t1Location, board);
             }
 
-            int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),direction, board);
-            moveMarble(marblesToBePushed.get(0),nLocation,board);
             int[] location1 = checkSquareForLocation(marble1,direction,board);
             moveMarble(marble1,location1,board);
             int[] location2=checkSquareForLocation(marble2,direction,board);
