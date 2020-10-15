@@ -29,6 +29,10 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.util.Collections;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;  
+
 public class HomePage extends Application {
 
     private final double WIDTH = 1344;
@@ -166,6 +170,16 @@ public class HomePage extends Application {
         primaryStage.setTitle("Abalone");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE){
+                    primaryStage.close();
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {

@@ -46,6 +46,18 @@ public class BoardUI {
         return cellColors;
     }
 
+    public boolean isVictorious() {
+        int cnt1 = 0, cnt2 = 0;
+        for (int i = 0; i < 6; i++) {
+            if (scoredCirclesColors[i][0] > 0)
+                cnt1++;
+            if (scoredCirclesColors[i][1] > 0)
+                cnt2++;
+        }
+
+        return !(cnt1 == 6 || cnt2 == 6);
+    }
+
     /**
      * Creates the board itself shaped like a hexagon
      * @return the hexagon (representing the board)

@@ -22,7 +22,7 @@ public class Abalon {
 
 	private BoardUI board;
 	private Player[] player = new Player[2]; 
-	private int victory = 0;
+	private boolean victory = false;
 
 	/** 
 	 * Returns a new object of class Abalon
@@ -40,14 +40,10 @@ public class Abalon {
 		player[1].setTurn(2);
 	}
 
-	/**
-	 * Runs a new game
-	 * All moves are performed consecutively in EventQueue
-	 */
 	public void runGame() {
 		//playMove(false);
 
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; !victory; i++) {
 			try {
 				Move mv = player[i & 1].collectMove();
 				mv.board = board.getBoard();
@@ -64,6 +60,8 @@ public class Abalon {
 					board.drawAllCells();
 				}
 			});
+
+			victory = board.isVictorious();
 		}
 	}
 

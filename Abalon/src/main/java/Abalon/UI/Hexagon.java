@@ -21,6 +21,10 @@ import Abalon.Main.Abalon;
 import Abalon.Main.Player;
 import Abalon.Main.PlayerH;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;  
+
 /**
  * TODO Add marbles to the board and create Home page
  * Home Page: Aaron
@@ -94,6 +98,16 @@ public class Hexagon extends Application {
         primaryStage.setTitle("Abalone");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE){
+                    primaryStage.close();
+                }
+            }
+        });
     
         accessableScene = scene;
 
