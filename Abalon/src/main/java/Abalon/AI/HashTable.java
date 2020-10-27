@@ -3,21 +3,21 @@ package Abalon.AI;
 public class HashTable {
 
     public int arraySize;
-    public boolean[] table;
+    public double[] table;
     public Zorbist key;
 
     public HashTable() {
 
         key = new Zorbist();
         arraySize = (int) Math.pow(2, 20);
-        table = new boolean[arraySize];
+        table = new double[arraySize];
     }
 
-    public boolean checkInTable(int nextPlayer, int[][] cellColor) {
+    public boolean checkInTable(int currentPlayer, int[][] cellColor) {
 
-        int index = (int) key.getZorbistHash(nextPlayer, cellColor);
+        int index = (int) key.getZorbistHash(currentPlayer, cellColor);
 
-        if (!table[index]) {
+        if (table[index] == 0) {
             return true;
         }
         else {
@@ -25,13 +25,21 @@ public class HashTable {
         }
     }
 
-    public void put(int nextPlayer, int[][] cellColor) {
+    public void put(int currentPlayer, int[][] cellColor) {
 
-        int index = (int) key.getZorbistHash(nextPlayer, cellColor);
-        table[index] = true;
+        EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, cellColor);
+
+        int index = (int) key.getZorbistHash(currentPlayer, cellColor);
+        table[index] = evaluationFunction.evaluate();
     }
 
-    public boolean[] getTable() {
+    public double getScore(int currentPlayer, int[][] cellColor) {
+
+        int index = (int) key.getZorbistHash(currentPlayer, cellColor);
+        return table[index];
+    }
+
+    public double[] getTable() {
 
         return table;
     }

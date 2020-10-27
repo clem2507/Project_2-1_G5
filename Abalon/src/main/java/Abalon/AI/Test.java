@@ -25,11 +25,12 @@ public class Test {
             table.put(1, cellColor);
         }
         else {
-            // Else, backtrack the search because the move has already been visited
+            // node.setScore = table.getScore()
         }
 
-        EvaluationFunction evaluation = new EvaluationFunction();
-        int score = evaluation.evaluate(1, cellColor, 100, 5, 1, 1, 1, 1, 1);
+        // double score = EvaluationFunction.evaluate(1, cellColor, 100, 5, 1, 1, 1, 1, 1);
+        EvaluationFunction evalFunction = new EvaluationFunction(1, cellColor);
+        double score = evalFunction.evaluate();
         System.out.println("score = " + score);
     }
 }
