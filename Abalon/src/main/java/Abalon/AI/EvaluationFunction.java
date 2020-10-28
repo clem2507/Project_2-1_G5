@@ -2,6 +2,10 @@ package Abalon.AI;
 
 public class EvaluationFunction {
 
+    /*
+     * Author: Clément Detry
+     */
+
     /**
      ==================================================================================================================
 
@@ -9,7 +13,7 @@ public class EvaluationFunction {
      It depends on a lot of different parameters (in this case 6).
      The one we can use could be this one:
 
-     E(s) = SUM (wi*vi) - w6*v6
+     E(s) = (SUM (wi*vi)) - w6*v6
      -> where all the wi are scalar factors that are used to measure the significance of each parameter
      in the result of the function.
 
@@ -31,6 +35,7 @@ public class EvaluationFunction {
 
     private static int currentPlayer;
     private static int[][] cellColor;
+    private static int[][] rootCellColor;
 
     private static int v1;
     private static int v2;
@@ -56,50 +61,78 @@ public class EvaluationFunction {
     private static double[] modus8 = {2.4, 2.3, 25, 3, 35};
     private static double[] modus9 = {2.2, 2.3, 25, 3, 40};
 
-    public EvaluationFunction(int currentPlayer, int[][] cellColor) {
+    public EvaluationFunction(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
 
         EvaluationFunction.currentPlayer = currentPlayer;
         EvaluationFunction.cellColor = cellColor;
+        EvaluationFunction.rootCellColor = rootCellColor;
     }
 
     public static void computeValues() {
 
         // v1
-        v1 = 0;
-        // TODO need to find a way to compute it
+        int ownMarblesCenterDistance;
+        int opponentMarblesCenterDistance;
 
         // v2
-        v2 = 0;
-        // TODO need to find a way to compute it
+        int ownMarblesNeighbour;
+        int opponentMarblesNeighbour;
 
         // v3
-        v3 = 0;
-        // TODO need to find a way to compute it
+        int ownBreakStrongGroupCount;
+        int opponentBreakStrongGroupCount;
 
         // v4
-        v4 = 0;
-        // TODO need to find a way to compute it
+        int ownStrengthenGroupCount;
+        int opponentStrengthenGroupCount;
 
         // v5
-        v5 = 0;
-        // TODO need to find a way to finish it
-        if (currentPlayer == 1) {
-            int currentStateOpponentMarblesCount = countMarbles(currentPlayer+1, cellColor);
-            // int rootOpponentMarblesCount = countMarble(currentPlayer+1, rootCellColor);
-            // v5 = rootOpponentMarblesCount - currentStateOpponentMarblesCount;
-        }
-        else {
-            int currentStateOpponentMarblesCount = countMarbles(currentPlayer-1, cellColor);
-            // int rootOpponentMarblesCount = countMarble(currentPlayer-1, rootCellColor);
-            // v5 = rootOpponentMarblesCount - currentStateOpponentMarblesCount;
-        }
+        int currentStateOpponentMarblesCount;
+        int rootOpponentMarblesCount;
 
         // v6
-        v6 = 0;
-        // TODO need to find a way to finish it
         int currentStateOwnMarblesCount = countMarbles(currentPlayer, cellColor);
-        // int rootOwnMarblesCount = countMarble(currentPlayer, rootCellColor);
-        // v6 = rootOwnMarblesCount - currentStateOwnMarblesCount;
+        int rootOwnMarblesCount = countMarbles(currentPlayer, rootCellColor);
+
+        if (currentPlayer == 1) {
+            ownMarblesCenterDistance = centerDistance(currentPlayer);
+            opponentMarblesCenterDistance = centerDistance(currentPlayer+1);
+
+            ownMarblesNeighbour = marblesNeighbourhood(currentPlayer);
+            opponentMarblesNeighbour = marblesNeighbourhood(currentPlayer+1);
+
+            ownBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer);
+            opponentBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer+1);
+
+            ownStrengthenGroupCount = strengthenGroupPattern(currentPlayer);
+            opponentStrengthenGroupCount = strengthenGroupPattern(currentPlayer+1);
+
+            currentStateOpponentMarblesCount = countMarbles(currentPlayer+1, cellColor);
+            rootOpponentMarblesCount = countMarbles(currentPlayer+1, rootCellColor);
+        }
+        else {
+            ownMarblesCenterDistance = centerDistance(currentPlayer);
+            opponentMarblesCenterDistance = centerDistance(currentPlayer-1);
+
+            ownMarblesNeighbour = marblesNeighbourhood(currentPlayer);
+            opponentMarblesNeighbour = marblesNeighbourhood(currentPlayer-1);
+
+            ownBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer);
+            opponentBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer-1);
+
+            ownStrengthenGroupCount = strengthenGroupPattern(currentPlayer);
+            opponentStrengthenGroupCount = strengthenGroupPattern(currentPlayer-1);
+
+            currentStateOpponentMarblesCount = countMarbles(currentPlayer-1, cellColor);
+            rootOpponentMarblesCount = countMarbles(currentPlayer-1, rootCellColor);
+        }
+
+        v1 = opponentMarblesCenterDistance - ownMarblesCenterDistance;
+        v2 = ownMarblesNeighbour - opponentMarblesNeighbour;
+        v3 = ownBreakStrongGroupCount - opponentBreakStrongGroupCount;
+        v4 = ownStrengthenGroupCount - opponentStrengthenGroupCount;
+        v5 = rootOpponentMarblesCount - currentStateOpponentMarblesCount;
+        v6 = rootOwnMarblesCount - currentStateOwnMarblesCount;
     }
 
     public static void computeWeights(double v1, double v2) {
@@ -138,8 +171,334 @@ public class EvaluationFunction {
     public double evaluate() {
 
         computeValues();
+        System.out.println("v1 = " + v1);
+        System.out.println("v2 = " + v2);
+        System.out.println("v3 = " + v3);
+        System.out.println("v4 = " + v4);
+        System.out.println("v5 = " + v5);
+        System.out.println("v6 = " + v6);
         computeWeights(v1, v2);
         return (w1*v1 + w2*v2 + w3*v3 + w4*v4 + w5*v5) - w6*v6;
+    }
+
+    public static void changeModus(double[] modus) {
+
+        w1 = modus[0];
+        w2 = modus[1];
+        w3 = modus[2];
+        w4 = modus[3];
+        w5 = modus[4];
+        w6 = 50*w5;
+    }
+
+    public static int centerDistance(int currentPlayer) {
+
+        int distance = 0;
+        for (int i = 0; i < cellColor.length; i++) {
+            for (int j = 0; j < cellColor.length; j++) {
+                if (cellColor[i][j] == currentPlayer) {
+                    if (i == 4) {
+                        distance += Math.abs(4-j);
+                    }
+                    else if (j == 4) {
+                        distance += Math.abs(4-i);
+                    }
+                    else if (i <= 3 && j <= 3) {
+                        distance += 4 - Math.min(i,j);
+                    }
+                    else if (i >= 5 && j <= 3) {
+                        distance += 4 - Math.min((i-5), j);
+                    }
+                    else if ((i == 2 && j == 6) || (i == 6 && j == 6) || (i == 3 && j == 7) || (i == 5 && j == 7)) {
+                        distance += 4;
+                    }
+                    else if ((i == 3 && j == 6) || (i == 5 && j == 6)) {
+                        distance += 3;
+                    }
+                    else if (i <= 3 && j == 5) {
+                        distance += (4 - i) + 1;
+                    }
+                    else if (i >= 5 && j == 5) {
+                        distance += (i - 4) + 1;
+                    }
+                }
+            }
+        }
+        return distance;
+    }
+
+    public static int marblesNeighbourhood(int currentPlayer) {
+
+        int neighbourhood = 0;
+        for (int i = 0; i < cellColor.length; i++) {
+            for (int j = 0; j < cellColor.length; j++) {
+                if (cellColor[i][j] == currentPlayer) {
+                    neighbourhood += countNeighbour(i, j, currentPlayer);
+                }
+            }
+        }
+        return neighbourhood;
+    }
+
+    public static int countNeighbour(int i, int j, int currentPlayer) {
+
+        int count = 0;
+        if (i == 0 && j == 0) {
+            if (cellColor[i][j+1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i+1][j+1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i+1][j] == currentPlayer) {
+                count++;
+            }
+        }
+        else if (i == 4 && j == 8) {
+            if (cellColor[i][j-1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i-1][j-1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i+1][j-1] == currentPlayer) {
+                count++;
+            }
+        }
+        else if (i == 8 && j == 0) {
+            if (cellColor[i-1][j] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i-1][j+1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i][j+1] == currentPlayer) {
+                count++;
+            }
+        }
+        else if (i < 1 && j >= 1) {
+            if (cellColor[i][j+1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i+1][j] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i+1][j+1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i][j-1] == currentPlayer) {
+                count++;
+            }
+        }
+        else if (i >= 1 && j < 1) {
+            if (cellColor[i-1][j] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i][j+1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i+1][j+1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i+1][j] == currentPlayer) {
+                count++;
+            }
+        }
+        else if (i >= 8 && j >= 1) {
+            if (cellColor[i][j-1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i-1][j] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i-1][j+1] == currentPlayer) {
+                count++;
+            }
+            if (cellColor[i][j+1] == currentPlayer) {
+                count++;
+            }
+        }
+        else if (i >= 1 && j >= 1) {
+            if (i <= 3) {
+                if (cellColor[i][j-1] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i-1][j-1] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i-1][j] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i][j+1] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i+1][j] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i+1][j+1] == currentPlayer) {
+                    count++;
+                }
+            }
+            if (i == 4) {
+                if (cellColor[i][j-1] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i-1][j-1] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i-1][j] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i][j+1] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i+1][j] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i+1][j-1] == currentPlayer) {
+                    count++;
+                }
+            }
+            if (i >= 5) {
+                if (cellColor[i][j-1] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i+1][j-1] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i-1][j] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i][j+1] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i+1][j] == currentPlayer) {
+                    count++;
+                }
+                if (cellColor[i-1][j+1] == currentPlayer) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public static int breakStrongGroupPattern(int currentPlayer) {
+
+        int opponentPlayer;
+        if (currentPlayer == 1) {
+            opponentPlayer = 2;
+        }
+        else {
+            opponentPlayer = 1;
+        }
+        int count = 0;
+        for (int i = 0; i < cellColor.length; i++) {
+            for (int j = 1; j < cellColor.length-1; j++) {
+                if (cellColor[i][j] == currentPlayer) {
+                    if (i == 0 || i == 8) {
+                        if ((cellColor[i][j-1] == opponentPlayer) && (cellColor[i][j+1] == opponentPlayer)) {
+                            count++;
+                        }
+                    }
+                    if (i != 4) {
+                        if (i >= 1 && i <= 7) {
+                            if (i <= 3) {
+                                if ((cellColor[i - 1][j - 1] == opponentPlayer) && (cellColor[i + 1][j + 1]) == opponentPlayer) {
+                                    count++;
+                                }
+                            }
+                            if (i >= 5) {
+                                if ((cellColor[i - 1][j + 1] == opponentPlayer) && (cellColor[i + 1][j - 1]) == opponentPlayer) {
+                                    count++;
+                                }
+                            }
+                            if ((cellColor[i - 1][j] == opponentPlayer) && (cellColor[i + 1][j]) == opponentPlayer) {
+                                count++;
+                            }
+                            if ((cellColor[i][j - 1] == opponentPlayer) && (cellColor[i][j + 1]) == opponentPlayer) {
+                                count++;
+                            }
+                        }
+                    }
+                    else {
+                        if ((cellColor[i-1][j] == opponentPlayer) && (cellColor[i+1][j-1]) == opponentPlayer) {
+                            count++;
+                        }
+                        if ((cellColor[i][j-1] == opponentPlayer) && (cellColor[i][j+1]) == opponentPlayer) {
+                            count++;
+                        }
+                        if ((cellColor[i-1][j-1] == opponentPlayer) && (cellColor[i+1][j]) == opponentPlayer) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
+    public static int strengthenGroupPattern(int currentPlayer) {
+
+        int opponentPlayer;
+        if (currentPlayer == 1) {
+            opponentPlayer = 2;
+        }
+        else {
+            opponentPlayer = 1;
+        }
+        int count = 0;
+        for (int i = 0; i < cellColor.length; i++) {
+            for (int j = 1; j < cellColor.length-1; j++) {
+                if (cellColor[i][j] == currentPlayer) {
+                    if (i == 0 || i == 8) {
+                        if (((cellColor[i][j-1] == opponentPlayer) && (cellColor[i][j+1] == currentPlayer))
+                                || ((cellColor[i][j-1] == currentPlayer) && (cellColor[i][j+1] == opponentPlayer))) {
+                            count++;
+                        }
+                    }
+                    if (i != 4) {
+                        if (i >= 1 && i <= 7) {
+                            if (i <= 3) {
+                                if (((cellColor[i-1][j-1] == opponentPlayer) && (cellColor[i+1][j+1]) == currentPlayer)
+                                        || ((cellColor[i-1][j-1] == opponentPlayer) && (cellColor[i+1][j+1]) == opponentPlayer)) {
+                                    count++;
+                                }
+                            }
+                            if (i >= 5) {
+                                if (((cellColor[i-1][j+1] == currentPlayer) && (cellColor[i+1][j-1]) == opponentPlayer)
+                                        || ((cellColor[i-1][j+1] == opponentPlayer) && (cellColor[i+1][j-1]) == currentPlayer)) {
+                                    count++;
+                                }
+                            }
+                            if (((cellColor[i-1][j] == currentPlayer) && (cellColor[i+1][j]) == opponentPlayer)
+                                    || ((cellColor[i-1][j] == opponentPlayer) && (cellColor[i+1][j]) == currentPlayer)) {
+                                count++;
+                            }
+                            if (((cellColor[i][j-1] == currentPlayer) && (cellColor[i][j+1]) == opponentPlayer)
+                                    || ((cellColor[i][j-1] == opponentPlayer) && (cellColor[i][j+1]) == currentPlayer)) {
+                                count++;
+                            }
+                        }
+                    }
+                    else {
+                        if (((cellColor[i-1][j] == currentPlayer) && (cellColor[i+1][j-1]) == opponentPlayer)
+                                || ((cellColor[i-1][j] == opponentPlayer) && (cellColor[i+1][j-1]) == currentPlayer)) {
+                            count++;
+                        }
+                        if (((cellColor[i][j-1] == currentPlayer) && (cellColor[i][j+1]) == opponentPlayer)
+                                || ((cellColor[i][j-1] == opponentPlayer) && (cellColor[i][j+1]) == currentPlayer)) {
+                            count++;
+                        }
+                        if (((cellColor[i-1][j-1] == currentPlayer) && (cellColor[i+1][j]) == opponentPlayer)
+                                || ((cellColor[i-1][j-1] == opponentPlayer) && (cellColor[i+1][j]) == currentPlayer)) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
     }
 
     public static int countMarbles(int currentPlayer, int[][] cellColor) {
@@ -153,15 +512,5 @@ public class EvaluationFunction {
             }
         }
         return count;
-    }
-
-    public static void changeModus(double[] modus) {
-
-        w1 = modus[0];
-        w2 = modus[1];
-        w3 = modus[2];
-        w4 = modus[3];
-        w5 = modus[4];
-        w6 = 50*w5;
     }
 }

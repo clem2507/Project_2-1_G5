@@ -27,7 +27,7 @@ public class HashTable {
 
     public void put(int currentPlayer, int[][] cellColor) {
 
-        EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, cellColor);
+        EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, cellColor, cellColor);
 
         int index = (int) key.getZorbistHash(currentPlayer, cellColor);
         table[index] = evaluationFunction.evaluate();
