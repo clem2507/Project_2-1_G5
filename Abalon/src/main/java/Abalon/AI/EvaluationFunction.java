@@ -177,7 +177,14 @@ public class EvaluationFunction {
         System.out.println("v4 = " + v4);
         System.out.println("v5 = " + v5);
         System.out.println("v6 = " + v6);
+        System.out.println();
         computeWeights(v1, v2);
+        System.out.println("w1 = " + w1);
+        System.out.println("w2 = " + w2);
+        System.out.println("w3 = " + w3);
+        System.out.println("w4 = " + w4);
+        System.out.println("w5 = " + w5);
+        System.out.println("w6 = " + w6);
         return (w1*v1 + w2*v2 + w3*v3 + w4*v4 + w5*v5) - w6*v6;
     }
 

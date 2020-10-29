@@ -1,18 +1,20 @@
 package Abalon.AI;
 
+import java.util.Random;
+
 public class Test {
 
     public static int[][] cellColor = new int[][]{
 
-            {1, 1, 1, 1, 1, -1, -1, -1, -1},
-            {0, 1, 1, 1, 1,  0, -1, -1, -1},
-            {0, 2, 0, 1, 0,  0,  0, -1, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 1, 0, 0, 1,  2,  1,  0,  0},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 2, 2, 2,  0,  0, -1, -1},
-            {0, 0, 0, 2, 2,  0, -1, -1, -1},
-            {0, 2, 2, 2, 2, -1, -1, -1, -1}
+            {1, 1, 1, 0, 1, -1, -1, -1, -1},
+            {1, 1, 1, 1, 1,  1, -1, -1, -1},
+            {0, 0, 1, 1, 1,  0,  0, -1, -1},
+            {0, 0, 0, 1, 0,  0,  0,  0, -1},
+            {0, 0, 0, 2, 0,  0,  0,  0,  0},
+            {0, 0, 0, 2, 0,  0,  0,  0, -1},
+            {0, 0, 2, 0, 2,  0,  0, -1, -1},
+            {2, 2, 2, 0, 2,  2, -1, -1, -1},
+            {2, 2, 2, 2, 2, -1, -1, -1, -1}
 
     };
 
@@ -42,11 +44,34 @@ public class Test {
             // node.setScore = table.getScore()
         //}
 
-        // double score = EvaluationFunction.evaluate(1, cellColor, 100, 5, 1, 1, 1, 1, 1);
-        EvaluationFunction evalFunction = new EvaluationFunction(1, cellColor, rootCellColor);
-        double score = evalFunction.evaluate();
+        Random r = new Random();
 
-        System.out.println("score = " + score);
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < cellColor.length; j++) {
+                for (int k = 0; k < cellColor.length; k++) {
+                    if (cellColor[j][k] == 0 || cellColor[j][k] == 1 || cellColor[j][k] == 2) {
+                        int randomNum = r.nextInt((2) + 1);
+                        cellColor[j][k] = randomNum;
+                    }
+                }
+            }
+            EvaluationFunction evaluationFunction = new EvaluationFunction(1, cellColor, rootCellColor);
+            double score = evaluationFunction.evaluate();
+
+            System.out.println();
+
+            for (int j = 0; j < cellColor.length; j++) {
+                for (int k = 0; k < cellColor.length; k++) {
+                    System.out.print(cellColor[j][k] + " ");
+                }
+                System.out.println();
+            }
+
+            System.out.println();
+            System.out.println("score " + i + ": " + score);
+            System.out.println("-------");
+        }
+
         //System.out.println("Distance: " + EvaluationFunction.centerDistance(1, cellColor));
         //System.out.println("Neighbourhood: " + EvaluationFunction.marblesNeighbourhood(1, cellColor));
     }
