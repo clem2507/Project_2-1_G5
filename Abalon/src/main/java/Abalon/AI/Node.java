@@ -2,93 +2,42 @@ package Abalon.AI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node<T> {
+public class Node{
 
-    private T data = null;
+    private double score; //represent the score of a node, defined by the evaluation function
+    private int[][] boardState; //2D array of type cell colors, represent the state of the board
 
-    private List<Node<T>> children = new ArrayList<>();
-    private Node<T> parent = null;
-    private Node<T> root=null;
-    private Node left,right;
+    private List<Node> children = new ArrayList<>();
+    private Node parent = null;
+    private Node root = null;
 
-    public Node(T data) {
-        this.data = data;
+    public Node(int[][] boardState, int score) {
+        //get the values of the state and its score with their getters or not?
+        this.boardState = getBoardState();
+        this.score = getScore();
     }
-    public Node(Node root) {
-        this.root = root;
+
+    public double getScore() { //get the score by the evaluation function
+//        EvaluationFunction evaluationFunction = new EvaluationFunction(1, cellColor, rootCellColor);
+//        score = evaluationFunction.evaluate();
+        return score;
+    }
+
+    public int[][] getBoardState() {
+        return boardState;
     }
 
     public Node getRoot() {
         return this.root;
     }
 
-    public Node<T> addChild(Node<T> child) {
-        child.setParent(this);
-        this.children.add(child);
-        return child;
-    }
+//    public List<Node> setChildren(){
+//        //set children with possible moves (use Mathias' method)
+//    }
 
-    public void addChildren(List<Node<T>> children) {
-        this.children.addAll(children);
-    }
 
-    public List<Node<T>> getChildren() {
-        return this.children;
-    }
-
-    public T getData() {
-        return this.data;
-    }
-
-    public void setData(T data) {
-        this.data=data;
-    }
-
-    private void setParent(Node<T> parent) {
-        this.parent=parent;
-    }
-
-    public Node<T> getParent() {
-        return this.parent;
-    }
-
-    public void printCousins(Node root, Node node){
-        int level= getLevel(root,node,1);
-        printGivenLevel(root,node,level);
-    }
-
-    static int getLevel(Node root, Node node, int level) {
-        if (root == null)
-            return 0;
-        if (root == node)
-            return level;
-        // If node is present in left subtree
-        int downLevel = getLevel(root.left, node, level+1);
-        if (downLevel != 0)
-            return downLevel;
-        // If node is not present in left subtree
-        return getLevel(root.right, node, level+1);
-    }
-
-    static void printGivenLevel(Node root, Node node, int level) {
-        if (root == null || level < 2)
-            return;
-
-        if (level == 2)
-        {
-            if (root.left == node || root.right == node)
-                return;
-            if (root.left != null)
-                System.out.print(root.left.data + " ");
-            if (root.right != null)
-                System.out.print(root.right.data + " ");
-        }
-
-        else if (level > 2)
-        {
-            printGivenLevel(root.left, node, level-1);
-            printGivenLevel(root.right, node, level-1);
-        }
-    }
+//    public List<Node> getChildren() {
+            //get all possible moves from a board state, computed by Mathias' method
+//    }
 
 }
