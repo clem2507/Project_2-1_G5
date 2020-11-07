@@ -12,14 +12,12 @@ public class Node{
     private Node root = null;
 
     public Node(int[][] boardState, int score) {
-        //get the values of the state and its score with their getters or not?
         this.boardState = boardState;
         this.score = score;
     }
 
     public double getScore(int currentPlayer, int[][] currentBoardState) { //get the score by the evaluation function
-
-        EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, currentBoardState, rootBoardState);
+        EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, currentBoardState, GameTree.rootBoardState);
         score = evaluationFunction.evaluate();
         return score;
     }
