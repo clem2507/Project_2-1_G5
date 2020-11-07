@@ -4,20 +4,6 @@ import java.util.List;
 
 public class Node{
 
-    public static int[][] rootBoardState = new int[][]{
-
-            {1, 1, 1, 1, 1, -1, -1, -1, -1},
-            {1, 1, 1, 1, 1,  1, -1, -1, -1},
-            {0, 0, 1, 1, 1,  0,  0, -1, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0,  0},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 2, 2, 2,  0,  0, -1, -1},
-            {2, 2, 2, 2, 2,  2, -1, -1, -1},
-            {2, 2, 2, 2, 2, -1, -1, -1, -1}
-
-    };
-
     private double score; //represent the score of a node, defined by the evaluation function
     private int[][] boardState; //2D array of type cell colors, represent the state of the board
 
@@ -43,7 +29,7 @@ public class Node{
     }
 
     public Node getRoot() {
-        return this.root;
+        return root;
     }
 
 //    public List<Node> setChildren(){
