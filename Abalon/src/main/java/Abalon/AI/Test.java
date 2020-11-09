@@ -1,5 +1,8 @@
 package Abalon.AI;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Test {
@@ -74,5 +77,9 @@ public class Test {
 
         //System.out.println("Distance: " + EvaluationFunction.centerDistance(1, cellColor));
         //System.out.println("Neighbourhood: " + EvaluationFunction.marblesNeighbourhood(1, cellColor));
+
+        GameTree gameTree = new GameTree();
+
+        gameTree.createTree(rootCellColor, 1);
     }
 }
