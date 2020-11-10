@@ -16,7 +16,7 @@ public class Node{
         this.score = score;
     }
 
-    public double getScore(int currentPlayer, int[][] currentBoardState) { //get the score by the evaluation function
+    public double getScore() { //get the score by the evaluation function
         return score;
     }
 
