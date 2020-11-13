@@ -201,6 +201,52 @@ public class GameTree {
 
     public ArrayList<int[][]> doubleMarblemMoves(int[][] board, int playerTurn) {
         ArrayList<int[][]> doubleMarbleMoves = new ArrayList<>();
+        ArrayList<int[][]> combinationsOfMarbles = new ArrayList<>();
+        Move justAMove = new Move();
+        Rules searchRules = new Rules(justAMove);
+
+
+        for(int i = 0; i < board.length; i++) { // search for all combinations of two marbles the player can make
+                                                /*NOTE: there is no search upwards. This is to prevent unnecessarily
+                                                  finding vertically oriented combinations twice.
+                                                */
+            for(int j = 0; j < board[i].length; j++) {
+                if(board[i][j] == playerTurn) {
+                    int[] marbleLocation = new int[] {j,i};
+
+                    if(searchRules.checkSquareForColor(marbleLocation, MoveDirection.LEFT, board) == playerTurn) {
+                        int[][] newCombination = new int[2][2];
+                        newCombination[0] = marbleLocation;
+                        newCombination[1] = searchRules.checkSquareForLocation(marbleLocation, MoveDirection.LEFT, board);
+
+                        //YOU WERE HERE!!!;
+                        combinationsOfMarbles.add(newCombination);
+                    }
+
+                    if(searchRules.checkSquareForColor(marbleLocation, MoveDirection.BOTTOM_LEFT, board) == playerTurn) {
+                        int[][] newCombination = new int[2][2];
+                        newCombination[0] = marbleLocation;
+                        newCombination[1] = searchRules.checkSquareForLocation(marbleLocation, MoveDirection.BOTTOM_LEFT, board);
+                        combinationsOfMarbles.add(newCombination);
+                    }
+
+                    if(searchRules.checkSquareForColor(marbleLocation, MoveDirection.BOTTOM_RIGHT, board) == playerTurn) {
+                        int[][] newCombination = new int[2][2];
+                        newCombination[0] = marbleLocation;
+                        newCombination[1] = searchRules.checkSquareForLocation(marbleLocation, MoveDirection.BOTTOM_RIGHT, board);
+                        combinationsOfMarbles.add(newCombination);
+                    }
+
+                    if(searchRules.checkSquareForColor(marbleLocation, MoveDirection.RIGHT, board) == playerTurn) {
+                        int[][] newCombination = new int[2][2];
+                        newCombination[0] = marbleLocation;
+                        newCombination[1] = searchRules.checkSquareForLocation(marbleLocation, MoveDirection.RIGHT, board);
+                        combinationsOfMarbles.add(newCombination);
+                    }
+
+                }
+            }
+        }
         return doubleMarbleMoves;
         //TODO find all combinations of two marbles then use the same operations as singleMarbleMoves
     }
