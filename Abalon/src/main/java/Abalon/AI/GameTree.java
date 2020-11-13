@@ -2,6 +2,8 @@ package Abalon.AI;
 
 import java.util.*;
 import Abalon.Main.Rules;
+import Abalon.Main.Move;
+import Abalon.Main.MoveDirection;
 
 public class GameTree {
     /**
@@ -107,11 +109,15 @@ public class GameTree {
                 if (board[i][j] == playerTurn) { //search the entire array for marbles belonging to player 1
                     Move mv = new Move(); //create a move object
 
-                    mv.pushing = new int[3][2]; //add the first marble to pushing for the move
-                    mv.pushing[0][0] = j;       //QUESTION: in what form does pushing usually come? Is this valid for the rules class?
-                    mv.pushing[0][1] = i;
+                    mv.pushing = new int[1][2]; //add the first marble to pushing for the move
+                    mv.pushing[0][0] = i;       //QUESTION: in what form does pushing usually come? Is this valid for the rules class?
+                    mv.pushing[0][1] = j;
 
-                    mv.board = board.clone(); //clone the board as it is as a new object that can be altered
+                    int[][] newBoard = new int[board.length][];
+                    for(int k = 0; k < board.length; k++) {
+                        newBoard[k] = board[k].clone();
+                    }
+                    mv.board = newBoard;
                     mv.turn = playerTurn;
 
                     mv.dir = MoveDirection.TOP_LEFT;
@@ -119,39 +125,69 @@ public class GameTree {
                     if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                         rules.move(); //change the cloned board to the state after the move has been made
                         singleMarbleMoves.add(mv.board); //add this state to the array of possible moves
+
+                        newBoard = new int[board.length][]; //create a new copy of the current gamestate
+                        for(int k = 0; k < board.length; k++) {
+                            newBoard[k] = board[k].clone();
+                        }
+                        mv.board = newBoard;
                     }
 
                     mv.dir = MoveDirection.LEFT;
-                    mv.board = board.clone(); //create a new object from the game state before the move
+                    rules = new Rules(mv);
                     //rules = new Rules(mv);
                     if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                         rules.move();
                         singleMarbleMoves.add(mv.board);
+
+                        newBoard = new int[board.length][]; //create a new copy of the current gamestate
+                        for(int k = 0; k < board.length; k++) {
+                            newBoard[k] = board[k].clone();
+                        }
+                        mv.board = newBoard;
                     }
 
                     mv.dir = MoveDirection.BOTTOM_LEFT;
-                    mv.board = board.clone();
+                    rules = new Rules(mv);
                     if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                         rules.move();
                         singleMarbleMoves.add(mv.board);
+
+                        newBoard = new int[board.length][]; //create a new copy of the current gamestate
+                        for(int k = 0; k < board.length; k++) {
+                            newBoard[k] = board[k].clone();
+                        }
+                        mv.board = newBoard;
                     }
 
                     mv.dir = MoveDirection.TOP_RIGHT;
-                    mv.board = board.clone();
+                    rules = new Rules(mv);
                     if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                         rules.move();
                         singleMarbleMoves.add(mv.board);
+
+                        newBoard = new int[board.length][]; //create a new copy of the current gamestate
+                        for(int k = 0; k < board.length; k++) {
+                            newBoard[k] = board[k].clone();
+                        }
+                        mv.board = newBoard;
                     }
 
                     mv.dir = MoveDirection.RIGHT;
-                    mv.board = board.clone();
+                    rules = new Rules(mv);
                     if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                         rules.move();
                         singleMarbleMoves.add(mv.board);
+
+                        newBoard = new int[board.length][]; //create a new copy of the current gamestate
+                        for(int k = 0; k < board.length; k++) {
+                            newBoard[k] = board[k].clone();
+                        }
+                        mv.board = newBoard;
                     }
 
                     mv.dir = MoveDirection.BOTTOM_RIGHT;
-                    mv.board = board.clone();
+                    rules = new Rules(mv);
                     if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                         rules.move();
                         singleMarbleMoves.add(mv.board);
