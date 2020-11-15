@@ -1,7 +1,10 @@
 package Abalon.AI;
 
-import java.util.*;
+import Abalon.Main.Move;
+import Abalon.Main.MoveDirection;
 import Abalon.Main.Rules;
+
+import java.util.*;
 
 public class GameTree {
     /**
@@ -9,6 +12,7 @@ public class GameTree {
      * each node represents a state
      * then the algorithms will take care of going through the tree and pick a move
      */
+
     private Rules rules;
     private ArrayList<int[][]> allPossibleMoves = new ArrayList<>();
 
@@ -19,12 +23,14 @@ public class GameTree {
     private ArrayList<Node> previousGeneration = new ArrayList<>();
     private ArrayList<Node> currentGeneration = new ArrayList<>();
     private final int generation = 3;
-    private int counter = 1;
+    private int generationCounter = 1;
 
-    //private static ArrayList<int[][]> list;
+    private HashTable table;
 
     public GameTree(){
         //create the tree, start with the initial board
+
+        table = new HashTable();
     }
 
 
@@ -42,7 +48,7 @@ public class GameTree {
 
         createChildren(root, root.getBoardState(), currentPlayer);
 
-        while(counter < generation){
+        while(generationCounter < generation){
 
             if (currentPlayer == 1) {
                 currentPlayer = 2;
@@ -50,7 +56,7 @@ public class GameTree {
                 currentPlayer = 1;
             }
 
-            counter++;
+            generationCounter++;
 
             for(Node n : previousGeneration) {
                 createChildren(n, n.getBoardState(), currentPlayer);
@@ -64,7 +70,7 @@ public class GameTree {
 
     public void createChildren(Node parent, int[][] currentBoardState, int currentPlayer){
 
-        // ArrayList<int[][]> childrenStates = findPossibleMoves(currentPlayer, currentBoardState);
+        // ArrayList<int[][]> childrenStates = findRandomPossibleMoves(60);
 
         ArrayList<int[][]> childrenStates = getPossibleMoves(currentBoardState, currentPlayer);
 
@@ -79,14 +85,17 @@ public class GameTree {
             Edge edge = new Edge(parent, node);
             edges.add(edge);
 
-            if(counter == 1) {
+            if(generationCounter == 1) {
                 previousGeneration.add(node);
             }
             else {
-                currentGeneration.add(node);
+                if(table.checkInTable(currentPlayer, child, score)) {
+                    currentGeneration.add(node);
+                }
             }
         }
    }
+
 
     public ArrayList<int[][]> getPossibleMoves(int[][] board, int playerTurn) {
         //TODO take the board and create move objects for every possible move the player can make
@@ -176,41 +185,51 @@ public class GameTree {
     }
 
 
-    /*public static ArrayList<int[][]> findRandomPossibleMoves(int size) {
+    /*
+    public ArrayList<int[][]> findRandomPossibleMoves(int size) {
+
+        ArrayList<int[][]> list = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            list.add(createRandomArray());
+        }
+        return list;
+    }
+
+    public int[][] createRandomArray() {
 
         Random r = new Random();
 
-        list = new ArrayList<>();
+        int[][] randomCellColor = new int[9][9];
 
         int[][] cellColor = new int[][] {
 
-            {1, 1, 1, 1, 1, -1, -1, -1, -1},
-            {1, 1, 1, 1, 1,  1, -1, -1, -1},
-            {0, 0, 1, 1, 1,  0,  0, -1, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0,  0},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 2, 2, 2,  0,  0, -1, -1},
-            {2, 2, 2, 2, 2,  2, -1, -1, -1},
-            {2, 2, 2, 2, 2, -1, -1, -1, -1}
+                {1, 1, 1, 1, 1, -1, -1, -1, -1},
+                {1, 1, 1, 1, 1,  1, -1, -1, -1},
+                {0, 0, 1, 1, 1,  0,  0, -1, -1},
+                {0, 0, 0, 0, 0,  0,  0,  0, -1},
+                {0, 0, 0, 0, 0,  0,  0,  0,  0},
+                {0, 0, 0, 0, 0,  0,  0,  0, -1},
+                {0, 0, 2, 2, 2,  0,  0, -1, -1},
+                {2, 2, 2, 2, 2,  2, -1, -1, -1},
+                {2, 2, 2, 2, 2, -1, -1, -1, -1}
 
         };
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < cellColor.length; j++) {
-                for (int k = 0; k < cellColor.length; k++) {
-                    if (cellColor[j][k] == 0 || cellColor[j][k] == 1 || cellColor[j][k] == 2) {
-                        int randomNum = r.nextInt((2) + 1);
-                        cellColor[j][k] = randomNum;
-                    }
+        for (int j = 0; j < cellColor.length; j++) {
+            for (int k = 0; k < cellColor.length; k++) {
+                if (cellColor[j][k] == 0 || cellColor[j][k] == 1 || cellColor[j][k] == 2) {
+                    int randomNum = r.nextInt((2) + 1);
+                    randomCellColor[j][k] = randomNum;
+                }
+                else {
+                    randomCellColor[j][k] = -1;
                 }
             }
-            list.add(cellColor);
         }
-        return list;
-    }*/
-
-
+        return randomCellColor;
+    }
+    */
 
     public ArrayList<Node> getNodes() {
         return nodes;

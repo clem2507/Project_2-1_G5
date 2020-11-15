@@ -1,9 +1,6 @@
 package Abalon.AI;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Test {
 
@@ -78,7 +75,12 @@ public class Test {
         */
 
         GameTree gameTree = new GameTree();
+
+        long b_time = System.currentTimeMillis();
         gameTree.createTree(rootCellColor, 1);
+        long e_time = System.currentTimeMillis();
+
         System.out.println("nodes list size = " + gameTree.getNodes().size());
+        System.out.println("Compilation time: " + (e_time-b_time));
     }
 }
