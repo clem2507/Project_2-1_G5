@@ -1,8 +1,5 @@
 package Abalon.AI;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class Test {
@@ -38,7 +35,7 @@ public class Test {
     public static void main(String[]args) {
 
         // Instantiation of the hash table
-        // HashTable table = new HashTable();
+        HashTable table = new HashTable();
         // If there is an empty space in the table for a specific move, put true in the right index and continue the search
         //if (table.checkInTable(1, cellColor)) {
           //  table.put(1, cellColor);
@@ -47,7 +44,6 @@ public class Test {
             // node.setScore = table.getScore()
         //}
 
-        /*
         Random r = new Random();
 
         for (int i = 0; i < 50; i++) {
@@ -75,10 +71,8 @@ public class Test {
             System.out.println("score " + i + ": " + score);
             System.out.println("-------");
         }
-        */
 
-        GameTree gameTree = new GameTree();
-        gameTree.createTree(rootCellColor, 1);
-        System.out.println("nodes list size = " + gameTree.getNodes().size());
+        //System.out.println("Distance: " + EvaluationFunction.centerDistance(1, cellColor));
+        //System.out.println("Neighbourhood: " + EvaluationFunction.marblesNeighbourhood(1, cellColor));
     }
 }
