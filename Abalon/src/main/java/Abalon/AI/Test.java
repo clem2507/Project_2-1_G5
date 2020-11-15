@@ -1,9 +1,6 @@
 package Abalon.AI;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Test {
 
@@ -41,10 +38,10 @@ public class Test {
         // HashTable table = new HashTable();
         // If there is an empty space in the table for a specific move, put true in the right index and continue the search
         //if (table.checkInTable(1, cellColor)) {
-          //  table.put(1, cellColor);
+        //  table.put(1, cellColor);
         //}
         //else {
-            // node.setScore = table.getScore()
+        // node.setScore = table.getScore()
         //}
 
         /*
@@ -78,7 +75,13 @@ public class Test {
         */
 
         GameTree gameTree = new GameTree();
+
+        long b_time = System.currentTimeMillis();
         gameTree.createTree(rootCellColor, 1);
+        long e_time = System.currentTimeMillis();
+
         System.out.println("nodes list size = " + gameTree.getNodes().size());
+        System.out.println("Compilation time: " + (e_time-b_time));
     }
 }
+
