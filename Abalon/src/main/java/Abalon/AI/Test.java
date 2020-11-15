@@ -1,20 +1,18 @@
 package Abalon.AI;
 
-import java.util.*;
-
 public class Test {
 
     public static int[][] cellColor = new int[][]{
 
             {1, 1, 1, 0, 1, -1, -1, -1, -1},
-            {1, 1, 1, 1, 1,  1, -1, -1, -1},
+            {1, 0, 1, 1, 0,  1, -1, -1, -1},
             {0, 0, 1, 1, 1,  0,  0, -1, -1},
-            {0, 0, 0, 1, 0,  0,  0,  0, -1},
-            {0, 0, 0, 2, 0,  0,  0,  0,  0},
-            {0, 0, 0, 2, 0,  0,  0,  0, -1},
+            {0, 1, 0, 1, 0,  1,  0,  0, -1},
+            {0, 0, 0, 2, 0,  2,  0,  0,  1},
+            {2, 0, 0, 2, 0,  0,  0,  0, -1},
             {0, 0, 2, 0, 2,  0,  0, -1, -1},
-            {2, 2, 2, 0, 2,  2, -1, -1, -1},
-            {2, 2, 2, 2, 2, -1, -1, -1, -1}
+            {0, 2, 2, 0, 2,  0, -1, -1, -1},
+            {2, 2, 0, 2, 2, -1, -1, -1, -1}
 
     };
 
@@ -77,11 +75,16 @@ public class Test {
         GameTree gameTree = new GameTree();
 
         long b_time = System.currentTimeMillis();
+
         gameTree.createTree(rootCellColor, 1);
+
         long e_time = System.currentTimeMillis();
+        double duration = (e_time-b_time)/1000f;
 
         System.out.println("nodes list size = " + gameTree.getNodes().size());
-        System.out.println("Compilation time: " + (e_time-b_time));
+        System.out.println("pruned nodes = " + gameTree.getPrunedNodes());
+        System.out.println();
+        System.out.println("compilation time = " + duration + " s");
     }
 }
 
