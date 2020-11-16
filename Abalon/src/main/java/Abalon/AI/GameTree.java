@@ -23,7 +23,7 @@ public class GameTree {
     private ArrayList<Node> previousGeneration = new ArrayList<>();
     private ArrayList<Node> currentGeneration = new ArrayList<>();
 
-    private final int generation = 3;
+    private int generation;
     private int generationCounter = 1;
 
     private HashTable table;
@@ -35,7 +35,10 @@ public class GameTree {
         table = new HashTable();
     }
 
-    public void createTree(int[][] currentRoot, int currentPlayer){
+    public void createTree(int[][] currentRoot, int currentPlayer, int depth){
+
+        this.generation = depth;
+
         root = new Node(currentRoot, 0);
 
         nodes.add(root);
@@ -387,8 +390,55 @@ public class GameTree {
     }
     */
 
+    public boolean adjacent(Node x, Node y)	{
+        // Returns true when there’s an edge from x to y
+
+        for(Edge e : edges){
+            if (e.getSource() == x){
+                if(e.getDestination() == y){
+                    return true;
+                }
+            }else if (e.getSource() == y){
+                if(e.getDestination() == x) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public List<Node> getNeighbours(Node v) { // String vertex
+        // Returns all neighbours of a given vertex
+        List<Node> neighbours = new ArrayList<Node>();
+
+        for (Edge e : edges){
+            if(e.getSource() == v){
+                neighbours.add(e.getDestination());
+            }else if(e.getDestination() == v){
+                neighbours.add(e.getSource());
+            }
+        }
+        return neighbours;
+    }
+
+    public List<Node> getChildren(Node v) { // String vertex
+        // Returns all neighbours of a given vertex
+        List<Node> children = new ArrayList<Node>();
+
+        for (Edge e : edges){
+            if(e.getSource() == v) {
+                children.add(e.getDestination());
+            }
+        }
+        return children;
+    }
+
     public ArrayList<Node> getNodes() {
         return nodes;
+    }
+
+    public ArrayList<Edge> getEdges() {
+        return edges;
     }
 
     public int getPrunedNodes() {
