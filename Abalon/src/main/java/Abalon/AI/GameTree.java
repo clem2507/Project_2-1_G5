@@ -43,13 +43,6 @@ public class GameTree {
 
         nodes.add(root);
 
-        if (currentPlayer == 1) {
-            currentPlayer = 2;
-        }
-        else {
-            currentPlayer = 1;
-        }
-
         createChildren(root, root.getBoardState(), currentPlayer);
 
         while(generationCounter < generation){
@@ -421,9 +414,9 @@ public class GameTree {
         return neighbours;
     }
 
-    public List<Node> getChildren(Node v) { // String vertex
+    public ArrayList<Node> getChildren(Node v) { // String vertex
         // Returns all neighbours of a given vertex
-        List<Node> children = new ArrayList<Node>();
+        ArrayList<Node> children = new ArrayList<Node>();
 
         for (Edge e : edges){
             if(e.getSource() == v) {
@@ -443,6 +436,10 @@ public class GameTree {
 
     public int getPrunedNodes() {
         return prunedNodes;
+    }
+
+    public int getGeneration() {
+        return generation;
     }
 }
 

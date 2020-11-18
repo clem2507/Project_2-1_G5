@@ -85,33 +85,64 @@ public class Test {
         }
         */
 
-        GameTree gameTree = new GameTree();
+        EvaluationFunction evaluation = new EvaluationFunction(0, cellColor, rootCellColor);
 
-        long b_time = System.currentTimeMillis();
+        int[][] bestMove = rootCellColor;
+        int currentPlayer = 1;
+        int turn = 1;
+        while (Math.abs(evaluation.countMarbles(1, bestMove) - evaluation.countMarbles(2, bestMove)) < 1) {
 
-        gameTree.createTree(rootCellColor, 1, 3);
+            GameTree gameTree = new GameTree();
 
-        long e_time = System.currentTimeMillis();
-        double duration = (e_time-b_time)/1000f;
+            long b_gametreeTime = System.currentTimeMillis();
 
-        System.out.println("nodes list size = " + gameTree.getNodes().size());
-        System.out.println("pruned nodes = " + gameTree.getPrunedNodes());
-        System.out.println();
-        System.out.println("compilation time = " + duration + " s");
+            if (turn == 1) {
+                gameTree.createTree(rootCellColor, currentPlayer, 3);
+            }
+            else {
+                gameTree.createTree(bestMove, currentPlayer, 3);
+            }
 
-        ArrayList<Node> nodes = gameTree.getNodes();
-        ArrayList<Edge> edges = gameTree.getEdges();
+            long e_gametreeTime = System.currentTimeMillis();
+            double gametreeDuration = (e_gametreeTime - b_gametreeTime) / 1000f;
 
-        System.out.println();
-        System.out.println("source");
-        printBoard(edges.get(0).getSource().getBoardState());
-        System.out.println();
-        System.out.println("destination");
-        printBoard(edges.get(0).getDestination().getBoardState());
-        System.out.println();
-        System.out.println(gameTree.adjacent(nodes.get(0), nodes.get(44)));
-        System.out.println();
-        System.out.println(gameTree.getChildren(nodes.get(168)).size());
+            System.out.println();
+            System.out.println("currentPlayer = " + currentPlayer + ", turn = " + turn);
+
+            if (currentPlayer == 1) {
+                currentPlayer = 2;
+            }
+            else {
+                currentPlayer = 1;
+            }
+
+            System.out.println();
+            System.out.println("nodes list size = " + gameTree.getNodes().size());
+            System.out.println("pruned nodes = " + gameTree.getPrunedNodes());
+            System.out.println();
+            System.out.println("Game tree duration = " + gametreeDuration + " s");
+
+
+            long b_minimaxTime = System.currentTimeMillis();
+
+            AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
+            algo.start(true);
+            bestMove = algo.getBestMove();
+
+            long e_minimaxTime = System.currentTimeMillis();
+            double minimaxDuration = (e_minimaxTime - b_minimaxTime) / 1000f;
+
+            System.out.println();
+            System.out.println("Minimax time duration = " + minimaxDuration + " s");
+
+            System.out.println();
+            System.out.println("Total computation time = " + (gametreeDuration + minimaxDuration) + " s");
+
+            System.out.println();
+            System.out.println("--------------------");
+
+            turn++;
+        }
     }
 }
 
