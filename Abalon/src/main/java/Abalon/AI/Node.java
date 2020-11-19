@@ -27,14 +27,4 @@ public class Node{
     public Node getRoot() {
         return root;
     }
-//  ???????
-//    public List<Node> setChildren(){
-//
-//    }
-//
-//
-//    public List<Node> getChildren() {
-//        return children;
-//    }
-
 }

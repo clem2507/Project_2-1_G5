@@ -44,7 +44,7 @@ public class HomePage extends Application {
         Group pane = new Group();
 
         try {
-            BufferedImage buffer = ImageIO.read(new File("./res/grey.jpg"));
+            BufferedImage buffer = ImageIO.read(new File("Abalon/res/grey.jpg"));
             Image background = SwingFXUtils.toFXImage(buffer, null);
             ImageView view = new ImageView(background);
             pane.getChildren().addAll(view);
@@ -68,10 +68,10 @@ public class HomePage extends Application {
         //Creation of a combo box to choose the game Mode
         ComboBox gameChoice = new ComboBox();
         gameChoice.getItems().addAll(
-                "PLAYER VS PLAYER" ,
-                "AI CHOICE 1",
-                "AI CHOICE 2",
-                "PRACTICE MODE");
+                "Human VS Human" ,
+                "Alpha-Beta vs Human",
+                "MCTS vs Human",
+                "Alpha-Beta vs MCTS");
 
         gameChoice.getSelectionModel().selectFirst();
         gameChoice.setTranslateX(548);
@@ -93,6 +93,10 @@ public class HomePage extends Application {
             if (gameChoice.getValue().equals("PLAYER VS PLAYER")) {
                 hexagon = new Hexagon();
                 System.out.println("Start Button clicked, game is gonna start!");
+                hexagon.start(primaryStage);
+            }
+            else if (gameChoice.getValue().equals("Alpha-Beta vs Human")){
+                hexagon = new Hexagon();
                 hexagon.start(primaryStage);
             }
             else {
