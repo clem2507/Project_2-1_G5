@@ -88,11 +88,17 @@ public class Rules {
 
         switch(pushing.length) {
 
-            case 1: System.out.println(checkSingleMarble(pushing[0], direction, board,playerTurn)); return checkSingleMarble(pushing[0], direction, board,playerTurn);
+            case 1:
+                // System.out.println(checkSingleMarble(pushing[0], direction, board,playerTurn));
+            return checkSingleMarble(pushing[0], direction, board,playerTurn);
 
-            case 2: System.out.println(checkTwoMarbles(pushing, direction, board, playerTurn)); return checkTwoMarbles(pushing, direction, board, playerTurn);
+            case 2:
+                // System.out.println(checkTwoMarbles(pushing, direction, board, playerTurn));
+            return checkTwoMarbles(pushing, direction, board, playerTurn);
 
-            case 3: System.out.println(checkThreeMarbles(pushing,direction,board,playerTurn)); return checkThreeMarbles(pushing,direction,board,playerTurn); //TODO: method to be implemented
+            case 3:
+                // System.out.println(checkThreeMarbles(pushing,direction,board,playerTurn));
+            return checkThreeMarbles(pushing,direction,board,playerTurn); //TODO: method to be implemented
 
         }
         return false;
@@ -204,7 +210,7 @@ public class Rules {
                 if(playerTurn == 1){ return false; } //NOT valid if trying to push own marble
                 else {
                     int [] pushedMarbleLocation=checkSquareForLocation(leadingMarble,direction,board);
-                    System.out.println("pushedMarbleLocation: " + pushedMarbleLocation[0] + " " + pushedMarbleLocation[1]);
+                    // System.out.println("pushedMarbleLocation: " + pushedMarbleLocation[0] + " " + pushedMarbleLocation[1]);
                     //If spot behind pushedMarble is not empty, the move is not valid as two marbles can only push 1.
                     if(checkSquareForColor(pushedMarbleLocation,direction,board) != 0 && checkSquareForColor(pushedMarbleLocation,direction,board) != -1) {
                         return false;
@@ -230,7 +236,8 @@ public class Rules {
                 }
 
         }
-        System.out.println("?"); return false;
+       // System.out.println("?");
+        return false;
     }
 
     public boolean checkThreeMarbles(int[][] pushing,  MoveDirection direction, int[][] board, int playerTurn){
@@ -374,7 +381,8 @@ public class Rules {
                 if(marble[0] > 3) { return (board[marble[0]][marble[1]+1] == -1); }
                 return false;
         }
-        System.out.println("you should not be here"); return false;
+        // System.out.println("you should not be here");
+        return false;
     }
 
     /**
@@ -460,7 +468,10 @@ public class Rules {
      -1 = a position in the array that is out of bounds.
      */
     public int checkSquareForColor(int[] marble, MoveDirection direction, int[][] board) {
-        if (checkOutOfBounds(marble, direction, board)) { System.out.println("out of bounds"); return -1; }
+        if (checkOutOfBounds(marble, direction, board)) {
+            // System.out.println("out of bounds");
+            return -1;
+        }
         switch(direction) {
 
             case TOP_LEFT:
@@ -559,7 +570,10 @@ public class Rules {
                     equalFound = true;
                 }
             }
-            if(!equalFound) { System.out.println("leading marble: " + pushing[i][0] + " " + pushing[i][1]); return pushing[i];}
+            if(!equalFound) {
+                // System.out.println("leading marble: " + pushing[i][0] + " " + pushing[i][1]);
+                return pushing[i];
+            }
         }
         int[] problem = {-1,-1};
         return problem;
@@ -567,7 +581,7 @@ public class Rules {
 
     public void performMoveOne(int[] marble, MoveDirection direction, int[][] board) {
         int[] location = checkSquareForLocation(marble,direction,board);
-        System.out.println(location[0] + " " + location[1]);
+        // System.out.println(location[0] + " " + location[1]);
         new_board[marble[0]][marble[1]] = 0;
         moveMarble(marble,location, board);
     }
@@ -577,7 +591,7 @@ public class Rules {
         new_board[marble2[0]][marble2[1]] = 0;
             
         if(!pushingMove) {
-            System.out.println("heyo");
+            // System.out.println("heyo");
             int[] location1 = checkSquareForLocation(marble1,direction,board);
             moveMarble(marble1,location1,board);
             int[] location2=checkSquareForLocation(marble2,direction,board);
@@ -652,8 +666,8 @@ public class Rules {
             int[] marblet2 = marblesToBePushed.get(1);
             new_board[marblet2[0]][marblet2[1]] = 0;
             
-            System.out.println(marblet1[0] + " " + marblet1[1]);
-            System.out.println(marblet2[0] + " " + marblet2[1]);
+            // System.out.println(marblet1[0] + " " + marblet1[1]);
+            // System.out.println(marblet2[0] + " " + marblet2[1]);
 
             if (marblet1[0] == marblet2[0] && marblet1[1] == marblet2[1]) { // 1 Marble is pushed
                 if (!checkOutOfBounds(marblet1, direction, board)) {    

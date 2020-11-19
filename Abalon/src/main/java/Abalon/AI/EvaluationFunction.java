@@ -68,7 +68,7 @@ public class EvaluationFunction {
         EvaluationFunction.rootCellColor = rootCellColor;
     }
 
-    public static void computeValues() {
+    public void computeValues() {
 
         // v1
         int ownMarblesCenterDistance;
@@ -135,7 +135,7 @@ public class EvaluationFunction {
         v6 = rootOwnMarblesCount - currentStateOwnMarblesCount;
     }
 
-    public static void computeWeights(double v1, double v2) {
+    public void computeWeights(double v1, double v2) {
 
         if (v1 < 0) {
             changeModus(modus1);
@@ -188,7 +188,7 @@ public class EvaluationFunction {
         return (w1*v1 + w2*v2 + w3*v3 + w4*v4 + w5*v5) - w6*v6;
     }
 
-    public static void changeModus(double[] modus) {
+    public void changeModus(double[] modus) {
 
         w1 = modus[0];
         w2 = modus[1];
@@ -198,7 +198,7 @@ public class EvaluationFunction {
         w6 = 50*w5;
     }
 
-    public static int centerDistance(int currentPlayer) {
+    public int centerDistance(int currentPlayer) {
 
         int distance = 0;
         for (int i = 0; i < cellColor.length; i++) {
@@ -214,7 +214,7 @@ public class EvaluationFunction {
                         distance += 4 - Math.min(i,j);
                     }
                     else if (i >= 5 && j <= 3) {
-                        distance += 4 - Math.min((i-5), j);
+                        distance += 4 - Math.min(Math.abs(i-8), j);
                     }
                     else if ((i == 2 && j == 6) || (i == 6 && j == 6) || (i == 3 && j == 7) || (i == 5 && j == 7)) {
                         distance += 4;
@@ -234,7 +234,7 @@ public class EvaluationFunction {
         return distance;
     }
 
-    public static int marblesNeighbourhood(int currentPlayer) {
+    public int marblesNeighbourhood(int currentPlayer) {
 
         int neighbourhood = 0;
         for (int i = 0; i < cellColor.length; i++) {
@@ -247,7 +247,7 @@ public class EvaluationFunction {
         return neighbourhood;
     }
 
-    public static int countNeighbour(int i, int j, int currentPlayer) {
+    public int countNeighbour(int i, int j, int currentPlayer) {
 
         int count = 0;
         if (i == 0 && j == 0) {
@@ -302,9 +302,6 @@ public class EvaluationFunction {
                 count++;
             }
             if (cellColor[i][j+1] == currentPlayer) {
-                count++;
-            }
-            if (cellColor[i+1][j+1] == currentPlayer) {
                 count++;
             }
             if (cellColor[i+1][j] == currentPlayer) {
@@ -390,7 +387,7 @@ public class EvaluationFunction {
         return count;
     }
 
-    public static int breakStrongGroupPattern(int currentPlayer) {
+    public int breakStrongGroupPattern(int currentPlayer) {
 
         int opponentPlayer;
         if (currentPlayer == 1) {
@@ -445,7 +442,7 @@ public class EvaluationFunction {
         return count;
     }
 
-    public static int strengthenGroupPattern(int currentPlayer) {
+    public int strengthenGroupPattern(int currentPlayer) {
 
         int opponentPlayer;
         if (currentPlayer == 1) {
@@ -508,7 +505,7 @@ public class EvaluationFunction {
         return count;
     }
 
-    public static int countMarbles(int currentPlayer, int[][] cellColor) {
+    public int countMarbles(int currentPlayer, int[][] cellColor) {
 
         int count = 0;
         for (int i = 0; i < cellColor.length; i++) {
