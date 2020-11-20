@@ -85,7 +85,7 @@ public class Test {
         }
         */
 
-        EvaluationFunction evaluation = new EvaluationFunction(0, cellColor, rootCellColor);
+        /*EvaluationFunction evaluation = new EvaluationFunction(0, cellColor, rootCellColor);
 
         int[][] bestMove = rootCellColor;
         int currentPlayer = 1;
@@ -142,7 +142,22 @@ public class Test {
             System.out.println("--------------------");
 
             turn++;
-        }
+        }*/
+
+        long b_MCTStime = System.currentTimeMillis();
+
+        MCTS monteCarlo = new MCTS(rootCellColor, 1);
+        monteCarlo.start();
+
+        System.out.println();
+        printBoard(monteCarlo.getBestMove());
+
+        long e_MCTStime = System.currentTimeMillis();
+        double MCTSDuration = (e_MCTStime - b_MCTStime) / 1000f;
+
+        System.out.println();
+        System.out.println("MCTS time duration = " + MCTSDuration + " s");
+
     }
 }
 
