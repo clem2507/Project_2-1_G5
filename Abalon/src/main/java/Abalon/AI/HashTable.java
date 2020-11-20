@@ -9,15 +9,16 @@ public class HashTable {
     public HashTable() {
 
         key = new Zorbist();
-        arraySize = (int) Math.pow(2, 20);
+        arraySize = (int) Math.pow(2, 28);
         table = new double[arraySize];
     }
 
-    public boolean checkInTable(int currentPlayer, int[][] cellColor) {
+    public boolean checkInTable(int currentPlayer, int[][] cellColor, double score) {
 
-        int index = (int) key.getZorbistHash(currentPlayer, cellColor);
+        int index = (int) key.getZorbistKey(currentPlayer, cellColor);
 
         if (table[index] == 0) {
+            table[index] = score;
             return true;
         }
         else {
@@ -25,22 +26,10 @@ public class HashTable {
         }
     }
 
-    public void put(int currentPlayer, int[][] cellColor) {
-
-        EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, cellColor, cellColor);
-
-        int index = (int) key.getZorbistHash(currentPlayer, cellColor);
-        table[index] = evaluationFunction.evaluate();
-    }
-
-    public double getScore(int currentPlayer, int[][] cellColor) {
-
-        int index = (int) key.getZorbistHash(currentPlayer, cellColor);
-        return table[index];
-    }
-
     public double[] getTable() {
 
         return table;
     }
 }
+
+
