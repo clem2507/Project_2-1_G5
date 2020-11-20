@@ -39,7 +39,7 @@ public class MCTS {
 
         int simulationScore = 0;
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 50; i++) {
             long b_time = System.currentTimeMillis();
             int actualPlayer = currentPlayer;
             int[][] actualBoard = currentBoard;
