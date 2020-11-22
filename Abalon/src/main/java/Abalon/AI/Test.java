@@ -85,7 +85,8 @@ public class Test {
         }
         */
 
-        /*EvaluationFunction evaluation = new EvaluationFunction(0, cellColor, rootCellColor);
+
+        EvaluationFunction evaluation = new EvaluationFunction(0, cellColor, rootCellColor);
 
         int[][] bestMove = rootCellColor;
         int currentPlayer = 1;
@@ -96,18 +97,64 @@ public class Test {
 
             long b_gametreeTime = System.currentTimeMillis();
 
-            if (turn == 1) {
+            if (turn == 1 && currentPlayer == 1) {
                 gameTree.createTree(rootCellColor, currentPlayer, 3);
-            }
-            else {
-                gameTree.createTree(bestMove, currentPlayer, 3);
+
+                System.out.println();
+                System.out.println("nodes list size = " + gameTree.getNodes().size());
+                System.out.println("pruned nodes = " + gameTree.getPrunedNodes());
+                System.out.println();
+            } else {
+                if (currentPlayer == 1) {
+                    gameTree.createTree(bestMove, currentPlayer, 3);
+
+                    System.out.println();
+                    System.out.println("nodes list size = " + gameTree.getNodes().size());
+                    System.out.println("pruned nodes = " + gameTree.getPrunedNodes());
+                    System.out.println();
+                }
             }
 
             long e_gametreeTime = System.currentTimeMillis();
             double gametreeDuration = (e_gametreeTime - b_gametreeTime) / 1000f;
 
+            if (currentPlayer == 1) {
+                System.out.println("Game tree duration = " + gametreeDuration + " s");
+            }
+
             System.out.println();
             System.out.println("currentPlayer = " + currentPlayer + ", turn = " + turn);
+
+            if (currentPlayer == 1) {
+
+                long b_minimaxTime = System.currentTimeMillis();
+
+                AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
+                algo.start(true);
+                bestMove = algo.getBestMove();
+
+                long e_minimaxTime = System.currentTimeMillis();
+                double minimaxDuration = (e_minimaxTime - b_minimaxTime) / 1000f;
+
+                System.out.println();
+                System.out.println("Minimax time duration = " + minimaxDuration + " s");
+
+                System.out.println();
+                System.out.println("Total computation time (game tree + minimax) = " + (gametreeDuration + minimaxDuration) + " s");
+            } else {
+
+                long b_MCTStime = System.currentTimeMillis();
+
+                MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
+                monteCarlo.start();
+                bestMove = monteCarlo.getBestMove();
+
+                long e_MCTStime = System.currentTimeMillis();
+                double MCTSDuration = (e_MCTStime - b_MCTStime) / 1000f;
+
+                System.out.println();
+                System.out.println("MCTS time duration = " + MCTSDuration + " s");
+            }
 
             if (currentPlayer == 1) {
                 currentPlayer = 2;
@@ -117,47 +164,30 @@ public class Test {
             }
 
             System.out.println();
-            System.out.println("nodes list size = " + gameTree.getNodes().size());
-            System.out.println("pruned nodes = " + gameTree.getPrunedNodes());
-            System.out.println();
-            System.out.println("Game tree duration = " + gametreeDuration + " s");
-
-
-            long b_minimaxTime = System.currentTimeMillis();
-
-            AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
-            algo.start(true);
-            bestMove = algo.getBestMove();
-
-            long e_minimaxTime = System.currentTimeMillis();
-            double minimaxDuration = (e_minimaxTime - b_minimaxTime) / 1000f;
-
-            System.out.println();
-            System.out.println("Minimax time duration = " + minimaxDuration + " s");
-
-            System.out.println();
-            System.out.println("Total computation time = " + (gametreeDuration + minimaxDuration) + " s");
-
-            System.out.println();
             System.out.println("--------------------");
 
             turn++;
-        }*/
+        }
+        if (evaluation.countMarbles(1, bestMove) > evaluation.countMarbles(2, bestMove)) {
+            System.out.println("AI 1 won the game (minimax)");
+        }
+        else {
+            System.out.println("AI 2 won the game (mcts)");
+        }
 
+
+        /*
         long b_MCTStime = System.currentTimeMillis();
 
         MCTS monteCarlo = new MCTS(rootCellColor, 1);
         monteCarlo.start();
-
-        System.out.println();
-        printBoard(monteCarlo.getBestMove());
 
         long e_MCTStime = System.currentTimeMillis();
         double MCTSDuration = (e_MCTStime - b_MCTStime) / 1000f;
 
         System.out.println();
         System.out.println("MCTS time duration = " + MCTSDuration + " s");
-
+        */
     }
 }
 

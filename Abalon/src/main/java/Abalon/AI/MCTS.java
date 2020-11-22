@@ -33,18 +33,23 @@ public class MCTS {
         }
         rootChildren = getPossibleMoves.getPossibleMoves(boardState, currentPlayer);
         bestMove = rootChildren.get(bestIndex);
+
+        System.out.println();
+        System.out.println("best move = ");
+        Test.printBoard(bestMove);
     }
 
     public int simulation(int[][] currentBoard){
 
         int simulationScore = 0;
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 100; i++) {
             long b_time = System.currentTimeMillis();
             int actualPlayer = currentPlayer;
             int[][] actualBoard = currentBoard;
-            while ((System.currentTimeMillis() - b_time) < 50) {
-
+            int countMoves = 0;
+            // while ((System.currentTimeMillis() - b_time) < 50) {
+            while (countMoves <= 20) {
                 ArrayList<int[][]> children = getPossibleMoves.getPossibleMoves(actualBoard, actualPlayer);
 
                 int max = children.size();
@@ -60,6 +65,7 @@ public class MCTS {
                 else {
                     actualPlayer = 1;
                 }
+                countMoves++;
             }
 
             EvaluationFunction evaluation = new EvaluationFunction(currentPlayer, actualBoard, boardState);
@@ -71,7 +77,7 @@ public class MCTS {
                 simulationScore--;
             }
         }
-        System.out.println("simulationScore = " + simulationScore);
+        // System.out.println("simulationScore = " + simulationScore);
         return simulationScore;
     }
 
