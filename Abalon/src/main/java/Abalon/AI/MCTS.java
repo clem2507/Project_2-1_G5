@@ -9,9 +9,15 @@ public class MCTS {
     private int currentPlayer;
     private GetPossibleMoves getPossibleMoves = new GetPossibleMoves();
 
+    private EvaluationFunction rootEvaluation;
+    private double rootScore;
+
     public MCTS(int[][] boardState, int currentPlayer){
+
         this.boardState = boardState;
         this.currentPlayer = currentPlayer;
+        this.rootEvaluation = new EvaluationFunction(currentPlayer, boardState, boardState);
+        this.rootScore = rootEvaluation.evaluate();
     }
 
     public void start(){
@@ -34,9 +40,11 @@ public class MCTS {
         rootChildren = getPossibleMoves.getPossibleMoves(boardState, currentPlayer);
         bestMove = rootChildren.get(bestIndex);
 
-        System.out.println();
-        System.out.println("best move = ");
-        Test.printBoard(bestMove);
+//        System.out.println();
+//        System.out.println("maxScore = " + maxScore);
+//        System.out.println();
+//        System.out.println("best move = ");
+//        Test.printBoard(bestMove);
     }
 
     public int simulation(int[][] currentBoard){
@@ -49,7 +57,7 @@ public class MCTS {
             int[][] actualBoard = currentBoard;
             int countMoves = 0;
             // while ((System.currentTimeMillis() - b_time) < 50) {
-            while (countMoves <= 20) {
+            while (countMoves <= 10) {
                 ArrayList<int[][]> children = getPossibleMoves.getPossibleMoves(actualBoard, actualPlayer);
 
                 int max = children.size();
@@ -70,7 +78,7 @@ public class MCTS {
 
             EvaluationFunction evaluation = new EvaluationFunction(currentPlayer, actualBoard, boardState);
 
-            if (evaluation.evaluate() >= 0) {
+            if (evaluation.evaluate() >= rootScore) {
                 simulationScore++;
             }
             else {
@@ -85,4 +93,3 @@ public class MCTS {
         return bestMove;
     }
 }
-

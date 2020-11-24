@@ -18,7 +18,7 @@ public class BoardUI {
     private int[][] cellColors; // each cell of the board is associated to an integer which defines whether it
     private boolean[][] selected;
 
-                               // is a marble, a hole or out of the board
+    // is a marble, a hole or out of the board
     public Marble[][] circles; // array of all the Circles of the board (might be a hole or a marble)
 
     private int[][] scoredCirclesColors; // player
@@ -26,8 +26,8 @@ public class BoardUI {
 
     public Polygon hexagon; // the board shaped like an hexagon
 
-        private int[][] counter = new int[9][9]; // counters associated to each cell, used to check how much time a cell
-                                            // has been clicked by the mouse
+    private int[][] counter = new int[9][9]; // counters associated to each cell, used to check how much time a cell
+    // has been clicked by the mouse
 
     private final double RADIUS = 22; // radius of the circles (marbles & holes)
 
@@ -44,6 +44,10 @@ public class BoardUI {
 
     public int[][] getBoard() {
         return cellColors;
+    }
+
+    public void setBoard(int[][] newBoard) {
+        this.cellColors = newBoard;
     }
 
     public boolean isVictorious() {
@@ -127,7 +131,7 @@ public class BoardUI {
 
     /**
      * Create all circles of the board (a circle can be either a hole, or a marble)
-    */
+     */
     private void createCircles() {
         circles = new Marble[9][9];
         for (int i = 0; i < 9; i++)
@@ -135,7 +139,7 @@ public class BoardUI {
                 circles[i][j] = null;
 
         selected = new boolean[9][9];
-        for (int i = 0; i < 9; i++) 
+        for (int i = 0; i < 9; i++)
             for (int j = 0; j < 9; j++)
                 selected[i][j] = false;
 
@@ -278,7 +282,7 @@ public class BoardUI {
      * Medium_blue represents the marbles of player 1
      * Light_sky_blue represents the marbles of player 2
      * -1 is for "out of the board"
-    */
+     */
 
     private void createColors() {
         cellColors = new int[][]{
@@ -338,7 +342,7 @@ public class BoardUI {
                 innerShadow.setOffsetY(4);
                 innerShadow.setColor(Color.GRAY); //color of the shadow
                 circles[i][j].setEffect(innerShadow);
-            }            
+            }
         }
     }
 
@@ -369,7 +373,7 @@ public class BoardUI {
         }
         if (c != null) {
             scoredCircles[i][player].setFill(c);
-            
+
             if (c == ORANGE) {
                 InnerShadow innerShadow = new InnerShadow();
                 innerShadow.setOffsetX(4);
@@ -407,7 +411,7 @@ public class BoardUI {
 
         for (int i = 0; i < cnt1; i++)
             scoredCirclesColors[i][0] = 1;
-        for (int i = 0; i < cnt2; i++) 
+        for (int i = 0; i < cnt2; i++)
             scoredCirclesColors[i][1] = 2;
 
         for (int i = 0; i < 6; i++) {

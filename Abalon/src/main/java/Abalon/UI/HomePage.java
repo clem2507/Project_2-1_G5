@@ -11,7 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;   
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File; 
+import java.io.File;
 import javafx.embed.swing.SwingFXUtils;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -31,12 +31,14 @@ import java.util.Collections;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;  
+import javafx.scene.input.KeyCode;
 
 public class HomePage extends Application {
 
     private final double WIDTH = 1344;
     private final double HEIGHT = 756;
+    public static ComboBox gameChoice = new ComboBox();
+
     Hexagon hexagon;
 
     @Override
@@ -66,9 +68,8 @@ public class HomePage extends Application {
         // System.out.println(javafx.scene.text.Font.getFamilies());
 
         //Creation of a combo box to choose the game Mode
-        ComboBox gameChoice = new ComboBox();
         gameChoice.getItems().addAll(
-                "Human VS Human" ,
+                "Human vs Human" ,
                 "Alpha-Beta vs Human",
                 "MCTS vs Human",
                 "Alpha-Beta vs MCTS");
@@ -90,7 +91,7 @@ public class HomePage extends Application {
 
         //Button listener
         play.setOnAction((EventHandler) event -> {
-            if (gameChoice.getValue().equals("PLAYER VS PLAYER")) {
+            if (gameChoice.getValue().equals("Human vs Human")) {
                 hexagon = new Hexagon();
                 System.out.println("Start Button clicked, game is gonna start!");
                 hexagon.start(primaryStage);
@@ -99,8 +100,16 @@ public class HomePage extends Application {
                 hexagon = new Hexagon();
                 hexagon.start(primaryStage);
             }
+            else if (gameChoice.getValue().equals("MCTS vs Human")){
+                hexagon = new Hexagon();
+                hexagon.start(primaryStage);
+            }
+            else if (gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
+                hexagon = new Hexagon();
+                hexagon.start(primaryStage);
+            }
             else {
-                System.out.println("Please select PLAYER VS PLAYER game mode!");
+                System.out.println("Please select a valid game mode!");
             }
         });
 
