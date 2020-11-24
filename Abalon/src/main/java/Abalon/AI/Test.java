@@ -85,7 +85,6 @@ public class Test {
         }
         */
 
-
         EvaluationFunction evaluation = new EvaluationFunction(0, cellColor, rootCellColor);
 
         int[][] bestMove = rootCellColor;

@@ -1,5 +1,9 @@
 package Abalon.Main;
 
+import Abalon.AI.AlphaBetaSearch;
+import Abalon.AI.GameTree;
+import Abalon.AI.MCTS;
+import Abalon.AI.Test;
 import Abalon.UI.BoardUI;
 import java.awt.EventQueue;
 import javafx.application.Platform;
@@ -10,6 +14,8 @@ import java.lang.InterruptedException;
  * Abalon class that serves to run a new game
  */
 public class Abalon {
+
+	private int currentPlayer;
 
 	/**
 	 * Current way to run the project, to be replaced 
@@ -47,15 +53,17 @@ public class Abalon {
 	public void runGame() {
 		//playMove(false);
 
-		for (int i = 0; !victory; i++) {
-			try {
-				Move mv = player[i & 1].collectMove();
-				mv.board = board.getBoard();
-				Rules checkRules = new Rules(mv);
-				checkRules.move();
-			} catch (InterruptedException e) {
-				System.out.println("concurrency problem, aborting...");
-				System.exit(0);
+		if (gameMode.equals("Human vs Human")) {
+			for (int i = 0; !victory; i++) {
+				try {
+					Move mv = player[i & 1].collectMove();
+					mv.board = board.getBoard();
+					Rules checkRules = new Rules(mv);
+					checkRules.move();
+				} catch (InterruptedException e) {
+					System.out.println("concurrency problem, aborting...");
+					System.exit(0);
+				}
 			}
 
 			Platform.runLater(new Runnable() {
@@ -66,6 +74,38 @@ public class Abalon {
 			});
 
 			victory = board.isVictorious();
+		}
+		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
+			currentPlayer = 1;
+			while (!victory) {
+				if (currentPlayer == 1) {
+					GameTree gameTree = new GameTree();
+					gameTree.createTree(board.getBoard(), currentPlayer, 3);
+					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
+					algo.start(true);
+					board.setBoard(algo.getBestMove());
+					currentPlayer = 2;
+				}
+				else {
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
+					monteCarlo.start();
+					board.setBoard(monteCarlo.getBestMove());
+					currentPlayer = 1;
+				}
+
+				board.drawAllCells();
+			}
+
+			victory = board.isVictorious();
+		}
+		if (victory) {
+			if (currentPlayer == 1) {
+				System.out.println("MCTS won the game!");
+			}
+			else {
+				System.out.println("Minimax won the game");
+			}
+			System.exit(0);
 		}
 	}
 
