@@ -1,9 +1,5 @@
 package Abalon.UI;
 
-import Abalon.AI.AlphaBetaSearch;
-import Abalon.AI.GameTree;
-import Abalon.AI.MCTS;
-import Abalon.AI.Test;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -112,63 +108,40 @@ public class Hexagon extends Application {
         Player p1 = new PlayerH();
         Player p2 = new PlayerH();
 
-
-//        else if (HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-//            System.out.println("Choice of game: Alpha-Beta vs Human");
-//            p1 = new PlayerH();
-//
-//
-//            //player 2 a.k.a AI
-//            GameTree gameTree = new GameTree();
-//            AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
-//            algo.start(true);
-//            bestMove = algo.getBestMove();
-//
-//        }
-//        else if (HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-//            System.out.println("Choice of game: MCTS vs Human");
-//
-//            //player 2 a.k.a AI
-//            //MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
-//            //monteCarlo.start();
-//            //bestMove = monteCarlo.getBestMove();
-//
-//
-//        }
-//        else if (HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-//            System.out.println("Choice of game: Alpha-Beta vs MCTS");
-//
-//            GameTree gameTree = new GameTree();
-//            AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
-//            algo.start(true);
-//            bestMove = algo.getBestMove();
-//
-//        }
-
         Thread gameThread = new Thread(new Runnable() {
 
             @Override
             public void run() {
-                if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                if(HomePage.gameChoice.getValue().equals("Human VS Human")){
+                    System.out.println("Choice of game: Human vs Human");
+                    Abalon game = new Abalon(board, p1, p2);
                     game.runGame();
                 }
-                else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                else if (HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
+                    System.out.println("Choice of game: Alpha-Beta vs Human");
+                    //replace p2 by the AI
+                    Abalon game = new Abalon(board, p1, p2);
                     game.runGame();
                 }
-                else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                else if (HomePage.gameChoice.getValue().equals("MCTS vs Human")){
+                    System.out.println("Choice of game: MCTS vs Human");
+                    //replace p2 by the AI
+                    Abalon game = new Abalon(board, p1, p2);
                     game.runGame();
                 }
-                else{
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                else if (HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
+                    System.out.println("Choice of game: Alpha-Beta vs MCTS");
+                    //replace p1 and p2 by the bots
+                    Abalon game = new Abalon(board, p1, p2);
                     game.runGame();
+                }
+               else{
+                    System.out.println("Please choose a valid game mode");
+                    //exit the game
                 }
             }
         });
         gameThread.setDaemon(false);
         gameThread.start();
     }
-
 }
