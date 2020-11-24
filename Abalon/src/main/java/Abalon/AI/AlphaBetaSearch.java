@@ -30,32 +30,29 @@ public class AlphaBetaSearch {
         else {
             bestScore = minimax(tree.getNodes().get(0), totalDepth, true);
         }
-        System.out.println();
-        System.out.println("pruned branch count alpha-beta = " + prunedCount);
-        System.out.println();
-        System.out.println("best score = " + bestScore);
-        System.out.println("best move = ");
+//        System.out.println();
+//        System.out.println("pruned branch count alpha-beta = " + prunedCount);
+//        System.out.println();
+//        System.out.println("best score = " + bestScore);
+//        System.out.println("best move = ");
 
         for (Node n : rootChildrenBoard) {
             if (n.getScore() == bestScore) {
                 bestMove = n.getBoardState();
             }
         }
-        Test.printBoard(bestMove);
-
-        // TODO : need to perform the best move on the board
+//        Test.printBoard(bestMove);
     }
 
     // minimax algorithm without alpha-beta technique
     public double minimax(Node position, int depth, boolean maximizingPlayer) {
-
-        ArrayList<Node> children = tree.getChildren(position);
 
         if (depth == 0) {
             return position.getScore();
         }
 
         if (maximizingPlayer) {
+            ArrayList<Node> children = tree.getChildren(position);
             double maxEvaluation = Double.NEGATIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = minimax(child, depth-1, false);
@@ -64,6 +61,7 @@ public class AlphaBetaSearch {
             return maxEvaluation;
         }
         else {
+            ArrayList<Node> children = tree.getChildren(position);
             double minEvaluation = Double.POSITIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = minimax(child, depth-1, true);
