@@ -46,10 +46,6 @@ public class BoardUI {
         return cellColors;
     }
 
-    public void setBoard(int[][] newBoard) {
-        this.cellColors = newBoard;
-    }
-
     public boolean isVictorious() {
         int cnt1 = 0, cnt2 = 0;
         for (int i = 0; i < 6; i++) {
