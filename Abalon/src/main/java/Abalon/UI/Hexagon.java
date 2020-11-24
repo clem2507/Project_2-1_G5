@@ -25,6 +25,12 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;  
 
+/**
+ * TODO Add marbles to the board and create Home page
+ * Home Page: Aaron
+ * Marbles: Aaron + Adèle 
+ */
+
 public class Hexagon extends Application {
 
     private final double WIDTH = 1270;
@@ -112,33 +118,8 @@ public class Hexagon extends Application {
 
             @Override
             public void run() {
-                if(HomePage.gameChoice.getValue().equals("Human VS Human")){
-                    System.out.println("Choice of game: Human vs Human");
-                    Abalon game = new Abalon(board, p1, p2);
-                    game.runGame();
-                }
-                else if (HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-                    System.out.println("Choice of game: Alpha-Beta vs Human");
-                    //replace p2 by the AI
-                    Abalon game = new Abalon(board, p1, p2);
-                    game.runGame();
-                }
-                else if (HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-                    System.out.println("Choice of game: MCTS vs Human");
-                    //replace p2 by the AI
-                    Abalon game = new Abalon(board, p1, p2);
-                    game.runGame();
-                }
-                else if (HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-                    System.out.println("Choice of game: Alpha-Beta vs MCTS");
-                    //replace p1 and p2 by the bots
-                    Abalon game = new Abalon(board, p1, p2);
-                    game.runGame();
-                }
-               else{
-                    System.out.println("Please choose a valid game mode");
-                    //exit the game
-                }
+                Abalon game = new Abalon(board, p1, p2);
+                game.runGame();
             }
         });
         gameThread.setDaemon(false);

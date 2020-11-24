@@ -37,8 +37,6 @@ public class HomePage extends Application {
 
     private final double WIDTH = 1344;
     private final double HEIGHT = 756;
-    public static ComboBox gameChoice = new ComboBox();
-
     Hexagon hexagon;
 
     @Override
@@ -68,6 +66,7 @@ public class HomePage extends Application {
         // System.out.println(javafx.scene.text.Font.getFamilies());
 
         //Creation of a combo box to choose the game Mode
+        ComboBox gameChoice = new ComboBox();
         gameChoice.getItems().addAll(
                 "Human VS Human" ,
                 "Alpha-Beta vs Human",
@@ -91,7 +90,7 @@ public class HomePage extends Application {
 
         //Button listener
         play.setOnAction((EventHandler) event -> {
-            if (gameChoice.getValue().equals("Human VS Human")) {
+            if (gameChoice.getValue().equals("PLAYER VS PLAYER")) {
                 hexagon = new Hexagon();
                 System.out.println("Start Button clicked, game is gonna start!");
                 hexagon.start(primaryStage);
@@ -100,16 +99,8 @@ public class HomePage extends Application {
                 hexagon = new Hexagon();
                 hexagon.start(primaryStage);
             }
-            else if (gameChoice.getValue().equals("MCTS vs Human")){
-                hexagon = new Hexagon();
-                hexagon.start(primaryStage);
-            }
-            else if (gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-                hexagon = new Hexagon();
-                hexagon.start(primaryStage);
-            }
             else {
-                System.out.println("Please select a valid game mode!");
+                System.out.println("Please select PLAYER VS PLAYER game mode!");
             }
         });
 
