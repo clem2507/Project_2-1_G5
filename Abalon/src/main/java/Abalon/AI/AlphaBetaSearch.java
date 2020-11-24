@@ -1,5 +1,7 @@
 package Abalon.AI;
 
+import Abalon.Main.Player;
+
 import java.util.ArrayList;
 
 public class AlphaBetaSearch {

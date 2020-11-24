@@ -1,5 +1,10 @@
 package Abalon.Main;
 
+import Abalon.AI.AlphaBetaSearch;
+import Abalon.AI.GameTree;
+import Abalon.AI.MCTS;
+import Abalon.AI.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -38,30 +43,100 @@ public class Rules {
     }
 
     public void move(){
+        if(Abalon.getGameMode().equals("Human vs Human")){
 
-        for (int i = 0; i < marblesSelected.length; i++) {
-            int x = marblesSelected[i][0], y = marblesSelected[i][1];
-            if (board[x][y] != playerTurn) {
-                return;
+            System.out.println("Mode Human vs Human");
+
+            for (int i = 0; i < marblesSelected.length; i++) {
+                int x = marblesSelected[i][0], y = marblesSelected[i][1];
+                if (board[x][y] != playerTurn) {
+                    return;
+                }
+            }
+
+            if (nbSelected == 1) {
+                if (checkMove(marblesSelected,direction,board,playerTurn)) {
+                    performMoveOne(marblesSelected[0],direction,board);
+                    replaceBoard();
+                }
+            } else if (nbSelected == 2) {
+                if (checkMove(marblesSelected,direction,board,playerTurn)) {
+                    performMoveTwo(marblesSelected[0],marblesSelected[1],direction,board);
+                    replaceBoard();
+                }
+            } else if (nbSelected == 3) {
+                if (checkMove(marblesSelected,direction,board,playerTurn)) {
+                    performMoveThree(marblesSelected[0],marblesSelected[1], marblesSelected[2],direction,board);
+                    replaceBoard();
+                }
+            }
+        }
+        else if(Abalon.getGameMode().equals("Alpha-Beta vs Human") || (Abalon.getGameMode().equals("MCTS vs Human"))){
+
+            System.out.println("Mode AI vs Human");
+
+            if(playerTurn == 1){ //Human's turn
+                for (int i = 0; i < marblesSelected.length; i++) {
+                    int x = marblesSelected[i][0], y = marblesSelected[i][1];
+                    if (board[x][y] != playerTurn) {
+                        return;
+                    }
+                }
+
+                if (nbSelected == 1) {
+                    if (checkMove(marblesSelected,direction,board,playerTurn)) {
+                        performMoveOne(marblesSelected[0],direction,board);
+                        replaceBoard();
+                    }
+                } else if (nbSelected == 2) {
+                    if (checkMove(marblesSelected,direction,board,playerTurn)) {
+                        performMoveTwo(marblesSelected[0],marblesSelected[1],direction,board);
+                        replaceBoard();
+                    }
+                } else if (nbSelected == 3) {
+                    if (checkMove(marblesSelected,direction,board,playerTurn)) {
+                        performMoveThree(marblesSelected[0],marblesSelected[1], marblesSelected[2],direction,board);
+                        replaceBoard();
+                    }
+                }
+            }
+            else{ //AI's turn
+                if(Abalon.getGameMode().equals("Alpha-Beta vs Human")){ //MINIMAX
+                    GameTree gameTree = new GameTree();
+                    AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
+                    algo.start(true);
+                    new_board = algo.getBestMove();
+                    Test.printBoard(new_board);
+                    replaceBoard();
+                }
+                else{ //MCTS
+                    MCTS monteCarlo = new MCTS(board, playerTurn);
+                    monteCarlo.start();
+                    new_board = monteCarlo.getBestMove();
+                    replaceBoard();
+                }
             }
         }
 
-        if (nbSelected == 1) {
-            if (checkMove(marblesSelected,direction,board,playerTurn)) {
-                performMoveOne(marblesSelected[0],direction,board);
+        else{ //AI VS AI
+
+            System.out.println("Mode AI vs AI");
+
+            if(playerTurn == 1){
+                GameTree gameTree = new GameTree();
+                AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
+                algo.start(true);
+                new_board = algo.getBestMove();
                 replaceBoard();
             }
-        } else if (nbSelected == 2) {
-            if (checkMove(marblesSelected,direction,board,playerTurn)) {
-                performMoveTwo(marblesSelected[0],marblesSelected[1],direction,board);
-                replaceBoard();
-            }
-        } else if (nbSelected == 3) {
-            if (checkMove(marblesSelected,direction,board,playerTurn)) {
-                performMoveThree(marblesSelected[0],marblesSelected[1], marblesSelected[2],direction,board);
+            else{
+                MCTS monteCarlo = new MCTS(board, playerTurn);
+                monteCarlo.start();
+                new_board = monteCarlo.getBestMove();
                 replaceBoard();
             }
         }
+
     }
 
     public void replaceBoard() {

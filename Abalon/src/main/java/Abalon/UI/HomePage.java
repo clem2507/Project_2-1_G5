@@ -69,7 +69,7 @@ public class HomePage extends Application {
 
         //Creation of a combo box to choose the game Mode
         gameChoice.getItems().addAll(
-                "Human VS Human" ,
+                "Human vs Human" ,
                 "Alpha-Beta vs Human",
                 "MCTS vs Human",
                 "Alpha-Beta vs MCTS");
@@ -91,7 +91,7 @@ public class HomePage extends Application {
 
         //Button listener
         play.setOnAction((EventHandler) event -> {
-            if (gameChoice.getValue().equals("Human VS Human")) {
+            if (gameChoice.getValue().equals("Human vs Human")) {
                 hexagon = new Hexagon();
                 System.out.println("Start Button clicked, game is gonna start!");
                 hexagon.start(primaryStage);

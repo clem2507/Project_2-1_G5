@@ -24,12 +24,14 @@ public class Abalon {
 	private Player[] player = new Player[2]; 
 	private boolean victory = false;
 
+	private static String gameMode;
+
 	/** 
 	 * Returns a new object of class Abalon
 	 * @param p1 class that serves to perform the move of a real person OR an AI
 	 * @param p2 class that serves to perform the move of a real person OR an AI
 	 */
-	public Abalon(BoardUI board, Player p1, Player p2) {
+	public Abalon(BoardUI board, Player p1, Player p2, String gameMode) {
 		this.board = board;
 		player[0] = p1;
 		player[1] = p2;
@@ -38,6 +40,8 @@ public class Abalon {
 		player[1].setBoard(board);
 		player[0].setTurn(1);
 		player[1].setTurn(2);
+
+		this.gameMode = gameMode;
 	}
 
 	public void runGame() {
@@ -63,6 +67,10 @@ public class Abalon {
 
 			victory = board.isVictorious();
 		}
+	}
+
+	public static String getGameMode() {
+		return gameMode;
 	}
 
 	/*private void playMove(boolean flag) {
