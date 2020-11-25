@@ -60,20 +60,51 @@ public class Abalon {
 					mv.board = board.getBoard();
 					Rules checkRules = new Rules(mv);
 					checkRules.move();
+					board.drawAllCells();
 				} catch (InterruptedException e) {
 					System.out.println("concurrency problem, aborting...");
 					System.exit(0);
 				}
 			}
 
+			// Do we need this ?
+			/*
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
 					board.drawAllCells();
 				}
 			});
+			 */
 
 			victory = board.isVictorious();
+		}
+		else if (gameMode.equals("Alpha-Beta vs Human")) {
+			currentPlayer = 1;
+			while (!victory) {
+				if (currentPlayer == 1) {
+					try {
+						Move mv = player[currentPlayer].collectMove();
+						mv.board = board.getBoard();
+						Rules checkRules = new Rules(mv);
+						checkRules.move();
+					} catch (InterruptedException e) {
+						System.out.println("concurrency problem, aborting...");
+						System.exit(0);
+					}
+					currentPlayer = 2;
+				}
+				else {
+					GameTree gameTree = new GameTree();
+					gameTree.createTree(board.getBoard(), currentPlayer, 3);
+					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
+					algo.start(true);
+					board.setBoard(algo.getBestMove());
+					currentPlayer = 1;
+				}
+				board.drawAllCells();
+				victory = board.isVictorious();
+			}
 		}
 		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
 			currentPlayer = 1;
@@ -92,19 +123,17 @@ public class Abalon {
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
 				}
-
 				board.drawAllCells();
 			}
-
 			victory = board.isVictorious();
 		}
 		if (victory) {
 			if (currentPlayer == 1) {
 				System.out.println("MCTS won the game!");
-			}
-			else {
+			} else {
 				System.out.println("Minimax won the game");
 			}
+			// new page with the winner
 			System.exit(0);
 		}
 	}
