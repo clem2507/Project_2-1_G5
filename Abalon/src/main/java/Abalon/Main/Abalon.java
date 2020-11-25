@@ -56,7 +56,6 @@ public class Abalon {
 		if (gameMode.equals("Human vs Human")) {
 			for (int i = 0; !victory; i++) {
 				try {
-					System.out.println("i = " + i);
 					Move mv = player[i & 1].collectMove();
 					mv.board = board.getBoard();
 					Rules checkRules = new Rules(mv);

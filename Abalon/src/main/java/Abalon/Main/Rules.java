@@ -665,11 +665,19 @@ public class Rules {
             moveMarble(marble3, location3, board);
         }
         else if (pushingMove) {
-            int[] marblet1 = marblesToBePushed.get(0);
-            new_board[marblet1[0]][marblet1[1]] = 0;
+            int[] marblet1;
+            int[] marblet2 = new int[2];
+            if (marblesToBePushed.size() > 1) {
+                marblet1 = marblesToBePushed.get(0);
+                new_board[marblet1[0]][marblet1[1]] = 0;
 
-            int[] marblet2 = marblesToBePushed.get(1);
-            new_board[marblet2[0]][marblet2[1]] = 0;
+                marblet2 = marblesToBePushed.get(1);
+                new_board[marblet2[0]][marblet2[1]] = 0;
+            }
+            else {
+                marblet1 = marblesToBePushed.get(0);
+                new_board[marblet1[0]][marblet1[1]] = 0;
+            }
 
             // System.out.println(marblet1[0] + " " + marblet1[1]);
             // System.out.println(marblet2[0] + " " + marblet2[1]);
@@ -752,7 +760,13 @@ public class Rules {
             new_board[location[0]][location[1]] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
             //board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
         }*/
-        new_board[location[0]][location[1]] = board[marble[0]][marble[1]];
+        System.out.println(marble[0]);
+        System.out.println(marble[1]);
+        System.out.println(location[0]);
+        System.out.println(location[1]);
+        if (location[0] != -1 && location[1] != -1) {
+            new_board[location[0]][location[1]] = board[marble[0]][marble[1]];
+        }
     }
 
 }
