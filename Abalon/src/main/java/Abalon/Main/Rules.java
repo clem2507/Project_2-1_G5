@@ -760,10 +760,6 @@ public class Rules {
             new_board[location[0]][location[1]] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
             //board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
         }*/
-        System.out.println(marble[0]);
-        System.out.println(marble[1]);
-        System.out.println(location[0]);
-        System.out.println(location[1]);
         if (location[0] != -1 && location[1] != -1) {
             new_board[location[0]][location[1]] = board[marble[0]][marble[1]];
         }
