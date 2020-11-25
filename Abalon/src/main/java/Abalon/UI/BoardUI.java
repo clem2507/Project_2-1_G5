@@ -1,5 +1,6 @@
 package Abalon.UI;
 
+import Abalon.AI.EvaluationFunction;
 import javafx.scene.effect.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -50,7 +51,28 @@ public class BoardUI {
         this.cellColors = newBoard;
     }
 
-    public boolean isVictorious() {
+    public boolean isVictorious(int[][] board) {
+
+        int countP1 = 0;
+        int countP2 = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 1) {
+                    countP1++;
+                }
+                if (board[i][j] == 2) {
+                    countP2++;
+                }
+            }
+        }
+        if (countP1 <= 8 || countP2 <= 8) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+        /*
         int cnt1 = 0, cnt2 = 0;
         for (int i = 0; i < 6; i++) {
             if (scoredCirclesColors[i][0] > 0)
@@ -60,6 +82,7 @@ public class BoardUI {
         }
 
         return !(cnt1 == 6 || cnt2 == 6);
+         */
     }
 
     /**

@@ -15,7 +15,7 @@ import java.lang.InterruptedException;
  */
 public class Abalon {
 
-	private int currentPlayer;
+	private int currentPlayer = 1;
 
 	/**
 	 * Current way to run the project, to be replaced
@@ -56,6 +56,7 @@ public class Abalon {
 		if (gameMode.equals("Human vs Human")) {
 			for (int i = 0; !victory; i++) {
 				try {
+					System.out.println("i = " + i);
 					Move mv = player[i & 1].collectMove();
 					mv.board = board.getBoard();
 					Rules checkRules = new Rules(mv);
@@ -65,6 +66,7 @@ public class Abalon {
 					System.out.println("concurrency problem, aborting...");
 					System.exit(0);
 				}
+				victory = board.isVictorious(board.getBoard());
 			}
 
 			// Do we need this ?
@@ -76,15 +78,13 @@ public class Abalon {
 				}
 			});
 			 */
-
-			victory = board.isVictorious();
 		}
 		else if (gameMode.equals("Alpha-Beta vs Human")) {
-			currentPlayer = 1;
+			int index = 0;
 			while (!victory) {
 				if (currentPlayer == 1) {
 					try {
-						Move mv = player[currentPlayer].collectMove();
+						Move mv = player[index & 1].collectMove();
 						mv.board = board.getBoard();
 						Rules checkRules = new Rules(mv);
 						checkRules.move();
@@ -93,6 +93,7 @@ public class Abalon {
 						System.exit(0);
 					}
 					currentPlayer = 2;
+					index += 2;
 				}
 				else {
 					GameTree gameTree = new GameTree();
@@ -103,7 +104,33 @@ public class Abalon {
 					currentPlayer = 1;
 				}
 				board.drawAllCells();
-				victory = board.isVictorious();
+				victory = board.isVictorious(board.getBoard());
+			}
+		}
+		else if (gameMode.equals("MCTS vs Human")) {
+			int index = 0;
+			while (!victory) {
+				if (currentPlayer == 1) {
+					try {
+						Move mv = player[index & 1].collectMove();
+						mv.board = board.getBoard();
+						Rules checkRules = new Rules(mv);
+						checkRules.move();
+					} catch (InterruptedException e) {
+						System.out.println("concurrency problem, aborting...");
+						System.exit(0);
+					}
+					currentPlayer = 2;
+					index += 2;
+				}
+				else {
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
+					monteCarlo.start();
+					board.setBoard(monteCarlo.getBestMove());
+					currentPlayer = 1;
+				}
+				board.drawAllCells();
+				victory = board.isVictorious(board.getBoard());
 			}
 		}
 		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
@@ -124,8 +151,8 @@ public class Abalon {
 					currentPlayer = 1;
 				}
 				board.drawAllCells();
+				victory = board.isVictorious(board.getBoard());
 			}
-			victory = board.isVictorious();
 		}
 		if (victory) {
 			if (currentPlayer == 1) {
