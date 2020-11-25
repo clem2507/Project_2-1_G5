@@ -9,7 +9,7 @@ public class HashTable {
     public HashTable() {
 
         key = new Zorbist();
-        arraySize = (int) Math.pow(2, 28);
+        arraySize = (int) Math.pow(2, 26);
         table = new double[arraySize];
     }
 
