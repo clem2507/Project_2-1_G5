@@ -58,7 +58,7 @@ public class Zorbist {
     public long generateRandomNumber() {
 
         SecureRandom random = new SecureRandom();
-        return bitExtracted(random.nextLong(), 28, 1);
+        return bitExtracted(random.nextLong(), 26, 1);
     }
 
     public long bitExtracted(long randomNumber, int bits, int p)
