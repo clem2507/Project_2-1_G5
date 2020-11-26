@@ -28,11 +28,15 @@ import Abalon.Main.PlayerH;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.shape.*;
 
 public class Hexagon extends Application {
 
     private final double WIDTH = 1270;
     private final double HEIGHT = 700;
+
+    //Creation of a Border pane to make our scene easier to construct
+    private BorderPane pane = new BorderPane();
 
     public static Scene accessableScene;
 
@@ -41,9 +45,6 @@ public class Hexagon extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
-        //Creation of a Border pane to make our scene easier to construct
-        BorderPane pane = new BorderPane();
 
         try {
             BufferedImage buffer = ImageIO.read(new File("Abalon/res/grey2.jpg"));
@@ -105,7 +106,6 @@ public class Hexagon extends Application {
         player1.setStrokeWidth(2);
         pane.getChildren().add(player1);
 
-
         player2.setTranslateX(1036);
         player2.setTranslateY(170);
         player2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
@@ -124,9 +124,12 @@ public class Hexagon extends Application {
         gameMode.setStrokeWidth(2);
         pane.getChildren().add(gameMode);
 
+        // sketch buttons to know how to play the game
+        sketchHowToPlay();
+
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         primaryStage.setResizable(false);
-        primaryStage.setTitle("Abalone");
+        primaryStage.setTitle("Abalon");
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -202,6 +205,64 @@ public class Hexagon extends Application {
         });
         gameThread.setDaemon(false);
         gameThread.start();
+    }
+
+    private void sketchHowToPlay() {
+
+        int y = 40; // interval
+
+        for(int i = 0; i < 6; i++){
+            Rectangle rect = new Rectangle(30,30,Color.GREY);
+            rect.setArcHeight(8);
+            rect.setArcWidth(8);
+            rect.relocate(70,400+(i*y));
+
+            Text letter = null;
+            Text direction = null;
+            if(i==0){ // Q key
+                letter = new Text("Q");
+                direction = new Text("TOP_LEFT");
+            }else if(i==1){ // A key
+                letter = new Text("A");
+                direction = new Text("LEFT");
+            }else if(i==2){ // D key
+                letter = new Text("D");
+                direction = new Text("RIGHT");
+            }else if(i==3){ // Z Key
+                letter = new Text("Z");
+                direction = new Text("BOTTOM_LEFT");
+            }else if(i==4){ // C key
+                letter = new Text("C");
+                direction = new Text("BOTTOM_RIGHT");
+            }else if(i==5){ // E Key
+                letter = new Text("E");
+                direction = new Text("TOP_RIGHT");
+            }
+
+            letter.setX(78);
+            letter.setY(420+(i*y));
+            letter.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+            letter.setFill(Color.BLACK);
+            letter.setStrokeWidth(2);
+
+            direction.setX(120);
+            direction.setY(420+(i*y));
+            direction.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+            direction.setFill(Color.BLACK);
+            direction.setStrokeWidth(2);
+
+            pane.getChildren().addAll(rect, letter, direction);
+        }
+
+        // press ENTER
+        Text enter = new Text ("Press Enter to validate move.");
+        enter.setX(80);
+        enter.setY(420+(6*y));
+        enter.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        enter.setFill(Color.BLACK);
+        enter.setStrokeWidth(2);
+        pane.getChildren().add(enter);
+
     }
 
 }
