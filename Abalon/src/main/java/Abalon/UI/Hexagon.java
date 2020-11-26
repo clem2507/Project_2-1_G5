@@ -125,7 +125,9 @@ public class Hexagon extends Application {
         pane.getChildren().add(gameMode);
 
         // sketch buttons to know how to play the game
-        sketchHowToPlay();
+        if (!HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")) {
+            sketchHowToPlay();
+        }
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         primaryStage.setResizable(false);

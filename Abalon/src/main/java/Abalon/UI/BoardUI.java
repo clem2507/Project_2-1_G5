@@ -184,9 +184,11 @@ public class BoardUI {
                 circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent e) {
-                        if (cellColors[circle.x][circle.y] == Abalon.getCurrentPlayer()) {
-                            selected[circle.x][circle.y] ^= true;
-                            drawAllCells();
+                        if (!Abalon.getGameMode().equals("Alpha-Beta vs MCTS")) {
+                            if (cellColors[circle.x][circle.y] == Abalon.getCurrentPlayer()) {
+                                selected[circle.x][circle.y] ^= true;
+                                drawAllCells();
+                            }
                         }
                     }
                 });
