@@ -71,25 +71,58 @@ public class Hexagon extends Application {
         }
 
 
-        Text player1 = new Text("Player 1");
+        Text player1 = null;
+        Text player2 = null;
+        Text gameMode = null;
+
+        if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
+            player1 = new Text("Human 1");
+            player2 = new Text("Human 2");
+            gameMode = new Text((String) HomePage.gameChoice.getValue());
+        }
+        else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
+            player1 = new Text("Alpha-Beta");
+            player2 = new Text("Human");
+            gameMode = new Text((String) HomePage.gameChoice.getValue());
+        }
+        else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
+            player1 = new Text("MCTS");
+            player2 = new Text("Human");
+            gameMode = new Text((String) HomePage.gameChoice.getValue());
+        }
+        else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
+            player1 = new Text("Alpha-Beta");
+            player2 = new Text("MCTS");
+            gameMode = new Text((String) HomePage.gameChoice.getValue());
+        }
+
         player1.setTranslateX(100);
         player1.setTranslateY(170);
         player1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color
-        player1.setFill(Color.BLACK);
+        player1.setFill(Color.LIGHTSKYBLUE);
         //Setting the Stroke
         player1.setStrokeWidth(2);
         pane.getChildren().add(player1);
 
-        Text player2 = new Text("Player 2");
+
         player2.setTranslateX(1036);
         player2.setTranslateY(170);
         player2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color
-        player2.setFill(Color.BLACK);
+        player2.setFill(Color.MEDIUMBLUE);
         //Setting the Stroke
         player2.setStrokeWidth(2);
         pane.getChildren().add(player2);
+
+        gameMode.setTranslateX(485);
+        gameMode.setTranslateY(70);
+        gameMode.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        //Setting the color
+        gameMode.setFill(Color.BLACK);
+        //Setting the Stroke
+        gameMode.setStrokeWidth(2);
+        pane.getChildren().add(gameMode);
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         primaryStage.setResizable(false);
@@ -161,7 +194,7 @@ public class Hexagon extends Application {
                     Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
                 }
-                else{
+                else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                     Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
                 }

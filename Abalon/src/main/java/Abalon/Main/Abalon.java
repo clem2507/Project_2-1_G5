@@ -44,8 +44,8 @@ public class Abalon {
 
 		player[0].setBoard(board);
 		player[1].setBoard(board);
-		player[0].setTurn(1);
-		player[1].setTurn(2);
+		player[0].setTurn(2);
+		player[1].setTurn(1);
 
 		this.gameMode = gameMode;
 	}
