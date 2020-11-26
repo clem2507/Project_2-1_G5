@@ -125,12 +125,11 @@ public class HomePage extends Application {
                     dialog.initOwner(primaryStage);
                     VBox dialogVbox = new VBox(20);
                     Text text = new Text("The goal of the game is to eject 6 marbles of the \n opponent. " +
-                            "Each player waits for his turn to play. \n When it is its turn the player has three options: \n" +
+                            "Each player waits for his turn to play. \n When it's its turn the player has three options: \n" +
                             " moving 1, 2 or 3 marbles at the same \n time. Knowing that to displace opponent's \n marble," +
-                            "he needs to push them with more \n than the number of marbles that are going to \n be displaced." +
-                            "Thus, he can displace maximum \n two of the opponents' marbles because he can \n only move maximum" +
-                            "three marbles at the \n same time. A marble is ejected when it \n gets pushed out of the board." +
-                            "To \n move the marbles, the user first needs to select \n the marbles to move and then press:" +
+                            "he needs to push them with more \n than the number of marbles that are going to \n be displaced. " +
+                            "A marble is ejected when it gets \n pushed out of the board. " +
+                            "To move \n the marbles, the user first needs to select \n the marbles to move and then press:" +
                             "\n- Q to go TOP_LEFT \n" +
                             "- A to go LEFT\n" +
                             "- D to go RIGHT \n" +
