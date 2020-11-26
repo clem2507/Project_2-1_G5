@@ -6,7 +6,11 @@ import Abalon.AI.MCTS;
 import Abalon.AI.Test;
 import Abalon.UI.BoardUI;
 import java.awt.EventQueue;
+
+import Abalon.UI.WinPage;
 import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.lang.InterruptedException;
 
@@ -32,6 +36,8 @@ public class Abalon {
 
 	private static String gameMode;
 
+	WinPage winPage;
+
 	/**
 	 * Returns a new object of class Abalon
 	 * @param p1 class that serves to perform the move of a real person OR an AI
@@ -50,7 +56,7 @@ public class Abalon {
 		this.gameMode = gameMode;
 	}
 
-	public void runGame() {
+	public void runGame()  {
 		//playMove(false);
 
 		if (gameMode.equals("Human vs Human")) {
@@ -66,6 +72,18 @@ public class Abalon {
 					System.exit(0);
 				}
 				victory = board.isVictorious(board.getBoard());
+			}
+
+			if (victory) {
+				if (currentPlayer == 1) {
+					System.out.println("Player 2 won the game!");
+					winPage = new WinPage();
+				} else {
+					System.out.println("Player 1 won the game");
+					winPage = new WinPage();
+				}
+				// new page with the winner
+				//System.exit(0);
 			}
 
 			// Do we need this ?
@@ -105,6 +123,17 @@ public class Abalon {
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
 			}
+			if (victory) {
+				if (currentPlayer == 1) {
+					System.out.println("MINIMAX won the game!");
+					//winPage = new WinPage();
+				} else {
+					System.out.println("Player 1 won the game");
+					//winPage = new WinPage();
+				}
+				// new page with the winner
+				//System.exit(0);
+			}
 		}
 		else if (gameMode.equals("MCTS vs Human")) {
 			int index = 0;
@@ -131,6 +160,17 @@ public class Abalon {
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
 			}
+			if (victory) {
+				if (currentPlayer == 1) {
+					System.out.println("MCTS won the game!");
+					//winPage = new WinPage();
+				} else {
+					System.out.println("Player 1 won the game");
+					//winPage = new WinPage();
+				}
+				// new page with the winner
+				//System.exit(0);
+			}
 		}
 		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
 			currentPlayer = 1;
@@ -152,20 +192,27 @@ public class Abalon {
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
 			}
-		}
-		if (victory) {
-			if (currentPlayer == 1) {
-				System.out.println("MCTS won the game!");
-			} else {
-				System.out.println("Minimax won the game");
+			if (victory) {
+				if (currentPlayer == 1) {
+					System.out.println("MCTS won the game!");
+					//winPage = new WinPage();
+				} else {
+					System.out.println("Minimax won the game");
+					winPage = new WinPage();
+				}
+				// new page with the winner
+				//System.exit(0);
 			}
-			// new page with the winner
-			System.exit(0);
 		}
+
 	}
 
 	public static String getGameMode() {
 		return gameMode;
+	}
+
+	public int getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	/*private void playMove(boolean flag) {
