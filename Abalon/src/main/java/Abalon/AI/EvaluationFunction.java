@@ -51,15 +51,18 @@ public class EvaluationFunction {
     private static double w5;
     private static double w6;
 
-    private static double[] modus1 = {3, 2, 6, 1.8, 0};
-    private static double[] modus2 = {3.3, 2, 6, 1.8, 35};
-    private static double[] modus3 = {2.9, 2, 15, 3, 4};
-    private static double[] modus4 = {2.9, 2, 15, 3, 15};
-    private static double[] modus5 = {2.8, 2.3, 25, 3, 15};
-    private static double[] modus6 = {2.8, 2.1, 25, 3, 25};
-    private static double[] modus7 = {2.7, 2.3, 25, 3, 30};
-    private static double[] modus8 = {2.4, 2.3, 25, 3, 35};
-    private static double[] modus9 = {2.2, 2.3, 25, 3, 40};
+    // w6 = 50*w5 because useless to push out an opponent marble if opponent can also push afterwards
+    private static double[] modus1 = {3, 2, 6, 1.8, 0, 0};
+    private static double[] modus2 = {3.3, 2, 6, 1.8, 35, 1750};
+    private static double[] modus3 = {2.9, 2, 15, 3, 4, 200};
+    private static double[] modus4 = {2.9, 2, 15, 3, 15, 750};
+    private static double[] modus5 = {2.8, 2.3, 25, 3, 15, 75};
+    private static double[] modus6 = {2.8, 2.1, 25, 3, 25, 750};
+    private static double[] modus7 = {2.7, 2.3, 25, 3, 30, 1500};
+    private static double[] modus8 = {2.4, 2.3, 25, 3, 35, 1750};
+    private static double[] modus9 = {2.2, 2.3, 25, 3, 40, 2000};
+    // w5 is huge because bot can win the game
+    private static double[] modus10 = {2.2, 2.3, 25, 3, 10000, 1};
 
     public EvaluationFunction(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
 
@@ -137,33 +140,36 @@ public class EvaluationFunction {
 
     public void computeWeights(double v1, double v2) {
 
-        if (v1 < 0) {
-            changeModus(modus1);
+        if (isWin()) {
+            changeModus(modus10);
         }
-        else if (v1 < 5) {
-            changeModus(modus2);
-        }
-        else if (v1 >= 5) {
-            if (v2 >= 0 && v2 < 4) {
-                changeModus(modus3);
-            }
-            if (v2 >= 4 && v2 < 10) {
-                changeModus(modus4);
-            }
-            if (v2 >= 10 && v2 < 16) {
-                changeModus(modus5);
-            }
-            if (v2 >= 16 && v2 < 22) {
-                changeModus(modus6);
-            }
-            if (v2 >= 22 && v2 < 28) {
-                changeModus(modus7);
-            }
-            if (v2 >= 28 && v2 < 34) {
-                changeModus(modus8);
-            }
-            if (v2 >= 34) {
-                changeModus(modus9);
+        else {
+            if (v1 < 0) {
+                changeModus(modus1);
+            } else if (v1 < 5) {
+                changeModus(modus2);
+            } else if (v1 >= 5) {
+                if (v2 >= 0 && v2 < 4) {
+                    changeModus(modus3);
+                }
+                if (v2 >= 4 && v2 < 10) {
+                    changeModus(modus4);
+                }
+                if (v2 >= 10 && v2 < 16) {
+                    changeModus(modus5);
+                }
+                if (v2 >= 16 && v2 < 22) {
+                    changeModus(modus6);
+                }
+                if (v2 >= 22 && v2 < 28) {
+                    changeModus(modus7);
+                }
+                if (v2 >= 28 && v2 < 34) {
+                    changeModus(modus8);
+                }
+                if (v2 >= 34) {
+                    changeModus(modus9);
+                }
             }
         }
     }
@@ -185,7 +191,8 @@ public class EvaluationFunction {
 //        System.out.println("w4 = " + w4);
 //        System.out.println("w5 = " + w5);
 //        System.out.println("w6 = " + w6);
-        return (w1*v1 + w2*v2 + w3*v3 + w4*v4 + w5*v5) - w6*v6;
+        return (w1 * v1 + w2 * v2 + w3 * v3 + w4 * v4 + w5 * v5) - w6 * v6;
+
     }
 
     public void changeModus(double[] modus) {
@@ -195,7 +202,7 @@ public class EvaluationFunction {
         w3 = modus[2];
         w4 = modus[3];
         w5 = modus[4];
-        w6 = 50*w5;
+        w6 = modus[5];
     }
 
     public int centerDistance(int currentPlayer) {
@@ -517,5 +524,21 @@ public class EvaluationFunction {
         }
         return count;
     }
+
+    public boolean isWin() {
+
+        if (currentPlayer == 1) {
+            if (countMarbles(currentPlayer+1, cellColor) <= 8) {
+                return true;
+            }
+        }
+        else {
+            if (countMarbles(currentPlayer-1, cellColor) <= 8) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
 
