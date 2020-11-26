@@ -44,8 +44,8 @@ public class Abalon {
 
 		player[0].setBoard(board);
 		player[1].setBoard(board);
-		player[0].setTurn(2);
-		player[1].setTurn(1);
+		player[0].setTurn(1);
+		player[1].setTurn(2);
 
 		this.gameMode = gameMode;
 	}
@@ -105,6 +105,12 @@ public class Abalon {
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
 			}
+			if (currentPlayer == 1) {
+				System.out.println("Alpha-beta won the game!");
+			} else {
+				System.out.println("Human won the game");
+			}
+			System.exit(0);
 		}
 		else if (gameMode.equals("MCTS vs Human")) {
 			int index = 0;
@@ -131,6 +137,12 @@ public class Abalon {
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
 			}
+			if (currentPlayer == 1) {
+				System.out.println("MCTS won the game!");
+			} else {
+				System.out.println("Human won the game");
+			}
+			System.exit(0);
 		}
 		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
 			currentPlayer = 1;
@@ -152,8 +164,6 @@ public class Abalon {
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
 			}
-		}
-		if (victory) {
 			if (currentPlayer == 1) {
 				System.out.println("MCTS won the game!");
 			} else {
@@ -173,7 +183,7 @@ public class Abalon {
 			public void run() {
 				int id = (flag ? 1 : 0);
 				player[id].performMove();
-				if (victory == 0) 
+				if (victory == 0)
 					playMove(flag ^ false);
 			}
 		});
