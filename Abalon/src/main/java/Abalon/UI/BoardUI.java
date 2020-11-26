@@ -1,6 +1,7 @@
 package Abalon.UI;
 
 import Abalon.AI.EvaluationFunction;
+import Abalon.Main.Abalon;
 import javafx.scene.effect.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -183,8 +184,10 @@ public class BoardUI {
                 circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent e) {
-                        selected[circle.x][circle.y] ^= true;
-                        drawAllCells();
+                        if (cellColors[circle.x][circle.y] == Abalon.getCurrentPlayer()) {
+                            selected[circle.x][circle.y] ^= true;
+                            drawAllCells();
+                        }
                     }
                 });
 

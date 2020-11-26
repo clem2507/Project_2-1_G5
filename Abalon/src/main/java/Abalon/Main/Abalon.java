@@ -19,7 +19,7 @@ import java.lang.InterruptedException;
  */
 public class Abalon {
 
-	private int currentPlayer = 1;
+	private static int currentPlayer = 1;
 
 	/**
 	 * Current way to run the project, to be replaced
@@ -67,6 +67,12 @@ public class Abalon {
 					Rules checkRules = new Rules(mv);
 					checkRules.move();
 					board.drawAllCells();
+					if (currentPlayer == 1) {
+						currentPlayer = 2;
+					}
+					else {
+						currentPlayer = 1;
+					}
 				} catch (InterruptedException e) {
 					System.out.println("concurrency problem, aborting...");
 					System.exit(0);
@@ -211,7 +217,7 @@ public class Abalon {
 		return gameMode;
 	}
 
-	public int getCurrentPlayer() {
+	public static int getCurrentPlayer() {
 		return currentPlayer;
 	}
 
