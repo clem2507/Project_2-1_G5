@@ -440,7 +440,7 @@ public class BoardUI {
         for (int i = 0; i < cnt1; i++)
             scoredCirclesColors[i][1] = 1;
         for (int i = 0; i < cnt2; i++)
-            scoredCirclesColors[i][2] = 2;
+            scoredCirclesColors[i][0] = 2;
 
         for (int i = 0; i < 6; i++) {
             drawScoredCell(i, 0);

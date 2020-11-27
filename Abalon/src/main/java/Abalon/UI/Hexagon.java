@@ -136,7 +136,7 @@ public class Hexagon extends Application {
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         primaryStage.setResizable(false);
-        primaryStage.setTitle("Abalon");
+        primaryStage.setTitle("Abalone");
         primaryStage.setScene(scene);
         primaryStage.show();
 
