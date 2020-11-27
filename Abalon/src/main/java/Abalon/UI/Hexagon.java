@@ -36,8 +36,9 @@ public class Hexagon extends Application {
     private final double HEIGHT = 700;
 
     //Creation of a Border pane to make our scene easier to construct
-    private BorderPane pane = new BorderPane();
+    public static BorderPane pane = new BorderPane();
 
+    public static Text whosePlaying;
     public static Scene accessableScene;
 
     // Hexagon should access Board to obtain Marbles positions, color, etc
@@ -128,6 +129,10 @@ public class Hexagon extends Application {
         if (!HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")) {
             sketchHowToPlay();
         }
+
+        //displays message to indicate whose player is playing TODO: update message
+        //Text whosePlaying = displayCurrentPlayer();
+        //pane.getChildren().add(whosePlaying);
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         primaryStage.setResizable(false);
@@ -264,6 +269,47 @@ public class Hexagon extends Application {
         enter.setFill(Color.BLACK);
         enter.setStrokeWidth(2);
         pane.getChildren().add(enter);
+    }
+
+    public static Text displayCurrentPlayer() {
+        String currentPlayer = null;
+
+        if(Abalon.getCurrentPlayer() == 1){
+            if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
+                currentPlayer = "Human 1";
+            }
+            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
+                currentPlayer = "Alpha-Beta";
+            }
+            else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
+                currentPlayer = "MCTS";
+            }
+            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
+                currentPlayer = "Alpha-Beta";
+            }
+        }else if(Abalon.getCurrentPlayer() == 2){
+            if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
+                currentPlayer = "Human 2";
+            }
+            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
+                currentPlayer = "Human";
+            }
+            else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
+                currentPlayer = "Human";
+            }
+            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
+                currentPlayer = "MCTS";
+            }
+        }
+
+        whosePlaying = new Text ("It is "+ currentPlayer +"'s turn to play.");
+        whosePlaying.setX(485);
+        whosePlaying.setY(640);
+        whosePlaying.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        whosePlaying.setFill(Color.BLACK);
+        whosePlaying.setStrokeWidth(2);
+
+        return whosePlaying;
 
     }
 

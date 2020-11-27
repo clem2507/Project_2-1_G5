@@ -69,9 +69,12 @@ public class Abalon {
 					board.drawAllCells();
 					if (currentPlayer == 1) {
 						currentPlayer = 2;
+						//TODO : update message to indicate whose player is playing
+
 					}
 					else {
 						currentPlayer = 1;
+						//TODO : update message to indicate whose player is playing
 					}
 				} catch (InterruptedException e) {
 					System.out.println("concurrency problem, aborting...");
