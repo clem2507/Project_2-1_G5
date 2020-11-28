@@ -314,15 +314,15 @@ public class BoardUI {
 
     private void createColors() {
         cellColors = new int[][]{
-                {1, 1, 1, 1, 1, -1, -1, -1, -1},
-                {1, 1, 1, 1, 1,  1, -1, -1, -1},
-                {0, 0, 1, 1, 1,  0,  0, -1, -1},
+                {2, 2, 2, 2, 2, -1, -1, -1, -1},
+                {2, 2, 2, 2, 2,  2, -1, -1, -1},
+                {0, 0, 2, 2, 2,  0,  0, -1, -1},
                 {0, 0, 0, 0, 0,  0,  0,  0, -1},
                 {0, 0, 0, 0, 0,  0,  0,  0,  0},
                 {0, 0, 0, 0, 0,  0,  0,  0, -1},
-                {0, 0, 2, 2, 2,  0,  0, -1, -1},
-                {2, 2, 2, 2, 2,  2, -1, -1, -1},
-                {2, 2, 2, 2, 2, -1, -1, -1, -1}
+                {0, 0, 1, 1, 1,  0,  0, -1, -1},
+                {1, 1, 1, 1, 1,  1, -1, -1, -1},
+                {1, 1, 1, 1, 1, -1, -1, -1, -1}
         };
     }
 
@@ -343,8 +343,8 @@ public class BoardUI {
         Color c = null;
         switch (cellColors[i][j]) {
             case 0:  c = BISQUE;       break;
-            case 1:  c = MEDIUMBLUE;   break;
-            case 2:  c = LIGHTSKYBLUE; break;
+            case 1:  c = LIGHTSKYBLUE;   break;
+            case 2:  c = MEDIUMBLUE; break;
             default: break;
         }
         if (selected[i][j])

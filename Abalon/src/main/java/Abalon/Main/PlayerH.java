@@ -21,14 +21,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File; 
+import java.io.File;
 import javafx.embed.swing.SwingFXUtils;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;  
+import javafx.scene.input.KeyCode;
 
 import java.lang.InterruptedException;
 
@@ -43,7 +43,7 @@ public class PlayerH implements Player {
 	public boolean flag_inputObtained = false;
 
 	public PlayerH() {
-		
+
 	}
 
 	@Override
@@ -60,50 +60,66 @@ public class PlayerH implements Player {
 
 	EventHandler keyHandler  = new EventHandler<KeyEvent>() {
 		@Override
-        public void handle(KeyEvent e) {
-            switch(e.getCode()) {
-                case Q: dir = MoveDirection.TOP_LEFT; break;
-                case A: dir = MoveDirection.LEFT; break;
-                case Z: dir = MoveDirection.BOTTOM_LEFT; break;
-                case E: dir = MoveDirection.TOP_RIGHT; break;
-                case D: dir = MoveDirection.RIGHT; break;
-                case C: dir = MoveDirection.BOTTOM_RIGHT; break; 
-                case ENTER: setDone(); break;
-            }
-        } 
-    };
+		public void handle(KeyEvent e) {
+			switch (e.getCode()) {
+				case Q:
+					dir = MoveDirection.TOP_LEFT;
+					break;
+				case A:
+					dir = MoveDirection.LEFT;
+					break;
+				case Z:
+					dir = MoveDirection.BOTTOM_LEFT;
+					break;
+				case E:
+					dir = MoveDirection.TOP_RIGHT;
+					break;
+				case D:
+					dir = MoveDirection.RIGHT;
+					break;
+				case C:
+					dir = MoveDirection.BOTTOM_RIGHT;
+					break;
+				case ENTER:
+					if (dir != null) {
+						setDone();
+					}
+					break;
+			}
+		}
+	};
 
-    public synchronized void setDone() {
-    	flag_inputObtained = true;
-        System.out.println("enter pressed");
-        this.notifyAll();
-    } 
+	public synchronized void setDone() {
+		flag_inputObtained = true;
+		System.out.println("enter pressed");
+		this.notifyAll();
+	}
 
-    public synchronized void waitUntilDone() {
-    	while (!flag_inputObtained) {
-    		try {
-    			this.wait();
-    		} catch (InterruptedException e) {
+	public synchronized void waitUntilDone() {
+		while (!flag_inputObtained) {
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
 
-    		}
-    	}
-    }
+			}
+		}
+	}
 
 	@Override
 	public Move collectMove() {//throws InterruptedException {
 		Move ans = new Move();
 		ans.turn = turn;
-		
+
 		Thread inpThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Hexagon.accessableScene.addEventHandler(KeyEvent.KEY_PRESSED, keyHandler);				
+				Hexagon.accessableScene.addEventHandler(KeyEvent.KEY_PRESSED, keyHandler);
 			}
 		});
 		inpThread.start();
 		waitUntilDone();
 
-		/*try { 
+		/*try {
 			waitForInput();
 		} catch (InterruptedException e) {
 			System.out.println("input interrupted");
@@ -111,10 +127,10 @@ public class PlayerH implements Player {
 		/*Thread inpThread = new Thread(new Runnable() {
             @Override
             public synchronized void run() {
-		     	Hexagon.accessableScene.addEventHandler(KeyEvent.KEY_PRESSED, keyHandler);   
+		     	Hexagon.accessableScene.addEventHandler(KeyEvent.KEY_PRESSED, keyHandler);
             }
         });*/
-     
+
         /*lock.lock();
         try {
      		//inpThread.setDaemon(false);
@@ -127,21 +143,23 @@ public class PlayerH implements Player {
         	lock.unlock();
         }*/
 
-        //try {
-        	Hexagon.accessableScene.removeEventHandler(KeyEvent.KEY_PRESSED, keyHandler);
-        //} catch (Exception e) {
-        //	System.out.println("failed to remove key handler, aborting...");
-        //	System.exit(0);
-        //}
-        ans.dir = dir;
-        ans.pushing = board.getSelected();
-        board.unselect();
-        flag_inputObtained = false;
+		//try {
+		Hexagon.accessableScene.removeEventHandler(KeyEvent.KEY_PRESSED, keyHandler);
+		//} catch (Exception e) {
+		//	System.out.println("failed to remove key handler, aborting...");
+		//	System.exit(0);
+		//}
+		ans.dir = dir;
+		ans.pushing = board.getSelected();
+		board.unselect();
+		flag_inputObtained = false;
 
-        System.out.println(ans);
+		System.out.println(ans);
 
-        return ans;
-	
+		dir = null;
+
+		return ans;
+
 		/*Scanner scr = new Scanner(System.in);
 		int numb = scr.nextInt();
 		int[][] a = new int[numb][2];
