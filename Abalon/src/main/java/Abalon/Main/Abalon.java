@@ -9,8 +9,11 @@ import java.awt.EventQueue;
 
 import Abalon.UI.Hexagon;
 import Abalon.UI.WinPage;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.lang.InterruptedException;
@@ -48,11 +51,12 @@ public class Abalon {
 		this.gameMode = gameMode;
 	}
 
-	public void runGame()  {
+	public void runGame() {
 		//playMove(false);
 
 		if (gameMode.equals("Human vs Human")) {
 			for (int i = 0; !victory; i++) {
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				try {
 					Move mv = player[i & 1].collectMove();
 					mv.board = board.getBoard();
@@ -61,38 +65,25 @@ public class Abalon {
 					board.drawAllCells();
 					if (currentPlayer == 1) {
 						currentPlayer = 2;
-						//TODO : update message to indicate whose player is playing
-
 					}
 					else {
 						currentPlayer = 1;
-						//TODO : update message to indicate whose player is playing
 					}
 				} catch (InterruptedException e) {
 					System.out.println("concurrency problem, aborting...");
 					System.exit(0);
 				}
 				victory = board.isVictorious(board.getBoard());
-				// to test win page
+
 				// victory = true;
-
 			}
-
-			if (victory) {
-				if (currentPlayer == 1) {
-					System.out.println("Player 2 won the game!");
-					//TODO: add winpage
-					//winPage = new WinPage();
-					//WinPage.launch(WinPage.class);
-				} else {
-					System.out.println("Player 1 won the game");
-					//TODO: add winpage
-					//winPage = new WinPage();
-					//WinPage.launch(WinPage.class);
-				}
-				// new page with the winner
-				//System.exit(0);
+			if (currentPlayer == 1) {
+				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+			} else {
+				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
 			}
+			// new page with the winner
+			//System.exit(0);
 
 			// Do we need this ?
 			/*
@@ -107,6 +98,7 @@ public class Abalon {
 		else if (gameMode.equals("Alpha-Beta vs Human")) {
 			int index = 0;
 			while (!victory) {
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				if (currentPlayer == 1) {
 					try {
 						Move mv = player[index & 1].collectMove();
@@ -118,7 +110,6 @@ public class Abalon {
 						System.exit(0);
 					}
 					currentPlayer = 2;
-					//TODO : update message to indicate whose player is playing
 					index += 2;
 				}
 				else {
@@ -128,28 +119,20 @@ public class Abalon {
 					algo.start(true);
 					board.setBoard(algo.getBestMove());
 					currentPlayer = 1;
-					//TODO : update message to indicate whose player is playing
 				}
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
 			}
-			if (victory) {
-				if (currentPlayer == 1) {
-					System.out.println("MINIMAX won the game!");
-					//TODO: add winpage
-					//winPage = new WinPage();
-				} else {
-					System.out.println("Player 1 won the game");
-					//TODO: add winpage
-					//winPage = new WinPage();
-				}
-				// new page with the winner
-				//System.exit(0);
+			if (currentPlayer == 1) {
+				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+			} else {
+				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
 			}
 		}
 		else if (gameMode.equals("MCTS vs Human")) {
 			int index = 0;
 			while (!victory) {
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				if (currentPlayer == 1) {
 					try {
 						Move mv = player[index & 1].collectMove();
@@ -161,7 +144,6 @@ public class Abalon {
 						System.exit(0);
 					}
 					currentPlayer = 2;
-					//TODO : update message to indicate whose player is playing
 					index += 2;
 				}
 				else {
@@ -169,28 +151,20 @@ public class Abalon {
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
-					//TODO : update message to indicate whose player is playing
 				}
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
 			}
-			if (victory) {
-				if (currentPlayer == 1) {
-					System.out.println("MCTS won the game!");
-					//TODO: add winpage
-					//winPage = new WinPage();
-				} else {
-					System.out.println("Player 1 won the game");
-					//TODO: add winpage
-					//winPage = new WinPage();
-				}
-				// new page with the winner
-				//System.exit(0);
+			if (currentPlayer == 1) {
+				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+			} else {
+				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
 			}
 		}
 		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
 			currentPlayer = 1;
 			while (!victory) {
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				if (currentPlayer == 1) {
 					GameTree gameTree = new GameTree();
 					gameTree.createTree(board.getBoard(), currentPlayer, 3);
@@ -198,30 +172,20 @@ public class Abalon {
 					algo.start(true);
 					board.setBoard(algo.getBestMove());
 					currentPlayer = 2;
-					//TODO : update message to indicate whose player is playing
 				}
 				else {
 					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
-					//TODO : update message to indicate whose player is playing
 				}
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
 			}
-			if (victory) {
-				if (currentPlayer == 1) {
-					System.out.println("MCTS won the game!");
-					//TODO: add winpage
-					//winPage = new WinPage();
-				} else {
-					System.out.println("Minimax won the game");
-					//TODO: add winpage
-					//winPage = new WinPage();
-				}
-				// new page with the winner
-				//System.exit(0);
+			if (currentPlayer == 1) {
+				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+			} else {
+				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
 			}
 		}
 
@@ -240,7 +204,7 @@ public class Abalon {
 			public void run() {
 				int id = (flag ? 1 : 0);
 				player[id].performMove();
-				if (victory == 0) 
+				if (victory == 0)
 					playMove(flag ^ false);
 			}
 		});

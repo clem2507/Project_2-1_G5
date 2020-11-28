@@ -36,6 +36,7 @@ public class Hexagon extends Application {
     public static BorderPane pane = new BorderPane();
 
     public static Text whosePlaying;
+    public static Text winText;
     public static Scene accessableScene;
     public static Stage primaryStage;
 
@@ -132,9 +133,22 @@ public class Hexagon extends Application {
             sketchHowToPlay();
         }
 
-        //displays message to indicate whose player is playing TODO: update message
-        //Text whosePlaying = displayCurrentPlayer();
-        //pane.getChildren().add(whosePlaying);
+        //displays message to indicate whose player is playing
+        whosePlaying = new Text (displayCurrentPlayer(1));
+        whosePlaying.setX(485);
+        whosePlaying.setY(640);
+        whosePlaying.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        whosePlaying.setFill(Color.BLACK);
+        whosePlaying.setStrokeWidth(2);
+        pane.getChildren().add(whosePlaying);
+
+        winText = new Text ("");
+        winText.setX(900);
+        winText.setY(600);
+        winText.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 25));
+        winText.setFill(Color.RED);
+        winText.setStrokeWidth(2);
+        pane.getChildren().add(winText);
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         this.primaryStage.setResizable(false);
@@ -273,46 +287,45 @@ public class Hexagon extends Application {
         pane.getChildren().add(enter);
     }
 
-    public static Text displayCurrentPlayer() {
+    public static String displayCurrentPlayer(int player) {
         String currentPlayer = null;
 
-        if(Abalon.getCurrentPlayer() == 1){
+        if(player == 1){
             if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
                 currentPlayer = "Human 1";
+            }
+            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
+                currentPlayer = "Human";
+            }
+            else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
+                currentPlayer = "Human";
+            }
+            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
+                currentPlayer = "Alpha-Beta";
+            }
+        }else if(player == 2){
+            if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
+                currentPlayer = "Human 2";
             }
             else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
                 currentPlayer = "Alpha-Beta";
             }
             else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
                 currentPlayer = "MCTS";
-            }
-            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-                currentPlayer = "Alpha-Beta";
-            }
-        }else if(Abalon.getCurrentPlayer() == 2){
-            if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
-                currentPlayer = "Human 2";
-            }
-            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-                currentPlayer = "Human";
-            }
-            else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-                currentPlayer = "Human";
             }
             else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                 currentPlayer = "MCTS";
             }
         }
 
-        whosePlaying = new Text ("It is "+ currentPlayer +"'s turn to play.");
-        whosePlaying.setX(485);
-        whosePlaying.setY(640);
-        whosePlaying.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        whosePlaying.setFill(Color.BLACK);
-        whosePlaying.setStrokeWidth(2);
+//        whosePlaying = new Text ("It is "+ currentPlayer +"'s turn to play.");
+//        whosePlaying.setX(485);
+//        whosePlaying.setY(640);
+//        whosePlaying.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+//        whosePlaying.setFill(Color.BLACK);
+//        whosePlaying.setStrokeWidth(2);
 
-        return whosePlaying;
-
+        return currentPlayer;
     }
 
     MediaPlayer mediaPlayer;
@@ -330,5 +343,4 @@ public class Hexagon extends Application {
         */
 
     }
-
 }
