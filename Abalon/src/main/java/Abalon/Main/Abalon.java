@@ -7,6 +7,7 @@ import Abalon.AI.Test;
 import Abalon.UI.BoardUI;
 import java.awt.EventQueue;
 
+import Abalon.UI.Hexagon;
 import Abalon.UI.WinPage;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -20,15 +21,6 @@ import java.lang.InterruptedException;
 public class Abalon {
 
 	private static int currentPlayer = 1;
-
-	/**
-	 * Current way to run the project, to be replaced
-	 */
-	public static void main(String[] args) {
-		//Player p1 = new PlayerH();
-		//Player p2 = new PlayerH();
-		//Abalon obj = new Abalon(p1, p2);
-	}
 
 	private BoardUI board;
 	private Player[] player = new Player[2];
@@ -81,15 +73,22 @@ public class Abalon {
 					System.exit(0);
 				}
 				victory = board.isVictorious(board.getBoard());
+				// to test win page
+				// victory = true;
+
 			}
 
 			if (victory) {
 				if (currentPlayer == 1) {
 					System.out.println("Player 2 won the game!");
-					winPage = new WinPage();
+					//TODO: add winpage
+					//winPage = new WinPage();
+					//WinPage.launch(WinPage.class);
 				} else {
 					System.out.println("Player 1 won the game");
-					winPage = new WinPage();
+					//TODO: add winpage
+					//winPage = new WinPage();
+					//WinPage.launch(WinPage.class);
 				}
 				// new page with the winner
 				//System.exit(0);
@@ -119,6 +118,7 @@ public class Abalon {
 						System.exit(0);
 					}
 					currentPlayer = 2;
+					//TODO : update message to indicate whose player is playing
 					index += 2;
 				}
 				else {
@@ -128,6 +128,7 @@ public class Abalon {
 					algo.start(true);
 					board.setBoard(algo.getBestMove());
 					currentPlayer = 1;
+					//TODO : update message to indicate whose player is playing
 				}
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
@@ -135,9 +136,11 @@ public class Abalon {
 			if (victory) {
 				if (currentPlayer == 1) {
 					System.out.println("MINIMAX won the game!");
+					//TODO: add winpage
 					//winPage = new WinPage();
 				} else {
 					System.out.println("Player 1 won the game");
+					//TODO: add winpage
 					//winPage = new WinPage();
 				}
 				// new page with the winner
@@ -158,6 +161,7 @@ public class Abalon {
 						System.exit(0);
 					}
 					currentPlayer = 2;
+					//TODO : update message to indicate whose player is playing
 					index += 2;
 				}
 				else {
@@ -165,6 +169,7 @@ public class Abalon {
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
+					//TODO : update message to indicate whose player is playing
 				}
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
@@ -172,9 +177,11 @@ public class Abalon {
 			if (victory) {
 				if (currentPlayer == 1) {
 					System.out.println("MCTS won the game!");
+					//TODO: add winpage
 					//winPage = new WinPage();
 				} else {
 					System.out.println("Player 1 won the game");
+					//TODO: add winpage
 					//winPage = new WinPage();
 				}
 				// new page with the winner
@@ -191,12 +198,14 @@ public class Abalon {
 					algo.start(true);
 					board.setBoard(algo.getBestMove());
 					currentPlayer = 2;
+					//TODO : update message to indicate whose player is playing
 				}
 				else {
 					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
+					//TODO : update message to indicate whose player is playing
 				}
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
@@ -204,10 +213,12 @@ public class Abalon {
 			if (victory) {
 				if (currentPlayer == 1) {
 					System.out.println("MCTS won the game!");
+					//TODO: add winpage
 					//winPage = new WinPage();
 				} else {
 					System.out.println("Minimax won the game");
-					winPage = new WinPage();
+					//TODO: add winpage
+					//winPage = new WinPage();
 				}
 				// new page with the winner
 				//System.exit(0);

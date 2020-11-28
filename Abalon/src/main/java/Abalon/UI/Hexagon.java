@@ -5,6 +5,7 @@ import Abalon.AI.GameTree;
 import Abalon.AI.MCTS;
 import Abalon.AI.Test;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,12 +41,15 @@ public class Hexagon extends Application {
 
     public static Text whosePlaying;
     public static Scene accessableScene;
+    public static Stage primaryStage;
 
     // Hexagon should access Board to obtain Marbles positions, color, etc
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
 
     @Override
     public void start(Stage primaryStage) {
+
+        this.primaryStage = primaryStage;
 
         try {
             BufferedImage buffer = ImageIO.read(new File("Abalon/res/grey2.jpg"));
@@ -135,10 +139,10 @@ public class Hexagon extends Application {
         //pane.getChildren().add(whosePlaying);
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("Abalone");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        this.primaryStage.setResizable(false);
+        this.primaryStage.setTitle("Abalone");
+        this.primaryStage.setScene(scene);
+        this.primaryStage.show();
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
