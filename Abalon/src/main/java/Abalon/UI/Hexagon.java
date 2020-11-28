@@ -1,35 +1,31 @@
 package Abalon.UI;
 
-import Abalon.AI.AlphaBetaSearch;
-import Abalon.AI.GameTree;
-import Abalon.AI.MCTS;
-import Abalon.AI.Test;
+import Abalon.Main.Abalon;
+import Abalon.Main.Player;
+import Abalon.Main.PlayerH;
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File;
-import javafx.embed.swing.SwingFXUtils;
-import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-
-import Abalon.Main.Abalon;
-import Abalon.Main.Player;
-import Abalon.Main.PlayerH;
-
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.shape.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.nio.file.Paths;
 
 public class Hexagon extends Application {
 
@@ -50,6 +46,8 @@ public class Hexagon extends Application {
     public void start(Stage primaryStage) {
 
         this.primaryStage = primaryStage;
+
+        music();
 
         try {
             BufferedImage buffer = ImageIO.read(new File("Abalon/res/grey2.jpg"));
@@ -314,6 +312,22 @@ public class Hexagon extends Application {
         whosePlaying.setStrokeWidth(2);
 
         return whosePlaying;
+
+    }
+
+    MediaPlayer mediaPlayer;
+    public void music(){
+        //Add of music in the game
+        String musicFile = "Abalon/res/wii.mp3";
+        Media media = new Media(Paths.get(musicFile).toUri().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
+
+       /* Media mp3MusicFile= new Media(new File(musicFile).toURI().toString());
+        MediaPlayer player = new MediaPlayer(mp3MusicFile);
+        player.play();
+
+        */
 
     }
 
