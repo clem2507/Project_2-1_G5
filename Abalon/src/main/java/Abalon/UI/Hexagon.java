@@ -336,11 +336,6 @@ public class Hexagon extends Application {
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
 
-       /* Media mp3MusicFile= new Media(new File(musicFile).toURI().toString());
-        MediaPlayer player = new MediaPlayer(mp3MusicFile);
-        player.play();
-
-        */
 
     }
 }
