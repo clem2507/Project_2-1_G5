@@ -370,6 +370,11 @@ public class Hexagon extends Application {
         Media mediaWin = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayerWin = new MediaPlayer(mediaWin);
         mediaPlayerWin.play();
+        long time = System.currentTimeMillis();
+        while ((System.currentTimeMillis() - time) < 6600) {
+            // just a timer that waits the end of the win music
+        }
+        System.exit(0);
     }
 }
 
