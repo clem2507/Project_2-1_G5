@@ -80,9 +80,11 @@ public class Abalon {
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
 				Hexagon.winImage.setImage(Hexagon.gif);
+				Hexagon.winMusic();
 			} else {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
 				Hexagon.winImage.setImage(Hexagon.gif);
+				Hexagon.winMusic();
 			}
 			// new page with the winner
 			//System.exit(0);

@@ -351,14 +351,25 @@ public class Hexagon extends Application {
         return currentPlayer;
     }
 
-    MediaPlayer mediaPlayer;
-    public void music(){
+    static MediaPlayer mediaPlayer;
+    public static void music(){
         //Add of music in the game
         String musicFile = "Abalon/res/wii.mp3";
         Media media = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+    }
 
 
+    static MediaPlayer mediaPlayerWin;
+
+    public static void winMusic(){
+        mediaPlayer.stop();
+        //Add of music in the game
+        String musicFile = "Abalon/res/win.mp3";
+        Media mediaWin = new Media(Paths.get(musicFile).toUri().toString());
+        mediaPlayerWin = new MediaPlayer(mediaWin);
+        mediaPlayerWin.play();
     }
 }
+
