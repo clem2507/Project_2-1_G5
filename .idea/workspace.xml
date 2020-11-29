@@ -23,9 +23,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38210eae-fd5e-4a46-95a0-b06da393825a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/Main/Rules.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/Main/Rules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Abalon/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/Main/Abalon.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/Main/Abalon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/Hexagon.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/Hexagon.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +48,12 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Project2-1" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -84,18 +92,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="RunManager" selected="Application.Hexagon">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.HomePage">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Abalon.App" />
       <module name="Project2-1.main" />
@@ -135,13 +132,86 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="HomePage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Abalon.UI.HomePage" />
+      <module name="Project2-1.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Abalon.UI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Project_2-1_G5" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Project_2-1_G5" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.App" />
       <item itemvalue="Application.ExampleJavaFx" />
       <item itemvalue="Application.Hexagon" />
+      <item itemvalue="Application.HomePage" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.HomePage" />
         <item itemvalue="Application.Hexagon" />
         <item itemvalue="Application.ExampleJavaFx" />
         <item itemvalue="Application.App" />
@@ -178,13 +248,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="104" y="35" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600006856043">
@@ -196,46 +265,50 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="121" y="51" key="DiffContextDialog/0.0.1280.800@0.0.1280.800" timestamp="1600521216744" />
-    <state width="1238" height="264" key="GridCell.Tab.0.bottom" timestamp="1600161199383">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="300" key="GridCell.Tab.0.bottom" timestamp="1606639828083">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1238" height="264" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1600161199383" />
-    <state width="1878" height="304" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600105745540" />
+    <state width="1878" height="300" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1606639828083" />
     <state width="1238" height="186" key="GridCell.Tab.0.bottom/0.23.1280.741@0.23.1280.741" timestamp="1600003523125" />
-    <state width="1238" height="264" key="GridCell.Tab.0.center" timestamp="1600161199381">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="300" key="GridCell.Tab.0.center" timestamp="1606639828081">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1238" height="264" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1600161199381" />
-    <state width="1878" height="304" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600105745539" />
+    <state width="1878" height="300" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1606639828081" />
     <state width="1238" height="186" key="GridCell.Tab.0.center/0.23.1280.741@0.23.1280.741" timestamp="1600003523124" />
-    <state width="1238" height="264" key="GridCell.Tab.0.left" timestamp="1600161199380">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="300" key="GridCell.Tab.0.left" timestamp="1606639828081">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1238" height="264" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1600161199380" />
-    <state width="1878" height="304" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600105745539" />
+    <state width="1878" height="300" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1606639828081" />
     <state width="1238" height="186" key="GridCell.Tab.0.left/0.23.1280.741@0.23.1280.741" timestamp="1600003523123" />
-    <state width="1238" height="264" key="GridCell.Tab.0.right" timestamp="1600161199382">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="300" key="GridCell.Tab.0.right" timestamp="1606639828082">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1238" height="264" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1600161199382" />
-    <state width="1878" height="304" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600105745540" />
+    <state width="1878" height="300" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1606639828082" />
     <state width="1238" height="186" key="GridCell.Tab.0.right/0.23.1280.741@0.23.1280.741" timestamp="1600003523124" />
-    <state width="1238" height="264" key="GridCell.Tab.1.bottom" timestamp="1600161199387">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="369" key="GridCell.Tab.1.bottom" timestamp="1606639599319">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1238" height="264" key="GridCell.Tab.1.bottom/0.0.1280.800@0.0.1280.800" timestamp="1600161199387" />
-    <state width="1238" height="264" key="GridCell.Tab.1.center" timestamp="1600161199384">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="369" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1606639599319" />
+    <state width="1878" height="369" key="GridCell.Tab.1.center" timestamp="1606639599318">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1238" height="264" key="GridCell.Tab.1.center/0.0.1280.800@0.0.1280.800" timestamp="1600161199384" />
-    <state width="1238" height="264" key="GridCell.Tab.1.left" timestamp="1600161199383">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="369" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1606639599318" />
+    <state width="1878" height="369" key="GridCell.Tab.1.left" timestamp="1606639599317">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1238" height="264" key="GridCell.Tab.1.left/0.0.1280.800@0.0.1280.800" timestamp="1600161199383" />
-    <state width="1238" height="264" key="GridCell.Tab.1.right" timestamp="1600161199386">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="369" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1606639599317" />
+    <state width="1878" height="369" key="GridCell.Tab.1.right" timestamp="1606639599318">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1238" height="264" key="GridCell.Tab.1.right/0.0.1280.800@0.0.1280.800" timestamp="1600161199386" />
+    <state width="1878" height="369" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1606639599318" />
     <state x="255" y="100" width="801" height="587" key="NewModule_or_Project.wizard" timestamp="1600002596211">
       <screen x="0" y="23" width="1280" height="741" />
     </state>
