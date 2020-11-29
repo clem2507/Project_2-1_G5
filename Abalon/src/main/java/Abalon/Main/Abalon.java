@@ -3,20 +3,16 @@ package Abalon.Main;
 import Abalon.AI.AlphaBetaSearch;
 import Abalon.AI.GameTree;
 import Abalon.AI.MCTS;
-import Abalon.AI.Test;
 import Abalon.UI.BoardUI;
-import java.awt.EventQueue;
 
 import Abalon.UI.Hexagon;
 import Abalon.UI.WinPage;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 
 import java.lang.InterruptedException;
+
+import static javafx.scene.input.KeyCode.*;
 
 /**
  * Abalon class that serves to run a new game
@@ -56,6 +52,7 @@ public class Abalon {
 
 		if (gameMode.equals("Human vs Human")) {
 			for (int i = 0; !victory; i++) {
+				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				try {
 					Move mv = player[i & 1].collectMove();
@@ -79,12 +76,8 @@ public class Abalon {
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-
 			} else {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-
 			}
 			// new page with the winner
 			//System.exit(0);
@@ -102,6 +95,7 @@ public class Abalon {
 		else if (gameMode.equals("Alpha-Beta vs Human")) {
 			int index = 0;
 			while (!victory) {
+				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				if (currentPlayer == 1) {
 					try {
@@ -129,17 +123,14 @@ public class Abalon {
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-
 			} else {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-
 			}
 		}
 		else if (gameMode.equals("MCTS vs Human")) {
 			int index = 0;
 			while (!victory) {
+				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				if (currentPlayer == 1) {
 					try {
@@ -165,17 +156,14 @@ public class Abalon {
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-
 			} else {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-
 			}
 		}
 		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
 			currentPlayer = 1;
 			while (!victory) {
+				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				if (currentPlayer == 1) {
 					GameTree gameTree = new GameTree();
@@ -196,14 +184,23 @@ public class Abalon {
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
 			} else {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-
 			}
 		}
 
+	}
+
+	public void checkExitTheGame(){
+
+		EventHandler keyHandler  = (EventHandler<KeyEvent>) e -> {
+			if (e.getCode() == ESCAPE) {
+				System.exit(0);
+			}
+		};
+
+		Thread inpThread = new Thread(() -> Hexagon.accessableScene.addEventHandler(KeyEvent.KEY_PRESSED, keyHandler));
+		inpThread.start();
 	}
 
 	public static String getGameMode() {
@@ -225,3 +222,4 @@ public class Abalon {
 		});
 	}*/
 }
+
