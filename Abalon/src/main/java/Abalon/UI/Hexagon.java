@@ -38,6 +38,7 @@ public class Hexagon extends Application {
 
     public static Text whosePlaying;
     public static Text winText;
+    public static Text turnText;
     public static Scene accessableScene;
     public static Stage primaryStage;
 
@@ -145,6 +146,14 @@ public class Hexagon extends Application {
         whosePlaying.setFill(Color.BLACK);
         whosePlaying.setStrokeWidth(2);
         pane.getChildren().add(whosePlaying);
+
+        turnText = new Text ("Turn number 0");
+        turnText.setX(485);
+        turnText.setY(670);
+        turnText.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        turnText.setFill(Color.BLACK);
+        turnText.setStrokeWidth(2);
+        pane.getChildren().add(turnText);
 
         winText = new Text ("");
         winText.setX(900);

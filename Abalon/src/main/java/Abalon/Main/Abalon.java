@@ -26,6 +26,8 @@ public class Abalon {
 	private Player[] player = new Player[2];
 	private boolean victory = false;
 
+	private int numberOfTurn = 0;
+
 	private static String gameMode;
 
 	WinPage winPage;
@@ -72,8 +74,8 @@ public class Abalon {
 					System.exit(0);
 				}
 				victory = board.isVictorious(board.getBoard());
-
-				// victory = true;
+				numberOfTurn++;
+				Hexagon.turnText.setText("Turn number " + numberOfTurn);
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
@@ -123,6 +125,8 @@ public class Abalon {
 				}
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
+				numberOfTurn++;
+				Hexagon.turnText.setText("Turn number " + numberOfTurn);
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
@@ -158,6 +162,8 @@ public class Abalon {
 				}
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
+				numberOfTurn++;
+				Hexagon.turnText.setText("Turn number " + numberOfTurn);
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
@@ -188,6 +194,8 @@ public class Abalon {
 				}
 				board.drawAllCells();
 				victory = board.isVictorious(board.getBoard());
+				numberOfTurn++;
+				Hexagon.turnText.setText("Turn number " + numberOfTurn);
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
