@@ -395,8 +395,8 @@ public class BoardUI {
         Color c = null;
         switch (scoredCirclesColors[i][player]) {
             case 0:  c = ORANGE;       break;
-            case 1:  c = MEDIUMBLUE;   break;
-            case 2:  c = LIGHTSKYBLUE; break;
+            case 1:  c = LIGHTSKYBLUE;   break;
+            case 2:  c = MEDIUMBLUE; break;
             default: break;
         }
         if (c != null) {

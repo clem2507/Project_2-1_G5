@@ -105,7 +105,7 @@ public class Hexagon extends Application {
         player1.setTranslateY(170);
         player1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color
-        player1.setFill(Color.MEDIUMBLUE);
+        player1.setFill(Color.LIGHTSKYBLUE);
         //Setting the Stroke
         player1.setStrokeWidth(2);
         pane.getChildren().add(player1);
@@ -114,7 +114,7 @@ public class Hexagon extends Application {
         player2.setTranslateY(170);
         player2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color
-        player2.setFill(Color.LIGHTSKYBLUE);
+        player2.setFill(Color.MEDIUMBLUE);
         //Setting the Stroke
         player2.setStrokeWidth(2);
         pane.getChildren().add(player2);
@@ -335,7 +335,5 @@ public class Hexagon extends Application {
         Media media = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
-
-
     }
 }
