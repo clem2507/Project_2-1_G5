@@ -41,6 +41,9 @@ public class Hexagon extends Application {
     public static Scene accessableScene;
     public static Stage primaryStage;
 
+    public static ImageView winImage;
+    public static Image gif;
+
     // Hexagon should access Board to obtain Marbles positions, color, etc
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
 
@@ -146,10 +149,20 @@ public class Hexagon extends Application {
         winText = new Text ("");
         winText.setX(900);
         winText.setY(600);
-        winText.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 25));
-        winText.setFill(Color.RED);
+        winText.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        winText.setFill(Color.DARKORANGE);
         winText.setStrokeWidth(2);
         pane.getChildren().add(winText);
+
+        winImage = new ImageView();
+        gif = new Image(new File("Abalon/res/giphy.gif").toURI().toString());
+        //selectedImage.setImage(gif);
+        winImage.setX(1000);
+        winImage.setY(600);
+        winImage.setFitHeight(100);
+        winImage.setFitWidth(100);
+        pane.getChildren().addAll(winImage);
+
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         this.primaryStage.setResizable(false);

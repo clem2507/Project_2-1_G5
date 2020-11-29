@@ -1,3 +1,4 @@
+
 package Abalon.Main;
 
 import Abalon.AI.AlphaBetaSearch;
@@ -76,8 +77,10 @@ public class Abalon {
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+				Hexagon.winImage.setImage(Hexagon.gif);
 			} else {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
+				Hexagon.winImage.setImage(Hexagon.gif);
 			}
 			// new page with the winner
 			//System.exit(0);
@@ -123,8 +126,10 @@ public class Abalon {
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+				Hexagon.winImage.setImage(Hexagon.gif);
 			} else {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
+				Hexagon.winImage.setImage(Hexagon.gif);
 			}
 		}
 		else if (gameMode.equals("MCTS vs Human")) {
@@ -156,8 +161,10 @@ public class Abalon {
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+				Hexagon.winImage.setImage(Hexagon.gif);
 			} else {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
+				Hexagon.winImage.setImage(Hexagon.gif);
 			}
 		}
 		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
@@ -184,8 +191,10 @@ public class Abalon {
 			}
 			if (currentPlayer == 1) {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+				Hexagon.winImage.setImage(Hexagon.gif);
 			} else {
 				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
+				Hexagon.winImage.setImage(Hexagon.gif);
 			}
 		}
 
