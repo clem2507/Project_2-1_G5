@@ -18,7 +18,7 @@ plugins {
 
 javafx {
     version = "13"
-    modules = ['javafx.controls', 'javafx.swing']
+    modules = ['javafx.controls','javafx.media', 'javafx.swing']
 }
 
 repositories {
@@ -49,3 +49,9 @@ task(runRulesTest, dependsOn: 'classes', type: JavaExec) {
 task(testCollect, dependsOn: 'classes', type: JavaExec) {
     main = 'Abalon.Main.PlayerH'
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
