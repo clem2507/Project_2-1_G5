@@ -73,18 +73,9 @@ public class Abalon {
 					System.out.println("concurrency problem, aborting...");
 					System.exit(0);
 				}
-				victory = board.isVictorious(board.getBoard());
 				numberOfTurn++;
 				Hexagon.turnText.setText("Turn number " + numberOfTurn);
-			}
-			if (currentPlayer == 1) {
-				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-				Hexagon.winMusic();
-			} else {
-				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-				Hexagon.winMusic();
+				victory = BoardUI.isVictorious(board.getBoard());
 			}
 			// new page with the winner
 			//System.exit(0);
@@ -125,17 +116,10 @@ public class Abalon {
 					board.setBoard(algo.getBestMove());
 					currentPlayer = 1;
 				}
-				board.drawAllCells();
-				victory = board.isVictorious(board.getBoard());
 				numberOfTurn++;
 				Hexagon.turnText.setText("Turn number " + numberOfTurn);
-			}
-			if (currentPlayer == 1) {
-				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-			} else {
-				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
+				board.drawAllCells();
+				victory = BoardUI.isVictorious(board.getBoard());
 			}
 		}
 		else if (gameMode.equals("MCTS vs Human")) {
@@ -157,22 +141,15 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer, 10);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
 				}
-				board.drawAllCells();
-				victory = board.isVictorious(board.getBoard());
 				numberOfTurn++;
 				Hexagon.turnText.setText("Turn number " + numberOfTurn);
-			}
-			if (currentPlayer == 1) {
-				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-			} else {
-				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
+				board.drawAllCells();
+				victory = BoardUI.isVictorious(board.getBoard());
 			}
 		}
 		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
@@ -189,25 +166,27 @@ public class Abalon {
 					currentPlayer = 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer, 10);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
 				}
-				board.drawAllCells();
-				victory = board.isVictorious(board.getBoard());
 				numberOfTurn++;
 				Hexagon.turnText.setText("Turn number " + numberOfTurn);
-			}
-			if (currentPlayer == 1) {
-				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
-			} else {
-				Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
-				Hexagon.winImage.setImage(Hexagon.gif);
+				board.drawAllCells();
+				victory = BoardUI.isVictorious(board.getBoard());
 			}
 		}
-
+		System.out.println("total numberOfTurn = " + numberOfTurn);
+		if (currentPlayer == 1) {
+			Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+			Hexagon.winImage.setImage(Hexagon.gif);
+			Hexagon.winMusic();
+		} else {
+			Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
+			Hexagon.winImage.setImage(Hexagon.gif);
+			Hexagon.winMusic();
+		}
 	}
 
 	public void checkExitTheGame(){

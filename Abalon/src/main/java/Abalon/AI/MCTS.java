@@ -12,12 +12,15 @@ public class MCTS {
     private EvaluationFunction rootEvaluation;
     private double rootScore;
 
-    public MCTS(int[][] boardState, int currentPlayer){
+    private int depth;
+
+    public MCTS(int[][] boardState, int currentPlayer, int depth){
 
         this.boardState = boardState;
         this.currentPlayer = currentPlayer;
         this.rootEvaluation = new EvaluationFunction(currentPlayer, boardState, boardState);
         this.rootScore = rootEvaluation.evaluate();
+        this.depth = depth;
     }
 
     public void start(){
@@ -57,7 +60,7 @@ public class MCTS {
             int[][] actualBoard = currentBoard;
             int countMoves = 0;
             // while ((System.currentTimeMillis() - b_time) < 50) {
-            while (countMoves <= 10) {
+            while (countMoves <= depth) {
                 ArrayList<int[][]> children = getPossibleMoves.getPossibleMoves(actualBoard, actualPlayer);
 
                 int max = children.size();

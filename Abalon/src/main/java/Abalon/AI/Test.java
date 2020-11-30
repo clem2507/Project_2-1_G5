@@ -1,7 +1,6 @@
 package Abalon.AI;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import Abalon.UI.BoardUI;
 
 public class Test {
 
@@ -15,31 +14,17 @@ public class Test {
         }
     }
 
-    public static int[][] cellColor = new int[][]{
-
-            {0, 1, 1, 1, 1, -1, -1, -1, -1},
-            {0, 0, 1, 1, 1,  0, -1, -1, -1},
-            {0, 0, 0, 0, 0,  0,  0, -1, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0,  0},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 0, 0, 0,  0,  0, -1, -1},
-            {0, 0, 2, 2, 2,  0, -1, -1, -1},
-            {0, 2, 2, 2, 2, -1, -1, -1, -1}
-
-    };
-
     public static int[][] rootCellColor = new int[][]{
 
-            {1, 1, 1, 1, 1, -1, -1, -1, -1},
-            {1, 1, 1, 1, 1,  1, -1, -1, -1},
-            {0, 0, 1, 1, 1,  0,  0, -1, -1},
+            {2, 2, 2, 2, 2, -1, -1, -1, -1},
+            {2, 2, 2, 2, 2,  2, -1, -1, -1},
+            {0, 0, 2, 2, 2,  0,  0, -1, -1},
             {0, 0, 0, 0, 0,  0,  0,  0, -1},
             {0, 0, 0, 0, 0,  0,  0,  0,  0},
             {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 2, 2, 2,  0,  0, -1, -1},
-            {2, 2, 2, 2, 2,  2, -1, -1, -1},
-            {2, 2, 2, 2, 2, -1, -1, -1, -1}
+            {0, 0, 1, 1, 1,  0,  0, -1, -1},
+            {1, 1, 1, 1, 1,  1, -1, -1, -1},
+            {1, 1, 1, 1, 1, -1, -1, -1, -1}
 
     };
 
@@ -85,108 +70,93 @@ public class Test {
         }
         */
 
-        EvaluationFunction evaluation = new EvaluationFunction(0, cellColor, rootCellColor);
+        // These two lines are used to store data in files (it takes a while to compute)
+        abVSmcts_Simulation(100, "Output1.txt", 3, 10);
+        abVSmcts_Simulation(100, "Output2.txt", 2, 5);
+    }
 
-        int[][] bestMove = rootCellColor;
-        int currentPlayer = 1;
-        int turn = 1;
-        while (Math.abs(evaluation.countMarbles(1, bestMove) - evaluation.countMarbles(2, bestMove)) < 1) {
+    public static void abVSmcts_Simulation(int numSimulation, String fileName, int gtDepth, int mctsDepth) {
 
-            GameTree gameTree = new GameTree();
+        OutputCSV out = new OutputCSV(numSimulation, fileName);
+        for (int i = 0; i < numSimulation; i++) {
 
-            long b_gametreeTime = System.currentTimeMillis();
+            int[][] bestMove = rootCellColor;
+            int currentPlayer = 1;
+            int turn = 1;
+            int ab_turn = 0;
+            int mcts_turn = 0;
+            float ab_avg_time = 0;
+            float mcts_avg_time = 0;
+            String winner;
 
-            if (turn == 1 && currentPlayer == 1) {
-                gameTree.createTree(rootCellColor, currentPlayer, 3);
+            while (!BoardUI.isVictorious(bestMove)) {
 
-                System.out.println();
-                System.out.println("nodes list size = " + gameTree.getNodes().size());
-                System.out.println("pruned nodes = " + gameTree.getPrunedNodes());
-                System.out.println();
-            } else {
-                if (currentPlayer == 1) {
-                    gameTree.createTree(bestMove, currentPlayer, 3);
+                GameTree gameTree = new GameTree();
 
-                    System.out.println();
-                    System.out.println("nodes list size = " + gameTree.getNodes().size());
-                    System.out.println("pruned nodes = " + gameTree.getPrunedNodes());
-                    System.out.println();
+                long b_gametreeTime = System.currentTimeMillis();
+
+                if (turn == 1 && currentPlayer == 1) {
+                    gameTree.createTree(rootCellColor, currentPlayer, gtDepth);
+                } else {
+                    if (currentPlayer == 1) {
+                        gameTree.createTree(bestMove, currentPlayer, gtDepth);
+                    }
                 }
+
+                long e_gametreeTime = System.currentTimeMillis();
+                double gametreeDuration = (e_gametreeTime - b_gametreeTime);
+
+                if (currentPlayer == 1) {
+
+                    long b_minimaxTime = System.currentTimeMillis();
+
+                    AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
+                    algo.start(true);
+                    bestMove = algo.getBestMove();
+
+                    long e_minimaxTime = System.currentTimeMillis();
+                    double minimaxDuration = (e_minimaxTime - b_minimaxTime);
+
+                    ab_avg_time += (minimaxDuration + gametreeDuration);
+                    ab_turn++;
+
+                } else {
+                    long b_MCTStime = System.currentTimeMillis();
+
+                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer, mctsDepth);
+                    monteCarlo.start();
+                    bestMove = monteCarlo.getBestMove();
+
+                    long e_MCTStime = System.currentTimeMillis();
+                    double MCTSDuration = (e_MCTStime - b_MCTStime);
+
+                    mcts_avg_time += MCTSDuration;
+                    mcts_turn++;
+                }
+
+                if (currentPlayer == 1) {
+                    currentPlayer = 2;
+                } else {
+                    currentPlayer = 1;
+                }
+
+                turn++;
+                // System.out.println("turn = " + turn);
             }
 
-            long e_gametreeTime = System.currentTimeMillis();
-            double gametreeDuration = (e_gametreeTime - b_gametreeTime) / 1000f;
-
             if (currentPlayer == 1) {
-                System.out.println("Game tree duration = " + gametreeDuration + " s");
-            }
-
-            System.out.println();
-            System.out.println("currentPlayer = " + currentPlayer + ", turn = " + turn);
-
-            if (currentPlayer == 1) {
-
-                long b_minimaxTime = System.currentTimeMillis();
-
-                AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
-                algo.start(true);
-                bestMove = algo.getBestMove();
-
-                long e_minimaxTime = System.currentTimeMillis();
-                double minimaxDuration = (e_minimaxTime - b_minimaxTime) / 1000f;
-
-                System.out.println();
-                System.out.println("Minimax time duration = " + minimaxDuration + " s");
-
-                System.out.println();
-                System.out.println("Total computation time (game tree + minimax) = " + (gametreeDuration + minimaxDuration) + " s");
-            } else {
-
-                long b_MCTStime = System.currentTimeMillis();
-
-                MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
-                monteCarlo.start();
-                bestMove = monteCarlo.getBestMove();
-
-                long e_MCTStime = System.currentTimeMillis();
-                double MCTSDuration = (e_MCTStime - b_MCTStime) / 1000f;
-
-                System.out.println();
-                System.out.println("MCTS time duration = " + MCTSDuration + " s");
-            }
-
-            if (currentPlayer == 1) {
-                currentPlayer = 2;
+                winner = "MCTS";
             }
             else {
-                currentPlayer = 1;
+                winner = "Alpha-Beta";
             }
 
-            System.out.println();
-            System.out.println("--------------------");
+            ab_avg_time = (ab_avg_time/ab_turn)/1000f;
+            mcts_avg_time = (mcts_avg_time/mcts_turn)/1000f;
 
-            turn++;
+            out.set(i, ab_avg_time, mcts_avg_time, turn, winner);
         }
-        if (evaluation.countMarbles(1, bestMove) > evaluation.countMarbles(2, bestMove)) {
-            System.out.println("AI 1 won the game (minimax)");
-        }
-        else {
-            System.out.println("AI 2 won the game (mcts)");
-        }
-
-
-        /*
-        long b_MCTStime = System.currentTimeMillis();
-
-        MCTS monteCarlo = new MCTS(rootCellColor, 1);
-        monteCarlo.start();
-
-        long e_MCTStime = System.currentTimeMillis();
-        double MCTSDuration = (e_MCTStime - b_MCTStime) / 1000f;
-
-        System.out.println();
-        System.out.println("MCTS time duration = " + MCTSDuration + " s");
-        */
+        out.writeResume();
     }
 }
 

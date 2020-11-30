@@ -33,6 +33,8 @@ public class EvaluationFunction {
      ==================================================================================================================
      */
 
+    private int strategy;
+
     private static int currentPlayer;
     private static int[][] cellColor;
     private static int[][] rootCellColor;
@@ -64,11 +66,14 @@ public class EvaluationFunction {
     // w5 is huge because bot can win the game
     private static double[] modus10 = {2.2, 2.3, 25, 3, 10000, 1};
 
+
     public EvaluationFunction(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
 
         EvaluationFunction.currentPlayer = currentPlayer;
         EvaluationFunction.cellColor = cellColor;
         EvaluationFunction.rootCellColor = rootCellColor;
+
+        this.strategy = strategy;
     }
 
     public void computeValues() {
@@ -138,12 +143,17 @@ public class EvaluationFunction {
         v6 = rootOwnMarblesCount - currentStateOwnMarblesCount;
     }
 
-    public void computeWeights(double v1, double v2) {
+    public void computeWeights(double v1, double v2, double v5, double v6) {
 
         if (isWin()) {
             changeModus(modus10);
         }
         else {
+//            if (v5 > 0) {
+//                if (strategy == 2) {
+//                    changeModus(modus11);
+//                }
+//            }
             if (v1 < 0) {
                 changeModus(modus1);
             } else if (v1 < 5) {
@@ -184,7 +194,7 @@ public class EvaluationFunction {
 //        System.out.println("v5 = " + v5);
 //        System.out.println("v6 = " + v6);
 //        System.out.println();
-        computeWeights(v1, v2);
+        computeWeights(v1, v2, v5, v6);
 //        System.out.println("w1 = " + w1);
 //        System.out.println("w2 = " + w2);
 //        System.out.println("w3 = " + w3);

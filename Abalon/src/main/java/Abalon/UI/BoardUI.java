@@ -52,7 +52,7 @@ public class BoardUI {
         this.cellColors = newBoard;
     }
 
-    public boolean isVictorious(int[][] board) {
+    public static boolean isVictorious(int[][] board) {
 
         int countP1 = 0;
         int countP2 = 0;
