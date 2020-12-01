@@ -31,15 +31,18 @@ public class GameTree {
     private HashTable table;
     private int prunedNodes = 0;
 
+    private int strategy;
+
     public GameTree(){
         //create the tree, start with the initial board
 
         table = new HashTable();
     }
 
-    public void createTree(int[][] currentRoot, int currentPlayer, int depth){
+    public void createTree(int[][] currentRoot, int currentPlayer, int depth, int strategy){
 
         this.generation = depth;
+        this.strategy = strategy;
 
         root = new Node(currentRoot, 0);
 
@@ -75,7 +78,7 @@ public class GameTree {
 
         for(int[][] child : childrenStates){
 
-            EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, child, root.getBoardState());
+            EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, child, root.getBoardState(), strategy);
             double score = evaluationFunction.evaluate();
 
             if(generationCounter == 1) {

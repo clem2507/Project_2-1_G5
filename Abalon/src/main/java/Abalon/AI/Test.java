@@ -70,13 +70,17 @@ public class Test {
         }
         */
 
-        // These two lines are used to store data in files (it takes a while to compute)
-        abVSmcts_Simulation(15, "Output1.txt", 3, 10);
-        abVSmcts_Simulation(15, "Output2.txt", 2, 5);
+        // These lines are used to store data in files (it takes a while to compute)
+        abVSmcts_Simulation(5, "Output1.txt", 2, 5, 1, 1);
+        abVSmcts_Simulation(5, "Output2.txt", 3, 10, 1, 1);
+        abVSmcts_Simulation(5, "Output3.txt", 3, 10, 1, 2);
+        abVSmcts_Simulation(5, "Output4.txt", 3, 10, 1, 3);
+        abVSmcts_Simulation(5, "Output5.txt", 3, 10, 2, 1);
+        abVSmcts_Simulation(5, "Output6.txt", 3, 10, 3, 1);
     }
 
     // add the one how takes the first marble and see if he won the game
-    public static void abVSmcts_Simulation(int numSimulation, String fileName, int gtDepth, int mctsDepth) {
+    public static void abVSmcts_Simulation(int numSimulation, String fileName, int gtDepth, int mctsDepth, int gtStrategy, int mctsStrategy) {
 
         OutputCSV out = new OutputCSV(numSimulation, fileName);
         for (int i = 0; i < numSimulation; i++) {
@@ -94,7 +98,7 @@ public class Test {
 
             while (!BoardUI.isVictorious(bestMove)) {
 
-                if (turn > 300) {
+                if (turn > 1000) {
                     break;
                 }
 
@@ -103,10 +107,10 @@ public class Test {
                 long b_gametreeTime = System.currentTimeMillis();
 
                 if (turn == 1 && currentPlayer == 1) {
-                    gameTree.createTree(rootCellColor, currentPlayer, gtDepth);
+                    gameTree.createTree(rootCellColor, currentPlayer, gtDepth, gtStrategy);
                 } else {
                     if (currentPlayer == 1) {
-                        gameTree.createTree(bestMove, currentPlayer, gtDepth);
+                        gameTree.createTree(bestMove, currentPlayer, gtDepth, gtStrategy);
                     }
                 }
 
@@ -130,7 +134,7 @@ public class Test {
                 } else {
                     long b_MCTStime = System.currentTimeMillis();
 
-                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer, mctsDepth);
+                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer, mctsDepth, mctsStrategy);
                     monteCarlo.start();
                     bestMove = monteCarlo.getBestMove();
 

@@ -54,25 +54,28 @@ public class EvaluationFunction {
     private static double w6;
 
     // w6 = 50*w5 because useless to push out an opponent marble if opponent can also push afterwards
-    private static double[] modus1 = {3, 2, 6, 1.8, 0, 0};
-    private static double[] modus2 = {3.3, 2, 6, 1.8, 35, 1750};
-    private static double[] modus3 = {2.9, 2, 15, 3, 4, 200};
-    private static double[] modus4 = {2.9, 2, 15, 3, 15, 750};
-    private static double[] modus5 = {2.8, 2.3, 25, 3, 15, 75};
-    private static double[] modus6 = {2.8, 2.1, 25, 3, 25, 750};
-    private static double[] modus7 = {2.7, 2.3, 25, 3, 30, 1500};
-    private static double[] modus8 = {2.4, 2.3, 25, 3, 35, 1750};
-    private static double[] modus9 = {2.2, 2.3, 25, 3, 40, 2000};
+    private static double[] modusN1 = {3, 2, 6, 1.8, 0, 0};
+    private static double[] modusN2 = {3.3, 2, 6, 1.8, 35, 1750};
+    private static double[] modusN3 = {2.9, 2, 15, 3, 4, 200};
+    private static double[] modusN4 = {2.9, 2, 15, 3, 15, 750};
+    private static double[] modusN5 = {2.8, 2.3, 25, 3, 15, 75};
+    private static double[] modusN6 = {2.8, 2.1, 25, 3, 25, 750};
+    private static double[] modusN7 = {2.7, 2.3, 25, 3, 30, 1500};
+    private static double[] modusN8 = {2.4, 2.3, 25, 3, 35, 1750};
+    private static double[] modusN9 = {2.2, 2.3, 25, 3, 40, 2000};
     // w5 is huge because bot can win the game
-    private static double[] modus10 = {2.2, 2.3, 25, 3, 10000, 1};
+    private static double[] modusWin = {1, 1, 1, 1, 100000, 1};
 
 
-    public EvaluationFunction(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
+    public EvaluationFunction(int currentPlayer, int[][] cellColor, int[][] rootCellColor, int strategy) {
 
         EvaluationFunction.currentPlayer = currentPlayer;
         EvaluationFunction.cellColor = cellColor;
         EvaluationFunction.rootCellColor = rootCellColor;
 
+        // strategy = 1 -> neutral bot
+        // strategy = 2 -> offensive bot
+        // strategy = 3 -> defensive bot
         this.strategy = strategy;
     }
 
@@ -143,42 +146,37 @@ public class EvaluationFunction {
         v6 = rootOwnMarblesCount - currentStateOwnMarblesCount;
     }
 
-    public void computeWeights(double v1, double v2, double v5, double v6) {
+    public void computeWeights(double v1, double v2) {
 
         if (isWin()) {
-            changeModus(modus10);
+            changeModus(modusWin);
         }
         else {
-//            if (v5 > 0) {
-//                if (strategy == 2) {
-//                    changeModus(modus11);
-//                }
-//            }
             if (v1 < 0) {
-                changeModus(modus1);
+                changeModus(modusN1);
             } else if (v1 < 5) {
-                changeModus(modus2);
+                changeModus(modusN2);
             } else if (v1 >= 5) {
                 if (v2 >= 0 && v2 < 4) {
-                    changeModus(modus3);
+                    changeModus(modusN3);
                 }
                 if (v2 >= 4 && v2 < 10) {
-                    changeModus(modus4);
+                    changeModus(modusN4);
                 }
                 if (v2 >= 10 && v2 < 16) {
-                    changeModus(modus5);
+                    changeModus(modusN5);
                 }
                 if (v2 >= 16 && v2 < 22) {
-                    changeModus(modus6);
+                    changeModus(modusN6);
                 }
                 if (v2 >= 22 && v2 < 28) {
-                    changeModus(modus7);
+                    changeModus(modusN7);
                 }
                 if (v2 >= 28 && v2 < 34) {
-                    changeModus(modus8);
+                    changeModus(modusN8);
                 }
                 if (v2 >= 34) {
-                    changeModus(modus9);
+                    changeModus(modusN9);
                 }
             }
         }
@@ -194,7 +192,7 @@ public class EvaluationFunction {
 //        System.out.println("v5 = " + v5);
 //        System.out.println("v6 = " + v6);
 //        System.out.println();
-        computeWeights(v1, v2, v5, v6);
+        computeWeights(v1, v2);
 //        System.out.println("w1 = " + w1);
 //        System.out.println("w2 = " + w2);
 //        System.out.println("w3 = " + w3);
@@ -207,12 +205,30 @@ public class EvaluationFunction {
 
     public void changeModus(double[] modus) {
 
-        w1 = modus[0];
-        w2 = modus[1];
-        w3 = modus[2];
-        w4 = modus[3];
-        w5 = modus[4];
-        w6 = modus[5];
+        if (strategy == 1) {
+            w1 = modus[0];
+            w2 = modus[1];
+            w3 = modus[2];
+            w4 = modus[3];
+            w5 = modus[4];
+            w6 = modus[5];
+        }
+        else if (strategy == 2) {
+            w1 = modus[0];
+            w2 = modus[1];
+            w3 = modus[2];
+            w4 = modus[3]*10;
+            w5 = modus[4]*5;
+            w6 = modus[5]/5;
+        }
+        else {
+            w1 = modus[0]*3;
+            w2 = modus[1]*3;
+            w3 = modus[2]*5;
+            w4 = modus[3]/2;
+            w5 = modus[4]/2;
+            w6 = modus[5]*2;
+        }
     }
 
     public int centerDistance(int currentPlayer) {

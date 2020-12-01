@@ -91,13 +91,13 @@ public class Hexagon extends Application {
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
         else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-            player1 = new Text("Alpha-Beta");
-            player2 = new Text("Human");
+            player1 = new Text("Human");
+            player2 = new Text("Alpha-Beta");
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
         else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-            player1 = new Text("MCTS");
-            player2 = new Text("Human");
+            player1 = new Text("Human");
+            player2 = new Text("MCTS");
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
         else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){

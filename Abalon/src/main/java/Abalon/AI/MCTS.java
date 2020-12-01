@@ -14,13 +14,16 @@ public class MCTS {
 
     private int depth;
 
-    public MCTS(int[][] boardState, int currentPlayer, int depth){
+    private int strategy;
+
+    public MCTS(int[][] boardState, int currentPlayer, int depth, int strategy){
 
         this.boardState = boardState;
         this.currentPlayer = currentPlayer;
-        this.rootEvaluation = new EvaluationFunction(currentPlayer, boardState, boardState);
+        this.rootEvaluation = new EvaluationFunction(currentPlayer, boardState, boardState, strategy);
         this.rootScore = rootEvaluation.evaluate();
         this.depth = depth;
+        this.strategy = strategy;
     }
 
     public void start(){
@@ -79,7 +82,7 @@ public class MCTS {
                 countMoves++;
             }
 
-            EvaluationFunction evaluation = new EvaluationFunction(currentPlayer, actualBoard, boardState);
+            EvaluationFunction evaluation = new EvaluationFunction(currentPlayer, actualBoard, boardState, strategy);
 
             if (evaluation.evaluate() >= rootScore) {
                 simulationScore++;
