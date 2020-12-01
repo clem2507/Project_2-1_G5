@@ -71,10 +71,11 @@ public class Test {
         */
 
         // These two lines are used to store data in files (it takes a while to compute)
-        abVSmcts_Simulation(100, "Output1.txt", 3, 10);
-        abVSmcts_Simulation(100, "Output2.txt", 2, 5);
+        abVSmcts_Simulation(15, "Output1.txt", 3, 10);
+        abVSmcts_Simulation(15, "Output2.txt", 2, 5);
     }
 
+    // add the one how takes the first marble and see if he won the game
     public static void abVSmcts_Simulation(int numSimulation, String fileName, int gtDepth, int mctsDepth) {
 
         OutputCSV out = new OutputCSV(numSimulation, fileName);
@@ -87,9 +88,15 @@ public class Test {
             int mcts_turn = 0;
             float ab_avg_time = 0;
             float mcts_avg_time = 0;
+            boolean checkFirstRemoved = false;
+            String firstMarble = "";
             String winner;
 
             while (!BoardUI.isVictorious(bestMove)) {
+
+                if (turn > 300) {
+                    break;
+                }
 
                 GameTree gameTree = new GameTree();
 
@@ -134,6 +141,18 @@ public class Test {
                     mcts_turn++;
                 }
 
+                if (!checkFirstRemoved) {
+                    if (Math.abs((EvaluationFunction.countMarbles(1, bestMove)-EvaluationFunction.countMarbles(2, bestMove))) > 0) {
+                        if (currentPlayer == 1) {
+                            firstMarble = "Alpha-Beta";
+                        }
+                        else {
+                            firstMarble = "MCTS";
+                        }
+                        checkFirstRemoved = true;
+                    }
+                }
+
                 if (currentPlayer == 1) {
                     currentPlayer = 2;
                 } else {
@@ -141,7 +160,6 @@ public class Test {
                 }
 
                 turn++;
-                // System.out.println("turn = " + turn);
             }
 
             if (currentPlayer == 1) {
@@ -154,7 +172,8 @@ public class Test {
             ab_avg_time = (ab_avg_time/ab_turn)/1000f;
             mcts_avg_time = (mcts_avg_time/mcts_turn)/1000f;
 
-            out.set(i, ab_avg_time, mcts_avg_time, turn, winner);
+            out.add(i, ab_avg_time, mcts_avg_time, turn, firstMarble, winner);
+            System.out.println("i = " + i);
         }
         out.writeResume();
     }

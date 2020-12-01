@@ -522,7 +522,7 @@ public class EvaluationFunction {
         return count;
     }
 
-    public int countMarbles(int currentPlayer, int[][] cellColor) {
+    public static int countMarbles(int currentPlayer, int[][] cellColor) {
 
         int count = 0;
         for (int i = 0; i < cellColor.length; i++) {

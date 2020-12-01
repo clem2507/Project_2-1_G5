@@ -13,6 +13,7 @@ public class OutputCSV {
     private float[] ab_time_tab;
     private float[] mcts_time_tab;
     private int[] numb_turn_tab;
+    private String[] first_marble_tab;
     private String[] winner_tab;
 
     private String fileName;
@@ -22,25 +23,25 @@ public class OutputCSV {
         this.ab_time_tab = new float[totalSimulation];
         this.mcts_time_tab = new float[totalSimulation];
         this.numb_turn_tab = new int[totalSimulation];
+        this.first_marble_tab = new String[totalSimulation];
         this.winner_tab = new String[totalSimulation];
 
         this.totalSimulation = totalSimulation;
         this.fileName = fileName;
     }
 
-    public void set(int index, float ab_time, float mcts_time, int numb_turn, String winner){
+    public void add(int index, float ab_time, float mcts_time, int numb_turn, String first_marble, String winner){
 
         ab_time_tab[index] = ab_time;
         mcts_time_tab[index] = mcts_time;
         numb_turn_tab[index] = numb_turn;
+        first_marble_tab[index] = first_marble;
         winner_tab[index] = winner;
     }
 
-    private static String stringHeaderResume = "Alpha-Beta(time avg), MCTS(time avg), #turn, winner";
-
     public void writeResume() {
 
-        String[][] data = new String[totalSimulation][4];
+        String[][] data = new String[totalSimulation][5];
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
                 if (j == 0) {
@@ -51,6 +52,9 @@ public class OutputCSV {
                 }
                 else if (j == 2) {
                     data[i][j] = Integer.toString(numb_turn_tab[i]);
+                }
+                else if (j == 3) {
+                    data[i][j] = first_marble_tab[i];
                 }
                 else {
                     data[i][j] = winner_tab[i];
@@ -64,12 +68,13 @@ public class OutputCSV {
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             PrintWriter printWriter = new PrintWriter(bufferedWriter);
 
+            String stringHeaderResume = "Alpha-Beta(time_avg), MCTS(time_avg), #turn, first_marble, winner";
             printWriter.println(stringHeaderResume);
 
             printWriter.println();
 
             for (int i = 0; i < data.length; i++) {
-                printWriter.println(data[i][0]+","+data[i][1]+","+data[i][2]+","+data[i][3]);
+                printWriter.println(data[i][0]+","+data[i][1]+","+data[i][2]+","+data[i][3]+","+data[i][4]);
             }
 
             printWriter.flush();
