@@ -15,33 +15,47 @@ public class OutputCSV {
     private int[] numb_turn_tab;
     private String[] first_marble_tab;
     private String[] winner_tab;
+    private String[] winning_strategy_tab;
 
     private String fileName;
+    private String stringHeaderResume;
 
-    public OutputCSV(int totalSimulation, String fileName) {
+    public OutputCSV(int totalSimulation, String fileName, int choice) {
 
         this.ab_time_tab = new float[totalSimulation];
         this.mcts_time_tab = new float[totalSimulation];
         this.numb_turn_tab = new int[totalSimulation];
         this.first_marble_tab = new String[totalSimulation];
         this.winner_tab = new String[totalSimulation];
+        this.winning_strategy_tab = new String[totalSimulation];
 
         this.totalSimulation = totalSimulation;
         this.fileName = fileName;
+
+        if (choice == 1) {
+            stringHeaderResume = "Alpha-Beta(time_avg), MCTS(time_avg), #turn, first_marble, winner, winning_strategy";
+        }
+        else if (choice == 2) {
+            stringHeaderResume = "Alpha-Beta1(time_avg), Alpha-Beta2(time_avg), #turn, first_marble, winner, winning_strategy";
+        }
+        else {
+            stringHeaderResume = "MCTS1(time_avg), MCTS2(time_avg), #turn, first_marble, winner, winning_strategy";
+        }
     }
 
-    public void add(int index, float ab_time, float mcts_time, int numb_turn, String first_marble, String winner){
+    public void add(int index, float ab_time, float mcts_time, int numb_turn, String first_marble, String winner, String winning_strategy){
 
         ab_time_tab[index] = ab_time;
         mcts_time_tab[index] = mcts_time;
         numb_turn_tab[index] = numb_turn;
         first_marble_tab[index] = first_marble;
         winner_tab[index] = winner;
+        winning_strategy_tab[index] = winning_strategy;
     }
 
     public void writeResume() {
 
-        String[][] data = new String[totalSimulation][5];
+        String[][] data = new String[totalSimulation][6];
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
                 if (j == 0) {
@@ -56,8 +70,11 @@ public class OutputCSV {
                 else if (j == 3) {
                     data[i][j] = first_marble_tab[i];
                 }
-                else {
+                else if (j == 4){
                     data[i][j] = winner_tab[i];
+                }
+                else {
+                    data[i][j] = winning_strategy_tab[i];
                 }
             }
         }
@@ -68,13 +85,12 @@ public class OutputCSV {
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             PrintWriter printWriter = new PrintWriter(bufferedWriter);
 
-            String stringHeaderResume = "Alpha-Beta(time_avg), MCTS(time_avg), #turn, first_marble, winner";
             printWriter.println(stringHeaderResume);
 
             printWriter.println();
 
             for (int i = 0; i < data.length; i++) {
-                printWriter.println(data[i][0]+","+data[i][1]+","+data[i][2]+","+data[i][3]+","+data[i][4]);
+                printWriter.println(data[i][0]+","+data[i][1]+","+data[i][2]+","+data[i][3]+","+data[i][4]+","+data[i][5]);
             }
 
             printWriter.flush();
@@ -87,3 +103,4 @@ public class OutputCSV {
         }
     }
 }
+
