@@ -72,7 +72,7 @@ public class Test {
 
         // These lines are used to store data in files (it takes a while to compute)
         abVSmcts_Simulation(5, "Output1.txt", 2, 10, 1, 1);
-        abVSmcts_Simulation(10, "Output2.txt", 3, 10, 1, 1);
+        // abVSmcts_Simulation(10, "Output2.txt", 3, 10, 1, 1);
         abVSmcts_Simulation(5, "Output3.txt", 3, 5, 1, 1);
         abVSab_Simulation(5, "Output4.txt", 3, 2, 3);
         mctsVSmcts_Simulation(5, "Output5.txt", 10, 2, 3);
@@ -89,6 +89,7 @@ public class Test {
             int turn = 1;
             int ab_turn = 0;
             int mcts_turn = 0;
+            double gt_nodes_avg = 0;
             float ab_avg_time = 0;
             float mcts_avg_time = 0;
             boolean checkFirstRemoved = false;
@@ -97,7 +98,6 @@ public class Test {
             String winner;
 
             while (!BoardUI.isVictorious(bestMove)) {
-
                 if (turn > 1000) {
                     break;
                 }
@@ -108,9 +108,11 @@ public class Test {
 
                 if (turn == 1 && currentPlayer == 1) {
                     gameTree.createTree(rootCellColor, currentPlayer, gtDepth, gtStrategy);
+                    gt_nodes_avg += gameTree.getNodes().size();
                 } else {
                     if (currentPlayer == 1) {
                         gameTree.createTree(bestMove, currentPlayer, gtDepth, gtStrategy);
+                        gt_nodes_avg += gameTree.getNodes().size();
                     }
                 }
 
@@ -191,10 +193,12 @@ public class Test {
                 }
             }
 
+            gt_nodes_avg = gt_nodes_avg/ab_turn;
+
             ab_avg_time = (ab_avg_time/ab_turn)/1000f;
             mcts_avg_time = (mcts_avg_time/mcts_turn)/1000f;
 
-            out.add(i, ab_avg_time, mcts_avg_time, turn, firstMarble, winner, winningStrategy);
+            out.add(i, ab_avg_time, mcts_avg_time, gt_nodes_avg, turn, firstMarble, winner, winningStrategy);
             System.out.println("i = " + i);
         }
         out.writeResume();
@@ -318,7 +322,7 @@ public class Test {
             ab_avg_time1 = (ab_avg_time1/ab_turn1)/1000f;
             ab_avg_time2 = (ab_avg_time2/ab_turn2)/1000f;
 
-            out.add(i, ab_avg_time1, ab_avg_time2, turn, firstMarble, winner, winningStrategy);
+            out.add(i, ab_avg_time1, ab_avg_time2, 0, turn, firstMarble, winner, winningStrategy);
             System.out.println("i = " + i);
         }
         out.writeResume();
@@ -424,7 +428,7 @@ public class Test {
             mcts_avg_time1 = (mcts_avg_time1/mcts_turn1)/1000f;
             mcts_avg_time2 = (mcts_avg_time2/mcts_turn2)/1000f;
 
-            out.add(i, mcts_avg_time1, mcts_avg_time2, turn, firstMarble, winner, winningStrategy);
+            out.add(i, mcts_avg_time1, mcts_avg_time2, 0, turn, firstMarble, winner, winningStrategy);
             System.out.println("i = " + i);
         }
         out.writeResume();
