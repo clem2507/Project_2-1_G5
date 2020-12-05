@@ -65,8 +65,6 @@ public class HomePage extends Application {
         //Setting the Stroke
         pane.getChildren().add(title);
 
-        // System.out.println(javafx.scene.text.Font.getFamilies());
-
         //Creation of a combo box to choose the game Mode
         gameChoice.getItems().addAll(
                 "Human vs Human" ,

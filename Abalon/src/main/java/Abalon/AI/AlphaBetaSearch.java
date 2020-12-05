@@ -32,21 +32,15 @@ public class AlphaBetaSearch {
         else {
             bestScore = minimax(tree.getNodes().get(0), totalDepth, true);
         }
-//        System.out.println();
-//        System.out.println("pruned branch count alpha-beta = " + prunedCount);
-//        System.out.println();
-//        System.out.println("best score = " + bestScore);
-//        System.out.println("best move = ");
 
         for (Node n : rootChildrenBoard) {
             if (n.getScore() == bestScore) {
                 bestMove = n.getBoardState();
             }
         }
-//        Test.printBoard(bestMove);
     }
 
-    // minimax algorithm without alpha-beta technique
+    // minimax algorithm without alpha-beta pruning
     public double minimax(Node position, int depth, boolean maximizingPlayer) {
 
         if (depth == 0) {

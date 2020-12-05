@@ -77,18 +77,6 @@ public class Abalon {
 				Hexagon.turnText.setText("Turn number " + numberOfTurn);
 				victory = BoardUI.isVictorious(board.getBoard());
 			}
-			// new page with the winner
-			//System.exit(0);
-
-			// Do we need this ?
-			/*
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					board.drawAllCells();
-				}
-			});
-			 */
 		}
 		else if (gameMode.equals("Alpha-Beta vs Human")) {
 			int index = 0;
@@ -209,15 +197,5 @@ public class Abalon {
 		return currentPlayer;
 	}
 
-	/*private void playMove(boolean flag) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				int id = (flag ? 1 : 0);
-				player[id].performMove();
-				if (victory == 0)
-					playMove(flag ^ false);
-			}
-		});
-	}*/
 }
 

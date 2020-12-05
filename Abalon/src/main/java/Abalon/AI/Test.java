@@ -30,52 +30,13 @@ public class Test {
 
     public static void main(String[]args) {
 
-        // Instantiation of the hash table
-        // HashTable table = new HashTable();
-        // If there is an empty space in the table for a specific move, put true in the right index and continue the search
-        //if (table.checkInTable(1, cellColor)) {
-        //  table.put(1, cellColor);
-        //}
-        //else {
-        // node.setScore = table.getScore()
-        //}
 
-        /*
-        Random r = new Random();
-
-        for (int i = 0; i < 50; i++) {
-            for (int j = 0; j < cellColor.length; j++) {
-                for (int k = 0; k < cellColor.length; k++) {
-                    if (cellColor[j][k] == 0 || cellColor[j][k] == 1 || cellColor[j][k] == 2) {
-                        int randomNum = r.nextInt((2) + 1);
-                        cellColor[j][k] = randomNum;
-                    }
-                }
-            }
-            EvaluationFunction evaluationFunction = new EvaluationFunction(1, cellColor, rootCellColor);
-            double score = evaluationFunction.evaluate();
-
-            System.out.println();
-
-            for (int j = 0; j < cellColor.length; j++) {
-                for (int k = 0; k < cellColor.length; k++) {
-                    System.out.print(cellColor[j][k] + " ");
-                }
-                System.out.println();
-            }
-
-            System.out.println();
-            System.out.println("score " + i + ": " + score);
-            System.out.println("-------");
-        }
-        */
-
-        // These lines are used to store data in files (it takes a while to compute)
         abVSmcts_Simulation(5, "Output1.txt", 2, 10, 1, 1);
-        // abVSmcts_Simulation(10, "Output2.txt", 3, 10, 1, 1);
+        abVSmcts_Simulation(5, "Output2.txt", 2, 5, 1, 1);
         abVSmcts_Simulation(5, "Output3.txt", 3, 5, 1, 1);
-        abVSab_Simulation(5, "Output4.txt", 3, 2, 3);
-        mctsVSmcts_Simulation(5, "Output5.txt", 10, 2, 3);
+        abVSmcts_Simulation(5, "Output4.txt", 3, 10, 1, 1);
+        abVSab_Simulation(5, "Output5.txt", 3, 2, 3);
+        mctsVSmcts_Simulation(5, "Output6.txt", 10, 2, 3);
 
     }
 

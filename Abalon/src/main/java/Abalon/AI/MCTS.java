@@ -45,12 +45,6 @@ public class MCTS {
         }
         rootChildren = getPossibleMoves.getPossibleMoves(boardState, currentPlayer);
         bestMove = rootChildren.get(bestIndex);
-
-//        System.out.println();
-//        System.out.println("maxScore = " + maxScore);
-//        System.out.println();
-//        System.out.println("best move = ");
-//        Test.printBoard(bestMove);
     }
 
     public int simulation(int[][] currentBoard){
@@ -58,11 +52,9 @@ public class MCTS {
         int simulationScore = 0;
 
         for (int i = 0; i < 100; i++) {
-            long b_time = System.currentTimeMillis();
             int actualPlayer = currentPlayer;
             int[][] actualBoard = currentBoard;
             int countMoves = 0;
-            // while ((System.currentTimeMillis() - b_time) < 50) {
             while (countMoves <= depth) {
                 ArrayList<int[][]> children = getPossibleMoves.getPossibleMoves(actualBoard, actualPlayer);
 
@@ -91,7 +83,6 @@ public class MCTS {
                 simulationScore--;
             }
         }
-        // System.out.println("simulationScore = " + simulationScore);
         return simulationScore;
     }
 
