@@ -37,7 +37,7 @@ public class RuleBased {
         	bestMove = rootChildren.get(20);
         
         else
-        	bestMove = rootChildren.get(ChildrenSize - 1);
+        	bestMove = rootChildren.get(childrenSize - 1);
         
         // Problem: which conditions to use ?
     }
