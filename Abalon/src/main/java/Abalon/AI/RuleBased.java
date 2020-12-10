@@ -33,7 +33,7 @@ public class RuleBased {
         int childrenSize = rootChildren.size();
         bestMove = new int[9][9];
 
-        if (childrenSize >= 20)
+        if (childrenSize > 20)
         	bestMove = rootChildren.get(20);
         
         else
