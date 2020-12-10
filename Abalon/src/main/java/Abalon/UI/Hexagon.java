@@ -113,7 +113,7 @@ public class Hexagon extends Application {
 
         player1.setTranslateX(100);
         player1.setTranslateY(170);
-        player1.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 26));
+        player1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color
         player1.setFill(Color.LIGHTSKYBLUE);
         //Setting the Stroke
@@ -122,7 +122,7 @@ public class Hexagon extends Application {
 
         player2.setTranslateX(1036);
         player2.setTranslateY(170);
-        player2.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 26));
+        player2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         //Setting the color
         player2.setFill(Color.MEDIUMBLUE);
         //Setting the Stroke
@@ -131,7 +131,7 @@ public class Hexagon extends Application {
 
         gameMode.setTranslateX(485);
         gameMode.setTranslateY(70);
-        gameMode.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        gameMode.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 30));
         //Setting the color
         gameMode.setFill(Color.BLACK);
         //Setting the Stroke
@@ -163,7 +163,7 @@ public class Hexagon extends Application {
         winText = new Text ("");
         winText.setX(900);
         winText.setY(600);
-        winText.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        winText.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 30));
         winText.setFill(Color.DARKORANGE);
         winText.setStrokeWidth(2);
         pane.getChildren().add(winText);
