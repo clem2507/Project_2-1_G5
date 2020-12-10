@@ -59,7 +59,7 @@ public class HomePage extends Application {
         Text title = new Text("ABALONE");
         title.setTranslateX(460);
         title.setTranslateY(180);
-        title.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 90));
+        title.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 90));
         //Setting the color
         title.setFill(Color.BLACK);
         //Setting the Stroke
@@ -84,7 +84,7 @@ public class HomePage extends Application {
         play.setTranslateX(570);
         play.setTranslateY(330);
         play.setTextFill(Color.BLACK);
-        play.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 35));
+        play.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 35));
         pane.getChildren().add(play);
 
         //Button listener

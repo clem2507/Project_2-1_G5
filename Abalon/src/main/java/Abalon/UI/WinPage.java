@@ -67,7 +67,7 @@ public class WinPage extends Application{
 
         title.setTranslateX(460);
         title.setTranslateY(180);
-        title.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 90));
+        title.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 90));
         //Setting the color
         title.setFill(Color.BLACK);
         //Setting the Stroke
