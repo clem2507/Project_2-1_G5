@@ -30,7 +30,6 @@ public class Test {
 
     public static void main(String[]args) {
 
-
         abVSmcts_Simulation(5, "Output1.txt", 2, 10, 1, 1);
         abVSmcts_Simulation(5, "Output2.txt", 2, 5, 1, 1);
         abVSmcts_Simulation(5, "Output3.txt", 3, 5, 1, 1);

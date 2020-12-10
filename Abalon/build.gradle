@@ -50,6 +50,10 @@ task(testCollect, dependsOn: 'classes', type: JavaExec) {
     main = 'Abalon.Main.PlayerH'
 }
 
+task(genLog, dependsOn: 'classes', type: JavaExec) {
+    main = 'Abalon.AI.GenAlgo'
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8

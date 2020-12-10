@@ -46,7 +46,7 @@ public class HomePage extends Application {
         Group pane = new Group();
 
         try {
-            BufferedImage buffer = ImageIO.read(new File("Abalon/res/grey.jpg"));
+            BufferedImage buffer = ImageIO.read(new File("./res/grey.jpg"));
             Image background = SwingFXUtils.toFXImage(buffer, null);
             ImageView view = new ImageView(background);
             pane.getChildren().addAll(view);

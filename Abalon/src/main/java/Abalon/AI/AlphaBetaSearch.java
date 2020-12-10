@@ -14,7 +14,6 @@ public class AlphaBetaSearch {
     private int index = 0;
     private int prunedCount = 0;
 
-
     public AlphaBetaSearch(GameTree gameTree) {
 
         this.tree = gameTree;

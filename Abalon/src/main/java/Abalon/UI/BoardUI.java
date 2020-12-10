@@ -90,7 +90,7 @@ public class BoardUI {
      * Creates the board itself shaped like a hexagon
      * @return the hexagon (representing the board)
      */
-    public static Polygon createHexagon(){
+    public static Polygon createHexagon() {
         Polygon hexagon = new Polygon();
 
         //Adding coordinates to the hexagon

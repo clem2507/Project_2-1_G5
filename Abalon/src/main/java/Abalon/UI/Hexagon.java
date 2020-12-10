@@ -36,6 +36,7 @@ public class Hexagon extends Application {
     //Creation of a Border pane to make our scene easier to construct
     public static BorderPane pane = new BorderPane();
 
+    private BoardUI board;
     public static Text whosePlaying;
     public static Text winText;
     public static Text turnText;
@@ -48,6 +49,10 @@ public class Hexagon extends Application {
     // Hexagon should access Board to obtain Marbles positions, color, etc
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
 
+    public BoardUI getBoardUI() {
+        return board;
+    }  
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -56,7 +61,7 @@ public class Hexagon extends Application {
         music();
 
         try {
-            BufferedImage buffer = ImageIO.read(new File("Abalon/res/grey2.jpg"));
+            BufferedImage buffer = ImageIO.read(new File("./res/grey2.jpg"));
             Image background = SwingFXUtils.toFXImage(buffer, null);
             ImageView view = new ImageView(background);
             pane.getChildren().addAll(view);
@@ -66,7 +71,7 @@ public class Hexagon extends Application {
         }
 
         //Creating an object of Board, which construct a board
-        BoardUI board = new BoardUI();
+        board = new BoardUI();
         pane.setCenter(board.hexagon);
 
         for (int i = 0; i < 9; i++) {
@@ -164,7 +169,7 @@ public class Hexagon extends Application {
         pane.getChildren().add(winText);
 
         winImage = new ImageView();
-        gif = new Image(new File("Abalon/res/giphy.gif").toURI().toString());
+        gif = new Image(new File("./res/giphy.gif").toURI().toString());
         //selectedImage.setImage(gif);
         winImage.setX(1000);
         winImage.setY(600);
@@ -354,7 +359,7 @@ public class Hexagon extends Application {
     static MediaPlayer mediaPlayer;
     public static void music(){
         //Add of music in the game
-        String musicFile = "Abalon/res/wii.mp3";
+        String musicFile = "./res/wii.mp3";
         Media media = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
@@ -366,7 +371,7 @@ public class Hexagon extends Application {
     public static void winMusic(){
         mediaPlayer.stop();
         //Add of music in the game
-        String musicFile = "Abalon/res/win.mp3";
+        String musicFile = "./res/win.mp3";
         Media mediaWin = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayerWin = new MediaPlayer(mediaWin);
         mediaPlayerWin.play();
