@@ -2,7 +2,7 @@
 
 How to run the game?
 
-Open the terminal. Go to the abalon file and use the following commands: 
+Open the terminal. Go to the Abalon folder (cd <path to Abalon>) and use the following commands: 
 
   gradle wrapper
   ./gradlew run
