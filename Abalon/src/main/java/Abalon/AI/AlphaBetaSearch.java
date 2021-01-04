@@ -45,7 +45,7 @@ public class AlphaBetaSearch {
         if (depth == 0) {
             return position.getScore();
         }
-
+        
         if (maximizingPlayer) {
             ArrayList<Node> children = tree.getChildren(position);
             double maxEvaluation = Double.NEGATIVE_INFINITY;

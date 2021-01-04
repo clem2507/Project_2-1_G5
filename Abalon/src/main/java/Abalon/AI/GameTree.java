@@ -76,8 +76,22 @@ public class GameTree {
 
         for(int[][] child : childrenStates){
 
-            EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, child, root.getBoardState(), strategy);
-            double score = evaluationFunction.evaluate();
+            double score;
+
+            if (table.checkInTable(currentPlayer, child)) {
+                EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, child, root.getBoardState(), strategy);
+                score = evaluationFunction.evaluate();
+                table.addInTable(score, generationCounter);
+            }
+            else {
+                if (generationCounter >= table.getTable()[table.index].getDepth()) {
+                    score = table.getTable()[table.index].getScore();
+                }
+                else {
+                    EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, child, root.getBoardState(), strategy);
+                    score = evaluationFunction.evaluate();
+                }
+            }
 
             if(generationCounter == 1) {
 
@@ -87,24 +101,17 @@ public class GameTree {
                 Edge edge = new Edge(parent, node);
                 edges.add(edge);
 
-                table.checkInTable(currentPlayer, child, score);
-
                 previousGeneration.add(node);
             }
             else {
-                if(table.checkInTable(currentPlayer, child, score)) {
 
-                    Node node = new Node(child, score);
-                    nodes.add(node);
+                Node node = new Node(child, score);
+                nodes.add(node);
 
-                    Edge edge = new Edge(parent, node);
-                    edges.add(edge);
+                Edge edge = new Edge(parent, node);
+                edges.add(edge);
 
-                    currentGeneration.add(node);
-                }
-                else {
-                    prunedNodes++;
-                }
+                currentGeneration.add(node);
             }
         }
     }
@@ -166,6 +173,10 @@ public class GameTree {
 
     public int getGeneration() {
         return generation;
+    }
+
+    public HashTable getTable() {
+        return table;
     }
 }
 
