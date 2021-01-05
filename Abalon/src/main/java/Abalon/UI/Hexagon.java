@@ -8,6 +8,8 @@ import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -137,6 +139,34 @@ public class Hexagon extends Application {
         //Setting the Stroke
         gameMode.setStrokeWidth(2);
         pane.getChildren().add(gameMode);
+
+        //Add of the button to pause and resume the music
+
+        Text music = new Text("Music: ");
+        music.setTranslateX(100);
+        music.setTranslateY(100);
+        music.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
+        music.setFill(Color.BLACK);
+        pane.getChildren().add(music);
+
+        Button pauseButton = new Button("Pause");
+        pauseButton.setTextFill(Color.BLACK);
+        pauseButton.setTranslateX(200);
+        pauseButton.setTranslateY(100);
+        pauseButton.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
+
+        pauseButton.setOnAction(
+                event -> {
+                    if(pauseButton.getText().equals("Pause")){
+                        mediaPlayer.pause();
+                        pauseButton.setText("Play");
+                    }
+                   else{
+                       mediaPlayer.play();
+                       pauseButton.setText("Pause");
+                    }
+                });
+        pane.getChildren().addAll(pauseButton);
 
         // sketch buttons to know how to play the game
         if (!HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")) {
