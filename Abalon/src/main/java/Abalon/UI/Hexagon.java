@@ -15,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -149,10 +151,14 @@ public class Hexagon extends Application {
         music.setFill(Color.BLACK);
         pane.getChildren().add(music);
 
-        Button pauseButton = new Button("Pause");
+        Pane musicPane = new Pane();
+
+        Button pauseButton = new Button();
+        pauseButton.setText("Pause");
         pauseButton.setTextFill(Color.BLACK);
+        pauseButton.setMaxWidth(300);
         pauseButton.setTranslateX(200);
-        pauseButton.setTranslateY(100);
+        pauseButton.setTranslateY(75);
         pauseButton.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
 
         pauseButton.setOnAction(
@@ -166,7 +172,10 @@ public class Hexagon extends Application {
                        pauseButton.setText("Pause");
                     }
                 });
-        pane.getChildren().addAll(pauseButton);
+
+        musicPane.getChildren().add(pauseButton);
+
+        pane.getChildren().add(musicPane);
 
         // sketch buttons to know how to play the game
         if (!HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")) {
