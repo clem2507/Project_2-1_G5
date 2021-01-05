@@ -105,6 +105,11 @@ public class Hexagon extends Application {
             player2 = new Text("MCTS");
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
+        else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
+            player1 = new Text("Human");
+            player2 = new Text("Rule-Based");
+            gameMode = new Text((String) HomePage.gameChoice.getValue());
+        }
         else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
             player1 = new Text("Alpha-Beta");
             player2 = new Text("MCTS");
@@ -248,6 +253,10 @@ public class Hexagon extends Application {
                     Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
                 }
+                else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
+                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    game.runGame();
+                }
                 else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                     Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
@@ -328,6 +337,9 @@ public class Hexagon extends Application {
             else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
                 currentPlayer = "Human";
             }
+            else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
+                currentPlayer = "Human";
+            }
             else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                 currentPlayer = "Alpha-Beta";
             }
@@ -340,6 +352,9 @@ public class Hexagon extends Application {
             }
             else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
                 currentPlayer = "MCTS";
+            }
+            else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
+                currentPlayer = "Rule-Based";
             }
             else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                 currentPlayer = "MCTS";

@@ -55,6 +55,15 @@ public class WinPage extends Application{
                 title.setText("MCTS WON!");
             }
         }
+        else if(Abalon.getGameMode().equals("Rule-Based vs Human")){
+            if(abalon.getCurrentPlayer() == 1){
+                System.out.println("Player 1 won the game");
+                title.setText("PLAYER 1 WON!");
+            }else{
+                System.out.println("Rule-Based won the game");
+                title.setText("Rule-Based WON!");
+            }
+        }
         else{ //AI vs AI
             if(abalon.getCurrentPlayer() == 1){
                 System.out.println("MINIMAX won the game");
