@@ -75,6 +75,7 @@ public class HomePage extends Application {
                 "Human vs Human" ,
                 "Alpha-Beta vs Human",
                 "MCTS vs Human",
+                "Rule-Based vs Human",
                 "Alpha-Beta vs MCTS");
 
         gameChoice.getSelectionModel().selectFirst();
@@ -104,6 +105,10 @@ public class HomePage extends Application {
                 hexagon.start(primaryStage);
             }
             else if (gameChoice.getValue().equals("MCTS vs Human")){
+                hexagon = new Hexagon();
+                hexagon.start(primaryStage);
+            }
+            else if (gameChoice.getValue().equals("Rule-Based vs Human")){
                 hexagon = new Hexagon();
                 hexagon.start(primaryStage);
             }
