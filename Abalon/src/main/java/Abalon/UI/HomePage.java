@@ -51,7 +51,7 @@ public class HomePage extends Application {
         Group pane = new Group();
 
         try {
-            BufferedImage buffer = ImageIO.read(new File("./res/grey.jpg"));
+            BufferedImage buffer = ImageIO.read(new File("Abalon/res/grey.jpg"));
             Image background = SwingFXUtils.toFXImage(buffer, null);
             ImageView view = new ImageView(background);
             pane.getChildren().addAll(view);
@@ -224,6 +224,10 @@ public class HomePage extends Application {
             else if(gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                 field2.setText("MCTS");
                 field1.setText("Alpha Beta");
+            }
+            else if(gameChoice.getValue().equals("Rule-Based vs Human")){
+                field2.setText("Rule-Based");
+                field1.setText("Human");
             }
         });
 
