@@ -29,6 +29,7 @@ import java.io.File;
 import javafx.embed.swing.SwingFXUtils;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.util.Collections;
 
 import javafx.event.EventHandler;
@@ -187,30 +188,30 @@ public class HomePage extends Application {
 
         //Set the Player's name
         Text player1Text = new Text("Player 1's Name: ");
-        player1Text.setTranslateX(150);
-        player1Text.setTranslateY(300);
+        player1Text.setTranslateX(270);
+        player1Text.setTranslateY(270);
         player1Text.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
         //Setting the color
         player1Text.setFill(Color.BLACK);
         pane.getChildren().addAll(player1Text);
 
-        field1 = new TextField("Enter your name");
-        field1.setTranslateX(300);
-        field1.setTranslateY(276);
+        field1 = new TextField();
+        field1.setTranslateX(270);
+        field1.setTranslateY(300);
         field1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
         pane.getChildren().addAll(field1);
 
         Text player2Text = new Text("Player 2's Name: ");
         player2Text.setTranslateX(800);
-        player2Text.setTranslateY(300);
+        player2Text.setTranslateY(270);
         player2Text.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
         //Setting the color
         player2Text.setFill(Color.BLACK);
         pane.getChildren().addAll(player2Text);
 
-        field2 = new TextField("Enter your name");
-        field2.setTranslateX(950);
-        field2.setTranslateY(276);
+        field2 = new TextField();
+        field2.setTranslateX(800);
+        field2.setTranslateY(300);
         field2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
         pane.getChildren().addAll(field2);
 
@@ -220,6 +221,9 @@ public class HomePage extends Application {
             }
             else if(gameChoice.getValue().equals("MCTS vs Human")){
                 field2.setText("MCTS");
+            }
+            else if(gameChoice.getValue().equals("Rule-Based vs Human")){
+                field2.setText("Rule-Based");
             }
             else if(gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                 field2.setText("MCTS");

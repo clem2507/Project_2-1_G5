@@ -162,6 +162,11 @@ public class Abalon {
 				else {
 					RuleBased ruleBased = new RuleBased(board.getBoard(), currentPlayer);
 					ruleBased.start();
+					try {
+						Thread.sleep(1000); // delay to have time to see bot playing
+					} catch (InterruptedException ie) {
+						Thread.currentThread().interrupt();
+					}
 					board.setBoard(ruleBased.getBestMove());
 					currentPlayer = 1;
 				}
