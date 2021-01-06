@@ -59,7 +59,7 @@ public class RuleBased {
                 bestMove = doubleMovesEject.get(rand);
             }else{
                 int rand = new Random().nextInt(triples); //between 0 and triples
-                bestMove = tripleMovesEject.get(rand);
+                bestMove = tripleMoves.get(rand);
             }
         }
     }
