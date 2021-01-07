@@ -129,7 +129,7 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer, 10, 1);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
@@ -154,7 +154,7 @@ public class Abalon {
 					currentPlayer = 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer, 10, 1);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
