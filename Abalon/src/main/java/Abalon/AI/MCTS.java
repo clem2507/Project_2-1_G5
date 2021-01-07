@@ -18,10 +18,12 @@ public class MCTS {
 
     private int count = 0;
 
+    private int strategy = 1;
+
     public MCTS(int[][] rootState, int currentPlayer) {
 
         this.currentPlayer = currentPlayer;
-        this.rootEvaluation = new EvaluationFunction(currentPlayer, rootState, rootState, 1);
+        this.rootEvaluation = new EvaluationFunction(currentPlayer, rootState, rootState, strategy);
         this.rootScore = rootEvaluation.evaluate();
         this.root = new Node(rootState, 0, 0);
         this.nodes.add(root);
@@ -58,7 +60,7 @@ public class MCTS {
         int parentVisits = getParent(n).getTotalSimulation();
         double meanScore;
         if (nodeVisits == 0) {
-            meanScore = Double.POSITIVE_INFINITY;
+            return Double.POSITIVE_INFINITY;
         }
         else {
             meanScore = (double) nodeWin / nodeVisits;
@@ -118,7 +120,7 @@ public class MCTS {
         for (int i = 0; i < numberOfSample; i++) {
             int actualPlayer = currentPlayer;
             int[][] actualBoard = n.getBoardState();
-            int numberOfPlays = 6;
+            int numberOfPlays = 10;
             int countMoves = 0;
             while (countMoves < numberOfPlays) {
                 if (actualPlayer == 1) {
@@ -139,7 +141,7 @@ public class MCTS {
                 countMoves++;
             }
 
-            EvaluationFunction evaluation = new EvaluationFunction(currentPlayer, actualBoard, n.getBoardState(), 1);
+            EvaluationFunction evaluation = new EvaluationFunction(currentPlayer, actualBoard, n.getBoardState(), strategy);
 
             if (evaluation.evaluate() >= rootScore) {
                 simulationScore++;
