@@ -96,7 +96,7 @@ public class Test {
                 } else {
                     long b_MCTStime = System.currentTimeMillis();
 
-                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer, mctsDepth, mctsStrategy);
+                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
                     monteCarlo.start();
                     bestMove = monteCarlo.getBestMove();
 
@@ -315,7 +315,7 @@ public class Test {
 
                     long b_MCTStime = System.currentTimeMillis();
 
-                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer, mctsDepth, mctsStrategy1);
+                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
                     monteCarlo.start();
                     bestMove = monteCarlo.getBestMove();
 
@@ -328,7 +328,7 @@ public class Test {
                 } else {
                     long b_MCTStime = System.currentTimeMillis();
 
-                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer, mctsDepth, mctsStrategy2);
+                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
                     monteCarlo.start();
                     bestMove = monteCarlo.getBestMove();
 
