@@ -47,6 +47,9 @@ public class Hexagon extends Application {
     public static Scene accessableScene;
     public static Stage primaryStage;
 
+    public static String player1 = null;
+    public static String player2 = null;
+
     public static ImageView winImage;
     public static Image gif;
 
@@ -65,7 +68,7 @@ public class Hexagon extends Application {
         music();
 
         try {
-            BufferedImage buffer = ImageIO.read(new File("Abalon/res/grey2.jpg"));
+            BufferedImage buffer = ImageIO.read(new File("./res/grey2.jpg"));
             Image background = SwingFXUtils.toFXImage(buffer, null);
             ImageView view = new ImageView(background);
             pane.getChildren().addAll(view);
@@ -89,49 +92,66 @@ public class Hexagon extends Application {
             pane.getChildren().add(board.scoredCircles[i][1]);
         }
 
-
-        Text player1 = null;
-        Text player2 = null;
         Text gameMode = null;
 
         if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
-            player1 = new Text(HomePage.field1.getText());
-            player2 = new Text(HomePage.field2.getText());
+            if(HomePage.field1.getText().length() != 0){
+                player1 = HomePage.field1.getText();
+            }else{
+                player1 = "Human1"; // default name
+            }
+
+            if(HomePage.field2.getText().length() != 0){
+                player2 = HomePage.field2.getText();
+            }else{
+                player2 = "Human2"; // default name
+            }
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
         else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-            player1 = new Text(HomePage.field1.getText());
-            player2 = new Text("Alpha-Beta");
+            if(HomePage.field1.getText().length() != 0){
+                player1 = HomePage.field1.getText();
+            }else{
+                player1 = "Human"; // default name
+            }
+            player2 =  HomePage.field2.getText();
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
         else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-            player1 = new Text(HomePage.field1.getText());
-            player2 = new Text("MCTS");
+            if(HomePage.field1.getText().length() != 0){
+                player1 = HomePage.field1.getText();
+            }else{
+                player1 = "Human"; // default name
+            }
+            player2 = HomePage.field2.getText();
+            gameMode = new Text((String) HomePage.gameChoice.getValue());
+        }
+        else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
+            if(HomePage.field1.getText().length() != 0){
+                player1 = HomePage.field1.getText();
+            }else{
+                player1 = "Human"; // default name
+            }
+            player2 = HomePage.field2.getText();
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
         else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-            player1 = new Text("Alpha-Beta");
-            player2 = new Text("MCTS");
+            player1 = HomePage.field1.getText();
+            player2 = HomePage.field2.getText();
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
 
-        player1.setTranslateX(100);
-        player1.setTranslateY(170);
-        player1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
-        //Setting the color
-        player1.setFill(Color.LIGHTSKYBLUE);
-        //Setting the Stroke
-        player1.setStrokeWidth(2);
-        pane.getChildren().add(player1);
+        Text pl1 = new Text(100, 170, player1);
+        pl1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
+        pl1.setFill(Color.LIGHTSKYBLUE);
+        pl1.setStrokeWidth(2);
+        pane.getChildren().add(pl1);
 
-        player2.setTranslateX(1036);
-        player2.setTranslateY(170);
-        player2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
-        //Setting the color
-        player2.setFill(Color.MEDIUMBLUE);
-        //Setting the Stroke
-        player2.setStrokeWidth(2);
-        pane.getChildren().add(player2);
+        Text pl2 = new Text(1036, 170, player2);
+        pl2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
+        pl2.setFill(Color.MEDIUMBLUE);
+        pl2.setStrokeWidth(2);
+        pane.getChildren().add(pl2);
 
         gameMode.setTranslateX(485);
         gameMode.setTranslateY(70);
@@ -208,7 +228,7 @@ public class Hexagon extends Application {
         pane.getChildren().add(winText);
 
         winImage = new ImageView();
-        gif = new Image(new File("Abalon/res/giphy.gif").toURI().toString());
+        gif = new Image(new File("./res/giphy.gif").toURI().toString());
         //selectedImage.setImage(gif);
         winImage.setX(1000);
         winImage.setY(600);
@@ -287,6 +307,10 @@ public class Hexagon extends Application {
                     Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
                 }
+                else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
+                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    game.runGame();
+                }
                 else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                     Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
@@ -311,22 +335,22 @@ public class Hexagon extends Application {
             Text direction = null;
             if(i==0){ // Q key
                 letter = new Text("Q");
-                direction = new Text("TOP_LEFT");
-            }else if(i==1){ // A key
+                direction = new Text("TOP_LEFT");}
+            else if(i==1){ // E Key
+                    letter = new Text("E");
+                    direction = new Text("TOP_RIGHT");
+            }else if(i==2){ // A key
                 letter = new Text("A");
                 direction = new Text("LEFT");
-            }else if(i==2){ // D key
+            }else if(i==3){ // D key
                 letter = new Text("D");
                 direction = new Text("RIGHT");
-            }else if(i==3){ // Z Key
+            }else if(i==4){ // Z Key
                 letter = new Text("Z");
                 direction = new Text("BOTTOM_LEFT");
-            }else if(i==4){ // C key
+            }else if(i==5){ // C key
                 letter = new Text("C");
                 direction = new Text("BOTTOM_RIGHT");
-            }else if(i==5){ // E Key
-                letter = new Text("E");
-                direction = new Text("TOP_RIGHT");
             }
 
             letter.setX(78);
@@ -358,39 +382,10 @@ public class Hexagon extends Application {
         String currentPlayer = null;
 
         if(player == 1){
-            if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
-                currentPlayer = "Human 1";
-            }
-            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-                currentPlayer = "Human";
-            }
-            else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-                currentPlayer = "Human";
-            }
-            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-                currentPlayer = "Alpha-Beta";
-            }
+            currentPlayer = player1;
         }else if(player == 2){
-            if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
-                currentPlayer = "Human 2";
-            }
-            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-                currentPlayer = "Alpha-Beta";
-            }
-            else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-                currentPlayer = "MCTS";
-            }
-            else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-                currentPlayer = "MCTS";
-            }
+            currentPlayer = player2;
         }
-
-//        whosePlaying = new Text ("It is "+ currentPlayer +"'s turn to play.");
-//        whosePlaying.setX(485);
-//        whosePlaying.setY(640);
-//        whosePlaying.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
-//        whosePlaying.setFill(Color.BLACK);
-//        whosePlaying.setStrokeWidth(2);
 
         return currentPlayer;
     }
@@ -398,7 +393,7 @@ public class Hexagon extends Application {
     static MediaPlayer mediaPlayer;
     public static void music(){
         //Add of music in the game
-        String musicFile = "Abalon/res/wii.mp3";
+        String musicFile = "./res/wii.mp3";
         Media media = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
@@ -410,7 +405,7 @@ public class Hexagon extends Application {
     public static void winMusic(){
         mediaPlayer.stop();
         //Add of music in the game
-        String musicFile = "Abalon/res/win.mp3";
+        String musicFile = "./res/win.mp3";
         Media mediaWin = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayerWin = new MediaPlayer(mediaWin);
         mediaPlayerWin.play();

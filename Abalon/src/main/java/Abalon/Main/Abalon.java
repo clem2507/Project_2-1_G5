@@ -4,6 +4,7 @@ package Abalon.Main;
 import Abalon.AI.AlphaBetaSearch;
 import Abalon.AI.GameTree;
 import Abalon.AI.MCTS;
+import Abalon.AI.RuleBased;
 import Abalon.UI.BoardUI;
 
 import Abalon.UI.Hexagon;
@@ -132,6 +133,41 @@ public class Abalon {
 					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
+					currentPlayer = 1;
+				}
+				numberOfTurn++;
+				Hexagon.turnText.setText("Turn number " + numberOfTurn);
+				board.drawAllCells();
+				victory = BoardUI.isVictorious(board.getBoard());
+			}
+		}
+		else if (gameMode.equals("Rule-Based vs Human")) {
+			int index = 0;
+			while (!victory) {
+				checkExitTheGame();
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
+				if (currentPlayer == 1) {
+					try {
+						Move mv = player[index & 1].collectMove();
+						mv.board = board.getBoard();
+						Rules checkRules = new Rules(mv);
+						checkRules.move();
+					} catch (InterruptedException e) {
+						System.out.println("concurrency problem, aborting...");
+						System.exit(0);
+					}
+					currentPlayer = 2;
+					index += 2;
+				}
+				else {
+					RuleBased ruleBased = new RuleBased(board.getBoard(), currentPlayer);
+					ruleBased.start();
+					try {
+						Thread.sleep(1000); // delay to have time to see bot playing
+					} catch (InterruptedException ie) {
+						Thread.currentThread().interrupt();
+					}
+					board.setBoard(ruleBased.getBestMove());
 					currentPlayer = 1;
 				}
 				numberOfTurn++;
