@@ -1,4 +1,6 @@
-package Abalon.AI;
+package Abalon.AI.RB;
+
+import Abalon.AI.Tree.GetPossibleMoves;
 
 import java.util.*;
 

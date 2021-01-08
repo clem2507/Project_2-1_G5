@@ -1,4 +1,4 @@
-package Abalon.AI;
+package Abalon.AI.Tree;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;

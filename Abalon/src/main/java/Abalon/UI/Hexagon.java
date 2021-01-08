@@ -228,7 +228,7 @@ public class Hexagon extends Application {
         pane.getChildren().add(winText);
 
         winImage = new ImageView();
-        gif = new Image(new File("./res/giphy.gif").toURI().toString());
+        gif = new Image(new File(".Abalonres/giphy.gif").toURI().toString());
         //selectedImage.setImage(gif);
         winImage.setX(1000);
         winImage.setY(600);

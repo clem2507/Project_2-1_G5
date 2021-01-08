@@ -1,10 +1,10 @@
 
 package Abalon.Main;
 
-import Abalon.AI.AlphaBetaSearch;
-import Abalon.AI.GameTree;
-import Abalon.AI.MCTS;
-import Abalon.AI.RuleBased;
+import Abalon.AI.AB.AlphaBetaSearch;
+import Abalon.AI.Tree.GameTree;
+import Abalon.AI.MCTS.MCTS;
+import Abalon.AI.RB.RuleBased;
 import Abalon.UI.BoardUI;
 
 import Abalon.UI.Hexagon;
@@ -130,7 +130,7 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,0,0,0,0);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
@@ -190,7 +190,7 @@ public class Abalon {
 					currentPlayer = 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,0,0,0,0);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;

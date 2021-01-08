@@ -1,4 +1,4 @@
-package Abalon.AI;
+package Abalon.AI.Tree;
 
 public class Edge  {
     private final Node source;

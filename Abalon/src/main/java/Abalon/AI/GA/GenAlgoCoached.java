@@ -1,14 +1,11 @@
-package Abalon.AI;
+package Abalon.AI.GA;
+
+import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
+import Abalon.AI.Tree.GetPossibleMoves;
 
 import java.util.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-
-import Abalon.UI.Hexagon;
-import Abalon.UI.BoardUI;
-
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 /** 
  * This class can produce new populations of evaluation function weights based on supervised learning.
@@ -175,7 +172,7 @@ public class GenAlgoCoached {//extends Application {
 
 				double max_score = Double.NEGATIVE_INFINITY;
 				for (int[][] child : childrenStates) {
-					EvaluationFunction func = new EvaluationFunction(currentPlayer, child, rootBoardState, 1);
+					NeutralEvalFunct func = new NeutralEvalFunct(currentPlayer, child, rootBoardState);
 					func.changeModus(p.toDouble());
 
 					if (func.isWin()) {
@@ -191,13 +188,13 @@ public class GenAlgoCoached {//extends Application {
 				}
 			} else {
 				// here we dont use MiniMax explicitly since with its current speed we would be able to use it for subtrees of depth 2 maximum anyways
-				// hence, for optimization reasons we use default values in EvaluationFunction that are also used by default in MiniMax
+				// hence, for optimization reasons we use default values in NeutralEvalFunct that are also used by default in MiniMax
 
 				ArrayList<int[][]> childrenStates = getPossibleMoves.getPossibleMoves(currentBoardState, currentPlayer);
 
 				double max_score = Double.NEGATIVE_INFINITY;
 				for (int[][] child : childrenStates) {
-					EvaluationFunction func = new EvaluationFunction(currentPlayer, child, rootBoardState, 1);
+					NeutralEvalFunct func = new NeutralEvalFunct(currentPlayer, child, rootBoardState);
 					
 					if (func.isWin()) {
 						break_flag = true;

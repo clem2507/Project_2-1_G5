@@ -1,6 +1,4 @@
-package Abalon.AI;
-import java.util.ArrayList;
-import java.util.List;
+package Abalon.AI.Tree;
 
 public class Node{
 
@@ -18,6 +16,7 @@ public class Node{
         this.score = score;
     }
 
+    // constructor used for the mcts tree
     public Node(int[][] boardState, int totalSimulation, int totalWin) {
         this.boardState = boardState;
         this.totalSimulation = totalSimulation;

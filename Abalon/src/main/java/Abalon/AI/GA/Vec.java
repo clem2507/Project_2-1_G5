@@ -1,9 +1,5 @@
-package Abalon.AI;
+package Abalon.AI.GA;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.concurrent.*;
 import java.lang.*;
 
 /** 

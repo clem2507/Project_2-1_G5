@@ -1,4 +1,10 @@
-package Abalon.AI;
+package Abalon.AI.MCTS;
+
+import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
+import Abalon.AI.Output.Test;
+import Abalon.AI.Tree.Edge;
+import Abalon.AI.Tree.GetPossibleMoves;
+import Abalon.AI.Tree.Node;
 
 import java.util.ArrayList;
 
@@ -13,32 +19,47 @@ public class MCTS {
 
     private Node root;
 
-    private EvaluationFunction rootEvaluation;
+    private NeutralEvalFunct rootEvaluation;
     private double rootScore;
 
     private int count = 0;
 
-    private int strategy = 1;
+    private int countForMean = 0;
+    private double sumForMean = 0;
 
-    public MCTS(int[][] rootState, int currentPlayer) {
+    private double mean = 0;
+
+    private int timer;
+    private int eval;
+    private int sampleSize;
+    private int numOfPlays;
+
+    public MCTS(int[][] rootState, int currentPlayer, int timer, int eval, int sampleSize, int numOfPlays) {
 
         this.currentPlayer = currentPlayer;
-        this.rootEvaluation = new EvaluationFunction(currentPlayer, rootState, rootState, strategy);
+        this.rootEvaluation = new NeutralEvalFunct(currentPlayer, rootState, rootState);
         this.rootScore = rootEvaluation.evaluate();
         this.root = new Node(rootState, 0, 0);
         this.nodes.add(root);
+        this.timer = timer;
+        // eval variable changes the final simulation board evaluation technique
+        // 1 = compared to the root score
+        // 2 = compared to the mean score so far
+        this.eval = eval;
+        this.sampleSize = sampleSize;
+        this.numOfPlays = numOfPlays;
     }
 
     public void start() {
 
         long b_time = System.currentTimeMillis();
-        int stopCondition = 10000;
+        int stopCondition = timer;
         while ((System.currentTimeMillis() - b_time) < stopCondition) {
             Selection();
-            //for (Node n : nodes) {
-                //System.out.print(n.getTotalWin() + ", ");
-            //}
-            //System.out.println();
+            for (Node n : nodes) {
+                System.out.print(n.getTotalSimulation() + ", ");
+            }
+            System.out.println();
             count++;
         }
         ArrayList<Node> rootChildren = getChildren(root);
@@ -49,6 +70,7 @@ public class MCTS {
                 bestMove = child.getBoardState();
             }
         }
+        System.out.println();
         Test.printBoard(bestMove);
     }
 
@@ -116,11 +138,11 @@ public class MCTS {
     public void Simulation(Node n, int currentPlayer) {
 
         int simulationScore = 0;
-        int numberOfSample = 10;
+        int numberOfSample = sampleSize;
         for (int i = 0; i < numberOfSample; i++) {
             int actualPlayer = currentPlayer;
             int[][] actualBoard = n.getBoardState();
-            int numberOfPlays = 10;
+            int numberOfPlays = numOfPlays;
             int countMoves = 0;
             while (countMoves < numberOfPlays) {
                 if (actualPlayer == 1) {
@@ -141,10 +163,17 @@ public class MCTS {
                 countMoves++;
             }
 
-            EvaluationFunction evaluation = new EvaluationFunction(currentPlayer, actualBoard, n.getBoardState(), strategy);
+            NeutralEvalFunct evaluation = new NeutralEvalFunct(currentPlayer, actualBoard, n.getBoardState());
 
-            if (evaluation.evaluate() >= rootScore) {
-                simulationScore++;
+            if (eval == 1) {
+                if (evaluation.evaluate() >= rootScore) {
+                    simulationScore++;
+                }
+            }
+            else {
+                if (BoardEvaluation(evaluation.evaluate())) {
+                    simulationScore++;
+                }
             }
         }
         n.setTotalSimulation(n.getTotalSimulation() + 1);
@@ -182,6 +211,19 @@ public class MCTS {
         return children;
     }
 
+    public boolean BoardEvaluation(double score) {
+
+        countForMean++;
+        boolean result = false;
+        if (score > mean) {
+            result = true;
+        }
+        sumForMean += score;
+        mean = sumForMean/countForMean;
+        //System.out.println("mean = " + mean);
+        return result;
+    }
+
     public Node getParent(Node n) {
 
         Node parent = null;
@@ -208,7 +250,7 @@ public class MCTS {
 //
 //        this.boardState = boardState;
 //        this.currentPlayer = currentPlayer;
-//        this.rootEvaluation = new EvaluationFunction(currentPlayer, boardState, boardState, strategy);
+//        this.rootEvaluation = new NeutralEvalFunct(currentPlayer, boardState, boardState);
 //        this.rootScore = rootEvaluation.evaluate();
 //        this.depth = depth;
 //        this.strategy = strategy;
@@ -262,7 +304,7 @@ public class MCTS {
 //                countMoves++;
 //            }
 //
-//            EvaluationFunction evaluation = new EvaluationFunction(currentPlayer, actualBoard, boardState, strategy);
+//            NeutralEvalFunct evaluation = new NeutralEvalFunct(currentPlayer, actualBoard, boardState);
 //
 //            if (evaluation.evaluate() >= rootScore) {
 //                simulationScore++;

@@ -1,4 +1,4 @@
-package Abalon.AI;
+package Abalon.AI.Tree;
 
 import Abalon.Main.Move;
 import Abalon.Main.MoveDirection;

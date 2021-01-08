@@ -1,4 +1,4 @@
-package Abalon.AI;
+package Abalon.AI.Output;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;

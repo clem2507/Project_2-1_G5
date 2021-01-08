@@ -1,8 +1,6 @@
-package Abalon.AI;
+package Abalon.AI.Tree;
 
-import Abalon.Main.Move;
-import Abalon.Main.MoveDirection;
-import Abalon.Main.Rules;
+import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
 
 import java.util.*;
 
@@ -79,8 +77,8 @@ public class GameTree {
             double score;
 
             if (table.checkInTable(currentPlayer, child)) {
-                EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, child, root.getBoardState(), strategy);
-                score = evaluationFunction.evaluate();
+                NeutralEvalFunct neutralEvalFunct = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                score = neutralEvalFunct.evaluate();
                 table.addInTable(score, generationCounter);
             }
             else {
@@ -88,8 +86,8 @@ public class GameTree {
                     score = table.getTable()[table.index].getScore();
                 }
                 else {
-                    EvaluationFunction evaluationFunction = new EvaluationFunction(currentPlayer, child, root.getBoardState(), strategy);
-                    score = evaluationFunction.evaluate();
+                    NeutralEvalFunct neutralEvalFunct = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = neutralEvalFunct.evaluate();
                 }
             }
 

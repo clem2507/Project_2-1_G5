@@ -1,6 +1,6 @@
-package Abalon.AI;
+package Abalon.AI.EvaluationFunction;
 
-public class EvaluationFunction {
+public class NeutralEvalFunct {
 
     /*
      * Author: Clément Detry
@@ -32,8 +32,6 @@ public class EvaluationFunction {
 
      ==================================================================================================================
      */
-
-    private int strategy;
 
     private static int currentPlayer;
     private static int[][] cellColor;
@@ -67,16 +65,11 @@ public class EvaluationFunction {
     private static double[] modusWin = {1, 1, 1, 1, 100000, 1};
 
 
-    public EvaluationFunction(int currentPlayer, int[][] cellColor, int[][] rootCellColor, int strategy) {
+    public NeutralEvalFunct(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
 
-        EvaluationFunction.currentPlayer = currentPlayer;
-        EvaluationFunction.cellColor = cellColor;
-        EvaluationFunction.rootCellColor = rootCellColor;
-
-        // strategy = 1 -> neutral bot
-        // strategy = 2 -> offensive bot
-        // strategy = 3 -> defensive bot
-        this.strategy = strategy;
+        NeutralEvalFunct.currentPlayer = currentPlayer;
+        NeutralEvalFunct.cellColor = cellColor;
+        NeutralEvalFunct.rootCellColor = rootCellColor;
     }
 
     public void computeValues() {
@@ -192,30 +185,12 @@ public class EvaluationFunction {
 
     public void changeModus(double[] modus) {
 
-        if (strategy == 1) {
-            w1 = modus[0];
-            w2 = modus[1];
-            w3 = modus[2];
-            w4 = modus[3];
-            w5 = modus[4];
-            w6 = modus[5];
-        }
-        else if (strategy == 2) {
-            w1 = modus[0];
-            w2 = modus[1];
-            w3 = modus[2];
-            w4 = modus[3]*10;
-            w5 = modus[4]*5;
-            w6 = modus[5]/5;
-        }
-        else {
-            w1 = modus[0]*3;
-            w2 = modus[1]*3;
-            w3 = modus[2]*5;
-            w4 = modus[3]/2;
-            w5 = modus[4]/2;
-            w6 = modus[5]*2;
-        }
+        w1 = modus[0];
+        w2 = modus[1];
+        w3 = modus[2];
+        w4 = modus[3];
+        w5 = modus[4];
+        w6 = modus[5];
     }
 
     public int centerDistance(int currentPlayer) {

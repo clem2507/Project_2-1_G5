@@ -1,4 +1,4 @@
-package Abalon.AI;
+package Abalon.AI.Tree;
 
 public class HashTable {
 

@@ -1,14 +1,11 @@
-package Abalon.AI;
+package Abalon.AI.GA;
+
+import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
+import Abalon.AI.Tree.GetPossibleMoves;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.*;
-
-import Abalon.UI.Hexagon;
-import Abalon.UI.BoardUI;
-
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 /** 
  * This class can produce new populations of evaluation function weights based on tournament selection.
@@ -40,7 +37,7 @@ public class GenAlgoTournament {//extends Application {
 		Vec[] population = new Vec[100];
 		
 		try {
-			Log.init(gen_number);	
+			Log.init(gen_number);
 			population = Log.read();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,7 +170,7 @@ public class GenAlgoTournament {//extends Application {
 			int[][] nextBoardState = null;
 			double max_score = Double.NEGATIVE_INFINITY;
 			for (int[][] child : childrenStates) {
-				EvaluationFunction func = new EvaluationFunction(currentPlayer, child, rootBoardState, 1);
+				NeutralEvalFunct func = new NeutralEvalFunct(currentPlayer, child, rootBoardState);
 
 				if (currentPlayer == 1) 
 					func.changeModus(p1.toDouble());

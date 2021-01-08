@@ -1,6 +1,5 @@
 package Abalon.UI;
 
-import Abalon.AI.EvaluationFunction;
 import Abalon.Main.Abalon;
 import javafx.scene.effect.*;
 import javafx.scene.paint.Color;

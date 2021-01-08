@@ -1,6 +1,7 @@
-package Abalon.AI;
+package Abalon.AI.AB;
 
-import Abalon.Main.Player;
+import Abalon.AI.Tree.GameTree;
+import Abalon.AI.Tree.Node;
 
 import java.util.ArrayList;
 
