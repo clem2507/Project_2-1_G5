@@ -99,33 +99,33 @@ public class NeutralEvalFunct {
         int rootOwnMarblesCount = countMarbles(currentPlayer, rootCellColor);
 
         if (currentPlayer == 1) {
-            ownMarblesCenterDistance = centerDistance(currentPlayer);
-            opponentMarblesCenterDistance = centerDistance(currentPlayer+1);
+            ownMarblesCenterDistance = centerDistance(currentPlayer, cellColor);
+            opponentMarblesCenterDistance = centerDistance(currentPlayer+1, cellColor);
 
-            ownMarblesNeighbour = marblesNeighbourhood(currentPlayer);
-            opponentMarblesNeighbour = marblesNeighbourhood(currentPlayer+1);
+            ownMarblesNeighbour = marblesNeighbourhood(currentPlayer, cellColor);
+            opponentMarblesNeighbour = marblesNeighbourhood(currentPlayer+1, cellColor);
 
-            ownBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer);
-            opponentBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer+1);
+            ownBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer, cellColor);
+            opponentBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer+1, cellColor);
 
-            ownStrengthenGroupCount = strengthenGroupPattern(currentPlayer);
-            opponentStrengthenGroupCount = strengthenGroupPattern(currentPlayer+1);
+            ownStrengthenGroupCount = strengthenGroupPattern(currentPlayer, cellColor);
+            opponentStrengthenGroupCount = strengthenGroupPattern(currentPlayer+1, cellColor);
 
             currentStateOpponentMarblesCount = countMarbles(currentPlayer+1, cellColor);
             rootOpponentMarblesCount = countMarbles(currentPlayer+1, rootCellColor);
         }
         else {
-            ownMarblesCenterDistance = centerDistance(currentPlayer);
-            opponentMarblesCenterDistance = centerDistance(currentPlayer-1);
+            ownMarblesCenterDistance = centerDistance(currentPlayer, cellColor);
+            opponentMarblesCenterDistance = centerDistance(currentPlayer-1, cellColor);
 
-            ownMarblesNeighbour = marblesNeighbourhood(currentPlayer);
-            opponentMarblesNeighbour = marblesNeighbourhood(currentPlayer-1);
+            ownMarblesNeighbour = marblesNeighbourhood(currentPlayer, cellColor);
+            opponentMarblesNeighbour = marblesNeighbourhood(currentPlayer-1, cellColor);
 
-            ownBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer);
-            opponentBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer-1);
+            ownBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer, cellColor);
+            opponentBreakStrongGroupCount = breakStrongGroupPattern(currentPlayer-1, cellColor);
 
-            ownStrengthenGroupCount = strengthenGroupPattern(currentPlayer);
-            opponentStrengthenGroupCount = strengthenGroupPattern(currentPlayer-1);
+            ownStrengthenGroupCount = strengthenGroupPattern(currentPlayer, cellColor);
+            opponentStrengthenGroupCount = strengthenGroupPattern(currentPlayer-1, cellColor);
 
             currentStateOpponentMarblesCount = countMarbles(currentPlayer-1, cellColor);
             rootOpponentMarblesCount = countMarbles(currentPlayer-1, rootCellColor);
@@ -141,7 +141,7 @@ public class NeutralEvalFunct {
 
     public void computeWeights(double v1, double v2) {
 
-        if (isWin()) {
+        if (isWin(cellColor)) {
             changeModus(modusWin);
         }
         else {
@@ -193,7 +193,7 @@ public class NeutralEvalFunct {
         w6 = modus[5];
     }
 
-    public int centerDistance(int currentPlayer) {
+    public static int centerDistance(int currentPlayer, int[][] cellColor) {
 
         int distance = 0;
         for (int i = 0; i < cellColor.length; i++) {
@@ -229,20 +229,20 @@ public class NeutralEvalFunct {
         return distance;
     }
 
-    public int marblesNeighbourhood(int currentPlayer) {
+    public static int marblesNeighbourhood(int currentPlayer, int[][] cellColor) {
 
         int neighbourhood = 0;
         for (int i = 0; i < cellColor.length; i++) {
             for (int j = 0; j < cellColor.length; j++) {
                 if (cellColor[i][j] == currentPlayer) {
-                    neighbourhood += countNeighbour(i, j, currentPlayer);
+                    neighbourhood += countNeighbour(i, j, currentPlayer, cellColor);
                 }
             }
         }
         return neighbourhood;
     }
 
-    public int countNeighbour(int i, int j, int currentPlayer) {
+    public static int countNeighbour(int i, int j, int currentPlayer, int[][] cellColor) {
 
         int count = 0;
         if (i == 0 && j == 0) {
@@ -382,7 +382,7 @@ public class NeutralEvalFunct {
         return count;
     }
 
-    public int breakStrongGroupPattern(int currentPlayer) {
+    public static int breakStrongGroupPattern(int currentPlayer, int[][] cellColor) {
 
         int opponentPlayer;
         if (currentPlayer == 1) {
@@ -437,7 +437,7 @@ public class NeutralEvalFunct {
         return count;
     }
 
-    public int strengthenGroupPattern(int currentPlayer) {
+    public static int strengthenGroupPattern(int currentPlayer, int[][] cellColor) {
 
         int opponentPlayer;
         if (currentPlayer == 1) {
@@ -513,7 +513,7 @@ public class NeutralEvalFunct {
         return count;
     }
 
-    public boolean isWin() {
+    public static boolean isWin(int[][] cellColor) {
 
         if (currentPlayer == 1) {
             if (countMarbles(currentPlayer+1, cellColor) <= 8) {

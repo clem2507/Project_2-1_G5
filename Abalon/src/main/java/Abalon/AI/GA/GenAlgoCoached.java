@@ -175,7 +175,7 @@ public class GenAlgoCoached {//extends Application {
 					NeutralEvalFunct func = new NeutralEvalFunct(currentPlayer, child, rootBoardState);
 					func.changeModus(p.toDouble());
 
-					if (func.isWin()) {
+					if (NeutralEvalFunct.isWin(child)) {
 						break_flag = true;
 						break;
 					}
@@ -196,7 +196,7 @@ public class GenAlgoCoached {//extends Application {
 				for (int[][] child : childrenStates) {
 					NeutralEvalFunct func = new NeutralEvalFunct(currentPlayer, child, rootBoardState);
 					
-					if (func.isWin()) {
+					if (NeutralEvalFunct.isWin(child)) {
 						break_flag = true;
 						break;
 					}

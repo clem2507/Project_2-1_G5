@@ -177,7 +177,7 @@ public class GenAlgoTournament {//extends Application {
 				else
 					func.changeModus(p2.toDouble());
 
-				if (func.isWin()) {
+				if (NeutralEvalFunct.isWin(child)) {
 					break_flag = true;
 					break;
 				}

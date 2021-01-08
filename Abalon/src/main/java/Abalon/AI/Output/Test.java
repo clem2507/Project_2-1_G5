@@ -1,6 +1,8 @@
 package Abalon.AI.Output;
 
+import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
 import Abalon.AI.MCTS.MCTS;
+import Abalon.UI.BoardUI;
 
 public class Test {
 
@@ -37,14 +39,14 @@ public class Test {
 //        abVSab_Simulation(5, "Output5.txt", 3, 2, 3);
 //        mctsVSmcts_Simulation(5, "Output6.txt", 10, 2, 3);
 
-//        mctsVSmcts(5000, 1, 5, 6, 5000, 2, 5, 6);
+        //mctsVSmcts(5000, 1, 5, 6, 5000, 2, 5, 6);
 
-        MCTS monteCarlo = new MCTS(rootCellColor, 1, 10000, 1, 20, 6);
-        monteCarlo.start();
-        System.out.println();
+        //MCTS monteCarlo = new MCTS(rootCellColor, 1, 10000, 1, 20, 6);
+        //monteCarlo.start();
+        //System.out.println();
     }
 
-    /*
+
     public static void mctsVSmcts(int timer1, int eval1, int sampleSize1, int numOfPlays1, int timer2, int eval2, int sampleSize2, int numOfPlays2) {
 
         int turn = 0;
@@ -93,7 +95,7 @@ public class Test {
             System.out.println();
         }
     }
-    */
+
 
     /*public static void abVSab_Simulation(int numSimulation, String fileName, int gtDepth, int gtStrategy1, int gtStrategy2) {
 

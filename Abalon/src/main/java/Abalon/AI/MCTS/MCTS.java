@@ -159,7 +159,6 @@ public class MCTS {
                 if (children.size() > 0) {
                     actualBoard = children.get(randomIndex);
                 }
-
                 countMoves++;
             }
 

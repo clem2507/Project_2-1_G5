@@ -16,15 +16,15 @@ public class Log {
 	public static String filename, resultFilename, readFileName;
 
 	public static void init(int n) throws IOException {
-		filename = "./res/genalgo/population-" + Integer.toString(n) + ".log";
+		filename = "Abalon/res/genalgo/population-" + Integer.toString(n) + ".log";
 		PrintWriter log = new PrintWriter(filename, "UTF-8");
 		log.close();
 
-		resultFilename = "./res/genalgo/population-final-" + Integer.toString(n) + ".log";
+		resultFilename = "Abalon/res/genalgo/population-final-" + Integer.toString(n) + ".log";
 		PrintWriter result = new PrintWriter(resultFilename, "UTF-8");
 		result.close();
 
-		readFileName = "./res/genalgo/population-final-" + Integer.toString(n - 1) + ".log";
+		readFileName = "Abalon/res/genalgo/population-final-" + Integer.toString(n - 1) + ".log";
 
 		try {
 			r = SecureRandom.getInstance("SHA1PRNG");
@@ -55,7 +55,7 @@ public class Log {
 	}
 
 	public static void generateLog(int population) throws IOException {
-		PrintWriter init = new PrintWriter("./res/genalgo/population-final-0.log", "UTF-8");
+		PrintWriter init = new PrintWriter("Abalon/res/genalgo/population-final-0.log", "UTF-8");
 
 		for (int i = 0; i < population; i++) {
 			Vec current = new Vec(6);
