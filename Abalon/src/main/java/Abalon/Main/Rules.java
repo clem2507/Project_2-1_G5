@@ -98,7 +98,7 @@ public class Rules {
 
             case 3:
                 // System.out.println(checkThreeMarbles(pushing,direction,board,playerTurn));
-                return checkThreeMarbles(pushing,direction,board,playerTurn); //TODO: method to be implemented
+                return checkThreeMarbles(pushing,direction,board,playerTurn);
 
         }
         return false;

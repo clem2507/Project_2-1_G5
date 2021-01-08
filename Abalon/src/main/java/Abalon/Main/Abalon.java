@@ -27,7 +27,7 @@ public class Abalon {
 	private Player[] player = new Player[2];
 	private boolean victory = false;
 
-	private int numberOfTurn = 0;
+	public static int numberOfTurn = 0;
 
 	private static String gameMode;
 
