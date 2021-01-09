@@ -82,7 +82,6 @@ public class GameTree {
                 //score = neutralEvalFunct.evaluate();
                 OffensiveEvalFunct neutralEvalFunct = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
                 score = neutralEvalFunct.evaluate();
-                System.out.println(score);
                 table.addInTable(score, generationCounter);
             }
             else {
@@ -94,7 +93,6 @@ public class GameTree {
                     //score = neutralEvalFunct.evaluate();
                     OffensiveEvalFunct neutralEvalFunct = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
                     score = neutralEvalFunct.evaluate();
-                    System.out.println(score);
                 }
             }
 
