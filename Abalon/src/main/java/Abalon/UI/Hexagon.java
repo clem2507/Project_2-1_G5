@@ -1,7 +1,6 @@
 package Abalon.UI;
 
 import Abalon.Main.Abalon;
-import Abalon.Main.MoveDirection;
 import Abalon.Main.Player;
 import Abalon.Main.PlayerH;
 import javafx.application.Application;
@@ -9,7 +8,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -228,7 +226,7 @@ public class Hexagon extends Application {
         pane.getChildren().add(winText);
 
         winImage = new ImageView();
-        gif = new Image(new File(".Abalonres/giphy.gif").toURI().toString());
+        gif = new Image(new File(".Abalon/res/giphy.gif").toURI().toString());
         //selectedImage.setImage(gif);
         winImage.setX(1000);
         winImage.setY(600);

@@ -25,9 +25,9 @@ public class Abalon {
 
 	private BoardUI board;
 	private Player[] player = new Player[2];
-	private boolean victory = false;
+	private boolean victory = true;
 
-	private int numberOfTurn = 0;
+	public static int numberOfTurn = 0;
 
 	private static String gameMode;
 
@@ -203,13 +203,27 @@ public class Abalon {
 		}
 		System.out.println("total numberOfTurn = " + numberOfTurn);
 		if (currentPlayer == 1) {
-			Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
+			WinPage winpage = new WinPage();
+			try {
+				winpage.start(Hexagon.primaryStage);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			/*Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
 			Hexagon.winImage.setImage(Hexagon.gif);
-			Hexagon.winMusic();
+			Hexagon.winMusic();*/
 		} else {
-			Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
+			WinPage winpage = new WinPage();
+			try {
+				winpage.start(Hexagon.primaryStage);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			/*Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
 			Hexagon.winImage.setImage(Hexagon.gif);
-			Hexagon.winMusic();
+			Hexagon.winMusic();*/
 		}
 	}
 
