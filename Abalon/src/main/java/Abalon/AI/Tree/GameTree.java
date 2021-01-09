@@ -1,5 +1,6 @@
 package Abalon.AI.Tree;
 
+import Abalon.AI.EvaluationFunction.DefensiveEvalFunct;
 import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
 import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
 
@@ -79,8 +80,8 @@ public class GameTree {
 
             if (table.checkInTable(currentPlayer, child)) {
                 //NeutralEvalFunct neutralEvalFunct = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                //score = neutralEvalFunct.evaluate();
-                OffensiveEvalFunct neutralEvalFunct = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                //OffensiveEvalFunct neutralEvalFunct = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                DefensiveEvalFunct neutralEvalFunct =  new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
                 score = neutralEvalFunct.evaluate();
                 table.addInTable(score, generationCounter);
             }
@@ -90,8 +91,8 @@ public class GameTree {
                 }
                 else {
                     //NeutralEvalFunct neutralEvalFunct = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                    //score = neutralEvalFunct.evaluate();
-                    OffensiveEvalFunct neutralEvalFunct = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    //OffensiveEvalFunct neutralEvalFunct = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    DefensiveEvalFunct neutralEvalFunct =  new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
                     score = neutralEvalFunct.evaluate();
                 }
             }
