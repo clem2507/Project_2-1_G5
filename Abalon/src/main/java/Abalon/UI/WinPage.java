@@ -5,22 +5,28 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class WinPage extends Application{
 
-    private final double WIDTH = 1344;
-    private final double HEIGHT = 756;
     Group pane = new Group();
 
     Abalon abalon;
+
+    static MediaPlayer mediaPlayerWin;
 
     public WinPage(){
 
@@ -40,7 +46,7 @@ public class WinPage extends Application{
         }
 
         JLabel message = new JLabel(txt);
-        message.setBounds(220, 120, 300, 100);
+        message.setBounds(100, 100, 1000, 1000);
         //message.setFont(new Font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 90));
         message.setFont(message.getFont ().deriveFont (37.0f));
 
@@ -48,17 +54,18 @@ public class WinPage extends Application{
 
 
         // TODO add turn
-        JLabel turn = new JLabel("The game took "+ String.valueOf(Abalon.numberOfTurn) +" turns.");
+        JLabel turn = new JLabel("The game took "+ Abalon.numberOfTurn +" turns.");
         message.setBounds(220, 70, 100, 50);
         message.setFont(message.getFont ().deriveFont (20.0f));
 
         // TODO add gif
         /*ImageView winImage = new ImageView();
-        Image gif = new Image(new File(".Abalon/res/giphy.gif").toURI().toString());
-        winImage.setX(1000);
-        winImage.setY(600);
+        Image gif = new Image(new File("./res/giphy.gif").toURI().toString());
+        winImage.setX(100);
+        winImage.setY(100);
         winImage.setFitHeight(100);
-        winImage.setFitWidth(100);*/
+        winImage.setFitWidth(100);
+        frame.add(winImage);*/
 
         /*try {
             BufferedImage img = ImageIO.read(new File("./res/giphy.gif"));
@@ -68,10 +75,10 @@ public class WinPage extends Application{
             frame.validate();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         // TODO add music
-        Hexagon.winMusic();*/
+        winMusic();
 
         frame.add(turn);
         frame.add(message);
@@ -79,24 +86,34 @@ public class WinPage extends Application{
         frame.setLayout(null);
         //frame.pack();
         frame.setSize(600,600);
+        frame.setLocationRelativeTo(null); //TODO center frame
         frame.setVisible(true);
 
 
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         launch(args);
+    }*/
+
+    /**
+     * Add of music in the game
+     */
+    public static void winMusic(){
+        Hexagon.mediaPlayer.stop();
+        String musicFile = "./res/win.mp3";
+        Media mediaWin = new Media(Paths.get(musicFile).toUri().toString());
+        mediaPlayerWin = new MediaPlayer(mediaWin);
+        mediaPlayerWin.play();
+
+        /*long time = System.currentTimeMillis();
+        while ((System.currentTimeMillis() - time) < 6600) {
+            // just a timer that waits the end of the win music
+        }
+        System.exit(0);*/
     }
 
-    public double getHEIGHT() {
-        return HEIGHT;
-    }
+    public static void exitHexagon(){
 
-    public double getWIDTH() {
-        return WIDTH;
-    }
-
-    public Group getPane() {
-        return pane;
     }
 }
