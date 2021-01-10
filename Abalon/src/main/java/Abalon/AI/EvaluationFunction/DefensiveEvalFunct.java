@@ -17,6 +17,28 @@ public class DefensiveEvalFunct {
 
     // E(s) = w1*v1 + w2*v2 + w4*v4 + w5*v5
 
+     -----------------------------------------------------
+
+     RECAP:
+
+     Don't forget to let the neutral strategy play few turns at the beginning to get closer to the center
+
+     HEURISTICS:
+
+     v1 = the current player board center distance - opponent (difference)
+     v2 = the current player marbles cohesion - opponent (difference)
+     v4 = count of breaking opponent line patterns
+     v6 = difference between root current player marble count and actual board count
+
+     WEIGHTS:
+
+     w1 = 3
+     w2 = 2
+     w4 = 3
+     w6 = 500
+
+     -----------------------------------------------------
+
      */
     private static int currentPlayer;
     private static int[][] cellColor;

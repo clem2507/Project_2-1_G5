@@ -11,6 +11,9 @@ public class OffensiveEvalFunct {
 
     Heuristics that are good to use:
 
+     // add the number of pushing positions as an heuristics
+     // as well as the number of push out positions
+
     // Possible sumito positions
     // -> Try to have as much as possible sumito positions compared to the opponent
     // As much as possible lost marbles for to the opponent
@@ -18,6 +21,32 @@ public class OffensiveEvalFunct {
     // -> v4, v5 to use from neutral strategy and sumito positions heuristic to introduce (let's call it v7)
 
     // E(s) = w4*v4 + w5*v5 + w7*v7
+
+     -----------------------------------------------------
+
+     RECAP:
+
+     Don't forget to let the neutral strategy play few turns at the beginning to get closer to the center
+
+     HEURISTICS:
+
+     v1bis = the current player board center distance
+     v2bis = the current player marbles cohesion
+     v5 = difference between root opponent player marble count and actual board count
+     v7 = total count of sumito positions
+     v8 = total count of pushing positions
+
+     Wait for Mathias to implement v7 and v8
+
+     WEIGHTS:
+
+     w1bis = 5
+     w2bis = 3
+     w5 = 500
+     w7 = 100
+     w8 = 40
+
+     -----------------------------------------------------
 
      */
 
@@ -27,13 +56,13 @@ public class OffensiveEvalFunct {
 
     private static int v1bis;
     private static int v2bis;
-    private static int v4;
+    //private static int v4;
     private static int v5;
     private static int v7;
 
     private static double w1 = -2;
     private static double w2 = 2;
-    private static double w4 = 70;
+    //private static double w4 = 70;
     private static double w5 = 100;
     private static double w7 = 90;
 
@@ -53,8 +82,8 @@ public class OffensiveEvalFunct {
         int ownMarblesNeighbour;
 
         // v4
-        int ownStrengthenGroupCount;
-        int opponentStrengthenGroupCount;
+        //int ownStrengthenGroupCount;
+        //int opponentStrengthenGroupCount;
 
         // v5
         int currentStateOpponentMarblesCount;
@@ -69,8 +98,8 @@ public class OffensiveEvalFunct {
 
             ownMarblesNeighbour = NeutralEvalFunct.marblesNeighbourhood(currentPlayer, cellColor);
 
-            ownStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer, cellColor);
-            opponentStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer+1, cellColor);
+            //ownStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer, cellColor);
+            //opponentStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer+1, cellColor);
 
             currentStateOpponentMarblesCount = NeutralEvalFunct.countMarbles(currentPlayer+1, cellColor);
             rootOpponentMarblesCount = NeutralEvalFunct.countMarbles(currentPlayer+1, rootCellColor);
@@ -83,8 +112,8 @@ public class OffensiveEvalFunct {
 
             ownMarblesNeighbour = NeutralEvalFunct.marblesNeighbourhood(currentPlayer, cellColor);
 
-            ownStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer, cellColor);
-            opponentStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer-1, cellColor);
+            //ownStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer, cellColor);
+            //opponentStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer-1, cellColor);
 
             currentStateOpponentMarblesCount = NeutralEvalFunct.countMarbles(currentPlayer-1, cellColor);
             rootOpponentMarblesCount = NeutralEvalFunct.countMarbles(currentPlayer-1, rootCellColor);
@@ -95,7 +124,7 @@ public class OffensiveEvalFunct {
 
         v1bis = ownMarblesCenterDistance;
         v2bis = ownMarblesNeighbour;
-        v4 = ownStrengthenGroupCount - opponentStrengthenGroupCount;
+        //v4 = ownStrengthenGroupCount - opponentStrengthenGroupCount;
         v5 = rootOpponentMarblesCount - currentStateOpponentMarblesCount;
         v7 = currentPlayerSumitos - opponentPlayerSumitos;
     }
@@ -138,7 +167,8 @@ public class OffensiveEvalFunct {
             score = neut.evaluate();
         }else{
             computeValues();
-            score = w1*v1bis + w2*v2bis + w4*v4 + w5*v5 + w7*v7;
+            //score = w1*v1bis + w2*v2bis + w4*v4 + w5*v5 + w7*v7;
+            score = w1*v1bis + w2*v2bis + w5*v5 + w7*v7;
         }
 
         return score;
