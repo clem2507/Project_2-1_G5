@@ -22,11 +22,10 @@ import javafx.stage.Stage;
 
 public class WinPage extends Application{
 
-    Group pane = new Group();
-
     Abalon abalon;
 
     static MediaPlayer mediaPlayerWin;
+    public static final Color VERYLIGHTBLUE = new Color(51,204,255);
 
     public WinPage(){
 
@@ -35,66 +34,57 @@ public class WinPage extends Application{
     public void start(Stage primaryStage) throws Exception {
 
         JFrame frame = new JFrame("Abalone");
-        String txt;
+        java.awt.Font f1 = new java.awt.Font("Zorque", 10, 40);
+        java.awt.Font f2 = new java.awt.Font("Zorque", 10, 20);
 
+        String txt;
+        Color c;
         if(abalon.getCurrentPlayer() == 1){
             System.out.println(Hexagon.player2 + " won the game");
             txt = Hexagon.player2.toUpperCase() + " WON!";
+            c = Color.BLUE;
         }else{
             System.out.println(Hexagon.player1 + " won the game");
             txt = Hexagon.player1.toUpperCase() + " WON!";
+            c = VERYLIGHTBLUE;
         }
 
-        JLabel message = new JLabel(txt);
-        message.setBounds(100, 100, 1000, 1000);
-        //message.setFont(new Font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 90));
-        message.setFont(message.getFont ().deriveFont (37.0f));
+        JLabel message = new JLabel(txt, SwingConstants.CENTER);
+        message.setBounds(100, 100, 400, 50);
+        message.setFont(f1);
+        message.setForeground(c);
 
         // TODO add timer
 
 
-        // TODO add turn
-        JLabel turn = new JLabel("The game took "+ Abalon.numberOfTurn +" turns.");
-        message.setBounds(220, 70, 100, 50);
-        message.setFont(message.getFont ().deriveFont (20.0f));
+        JLabel turn = new JLabel("The game took "+ Abalon.numberOfTurn +" turns.", SwingConstants.CENTER);
+        turn.setFont(f2);
+        turn.setBounds(100, 100, 400, 200);
 
-        // TODO add gif
-        /*ImageView winImage = new ImageView();
-        Image gif = new Image(new File("./res/giphy.gif").toURI().toString());
-        winImage.setX(100);
-        winImage.setY(100);
-        winImage.setFitHeight(100);
-        winImage.setFitWidth(100);
-        frame.add(winImage);*/
+        // add happy gif
+        ImageIcon gif = new ImageIcon("./res/giphy.gif");
+        JLabel happyGif = new JLabel(gif);
+        happyGif.setBounds(150, 200, 300, 400); // You can use your own values
+        frame.getContentPane().add(happyGif);
 
-        /*try {
-            BufferedImage img = ImageIO.read(new File("./res/giphy.gif"));
-            ImageIcon icon = new ImageIcon(img);
-            JLabel jlabel = new JLabel(icon, JLabel.CENTER);
-            frame.getContentPane().add(jlabel);
-            frame.validate();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        // add firework
+        ImageIcon fire = new ImageIcon("./res/fireworks.gif");
+        JLabel fireGif = new JLabel(fire);
+        fireGif.setBounds(100, 200, 400, 600); // You can use your own values
+        frame.getContentPane().add(fireGif);
 
-        // TODO add music
         winMusic();
 
-        frame.add(turn);
-        frame.add(message);
-        //frame.getContentPane().add(message);
+        frame.getContentPane().add(message);
+        frame.getContentPane().add(turn);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(null);
-        //frame.pack();
         frame.setSize(600,600);
-        frame.setLocationRelativeTo(null); //TODO center frame
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
 
     }
 
-    /*public static void main(String[] args) {
-        launch(args);
-    }*/
 
     /**
      * Add of music in the game
@@ -105,15 +95,6 @@ public class WinPage extends Application{
         Media mediaWin = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayerWin = new MediaPlayer(mediaWin);
         mediaPlayerWin.play();
-
-        /*long time = System.currentTimeMillis();
-        while ((System.currentTimeMillis() - time) < 6600) {
-            // just a timer that waits the end of the win music
-        }
-        System.exit(0);*/
     }
 
-    public static void exitHexagon(){
-
-    }
 }
