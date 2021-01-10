@@ -2,22 +2,11 @@ package Abalon.UI;
 
 import Abalon.Main.Abalon;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Font;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Paths;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class WinPage extends Application{

@@ -25,7 +25,7 @@ public class Abalon {
 
 	private BoardUI board;
 	private Player[] player = new Player[2];
-	private boolean victory = true;
+	private boolean victory = false;
 
 	public static int numberOfTurn = 0;
 
