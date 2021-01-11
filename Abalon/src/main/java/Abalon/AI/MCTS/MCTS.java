@@ -1,5 +1,6 @@
 package Abalon.AI.MCTS;
 
+import Abalon.AI.EvaluationFunction.DefensiveEvalFunct;
 import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
 import Abalon.AI.Output.Test;
 import Abalon.AI.Tree.Edge;
@@ -20,6 +21,7 @@ public class MCTS {
     private Node root;
 
     private NeutralEvalFunct rootEvaluation;
+    //private DefensiveEvalFunct rootEvaluation;
     private double rootScore;
 
     private int count = 0;
@@ -38,6 +40,7 @@ public class MCTS {
 
         this.currentPlayer = currentPlayer;
         this.rootEvaluation = new NeutralEvalFunct(currentPlayer, rootState, rootState);
+        //this.rootEvaluation = new DefensiveEvalFunct(currentPlayer, rootState, rootState);
         this.rootScore = rootEvaluation.evaluate();
         this.root = new Node(rootState, 0, 0);
         this.nodes.add(root);
@@ -163,6 +166,7 @@ public class MCTS {
             }
 
             NeutralEvalFunct evaluation = new NeutralEvalFunct(currentPlayer, actualBoard, n.getBoardState());
+            //DefensiveEvalFunct evaluation = new DefensiveEvalFunct(currentPlayer, actualBoard, n.getBoardState());
 
             if (eval == 1) {
                 if (evaluation.evaluate() >= rootScore) {
