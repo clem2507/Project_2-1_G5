@@ -1,6 +1,8 @@
 package Abalon.AI.Tree;
 
+import Abalon.AI.EvaluationFunction.DefensiveEvalFunct;
 import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
+import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
 
 import java.util.*;
 
@@ -18,7 +20,7 @@ public class GameTree {
 
     private Node root;
 
-    private ArrayList<Edge> edges = new ArrayList<>();
+    private static ArrayList<Edge> edges = new ArrayList<>();
     private ArrayList<Node> nodes = new ArrayList<>();
     private ArrayList<Node> previousGeneration = new ArrayList<>();
     private ArrayList<Node> currentGeneration = new ArrayList<>();
@@ -31,16 +33,16 @@ public class GameTree {
 
     private int strategy;
 
-    public GameTree(){
+    public GameTree(int strategy){
 
         //create the tree, start with the initial board
         table = new HashTable();
+        this.strategy = strategy;
     }
 
-    public void createTree(int[][] currentRoot, int currentPlayer, int depth, int strategy){
+    public void createTree(int[][] currentRoot, int currentPlayer, int depth){
 
         this.generation = depth;
-        this.strategy = strategy;
 
         root = new Node(currentRoot, 0);
 
@@ -65,6 +67,11 @@ public class GameTree {
             previousGeneration.clear();
             previousGeneration.addAll(currentGeneration);
         }
+
+        //for (Node node : nodes) {
+            // change the current player
+            //evaluateNodes(node, currentPlayer);
+        //}
     }
 
 
@@ -72,13 +79,27 @@ public class GameTree {
 
         ArrayList<int[][]> childrenStates = getPossibleMoves.getPossibleMoves(currentBoardState, currentPlayer);
 
+        NeutralEvalFunct neutral;
+        OffensiveEvalFunct offensive;
+        DefensiveEvalFunct defensive;
+
         for(int[][] child : childrenStates){
 
             double score;
 
             if (table.checkInTable(currentPlayer, child)) {
-                NeutralEvalFunct neutralEvalFunct = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                score = neutralEvalFunct.evaluate();
+                if (strategy == 1) {
+                    neutral = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = neutral.evaluate();
+                }
+                else if (strategy == 2) {
+                    offensive = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = offensive.evaluate();
+                }
+                else {
+                    defensive = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = defensive.evaluate();
+                }
                 table.addInTable(score, generationCounter);
             }
             else {
@@ -86,8 +107,18 @@ public class GameTree {
                     score = table.getTable()[table.index].getScore();
                 }
                 else {
-                    NeutralEvalFunct neutralEvalFunct = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = neutralEvalFunct.evaluate();
+                    if (strategy == 1) {
+                        neutral = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = neutral.evaluate();
+                    }
+                    else if (strategy == 2) {
+                        offensive = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = offensive.evaluate();
+                    }
+                    else {
+                        defensive = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = defensive.evaluate();
+                    }
                 }
             }
 
@@ -113,6 +144,28 @@ public class GameTree {
             }
         }
     }
+
+    /*
+    public void evaluateNodes(Node parent, int currentPlayer) {
+
+        NeutralEvalFunct neutral;
+        OffensiveEvalFunct offensive;
+        DefensiveEvalFunct defensive;
+        if (strategy == 1) {
+            neutral = new NeutralEvalFunct(currentPlayer, parent.getBoardState(), root.getBoardState());
+            parent.setScore(neutral.evaluate());
+        }
+        else if (strategy == 2) {
+
+            offensive = new OffensiveEvalFunct(parent, currentPlayer, parent.getBoardState(), root.getBoardState());
+            parent.setScore(offensive.evaluate());
+        }
+        else {
+            defensive = new DefensiveEvalFunct(currentPlayer, parent.getBoardState(), root.getBoardState());
+            parent.setScore(defensive.evaluate());
+        }
+    }
+    */
 
     public boolean adjacent(Node x, Node y)	{
         // Returns true when there’s an edge from x to y
@@ -145,7 +198,7 @@ public class GameTree {
         return neighbours;
     }
 
-    public ArrayList<Node> getChildren(Node v) { // String vertex
+    public static ArrayList<Node> getChildren(Node v) { // String vertex
         // Returns all neighbours of a given vertex
         ArrayList<Node> children = new ArrayList<Node>();
 

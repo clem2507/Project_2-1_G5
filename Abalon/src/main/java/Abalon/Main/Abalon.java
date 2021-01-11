@@ -98,8 +98,8 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					GameTree gameTree = new GameTree();
-					gameTree.createTree(board.getBoard(), currentPlayer, 3, 1);
+					GameTree gameTree = new GameTree(2);
+					gameTree.createTree(board.getBoard(), currentPlayer, 3);
 					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
 					algo.start(true);
 					board.setBoard(algo.getBestMove());
@@ -130,7 +130,7 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,0,0,0,0);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000,1,5,10);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
@@ -182,8 +182,8 @@ public class Abalon {
 				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				if (currentPlayer == 1) {
-					GameTree gameTree = new GameTree();
-					gameTree.createTree(board.getBoard(), currentPlayer, 3, 1);
+					GameTree gameTree = new GameTree(1);
+					gameTree.createTree(board.getBoard(), currentPlayer, 3);
 					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
 					algo.start(true);
 					board.setBoard(algo.getBestMove());
