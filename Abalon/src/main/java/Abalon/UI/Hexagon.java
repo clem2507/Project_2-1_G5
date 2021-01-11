@@ -6,6 +6,7 @@ import Abalon.Main.PlayerH;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -13,8 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -29,6 +30,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.Timer;
 
 public class Hexagon extends Application {
 
@@ -40,6 +44,7 @@ public class Hexagon extends Application {
 
     private BoardUI board;
     public static Text whosePlaying;
+    public static Text timer;
     public static Text winText;
     public static Text turnText;
     public static Scene accessableScene;
@@ -162,40 +167,6 @@ public class Hexagon extends Application {
         gameMode.setStrokeWidth(2);
         pane.getChildren().add(gameMode);
 
-
-        /*Text music = new Text("Music: ");
-        music.setTranslateX(100);
-        music.setTranslateY(100);
-        music.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
-        music.setFill(Color.BLACK);
-        pane.getChildren().add(music);
-
-        Pane musicPane = new Pane();
-
-        Button pauseButton = new Button();
-        pauseButton.setText("Pause");
-        pauseButton.setTextFill(Color.BLACK);
-        pauseButton.setMaxWidth(300);
-        pauseButton.setTranslateX(200);
-        pauseButton.setTranslateY(75);
-        pauseButton.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
-
-        pauseButton.setOnAction(
-                event -> {
-                    if(pauseButton.getText().equals("Pause")){
-                        mediaPlayer.pause();
-                        pauseButton.setText("Play");
-                    }
-                   else{
-                       mediaPlayer.play();
-                       pauseButton.setText("Pause");
-                    }
-                });
-
-        musicPane.getChildren().add(pauseButton);
-
-        pane.getChildren().add(musicPane);*/
-
         // Add of the button to pause and resume the music
         Button soundButton = new Button();
         String pathSoundOn = "./res/soundOn.png";
@@ -243,6 +214,21 @@ public class Hexagon extends Application {
         whosePlaying.setFill(Color.BLACK);
         whosePlaying.setStrokeWidth(2);
         pane.getChildren().add(whosePlaying);
+
+        // display timer of game
+        Pane timerPane = new StackPane();
+        System.out.println(Abalon.startTime);
+        System.out.println(Abalon.endTime);
+        long currentTimer = Duration.between(Abalon.startTime, Abalon.endTime).toSeconds();
+        timer = new Text(Long.toString(currentTimer));
+        timer.setX(520);
+        timer.setY(30);
+        timer.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 16));
+        timer.setFill(Color.BLACK);
+        timer.setStrokeWidth(2);
+        timerPane.setPrefSize(100,50);
+        timerPane.getChildren().add(timer);
+        pane.getChildren().add(timerPane);
 
         turnText = new Text ("Turn number 0");
         turnText.setX(485);

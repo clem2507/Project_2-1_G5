@@ -13,6 +13,9 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 import java.lang.InterruptedException;
+import java.time.LocalTime;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static javafx.scene.input.KeyCode.*;
 
@@ -30,6 +33,9 @@ public class Abalon {
 	public static int numberOfTurn = 0;
 
 	private static String gameMode;
+
+	public static LocalTime startTime = LocalTime.ofNanoOfDay(0);
+	public static LocalTime endTime = LocalTime.ofNanoOfDay(0);
 
 	WinPage winPage;
 
@@ -53,6 +59,17 @@ public class Abalon {
 
 	public void runGame() {
 		//playMove(false);
+		startTime = java.time.LocalTime.now();
+
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask()
+		{
+			public void run()
+			{ endTime = java.time.LocalTime.now();
+				System.out.println(endTime);}
+		};
+		timer.schedule(task,10l); //refresh
+
 
 		if (gameMode.equals("Human vs Human")) {
 			for (int i = 0; !victory; i++) {
