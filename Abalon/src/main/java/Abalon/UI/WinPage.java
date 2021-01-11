@@ -51,9 +51,9 @@ public class WinPage extends Application{
         turn.setBounds(100, 100, 400, 200);
 
         // add happy gif
-        ImageIcon gif = new ImageIcon("./res/giphy.gif");
+        ImageIcon gif = new ImageIcon("./res/aaron.gif");
         JLabel happyGif = new JLabel(gif);
-        happyGif.setBounds(150, 200, 300, 400); // You can use your own values
+        happyGif.setBounds(50, 150, 500, 500); // You can use your own values
         frame.getContentPane().add(happyGif);
 
         // add firework
@@ -68,7 +68,7 @@ public class WinPage extends Application{
         frame.getContentPane().add(turn);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(null);
-        frame.setSize(600,600);
+        frame.setSize(600,650);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
