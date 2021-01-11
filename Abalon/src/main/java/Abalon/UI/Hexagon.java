@@ -51,6 +51,8 @@ public class Hexagon extends Application {
     public static ImageView winImage;
     public static Image gif;
 
+    public static int pressed = 1;
+
     // Hexagon should access Board to obtain Marbles positions, color, etc
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
 
@@ -160,9 +162,8 @@ public class Hexagon extends Application {
         gameMode.setStrokeWidth(2);
         pane.getChildren().add(gameMode);
 
-        //Add of the button to pause and resume the music
 
-        Text music = new Text("Music: ");
+        /*Text music = new Text("Music: ");
         music.setTranslateX(100);
         music.setTranslateY(100);
         music.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
@@ -193,6 +194,40 @@ public class Hexagon extends Application {
 
         musicPane.getChildren().add(pauseButton);
 
+        pane.getChildren().add(musicPane);*/
+
+        // Add of the button to pause and resume the music
+        Button soundButton = new Button();
+        String pathSoundOn = "./res/soundOn.png";
+        String pathSoundOff = "./res/soundOff.png";
+        Image soundOn = new Image(Paths.get(pathSoundOn).toUri().toString());
+        Image soundOff = new Image(Paths.get(pathSoundOff).toUri().toString());
+        ImageView viewOn = new ImageView(soundOn);
+        ImageView viewOff = new ImageView(soundOff);
+        viewOn.setFitHeight(40);
+        viewOn.setPreserveRatio(true);
+        viewOff.setFitHeight(40);
+        viewOff.setPreserveRatio(true);
+        soundButton.setTranslateX(1160);
+        soundButton.setTranslateY(25);
+        soundButton.setPrefSize(40, 40);
+        soundButton.setGraphic(viewOn);
+
+        soundButton.setOnAction(
+                event -> {
+                    pressed = pressed + 1;
+                    if(pressed%2 == 0){
+                        mediaPlayer.pause();
+                        soundButton.setGraphic(viewOff);
+                    }
+                    else{
+                        mediaPlayer.play();
+                        soundButton.setGraphic(viewOn);
+                    }
+                });
+
+        Pane musicPane = new Pane();
+        musicPane.getChildren().add(soundButton);
         pane.getChildren().add(musicPane);
 
         // sketch buttons to know how to play the game
