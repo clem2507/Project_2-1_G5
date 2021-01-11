@@ -1,6 +1,8 @@
 package Abalon.AI.EvaluationFunction;
 
+import Abalon.AI.Tree.GameTree;
 import Abalon.AI.Tree.GetPossibleMoves;
+import Abalon.AI.Tree.Node;
 import Abalon.Main.Abalon;
 
 import java.util.ArrayList;
@@ -50,21 +52,23 @@ public class OffensiveEvalFunct {
 
      */
 
+    private ArrayList<int[][]> children;
+
     private static int currentPlayer;
     private static int[][] cellColor;
     private static int[][] rootCellColor;
 
     private static int v1bis;
     private static int v2bis;
-    //private static int v4;
     private static int v5;
     private static int v7;
+    private static int v8;
 
-    private static double w1 = -2;
-    private static double w2 = 2;
-    //private static double w4 = 70;
-    private static double w5 = 100;
-    private static double w7 = 90;
+    private static double w1 = 5;
+    private static double w2 = 3;
+    private static double w5 = 500;
+    private static double w7 = 100;
+    private static double w8 = 40;
 
     public OffensiveEvalFunct(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
 
@@ -81,52 +85,61 @@ public class OffensiveEvalFunct {
         //v2bis
         int ownMarblesNeighbour;
 
-        // v4
-        //int ownStrengthenGroupCount;
-        //int opponentStrengthenGroupCount;
-
         // v5
         int currentStateOpponentMarblesCount;
         int rootOpponentMarblesCount;
 
         // v7
         int currentPlayerSumitos;
-        int opponentPlayerSumitos;
+
+        // v8
+        int currentPlayerPushing;
 
         if (currentPlayer == 1) {
             ownMarblesCenterDistance = NeutralEvalFunct.centerDistance(currentPlayer, cellColor);
 
             ownMarblesNeighbour = NeutralEvalFunct.marblesNeighbourhood(currentPlayer, cellColor);
 
-            //ownStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer, cellColor);
-            //opponentStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer+1, cellColor);
-
             currentStateOpponentMarblesCount = NeutralEvalFunct.countMarbles(currentPlayer+1, cellColor);
             rootOpponentMarblesCount = NeutralEvalFunct.countMarbles(currentPlayer+1, rootCellColor);
 
-            currentPlayerSumitos = countSumitoPositions(cellColor, currentPlayer, currentPlayer+1);
-            opponentPlayerSumitos = countSumitoPositions(cellColor, currentPlayer+1, currentPlayer);
+            children = getPossiblePushingMoves(cellColor, currentPlayer);
+
+            currentPlayerSumitos = countSumitoPositions(children, cellColor, currentPlayer+1);
+
+            currentPlayerPushing = countPushingPositions(children, cellColor, currentPlayer+1);
         }
         else {
             ownMarblesCenterDistance = NeutralEvalFunct.centerDistance(currentPlayer, cellColor);
 
             ownMarblesNeighbour = NeutralEvalFunct.marblesNeighbourhood(currentPlayer, cellColor);
 
-            //ownStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer, cellColor);
-            //opponentStrengthenGroupCount = NeutralEvalFunct.strengthenGroupPattern(currentPlayer-1, cellColor);
-
             currentStateOpponentMarblesCount = NeutralEvalFunct.countMarbles(currentPlayer-1, cellColor);
             rootOpponentMarblesCount = NeutralEvalFunct.countMarbles(currentPlayer-1, rootCellColor);
 
-            currentPlayerSumitos = countSumitoPositions(cellColor, currentPlayer, currentPlayer-1);
-            opponentPlayerSumitos = countSumitoPositions(cellColor, currentPlayer-1, currentPlayer);
+            children = getPossiblePushingMoves(cellColor, currentPlayer);
+
+            currentPlayerSumitos = countSumitoPositions(children, cellColor, currentPlayer-1);
+
+            currentPlayerPushing = countPushingPositions(children, cellColor, currentPlayer-1);
         }
 
         v1bis = ownMarblesCenterDistance;
         v2bis = ownMarblesNeighbour;
-        //v4 = ownStrengthenGroupCount - opponentStrengthenGroupCount;
         v5 = rootOpponentMarblesCount - currentStateOpponentMarblesCount;
-        v7 = currentPlayerSumitos - opponentPlayerSumitos;
+        v7 = currentPlayerSumitos;
+        v8 = currentPlayerPushing;
+    }
+
+    public ArrayList<int[][]> getPossiblePushingMoves(int[][] board, int currentPlayer) {
+
+        GetPossibleMoves obj = new GetPossibleMoves();
+        ArrayList<int[][]> doubles = obj.getDoubleMarbleMoves(board, currentPlayer);
+        ArrayList<int[][]> triples = obj.getTripleMarbleMoves(board, currentPlayer);
+
+        doubles.addAll(triples);
+
+        return doubles;
     }
 
     /**
@@ -134,44 +147,52 @@ public class OffensiveEvalFunct {
      * =
      * all positions where opponent player can be pushed out
      */
-    public int countSumitoPositions(int[][] board, int currentPlayer, int opponentPlayer){
-        int sumito = 0;
+    public int countSumitoPositions(ArrayList<int[][]> children, int[][] board, int opponentPlayer){
 
-        GetPossibleMoves obj = new GetPossibleMoves();
-        //ArrayList<int[][]> pushMoves = obj.possibleMovesGivenPushing();
-        ArrayList<int[][]> moves = obj.getDoubleMarbleMoves(board, currentPlayer);
-        ArrayList<int[][]> triples = obj.getTripleMarbleMoves(board, currentPlayer);
-        for(int[][] triple : triples){
-            moves.add(triple);
-        }
-
-        int initialOppMarbles = NeutralEvalFunct.countMarbles(opponentPlayer,board);
-
-        for(int[][] move: moves){
-            int oppMarbles = NeutralEvalFunct.countMarbles(opponentPlayer, move);
-            if(oppMarbles < initialOppMarbles){
-                sumito++;
+        int count = 0;
+        for(int[][] child : children){
+            if(NeutralEvalFunct.countMarbles(opponentPlayer, board) < NeutralEvalFunct.countMarbles(opponentPlayer, child)){
+                count++;
             }
         }
+        return count;
+    }
 
-        System.out.println("there are "+sumito+" sumitos");
-        return sumito;
+    public int countPushingPositions(ArrayList<int[][]> children, int[][] board, int opponentPlayer) {
+
+        int count = 0;
+        for (int[][] child : children) {
+            if (!checkOpponentMarble(board, child, opponentPlayer)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public boolean checkOpponentMarble(int[][] board, int[][] currentBoard, int opponentPlayer) {
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] == opponentPlayer && currentBoard[i][j] != opponentPlayer) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public double evaluate() {
         int turn = Abalon.numberOfTurn;
         double score = 0;
 
-        if(turn <= 4){
+        if(turn <= -1){
             NeutralEvalFunct neut = new NeutralEvalFunct(currentPlayer, cellColor, rootCellColor);
             score = neut.evaluate();
         }else{
             computeValues();
-            //score = w1*v1bis + w2*v2bis + w4*v4 + w5*v5 + w7*v7;
-            score = w1*v1bis + w2*v2bis + w5*v5 + w7*v7;
+            score = w1 * v1bis + w2 * v2bis + w5 * v5 + w7 * v7 + w8 * v8;
+            //System.out.println("score = " + score);
         }
-
         return score;
-
     }
 }
