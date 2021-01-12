@@ -209,10 +209,6 @@ public class Abalon {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			/*Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer+1) + " won the game!");
-			Hexagon.winImage.setImage(Hexagon.gif);
-			Hexagon.winMusic();*/
 		} else {
 			WinPage winpage = new WinPage();
 			try {
@@ -220,10 +216,6 @@ public class Abalon {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			/*Hexagon.winText.setText(Hexagon.displayCurrentPlayer(currentPlayer-1) + " won the game!");
-			Hexagon.winImage.setImage(Hexagon.gif);
-			Hexagon.winMusic();*/
 		}
 	}
 

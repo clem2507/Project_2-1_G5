@@ -40,16 +40,12 @@ public class Hexagon extends Application {
 
     private BoardUI board;
     public static Text whosePlaying;
-    public static Text winText;
     public static Text turnText;
     public static Scene accessableScene;
     public static Stage primaryStage;
 
     public static String player1 = null;
     public static String player2 = null;
-
-    public static ImageView winImage;
-    public static Image gif;
 
     public static int pressed = 1;
 
@@ -162,40 +158,6 @@ public class Hexagon extends Application {
         gameMode.setStrokeWidth(2);
         pane.getChildren().add(gameMode);
 
-
-        /*Text music = new Text("Music: ");
-        music.setTranslateX(100);
-        music.setTranslateY(100);
-        music.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
-        music.setFill(Color.BLACK);
-        pane.getChildren().add(music);
-
-        Pane musicPane = new Pane();
-
-        Button pauseButton = new Button();
-        pauseButton.setText("Pause");
-        pauseButton.setTextFill(Color.BLACK);
-        pauseButton.setMaxWidth(300);
-        pauseButton.setTranslateX(200);
-        pauseButton.setTranslateY(75);
-        pauseButton.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
-
-        pauseButton.setOnAction(
-                event -> {
-                    if(pauseButton.getText().equals("Pause")){
-                        mediaPlayer.pause();
-                        pauseButton.setText("Play");
-                    }
-                   else{
-                       mediaPlayer.play();
-                       pauseButton.setText("Pause");
-                    }
-                });
-
-        musicPane.getChildren().add(pauseButton);
-
-        pane.getChildren().add(musicPane);*/
-
         // Add of the button to pause and resume the music
         Button soundButton = new Button();
         String pathSoundOn = "./res/soundOn.png";
@@ -251,24 +213,6 @@ public class Hexagon extends Application {
         turnText.setFill(Color.BLACK);
         turnText.setStrokeWidth(2);
         pane.getChildren().add(turnText);
-
-        winText = new Text ("");
-        winText.setX(900);
-        winText.setY(600);
-        winText.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        winText.setFill(Color.DARKORANGE);
-        winText.setStrokeWidth(2);
-        pane.getChildren().add(winText);
-
-        winImage = new ImageView();
-        gif = new Image(new File(".Abalon/res/giphy.gif").toURI().toString());
-        //selectedImage.setImage(gif);
-        winImage.setX(1000);
-        winImage.setY(600);
-        winImage.setFitHeight(100);
-        winImage.setFitWidth(100);
-        pane.getChildren().addAll(winImage);
-
 
         Scene scene = new Scene(pane, WIDTH, HEIGHT);
         this.primaryStage.setResizable(false);
