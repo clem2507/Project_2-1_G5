@@ -72,10 +72,10 @@ public class MCTS {
         int stopCondition = timer;
         while ((System.currentTimeMillis() - b_time) < stopCondition) {
             Selection();
-            //for (Node n : nodes) {
-                //System.out.print(n.getTotalSimulation() + ", ");
-            //}
-            //System.out.println();
+            for (Node n : nodes) {
+                System.out.print(n.getTotalScore() + ", ");
+            }
+            System.out.println();
             count++;
         }
         ArrayList<Node> rootChildren = getChildren(root);
@@ -93,15 +93,15 @@ public class MCTS {
     public double uctValue(Node n) {
 
         int c = 2;
-        int nodeWin = n.getTotalWin();
         int nodeVisits = n.getTotalSimulation();
         int parentVisits = getParent(n).getTotalSimulation();
+        double nodeWin = n.getTotalScore();
         double meanScore;
         if (nodeVisits == 0) {
             return Double.POSITIVE_INFINITY;
         }
         else {
-            meanScore = (double) nodeWin / nodeVisits;
+            meanScore = nodeWin / nodeVisits;
         }
         return meanScore + (c * Math.sqrt(Math.log(parentVisits)/nodeVisits));
     }
@@ -134,10 +134,13 @@ public class MCTS {
                 }
             }
         }
+        //Test.printBoard(n.getBoardState());
+        //System.out.println();
         Expansion(n, actualPlayer);
     }
 
     public void Expansion(Node n, int currentPlayer) {
+
 
         ArrayList<int[][]> children = getPossibleMoves.getPossibleMoves(n.getBoardState(), currentPlayer);
         for (int[][] child : children) {
@@ -153,7 +156,7 @@ public class MCTS {
 
     public void Simulation(Node n, int currentPlayer) {
 
-        int simulationScore = 0;
+        double simulationScore = 0;
         int numberOfSample = sampleSize;
         for (int i = 0; i < numberOfSample; i++) {
             int actualPlayer = currentPlayer;
@@ -180,38 +183,52 @@ public class MCTS {
 
             if (strategy == 1) {
                 neutralEvaluation = new NeutralEvalFunct(currentPlayer, actualBoard, n.getBoardState());
-                // call the ponderation function here
+                simulationScore += ponderationFunction(rootScore, neutralEvaluation.evaluate(), 1);
+//                System.out.println(rootScore);
+//                System.out.println(neutralEvaluation.evaluate());
+//                System.out.println(ponderationFunction(rootScore, neutralEvaluation.evaluate(), 1));
+//                System.out.println();
             }
             else if (strategy == 2) {
                 offensiveEvaluation = new OffensiveEvalFunct(currentPlayer, actualBoard, n.getBoardState());
-                // call the ponderation function here
             }
             else {
                 defensiveEvaluation = new DefensiveEvalFunct(currentPlayer, actualBoard, n.getBoardState());
-                // call the ponderation function here
             }
         }
         n.setTotalSimulation(n.getTotalSimulation() + 1);
-        n.setTotalWin(n.getTotalWin() + simulationScore);
+        n.setTotalWin(n.getTotalScore() + simulationScore);
 
         Backpropagation(n, simulationScore);
     }
 
-    public void Backpropagation(Node n, int simulationScore) {
+    public double ponderationFunction(double rootScore, double currentScore, double scale) {
+
+        double score;
+        if (currentScore > rootScore) {
+            score = Math.log((Math.abs(currentScore-rootScore)) + 1) * scale;
+        }
+        else {
+            score = -(Math.log(Math.abs((currentScore-rootScore)) + 1) * scale);
+        }
+        return score;
+    }
+
+    public void Backpropagation(Node n, double simulationScore) {
 
         while (getParent(n) != null) {
             n = getParent(n);
             n.setTotalSimulation(n.getTotalSimulation() + 1);
-            n.setTotalWin(n.getTotalWin() + simulationScore);
+            n.setTotalWin(n.getTotalScore() + simulationScore);
         }
         ArrayList<Node> rootChildren = getChildren(root);
-        int sumWin = 0;
+        double sumScore = 0;
         int sumSimulation = 0;
         for (Node child : rootChildren) {
-            sumWin += child.getTotalWin();
+            sumScore += child.getTotalScore();
             sumSimulation += child.getTotalSimulation();
         }
-        root.setTotalWin(sumWin);
+        root.setTotalWin(sumScore);
         root.setTotalSimulation(sumSimulation);
     }
 

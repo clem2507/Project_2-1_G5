@@ -41,9 +41,9 @@ public class Test {
 
         //mctsVSmcts(5000, 1, 5, 6, 5000, 2, 5, 6);
 
-        //MCTS monteCarlo = new MCTS(rootCellColor, 1, 10000, 1, 20, 6);
-        //monteCarlo.start();
-        //System.out.println();
+        MCTS monteCarlo = new MCTS(rootCellColor, 1, 5000, 10, 20, 1);
+        monteCarlo.start();
+        System.out.println();
     }
 
 

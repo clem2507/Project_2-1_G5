@@ -5,7 +5,7 @@ public class Node{
     private double score; //represent the score of a node, defined by the evaluation function
     private int[][] boardState; //2D array of type cell colors, represent the state of the board
     private int totalSimulation;
-    private int totalWin;
+    private double totalScore;
 
     //    private List<Node> children = new ArrayList<>();
     private Node parent = null;
@@ -17,10 +17,10 @@ public class Node{
     }
 
     // constructor used for the mcts tree
-    public Node(int[][] boardState, int totalSimulation, int totalWin) {
+    public Node(int[][] boardState, int totalSimulation, double totalScore) {
         this.boardState = boardState;
         this.totalSimulation = totalSimulation;
-        this.totalWin = totalWin;
+        this.totalScore = totalScore;
     }
 
     public double getScore() { //get the score by the evaluation function
@@ -47,12 +47,12 @@ public class Node{
         this.totalSimulation = totalSimulation;
     }
 
-    public int getTotalWin() {
-        return totalWin;
+    public double getTotalScore() {
+        return totalScore;
     }
 
-    public void setTotalWin(int totalWin) {
-        this.totalWin = totalWin;
+    public void setTotalWin(double totalScore) {
+        this.totalScore = totalScore;
     }
 }
 
