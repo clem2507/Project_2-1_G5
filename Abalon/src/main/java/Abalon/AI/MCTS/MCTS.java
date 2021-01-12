@@ -2,6 +2,7 @@ package Abalon.AI.MCTS;
 
 import Abalon.AI.EvaluationFunction.DefensiveEvalFunct;
 import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
+import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
 import Abalon.AI.Output.Test;
 import Abalon.AI.Tree.Edge;
 import Abalon.AI.Tree.GetPossibleMoves;
@@ -20,9 +21,14 @@ public class MCTS {
 
     private Node root;
 
-    private NeutralEvalFunct rootEvaluation;
-    //private DefensiveEvalFunct rootEvaluation;
+    private NeutralEvalFunct neutralRootEvaluation;
+    private OffensiveEvalFunct offensiveRootEvaluation;
+    private DefensiveEvalFunct defensiveRootEvaluation;
     private double rootScore;
+
+    private NeutralEvalFunct neutralEvaluation;
+    private OffensiveEvalFunct offensiveEvaluation;
+    private DefensiveEvalFunct defensiveEvaluation;
 
     private int count = 0;
 
@@ -35,20 +41,27 @@ public class MCTS {
     private int eval;
     private int sampleSize;
     private int numOfPlays;
+    private int strategy;
 
-    public MCTS(int[][] rootState, int currentPlayer, int timer, int eval, int sampleSize, int numOfPlays) {
+    public MCTS(int[][] rootState, int currentPlayer, int timer, int sampleSize, int numOfPlays, int strategy) {
 
+        this.strategy = strategy;
         this.currentPlayer = currentPlayer;
-        this.rootEvaluation = new NeutralEvalFunct(currentPlayer, rootState, rootState);
-        //this.rootEvaluation = new DefensiveEvalFunct(currentPlayer, rootState, rootState);
-        this.rootScore = rootEvaluation.evaluate();
+        if (strategy == 1) {
+            this.neutralRootEvaluation = new NeutralEvalFunct(currentPlayer, rootState, rootState);
+            this.rootScore = neutralRootEvaluation.evaluate();
+        }
+        else if (strategy == 2) {
+            this.offensiveRootEvaluation = new OffensiveEvalFunct(currentPlayer, rootState, rootState);
+            this.rootScore = offensiveRootEvaluation.evaluate();
+        }
+        else {
+            this.defensiveRootEvaluation = new DefensiveEvalFunct(currentPlayer, rootState, rootState);
+            this.rootScore = defensiveRootEvaluation.evaluate();
+        }
         this.root = new Node(rootState, 0, 0);
         this.nodes.add(root);
         this.timer = timer;
-        // eval variable changes the final simulation board evaluation technique
-        // 1 = compared to the root score
-        // 2 = compared to the mean score so far
-        this.eval = eval;
         this.sampleSize = sampleSize;
         this.numOfPlays = numOfPlays;
     }
@@ -59,10 +72,10 @@ public class MCTS {
         int stopCondition = timer;
         while ((System.currentTimeMillis() - b_time) < stopCondition) {
             Selection();
-            for (Node n : nodes) {
-                System.out.print(n.getTotalSimulation() + ", ");
-            }
-            System.out.println();
+            //for (Node n : nodes) {
+                //System.out.print(n.getTotalSimulation() + ", ");
+            //}
+            //System.out.println();
             count++;
         }
         ArrayList<Node> rootChildren = getChildren(root);
@@ -165,18 +178,17 @@ public class MCTS {
                 countMoves++;
             }
 
-            NeutralEvalFunct evaluation = new NeutralEvalFunct(currentPlayer, actualBoard, n.getBoardState());
-            //DefensiveEvalFunct evaluation = new DefensiveEvalFunct(currentPlayer, actualBoard, n.getBoardState());
-
-            if (eval == 1) {
-                if (evaluation.evaluate() >= rootScore) {
-                    simulationScore++;
-                }
+            if (strategy == 1) {
+                neutralEvaluation = new NeutralEvalFunct(currentPlayer, actualBoard, n.getBoardState());
+                // call the ponderation function here
+            }
+            else if (strategy == 2) {
+                offensiveEvaluation = new OffensiveEvalFunct(currentPlayer, actualBoard, n.getBoardState());
+                // call the ponderation function here
             }
             else {
-                if (BoardEvaluation(evaluation.evaluate())) {
-                    simulationScore++;
-                }
+                defensiveEvaluation = new DefensiveEvalFunct(currentPlayer, actualBoard, n.getBoardState());
+                // call the ponderation function here
             }
         }
         n.setTotalSimulation(n.getTotalSimulation() + 1);
@@ -214,6 +226,7 @@ public class MCTS {
         return children;
     }
 
+    /*
     public boolean BoardEvaluation(double score) {
 
         countForMean++;
@@ -226,6 +239,7 @@ public class MCTS {
         //System.out.println("mean = " + mean);
         return result;
     }
+    */
 
     public Node getParent(Node n) {
 
