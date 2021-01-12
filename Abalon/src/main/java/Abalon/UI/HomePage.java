@@ -31,6 +31,8 @@ public class HomePage extends Application {
     private final double WIDTH = 1344;
     private final double HEIGHT = 756;
     public static ComboBox gameChoice = new ComboBox();
+    public static ComboBox evaluationChoice1 = new ComboBox();
+    public static ComboBox evaluationChoice2 = new ComboBox();
 
     public static TextField field1;
     public static TextField field2;
@@ -84,11 +86,30 @@ public class HomePage extends Application {
         play.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 35));
         pane.getChildren().add(play);
 
+        // create combo boxes to choose which evaluation function to use
+        evaluationChoice1.getItems().addAll(
+                "Neutral evaluation function" ,
+                "Offensive evaluation function",
+                "Defensive evaluation function");
+        evaluationChoice1.getSelectionModel().selectFirst();
+        evaluationChoice1.setTranslateX(270);
+        evaluationChoice1.setTranslateY(350);
+        evaluationChoice1.setPrefSize(230, 35);
+        evaluationChoice2.getItems().addAll(
+                "Neutral evaluation function" ,
+                "Offensive evaluation function",
+                "Defensive evaluation function");
+        evaluationChoice2.getSelectionModel().selectFirst();
+        evaluationChoice2.setTranslateX(800);
+        evaluationChoice2.setTranslateY(350);
+        evaluationChoice2.setPrefSize(230, 35);
+        //pane.getChildren().add(evaluationChoice2);
+
+
         //Button listener
         play.setOnAction((EventHandler) event -> {
             if (gameChoice.getValue().equals("Human vs Human")) {
                 hexagon = new Hexagon();
-                System.out.println("Start Button clicked, game is gonna start!");
                 hexagon.start(primaryStage);
             }
             else if (gameChoice.getValue().equals("Alpha-Beta vs Human")){
@@ -208,9 +229,11 @@ public class HomePage extends Application {
         gameChoice.setOnAction(e -> {
             if(gameChoice.getValue().equals("Alpha-Beta vs Human")){
                 field2.setText("Alpha Beta");
+                pane.getChildren().add(evaluationChoice2);
             }
             else if(gameChoice.getValue().equals("MCTS vs Human")){
                 field2.setText("MCTS");
+                pane.getChildren().add(evaluationChoice2);
             }
             else if(gameChoice.getValue().equals("Rule-Based vs Human")){
                 field2.setText("Rule-Based");
@@ -218,6 +241,8 @@ public class HomePage extends Application {
             else if(gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                 field2.setText("MCTS");
                 field1.setText("Alpha Beta");
+                pane.getChildren().add(evaluationChoice1);
+                pane.getChildren().add(evaluationChoice2);
             }
         });
 

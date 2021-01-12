@@ -85,7 +85,7 @@ public class GameTree {
 
         for(int[][] child : childrenStates){
 
-            double score;
+            double score = 0;
 
             if (table.checkInTable(currentPlayer, child)) {
                 if (strategy == 1) {
@@ -96,7 +96,7 @@ public class GameTree {
                     offensive = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
                     score = offensive.evaluate();
                 }
-                else {
+                else if (strategy == 3){
                     defensive = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
                     score = defensive.evaluate();
                 }
