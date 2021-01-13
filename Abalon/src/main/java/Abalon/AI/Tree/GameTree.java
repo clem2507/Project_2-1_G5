@@ -97,8 +97,8 @@ public class GameTree {
                     score = eval.evaluate();
                 }
                 else if (strategy == 4){
-                    eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = eval.evaluate();
+                    //eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                    //score = eval.evaluate();
                 }
                 table.addInTable(score, generationCounter);
             }
@@ -119,8 +119,8 @@ public class GameTree {
                         eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
                         score = eval.evaluate();
                     }else if(strategy == 4){
-                        eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
-                        score = eval.evaluate();
+                        //eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                        //score = eval.evaluate();
                     }
                 }
             }

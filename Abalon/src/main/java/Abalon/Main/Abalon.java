@@ -8,7 +8,6 @@ import Abalon.AI.RB.RuleBased;
 import Abalon.UI.BoardUI;
 
 import Abalon.UI.Hexagon;
-import Abalon.UI.HomePage;
 import Abalon.UI.WinPage;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -29,8 +28,6 @@ public class Abalon {
 	private boolean victory = false;
 
 	public static int numberOfTurn = 0;
-	public int strategy1;
-	public int strategy2;
 
 	private static String gameMode;
 
@@ -83,15 +80,6 @@ public class Abalon {
 			}
 		}
 		else if (gameMode.equals("Alpha-Beta vs Human")) {
-			if(HomePage.evaluationChoice2.getValue().equals("Neutral evaluation function")){
-				strategy2 = 1;
-			}else if(HomePage.evaluationChoice2.getValue().equals("Offensive evaluation function")) {
-				strategy2 = 2;
-			}else if(HomePage.evaluationChoice2.getValue().equals("Defensive evaluation function")){
-				strategy2 = 3;
-			}else if(HomePage.evaluationChoice2.getValue().equals("All evaluation functions")){
-				strategy2 = 4;}
-
 			int index = 0;
 			while (!victory) {
 				checkExitTheGame();
@@ -110,7 +98,7 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					GameTree gameTree = new GameTree(strategy2);
+					GameTree gameTree = new GameTree(2);
 					gameTree.createTree(board.getBoard(), currentPlayer, 3);
 					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
 					algo.start(true);
@@ -124,15 +112,6 @@ public class Abalon {
 			}
 		}
 		else if (gameMode.equals("MCTS vs Human")) {
-			if(HomePage.evaluationChoice2.getValue().equals("Neutral evaluation function")){
-				strategy2 = 1;
-			}else if(HomePage.evaluationChoice2.getValue().equals("Offensive evaluation function")) {
-				strategy2 = 2;
-			}else if(HomePage.evaluationChoice2.getValue().equals("Defensive evaluation function")){
-				strategy2 = 3;
-			}else if(HomePage.evaluationChoice2.getValue().equals("All evaluation functions")){
-				strategy2 = 4;}
-
 			int index = 0;
 			while (!victory) {
 				checkExitTheGame();
@@ -151,7 +130,7 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,5000,5,10, strategy2);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000, 30,10, 1);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
@@ -198,30 +177,12 @@ public class Abalon {
 			}
 		}
 		else if (gameMode.equals("Alpha-Beta vs MCTS")) {
-			if(HomePage.evaluationChoice1.getValue().equals("Neutral evaluation function")){
-				strategy1 = 1;
-			}else if(HomePage.evaluationChoice1.getValue().equals("Offensive evaluation function")) {
-				strategy1 = 2;
-			}else if(HomePage.evaluationChoice1.getValue().equals("Defensive evaluation function")){
-				strategy1 = 3;
-			}else if(HomePage.evaluationChoice2.getValue().equals("All evaluation functions")){
-				strategy2 = 4;}
-
-			if(HomePage.evaluationChoice2.getValue().equals("Neutral evaluation function")){
-				strategy2 = 1;
-			}else if(HomePage.evaluationChoice2.getValue().equals("Offensive evaluation function")) {
-				strategy2 = 2;
-			}else if(HomePage.evaluationChoice2.getValue().equals("Defensive evaluation function")){
-				strategy2 = 3;
-			}else if(HomePage.evaluationChoice2.getValue().equals("All evaluation functions")){
-				strategy2 = 4;}
-
 			currentPlayer = 1;
 			while (!victory) {
 				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
 				if (currentPlayer == 1) {
-					GameTree gameTree = new GameTree(strategy1);
+					GameTree gameTree = new GameTree(1);
 					gameTree.createTree(board.getBoard(), currentPlayer, 3);
 					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
 					algo.start(true);
@@ -229,7 +190,7 @@ public class Abalon {
 					currentPlayer = 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,5000,5,10, strategy2);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000,30,10, 1);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
@@ -279,4 +240,5 @@ public class Abalon {
 	}
 
 }
+
 

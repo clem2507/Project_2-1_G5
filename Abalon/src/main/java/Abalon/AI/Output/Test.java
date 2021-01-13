@@ -1,8 +1,10 @@
 package Abalon.AI.Output;
 
+import Abalon.AI.AB.AlphaBetaSearch;
 import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
+import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
 import Abalon.AI.MCTS.MCTS;
-import Abalon.UI.BoardUI;
+import Abalon.AI.Tree.GameTree;
 
 public class Test {
 
@@ -18,15 +20,29 @@ public class Test {
 
     public static int[][] rootCellColor = new int[][]{
 
-            {2, 2, 2, 2, 2, -1, -1, -1, -1},
-            {2, 2, 2, 2, 2,  2, -1, -1, -1},
-            {0, 0, 2, 2, 2,  0,  0, -1, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0,  0},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 1, 1, 1,  0,  0, -1, -1},
-            {1, 1, 1, 1, 1,  1, -1, -1, -1},
-            {1, 1, 1, 1, 1, -1, -1, -1, -1}
+            {0, 2, 2, 2, 2, -1, -1, -1, -1},
+            {0, 2, 0, 0, 2,  2, -1, -1, -1},
+            {2, 0, 2, 2, 0,  0,  0, -1, -1},
+            {2, 0, 0, 1, 2,  0,  0,  0, -1},
+            {0, 0, 0, 1, 0,  2,  0,  0,  0},
+            {0, 0, 0, 1, 2,  0,  0,  1, -1},
+            {0, 0, 0, 1, 1,  0,  1, -1, -1},
+            {1, 1, 0, 0, 1,  0, -1, -1, -1},
+            {1, 1, 1, 1, 0, -1, -1, -1, -1}
+
+    };
+
+    public static int[][] cellColor = new int[][]{
+
+            {0, 2, 2, 2, 2, -1, -1, -1, -1},
+            {0, 2, 0, 0, 2,  2, -1, -1, -1},
+            {2, 0, 2, 2, 0,  0,  0, -1, -1},
+            {0, 0, 0, 1, 2,  0,  0,  0, -1},
+            {2, 1, 1, 0, 0,  2,  0,  0,  0},
+            {0, 0, 0, 0, 2,  0,  0,  1, -1},
+            {0, 0, 0, 1, 1,  0,  1, -1, -1},
+            {1, 1, 0, 0, 1,  0, -1, -1, -1},
+            {1, 1, 1, 1, 0, -1, -1, -1, -1}
 
     };
 
@@ -41,11 +57,72 @@ public class Test {
 
         //mctsVSmcts(5000, 1, 5, 6, 5000, 2, 5, 6);
 
-        MCTS monteCarlo = new MCTS(rootCellColor, 1, 5000, 10, 20, 1);
+        MCTS monteCarlo = new MCTS(cellColor, 1, 10000, 30, 10, 1);
         monteCarlo.start();
         System.out.println();
+
+        //testWeights(10);
     }
 
+    public static void testWeights(int plays) {
+
+        double max = Double.NEGATIVE_INFINITY;
+        int count = 0;
+        for (int w1 = -5; w1 < 0; w1++) {
+            for (int w2 = 1; w2 < 5; w2++) {
+                for (int w5 = 1000; w5 <= 1000; w5+=0) {
+                    for (int w7 = 200; w7 < 400; w7+=50) {
+                        for (int w8 = 50; w8 < 100; w8+=10) {
+                            int currentPlayer = 1;
+                            int[][] bestBoard = rootCellColor;
+                            for (int i = 0; i < plays; i++) {
+                                if (currentPlayer == 1) {
+                                    MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 20, 10, 2);
+                                    monteCarlo.start();
+                                    bestBoard = monteCarlo.getBestMove();
+                                    currentPlayer = 2;
+                                }
+                                else {
+                                    MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 20, 10, 1);
+                                    monteCarlo.start();
+                                    bestBoard = monteCarlo.getBestMove();
+                                    currentPlayer = 1;
+                                }
+                                //System.out.println("i = " + i);
+                            }
+                            count++;
+                            System.out.println();
+                            System.out.println("count = " + count);
+                            System.out.println((500-count) + " configurations left");
+                            System.out.println();
+                            double currentScore;
+                            NeutralEvalFunct eval = new NeutralEvalFunct(1, bestBoard, rootCellColor);
+                            currentScore = eval.evaluate();
+                            if (max < currentScore) {
+
+                                System.out.println("-------------------");
+                                System.out.println();
+                                System.out.println("score = " + currentScore);
+                                System.out.println();
+                                System.out.println("w1 = " + w1);
+                                System.out.println("w2 = " + w2);
+                                System.out.println("w5 = " + w5);
+                                System.out.println("w7 = " + w7);
+                                System.out.println("w8 = " + w8);
+                                System.out.println();
+                                System.out.println("-------------------");
+
+                                max = currentScore;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+/*
 
     public static void mctsVSmcts(int timer1, int eval1, int sampleSize1, int numOfPlays1, int timer2, int eval2, int sampleSize2, int numOfPlays2) {
 
@@ -95,6 +172,7 @@ public class Test {
             System.out.println();
         }
     }
+*/
 
 
     /*public static void abVSab_Simulation(int numSimulation, String fileName, int gtDepth, int gtStrategy1, int gtStrategy2) {
@@ -452,5 +530,6 @@ public class Test {
         out.writeResume();
     }*/
 }
+
 
 

@@ -1,6 +1,8 @@
 package Abalon.AI.MCTS;
 
-import Abalon.AI.EvaluationFunction.*;
+import Abalon.AI.EvaluationFunction.DefensiveEvalFunct;
+import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
+import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
 import Abalon.AI.Output.Test;
 import Abalon.AI.Tree.Edge;
 import Abalon.AI.Tree.GetPossibleMoves;
@@ -19,20 +21,11 @@ public class MCTS {
 
     private Node root;
 
-    private EvaluationFunction evaluationFunctionRoot;
-    private EvaluationFunction evaluationFunction;
-
     private double rootScore;
 
     private int count = 0;
 
-    private int countForMean = 0;
-    private double sumForMean = 0;
-
-    private double mean = 0;
-
     private int timer;
-    private int eval;
     private int sampleSize;
     private int numOfPlays;
     private int strategy;
@@ -42,19 +35,16 @@ public class MCTS {
         this.strategy = strategy;
         this.currentPlayer = currentPlayer;
         if (strategy == 1) {
-            this.evaluationFunctionRoot = new NeutralEvalFunct(currentPlayer, rootState, rootState);
-            this.rootScore = evaluationFunctionRoot.evaluate();
+            NeutralEvalFunct neutralRootEvaluation = new NeutralEvalFunct(currentPlayer, rootState, rootState);
+            this.rootScore = neutralRootEvaluation.evaluate();
         }
         else if (strategy == 2) {
-            this.evaluationFunctionRoot = new OffensiveEvalFunct(currentPlayer, rootState, rootState);
-            this.rootScore = evaluationFunctionRoot.evaluate();
+            OffensiveEvalFunct offensiveRootEvaluation = new OffensiveEvalFunct(currentPlayer, rootState, rootState);
+            this.rootScore = offensiveRootEvaluation.evaluate();
         }
-        else if(strategy == 3){
-            this.evaluationFunctionRoot = new DefensiveEvalFunct(currentPlayer, rootState, rootState);
-            this.rootScore = evaluationFunctionRoot.evaluate();
-        }else if (strategy == 4){
-            this.evaluationFunctionRoot = new MixEvalFunct(currentPlayer, rootState, rootState);
-            this.rootScore = evaluationFunctionRoot.evaluate();
+        else {
+            DefensiveEvalFunct defensiveRootEvaluation = new DefensiveEvalFunct(currentPlayer, rootState, rootState);
+            this.rootScore = defensiveRootEvaluation.evaluate();
         }
         this.root = new Node(rootState, 0, 0);
         this.nodes.add(root);
@@ -70,8 +60,8 @@ public class MCTS {
         while ((System.currentTimeMillis() - b_time) < stopCondition) {
             Selection();
             //for (Node n : nodes) {
-                //System.out.print(n.getTotalScore() + ", ");
-            //
+            //System.out.print(n.getTotalSimulation() + ", ");
+            //}
             //System.out.println();
             count++;
         }
@@ -83,13 +73,13 @@ public class MCTS {
                 bestMove = child.getBoardState();
             }
         }
+        System.out.println("Simulations = " + nodes.get(0).getTotalSimulation());
         System.out.println();
-        Test.printBoard(bestMove);
     }
 
     public double uctValue(Node n) {
 
-        int c = 2;
+        double c = 2;
         int nodeVisits = n.getTotalSimulation();
         int parentVisits = getParent(n).getTotalSimulation();
         double nodeWin = n.getTotalScore();
@@ -113,7 +103,6 @@ public class MCTS {
                 bestNode = node;
             }
         }
-        //System.out.println("max = " + max);
         return bestNode;
     }
 
@@ -131,13 +120,10 @@ public class MCTS {
                 }
             }
         }
-        //Test.printBoard(n.getBoardState());
-        //System.out.println();
         Expansion(n, actualPlayer);
     }
 
     public void Expansion(Node n, int currentPlayer) {
-
 
         ArrayList<int[][]> children = getPossibleMoves.getPossibleMoves(n.getBoardState(), currentPlayer);
         for (int[][] child : children) {
@@ -146,9 +132,14 @@ public class MCTS {
             Edge edge = new Edge(n, childNode);
             edges.add(edge);
         }
-        int max = children.size();
-        int randomIndex = (int)(Math.random() * ((max)));
-        Simulation(getChildren(n).get(randomIndex), currentPlayer);
+        if (this.currentPlayer == currentPlayer) {
+            int max = children.size();
+            int randomIndex = (int)(Math.random() * ((max)));
+            Simulation(getChildren(n).get(randomIndex), currentPlayer);
+        }
+        else {
+            Selection();
+        }
     }
 
     public void Simulation(Node n, int currentPlayer) {
@@ -179,36 +170,22 @@ public class MCTS {
             }
 
             if (strategy == 1) {
-                evaluationFunction = new NeutralEvalFunct(currentPlayer, actualBoard, n.getBoardState());
-                simulationScore += ponderationFunction(rootScore, evaluationFunction.evaluate(), 1);
-//                System.out.println(rootScore);
-//                System.out.println(neutralEvaluation.evaluate());
-//                System.out.println(ponderationFunction(rootScore, neutralEvaluation.evaluate(), 1));
-//                System.out.println();
+                NeutralEvalFunct neutralEvaluation = new NeutralEvalFunct(currentPlayer, actualBoard, root.getBoardState());
+                simulationScore += ponderationFunction(rootScore, neutralEvaluation.evaluate());
             }
             else if (strategy == 2) {
-                evaluationFunction = new OffensiveEvalFunct(currentPlayer, actualBoard, n.getBoardState());
+                OffensiveEvalFunct offensiveEvaluation = new OffensiveEvalFunct(currentPlayer, actualBoard, root.getBoardState());
+                simulationScore += ponderationFunction(rootScore, offensiveEvaluation.evaluate());
             }
             else {
-                evaluationFunction = new DefensiveEvalFunct(currentPlayer, actualBoard, n.getBoardState());
+                DefensiveEvalFunct defensiveEvaluation = new DefensiveEvalFunct(currentPlayer, actualBoard, root.getBoardState());
+                simulationScore += ponderationFunction(rootScore, defensiveEvaluation.evaluate());
             }
         }
         n.setTotalSimulation(n.getTotalSimulation() + 1);
         n.setTotalWin(n.getTotalScore() + simulationScore);
 
         Backpropagation(n, simulationScore);
-    }
-
-    public double ponderationFunction(double rootScore, double currentScore, double scale) {
-
-        double score;
-        if (currentScore > rootScore) {
-            score = Math.log((Math.abs(currentScore-rootScore)) + 1) * scale;
-        }
-        else {
-            score = -(Math.log(Math.abs((currentScore-rootScore)) + 1) * scale);
-        }
-        return score;
     }
 
     public void Backpropagation(Node n, double simulationScore) {
@@ -218,6 +195,7 @@ public class MCTS {
             n.setTotalSimulation(n.getTotalSimulation() + 1);
             n.setTotalWin(n.getTotalScore() + simulationScore);
         }
+
         ArrayList<Node> rootChildren = getChildren(root);
         double sumScore = 0;
         int sumSimulation = 0;
@@ -227,6 +205,17 @@ public class MCTS {
         }
         root.setTotalWin(sumScore);
         root.setTotalSimulation(sumSimulation);
+    }
+
+    public double ponderationFunction(double rootScore, double currentScore) {
+
+        double score = 0;
+        if (currentScore > rootScore) {
+            //score = Math.log((Math.abs(currentScore-rootScore)) + 1) * scale;
+            score = Math.sqrt(Math.abs(currentScore-rootScore))/5;
+            //score = Math.pow(Math.abs(currentScore-rootScore), (double) 2/3)/10;
+        }
+        return score;
     }
 
     public ArrayList<Node> getChildren(Node n) {
@@ -240,21 +229,6 @@ public class MCTS {
         return children;
     }
 
-    /*
-    public boolean BoardEvaluation(double score) {
-
-        countForMean++;
-        boolean result = false;
-        if (score > mean) {
-            result = true;
-        }
-        sumForMean += score;
-        mean = sumForMean/countForMean;
-        //System.out.println("mean = " + mean);
-        return result;
-    }
-    */
-
     public Node getParent(Node n) {
 
         Node parent = null;
@@ -266,88 +240,8 @@ public class MCTS {
         return parent;
     }
 
-    //    public ArrayList<Node> getNeighbours(Node n) {
-//
-//        ArrayList<Node> neighbours = new ArrayList<>();
-//        for(Edge e : edges) {
-//            if(e.getSource().equals(getParent(n))) {
-//                neighbours.add(e.getDestination());
-//            }
-//        }
-//        return neighbours;
-//    }
-
-//    public MCTS(int[][] boardState, int currentPlayer, int depth, int strategy){
-//
-//        this.boardState = boardState;
-//        this.currentPlayer = currentPlayer;
-//        this.rootEvaluation = new NeutralEvalFunct(currentPlayer, boardState, boardState);
-//        this.rootScore = rootEvaluation.evaluate();
-//        this.depth = depth;
-//        this.strategy = strategy;
-//    }
-//
-//    public void start(){
-//
-//        ArrayList<int[][]> rootChildren = getPossibleMoves.getPossibleMoves(boardState, currentPlayer);
-//
-//        int childrenSize = rootChildren.size();
-//        int bestIndex = 0;
-//        int maxScore = Integer.MIN_VALUE;
-//        bestMove = new int[9][9];
-//
-//        for(int i = 0; i < childrenSize; i++) {
-//            rootChildren = getPossibleMoves.getPossibleMoves(boardState, currentPlayer);
-//            int score = simulation(rootChildren.get(i));
-//            if (maxScore < score) {
-//                maxScore = score;
-//                bestIndex = i;
-//            }
-//        }
-//        rootChildren = getPossibleMoves.getPossibleMoves(boardState, currentPlayer);
-//        bestMove = rootChildren.get(bestIndex);
-//    }
-//
-//    public int simulation(int[][] currentBoard){
-//
-//        int simulationScore = 0;
-//
-//        for (int i = 0; i < 100; i++) {
-//            int actualPlayer = currentPlayer;
-//            int[][] actualBoard = currentBoard;
-//            int countMoves = 0;
-//            while (countMoves <= depth) {
-//                ArrayList<int[][]> children = getPossibleMoves.getPossibleMoves(actualBoard, actualPlayer);
-//
-//                int max = children.size();
-//                int randomIndex = (int)(Math.random() * ((max)));
-//
-//                if (children.size() > 0) {
-//                    actualBoard = children.get(randomIndex);
-//                }
-//
-//                if (actualPlayer == 1) {
-//                    actualPlayer = 2;
-//                }
-//                else {
-//                    actualPlayer = 1;
-//                }
-//                countMoves++;
-//            }
-//
-//            NeutralEvalFunct evaluation = new NeutralEvalFunct(currentPlayer, actualBoard, boardState);
-//
-//            if (evaluation.evaluate() >= rootScore) {
-//                simulationScore++;
-//            }
-//            else {
-//                simulationScore--;
-//            }
-//        }
-//        return simulationScore;
-//    }
-
     public int[][] getBestMove() {
         return bestMove;
     }
 }
+

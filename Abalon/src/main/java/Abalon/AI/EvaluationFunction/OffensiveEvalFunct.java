@@ -11,18 +11,18 @@ public class OffensiveEvalFunct extends EvaluationFunction{
 
     /**
 
-    Heuristics that are good to use:
+     Heuristics that are good to use:
 
      // add the number of pushing positions as an heuristics
      // as well as the number of push out positions
 
-    // Possible sumito positions
-    // -> Try to have as much as possible sumito positions compared to the opponent
-    // As much as possible lost marbles for to the opponent
+     // Possible sumito positions
+     // -> Try to have as much as possible sumito positions compared to the opponent
+     // As much as possible lost marbles for to the opponent
 
-    // -> v4, v5 to use from neutral strategy and sumito positions heuristic to introduce (let's call it v7)
+     // -> v4, v5 to use from neutral strategy and sumito positions heuristic to introduce (let's call it v7)
 
-    // E(s) = w4*v4 + w5*v5 + w7*v7
+     // E(s) = w4*v4 + w5*v5 + w7*v7
 
      -----------------------------------------------------
 
@@ -38,11 +38,9 @@ public class OffensiveEvalFunct extends EvaluationFunction{
      v7 = total count of sumito positions
      v8 = total count of pushing positions
 
-     Wait for Mathias to implement v7 and v8
-
      WEIGHTS:
 
-     w1bis = 5
+     w1bis = -5
      w2bis = 3
      w5 = 500
      w7 = 100
@@ -54,17 +52,17 @@ public class OffensiveEvalFunct extends EvaluationFunction{
 
     private ArrayList<int[][]> children;
 
-    private static int v1bis;
-    private static int v2bis;
-    private static int v5;
-    private static int v7;
-    private static int v8;
+    private int v1bis;
+    private int v2bis;
+    private int v5;
+    private int v7;
+    private int v8;
 
-    private static double w1 = 5;
-    private static double w2 = 3;
-    private static double w5 = 500;
-    private static double w7 = 100;
-    private static double w8 = 40;
+    private double w1 = -2;
+    private double w2 = 3;
+    private double w5 = 10000;
+    private double w7 = 300;
+    private double w8 = 70;
 
     public OffensiveEvalFunct(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
         super(currentPlayer, cellColor, rootCellColor);
@@ -174,19 +172,10 @@ public class OffensiveEvalFunct extends EvaluationFunction{
         return true;
     }
 
-    @Override
     public double evaluate() {
-        int turn = Abalon.numberOfTurn;
-        double score = 0;
 
-        if(turn <= -1){
-            EvaluationFunction neut = new NeutralEvalFunct(currentPlayer, cellColor, rootCellColor);
-            score = neut.evaluate();
-        }else{
-            computeValues();
-            score = w1 * v1bis + w2 * v2bis + w5 * v5 + w7 * v7 + w8 * v8;
-            //System.out.println("score = " + score);
-        }
-        return score;
+        computeValues();
+        return w1 * v1bis + w2 * v2bis + w5 * v5 + w7 * v7 + w8 * v8;
     }
 }
+
