@@ -2,7 +2,11 @@ package Abalon.AI.EvaluationFunction;
 
 //TODO add MixEvalFunct as option in the game settings
 
+import Abalon.AI.Tree.GetPossibleMoves;
+
 public class MixEvalFunct {
+
+    public OffensiveEvalFunct offensiveEvalFunct;
 
     private static int currentPlayer;
     private static int[][] cellColor; //current board (node of the game tree)
@@ -18,7 +22,7 @@ public class MixEvalFunct {
     public double evaluate() {
         double returnValue = 0;
 
-        int strategy = chooseEvalFunction();
+        int strategy = chooseEvalFunction(25);
 
         if(strategy == 1){
             EvaluationFunction neutral = new NeutralEvalFunct(currentPlayer, cellColor, rootCellColor);
@@ -34,13 +38,46 @@ public class MixEvalFunct {
         return returnValue;
     }
 
-    public int chooseEvalFunction() {
+    public int chooseEvalFunction(int tresholdDefense) {
         int strategy;
         int neutralScore = 0;
         int offensiveScore = 0;
         int defensiveScore = 0;
 
         // TODO compute scores
+        /*
+        Features that we want to use:
+        */
+        GetPossibleMoves obj = new GetPossibleMoves();
+        int ownMarblesCenterDistance = NeutralEvalFunct.centerDistance(currentPlayer, cellColor);
+        int ownMarblesNeighbours = NeutralEvalFunct.marblesNeighbourhood(currentPlayer, cellColor);
+        int diffBetweenPlayersMarbles;
+        int numberSumitos;
+
+        int opponentPlayer;
+
+        if(currentPlayer == 1){
+            opponentPlayer = 2;
+           diffBetweenPlayersMarbles = NeutralEvalFunct.countMarbles(currentPlayer, cellColor) -  NeutralEvalFunct.countMarbles(opponentPlayer, cellColor);
+           numberSumitos = offensiveEvalFunct.countSumitoPositions(obj.getPossibleMoves(cellColor, currentPlayer), cellColor, opponentPlayer);
+        }
+        else{
+            opponentPlayer = 1;
+            diffBetweenPlayersMarbles = NeutralEvalFunct.countMarbles(currentPlayer, cellColor) -  NeutralEvalFunct.countMarbles(opponentPlayer, cellColor);
+            numberSumitos = offensiveEvalFunct.countSumitoPositions(obj.getPossibleMoves(cellColor, currentPlayer), cellColor, opponentPlayer);
+        }
+
+        //Defensive
+        if(ownMarblesCenterDistance < tresholdDefense){
+            //Defensive
+            strategy = 3;
+        }
+        else{
+            //Neutral
+            strategy = 1;
+        }
+
+
 
         strategy = pickMax(neutralScore, offensiveScore, defensiveScore);
 
