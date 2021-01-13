@@ -1,6 +1,7 @@
 package Abalon.AI.Tree;
 
 import Abalon.AI.EvaluationFunction.DefensiveEvalFunct;
+import Abalon.AI.EvaluationFunction.EvaluationFunction;
 import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
 import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
 
@@ -79,9 +80,9 @@ public class GameTree {
 
         ArrayList<int[][]> childrenStates = getPossibleMoves.getPossibleMoves(currentBoardState, currentPlayer);
 
-        NeutralEvalFunct neutral;
-        OffensiveEvalFunct offensive;
-        DefensiveEvalFunct defensive;
+        EvaluationFunction neutral;
+        EvaluationFunction offensive;
+        EvaluationFunction defensive;
 
         for(int[][] child : childrenStates){
 

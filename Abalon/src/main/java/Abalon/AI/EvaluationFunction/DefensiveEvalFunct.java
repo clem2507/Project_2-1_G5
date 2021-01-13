@@ -2,9 +2,9 @@ package Abalon.AI.EvaluationFunction;
 
 import Abalon.Main.Abalon;
 
-public class DefensiveEvalFunct {
+public class DefensiveEvalFunct extends EvaluationFunction{
 
-    /*
+    /**
 
     Heuristics that are good to use:
 
@@ -38,11 +38,7 @@ public class DefensiveEvalFunct {
      w6 = 500
 
      -----------------------------------------------------
-
      */
-    private static int currentPlayer;
-    private static int[][] cellColor;
-    private static int[][] rootCellColor;
 
     private static int v1;
     private static int v2;
@@ -56,9 +52,7 @@ public class DefensiveEvalFunct {
 
 
     public DefensiveEvalFunct(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
-        DefensiveEvalFunct.currentPlayer = currentPlayer;
-        DefensiveEvalFunct.cellColor = cellColor;
-        DefensiveEvalFunct.rootCellColor = rootCellColor;
+        super(currentPlayer, cellColor, rootCellColor);
     }
 
     public void computeValues(){
@@ -109,13 +103,14 @@ public class DefensiveEvalFunct {
 
     }
 
+    @Override
     public double evaluate(){
 
         int turn = Abalon.numberOfTurn;
         double score = 0;
 
         if(turn <= 4){
-            NeutralEvalFunct neut = new NeutralEvalFunct(currentPlayer, cellColor, rootCellColor);
+            EvaluationFunction neut = new NeutralEvalFunct(currentPlayer, cellColor, rootCellColor);
             score = neut.evaluate();
         }else{
             computeValues();

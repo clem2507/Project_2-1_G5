@@ -7,7 +7,7 @@ import Abalon.Main.Abalon;
 
 import java.util.ArrayList;
 
-public class OffensiveEvalFunct {
+public class OffensiveEvalFunct extends EvaluationFunction{
 
     /**
 
@@ -54,10 +54,6 @@ public class OffensiveEvalFunct {
 
     private ArrayList<int[][]> children;
 
-    private static int currentPlayer;
-    private static int[][] cellColor;
-    private static int[][] rootCellColor;
-
     private static int v1bis;
     private static int v2bis;
     private static int v5;
@@ -71,10 +67,7 @@ public class OffensiveEvalFunct {
     private static double w8 = 40;
 
     public OffensiveEvalFunct(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
-
-        OffensiveEvalFunct.currentPlayer = currentPlayer;
-        OffensiveEvalFunct.cellColor = cellColor;
-        OffensiveEvalFunct.rootCellColor = rootCellColor;
+        super(currentPlayer, cellColor, rootCellColor);
     }
 
     public void computeValues() {
@@ -181,12 +174,13 @@ public class OffensiveEvalFunct {
         return true;
     }
 
+    @Override
     public double evaluate() {
         int turn = Abalon.numberOfTurn;
         double score = 0;
 
         if(turn <= -1){
-            NeutralEvalFunct neut = new NeutralEvalFunct(currentPlayer, cellColor, rootCellColor);
+            EvaluationFunction neut = new NeutralEvalFunct(currentPlayer, cellColor, rootCellColor);
             score = neut.evaluate();
         }else{
             computeValues();

@@ -1,10 +1,6 @@
 package Abalon.AI.EvaluationFunction;
 
-public class NeutralEvalFunct {
-
-    /*
-     * Author: Clément Detry
-     */
+public class NeutralEvalFunct extends EvaluationFunction{
 
     /**
      ==================================================================================================================
@@ -33,9 +29,6 @@ public class NeutralEvalFunct {
      ==================================================================================================================
      */
 
-    private static int currentPlayer;
-    private static int[][] cellColor;
-    private static int[][] rootCellColor;
 
     private static int v1;
     private static int v2;
@@ -66,10 +59,7 @@ public class NeutralEvalFunct {
 
 
     public NeutralEvalFunct(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
-
-        NeutralEvalFunct.currentPlayer = currentPlayer;
-        NeutralEvalFunct.cellColor = cellColor;
-        NeutralEvalFunct.rootCellColor = rootCellColor;
+        super(currentPlayer, cellColor, rootCellColor);
     }
 
     public void computeValues() {
@@ -175,6 +165,7 @@ public class NeutralEvalFunct {
         }
     }
 
+    @Override
     public double evaluate() {
 
         computeValues();
