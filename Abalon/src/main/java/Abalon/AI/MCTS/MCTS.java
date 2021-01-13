@@ -1,9 +1,6 @@
 package Abalon.AI.MCTS;
 
-import Abalon.AI.EvaluationFunction.DefensiveEvalFunct;
-import Abalon.AI.EvaluationFunction.EvaluationFunction;
-import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
-import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
+import Abalon.AI.EvaluationFunction.*;
 import Abalon.AI.Output.Test;
 import Abalon.AI.Tree.Edge;
 import Abalon.AI.Tree.GetPossibleMoves;
@@ -52,8 +49,11 @@ public class MCTS {
             this.evaluationFunctionRoot = new OffensiveEvalFunct(currentPlayer, rootState, rootState);
             this.rootScore = evaluationFunctionRoot.evaluate();
         }
-        else {
+        else if(strategy == 3){
             this.evaluationFunctionRoot = new DefensiveEvalFunct(currentPlayer, rootState, rootState);
+            this.rootScore = evaluationFunctionRoot.evaluate();
+        }else if (strategy == 4){
+            this.evaluationFunctionRoot = new MixEvalFunct(currentPlayer, rootState, rootState);
             this.rootScore = evaluationFunctionRoot.evaluate();
         }
         this.root = new Node(rootState, 0, 0);

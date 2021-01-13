@@ -1,9 +1,6 @@
 package Abalon.AI.Tree;
 
-import Abalon.AI.EvaluationFunction.DefensiveEvalFunct;
-import Abalon.AI.EvaluationFunction.EvaluationFunction;
-import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
-import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
+import Abalon.AI.EvaluationFunction.*;
 
 import java.util.*;
 
@@ -80,9 +77,7 @@ public class GameTree {
 
         ArrayList<int[][]> childrenStates = getPossibleMoves.getPossibleMoves(currentBoardState, currentPlayer);
 
-        EvaluationFunction neutral;
-        EvaluationFunction offensive;
-        EvaluationFunction defensive;
+        EvaluationFunction eval;
 
         for(int[][] child : childrenStates){
 
@@ -90,16 +85,20 @@ public class GameTree {
 
             if (table.checkInTable(currentPlayer, child)) {
                 if (strategy == 1) {
-                    neutral = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = neutral.evaluate();
+                    eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
                 }
                 else if (strategy == 2) {
-                    offensive = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = offensive.evaluate();
+                    eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
                 }
                 else if (strategy == 3){
-                    defensive = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = defensive.evaluate();
+                    eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
+                }
+                else if (strategy == 4){
+                    eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
                 }
                 table.addInTable(score, generationCounter);
             }
@@ -109,16 +108,19 @@ public class GameTree {
                 }
                 else {
                     if (strategy == 1) {
-                        neutral = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                        score = neutral.evaluate();
+                        eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = eval.evaluate();
                     }
                     else if (strategy == 2) {
-                        offensive = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                        score = offensive.evaluate();
+                        eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = eval.evaluate();
                     }
-                    else {
-                        defensive = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                        score = defensive.evaluate();
+                    else if(strategy == 3){
+                        eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = eval.evaluate();
+                    }else if(strategy == 4){
+                        eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = eval.evaluate();
                     }
                 }
             }

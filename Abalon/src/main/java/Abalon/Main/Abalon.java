@@ -88,7 +88,9 @@ public class Abalon {
 			}else if(HomePage.evaluationChoice2.getValue().equals("Offensive evaluation function")) {
 				strategy2 = 2;
 			}else if(HomePage.evaluationChoice2.getValue().equals("Defensive evaluation function")){
-				strategy2 = 3;}
+				strategy2 = 3;
+			}else if(HomePage.evaluationChoice2.getValue().equals("All evaluation functions")){
+				strategy2 = 4;}
 
 			int index = 0;
 			while (!victory) {
@@ -127,7 +129,9 @@ public class Abalon {
 			}else if(HomePage.evaluationChoice2.getValue().equals("Offensive evaluation function")) {
 				strategy2 = 2;
 			}else if(HomePage.evaluationChoice2.getValue().equals("Defensive evaluation function")){
-				strategy2 = 3;}
+				strategy2 = 3;
+			}else if(HomePage.evaluationChoice2.getValue().equals("All evaluation functions")){
+				strategy2 = 4;}
 
 			int index = 0;
 			while (!victory) {
@@ -199,14 +203,18 @@ public class Abalon {
 			}else if(HomePage.evaluationChoice1.getValue().equals("Offensive evaluation function")) {
 				strategy1 = 2;
 			}else if(HomePage.evaluationChoice1.getValue().equals("Defensive evaluation function")){
-				strategy1 = 3;}
+				strategy1 = 3;
+			}else if(HomePage.evaluationChoice2.getValue().equals("All evaluation functions")){
+				strategy2 = 4;}
 
 			if(HomePage.evaluationChoice2.getValue().equals("Neutral evaluation function")){
 				strategy2 = 1;
 			}else if(HomePage.evaluationChoice2.getValue().equals("Offensive evaluation function")) {
 				strategy2 = 2;
 			}else if(HomePage.evaluationChoice2.getValue().equals("Defensive evaluation function")){
-				strategy2 = 3;}
+				strategy2 = 3;
+			}else if(HomePage.evaluationChoice2.getValue().equals("All evaluation functions")){
+				strategy2 = 4;}
 
 			currentPlayer = 1;
 			while (!victory) {

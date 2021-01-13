@@ -90,7 +90,8 @@ public class HomePage extends Application {
         evaluationChoice1.getItems().addAll(
                 "Neutral evaluation function" ,
                 "Offensive evaluation function",
-                "Defensive evaluation function");
+                "Defensive evaluation function",
+                "All evaluation functions");
         evaluationChoice1.getSelectionModel().selectFirst();
         evaluationChoice1.setTranslateX(270);
         evaluationChoice1.setTranslateY(350);
@@ -98,7 +99,8 @@ public class HomePage extends Application {
         evaluationChoice2.getItems().addAll(
                 "Neutral evaluation function" ,
                 "Offensive evaluation function",
-                "Defensive evaluation function");
+                "Defensive evaluation function",
+                "All evaluation functions");
         evaluationChoice2.getSelectionModel().selectFirst();
         evaluationChoice2.setTranslateX(800);
         evaluationChoice2.setTranslateY(350);
