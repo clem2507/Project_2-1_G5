@@ -28,6 +28,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class Hexagon extends Application {
 
@@ -47,6 +48,9 @@ public class Hexagon extends Application {
     public static String player2 = null;
 
     public static int pressed = 1;
+    public static int pressed2 = 1;
+    public static ArrayList<Text> letters = new ArrayList<>();
+    public static Text direction = null;
 
     // Hexagon should access Board to obtain Marbles positions, color, etc
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
@@ -298,6 +302,32 @@ public class Hexagon extends Application {
     }
 
     private void sketchHowToPlay() {
+        Button qwertyToAzerty = new Button("AZERTY");
+        qwertyToAzerty.setTranslateX(70);
+        qwertyToAzerty.setTranslateY(670);
+        qwertyToAzerty.setPrefSize(100, 25);
+
+        qwertyToAzerty.setOnAction(
+                event -> {
+                    pressed2 = pressed2 + 1;
+                    if(pressed2%2 == 0){
+                        letters.get(0).setText("A");
+                        letters.get(2).setText("Q");
+                        letters.get(4).setText("W");
+                        qwertyToAzerty.setText("QWERTY");
+                    }
+                    else{
+                        qwertyToAzerty.setText("AZERTY");
+                        letters.get(0).setText("Q");
+                        letters.get(2).setText("A");
+                        letters.get(4).setText("Z");
+                    }
+                });
+
+        Pane keyboard = new Pane();
+        keyboard.getChildren().add(qwertyToAzerty);
+        pane.getChildren().add(keyboard);
+
 
         int y = 40; // interval
 
@@ -307,33 +337,31 @@ public class Hexagon extends Application {
             rect.setArcWidth(8);
             rect.relocate(70,400+(i*y));
 
-            Text letter = null;
-            Text direction = null;
-            if(i==0){ // Q key
-                letter = new Text("Q");
+            if(i==0){ // Q or A key
+                letters.add(new Text("Q"));
                 direction = new Text("TOP_LEFT");}
             else if(i==1){ // E Key
-                    letter = new Text("E");
-                    direction = new Text("TOP_RIGHT");
-            }else if(i==2){ // A key
-                letter = new Text("A");
+                letters.add(new Text("E"));
+                direction = new Text("TOP_RIGHT");
+            }else if(i==2){ // A or Q key
+                letters.add(new Text("A"));
                 direction = new Text("LEFT");
             }else if(i==3){ // D key
-                letter = new Text("D");
+                letters.add(new Text("D"));
                 direction = new Text("RIGHT");
-            }else if(i==4){ // Z Key
-                letter = new Text("Z");
+            }else if(i==4){ // Z or W Key
+                letters.add(new Text("Z"));
                 direction = new Text("BOTTOM_LEFT");
             }else if(i==5){ // C key
-                letter = new Text("C");
+                letters.add(new Text("C"));
                 direction = new Text("BOTTOM_RIGHT");
             }
 
-            letter.setX(78);
-            letter.setY(420+(i*y));
-            letter.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
-            letter.setFill(Color.BLACK);
-            letter.setStrokeWidth(2);
+            letters.get(i).setX(78);
+            letters.get(i).setY(420+(i*y));
+            letters.get(i).setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+            letters.get(i).setFill(Color.BLACK);
+            letters.get(i).setStrokeWidth(2);
 
             direction.setX(120);
             direction.setY(420+(i*y));
@@ -341,12 +369,12 @@ public class Hexagon extends Application {
             direction.setFill(Color.BLACK);
             direction.setStrokeWidth(2);
 
-            pane.getChildren().addAll(rect, letter, direction);
+            pane.getChildren().addAll(rect, letters.get(i), direction);
         }
 
         // press ENTER
         Text enter = new Text ("Press Enter to validate move.");
-        enter.setX(80);
+        enter.setX(70);
         enter.setY(420+(6*y));
         enter.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
         enter.setFill(Color.BLACK);

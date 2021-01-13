@@ -447,7 +447,7 @@ public class BoardUI {
         }
     }
 
-    /**
+    /*
      * Enables the option of selecting a marble
      * The selected marbles get highlighted in the selectionColor
      * @param circle the circle to be selected
