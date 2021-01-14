@@ -138,7 +138,7 @@ public class OffensiveEvalFunct extends EvaluationFunction{
      * =
      * all positions where opponent player can be pushed out
      */
-    public int countSumitoPositions(ArrayList<int[][]> children, int[][] board, int opponentPlayer){
+    public static int countSumitoPositions(ArrayList<int[][]> children, int[][] board, int opponentPlayer){
 
         int count = 0;
         for(int[][] child : children){

@@ -47,8 +47,8 @@ public class MCTS {
             this.evaluationFunctionRoot = new DefensiveEvalFunct(currentPlayer, rootState, rootState);
             this.rootScore = evaluationFunctionRoot.evaluate();
         }else{
-            //this.evaluationFunctionRoot = new MixEvalFunct(currentPlayer, rootState, rootState);
-            //this.rootScore = evaluationFunctionRoot.evaluate();
+            this.evaluationFunctionRoot = new MixEvalFunct(currentPlayer, rootState, rootState);
+            this.rootScore = evaluationFunctionRoot.evaluate();
         }
         this.root = new Node(rootState, 0, 0);
         this.nodes.add(root);
@@ -186,8 +186,8 @@ public class MCTS {
                 simulationScore += ponderationFunction(rootScore, evaluationFunction.evaluate());
             }
             else {
-                //evaluationFunction = new MixEvalFunct(currentPlayer, actualBoard, root.getBoardState());
-                //simulationScore += ponderationFunction(rootScore, evaluationFunction.evaluate());
+                evaluationFunction = new MixEvalFunct(currentPlayer, actualBoard, root.getBoardState());
+                simulationScore += ponderationFunction(rootScore, evaluationFunction.evaluate());
             }
         }
         n.setTotalSimulation(n.getTotalSimulation() + 1);
