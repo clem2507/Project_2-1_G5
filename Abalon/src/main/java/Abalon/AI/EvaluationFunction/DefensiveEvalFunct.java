@@ -45,8 +45,8 @@ public class DefensiveEvalFunct extends EvaluationFunction{
     private static int v4;
     private static int v6;
 
-    private static double w1 = -5;
-    private static double w2 = 5;
+    private static double w1 = -10;
+    private static double w2 = 10;
     private static double w4 = 150;
     private static double w6 = -10000;
 

@@ -223,6 +223,9 @@ public class MCTS {
             score = Math.sqrt(Math.abs(currentScore-rootScore))/5;
             //score = Math.pow(Math.abs(currentScore-rootScore), (double) 2/3)/10;
         }
+        else {
+            score = -(Math.sqrt(Math.abs(currentScore-rootScore))/5);
+        }
         return score;
     }
 

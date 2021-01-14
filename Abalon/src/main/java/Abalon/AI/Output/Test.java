@@ -59,7 +59,7 @@ public class Test {
 
         //mctsVSmcts(5000, 1, 5, 6, 5000, 2, 5, 6);
 
-        MCTS monteCarlo = new MCTS(cellColor, 1, 10000, 30, 10, 3);
+        MCTS monteCarlo = new MCTS(cellColor, 2, 10000, 30, 10, 3);
         monteCarlo.start();
         System.out.println();
 
