@@ -10,16 +10,43 @@ public class GetPossibleMoves {
 
     private Rules rules;
     private ArrayList<int[][]> allPossibleMoves = new ArrayList<>();
+    private ArrayList<int[][]> capturing = new ArrayList<>();
+    private ArrayList<int[][]> attacking = new ArrayList<>();
+    private ArrayList<int[][]> threeMarblesMoving = new ArrayList<>();
+    private ArrayList<int[][]> twoMarblesMoving = new ArrayList<>();
+    private ArrayList<int[][]> oneMarbleMoving = new ArrayList<>();
 
     public ArrayList<int[][]> getPossibleMoves(int[][] board, int playerTurn) {
-
+        //clear all arrays for new possible moves in a position
         allPossibleMoves.clear();
+        capturing.clear();
+        attacking.clear();
+        threeMarblesMoving.clear();
+        twoMarblesMoving.clear();
+        oneMarbleMoving.clear();
 
-        allPossibleMoves.addAll(getTripleMarbleMoves(board, playerTurn));
+        //three marbles capturing
+        threeMarblesMoving.addAll(getTripleMarbleMoves(board, playerTurn));
 
-        allPossibleMoves.addAll(getDoubleMarbleMoves(board, playerTurn));
+        twoMarblesMoving.addAll(getDoubleMarbleMoves(board, playerTurn));
 
-        allPossibleMoves.addAll(getSingleMarbleMoves(board, playerTurn));
+        oneMarbleMoving.addAll(getSingleMarbleMoves(board, playerTurn));
+
+        /*move ordering:
+            3 marbles, capturing
+            2 marbles, capturing
+            3 marbles, attacking
+            2 marbles, attacking
+            3 marbles, moving
+            2 marbles, moving
+            1 marble, moving
+         */
+
+        allPossibleMoves.addAll(capturing); //capturing is already ordered by 3 marbles first then 2 marbles second.
+        allPossibleMoves.addAll(attacking); //attacking is already ordered by 3 marbles first then 2 marbles second.
+        allPossibleMoves.addAll(threeMarblesMoving);
+        allPossibleMoves.addAll(twoMarblesMoving);
+        allPossibleMoves.addAll(oneMarbleMoving);
 
         return allPossibleMoves; //this will be an arraylist containing move objects
     }
@@ -168,7 +195,16 @@ public class GetPossibleMoves {
             rules = new Rules(mv);
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move(); //change the cloned board to the state after the move has been made
-                possibleMovesGivenPushing.add(mv.board); //add this state to the array of possible moves
+
+                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                    capturing.add(mv.board);
+                }
+                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                    attacking.add(mv.board);
+                }
+                else { // if the move is neither capturing nor attacking, add it to the regular moves.
+                    possibleMovesGivenPushing.add(mv.board);
+                }
 
                 newBoard = new int[board.length][]; //create a new copy of the current gamestate
                 for(int k = 0; k < board.length; k++) {
@@ -182,7 +218,16 @@ public class GetPossibleMoves {
             //rules = new Rules(mv);
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
-                possibleMovesGivenPushing.add(mv.board);
+
+                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                    capturing.add(mv.board);
+                }
+                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                    attacking.add(mv.board);
+                }
+                else { // if the move is neither capturing nor attacking, add it to the regular moves.
+                    possibleMovesGivenPushing.add(mv.board);
+                }
 
                 newBoard = new int[board.length][]; //create a new copy of the current gamestate
                 for(int k = 0; k < board.length; k++) {
@@ -195,7 +240,16 @@ public class GetPossibleMoves {
             rules = new Rules(mv);
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
-                possibleMovesGivenPushing.add(mv.board);
+
+                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                    capturing.add(mv.board);
+                }
+                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                    attacking.add(mv.board);
+                }
+                else { // if the move is neither capturing nor attacking, add it to the regular moves.
+                    possibleMovesGivenPushing.add(mv.board);
+                }
 
                 newBoard = new int[board.length][]; //create a new copy of the current gamestate
                 for(int k = 0; k < board.length; k++) {
@@ -208,7 +262,16 @@ public class GetPossibleMoves {
             rules = new Rules(mv);
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
-                possibleMovesGivenPushing.add(mv.board);
+
+                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                    capturing.add(mv.board);
+                }
+                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                    attacking.add(mv.board);
+                }
+                else { // if the move is neither capturing nor attacking, add it to the regular moves.
+                    possibleMovesGivenPushing.add(mv.board);
+                }
 
                 newBoard = new int[board.length][]; //create a new copy of the current gamestate
                 for(int k = 0; k < board.length; k++) {
@@ -221,7 +284,16 @@ public class GetPossibleMoves {
             rules = new Rules(mv);
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
-                possibleMovesGivenPushing.add(mv.board);
+
+                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                    capturing.add(mv.board);
+                }
+                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                    attacking.add(mv.board);
+                }
+                else { // if the move is neither capturing nor attacking, add it to the regular moves.
+                    possibleMovesGivenPushing.add(mv.board);
+                }
 
                 newBoard = new int[board.length][]; //create a new copy of the current gamestate
                 for(int k = 0; k < board.length; k++) {
@@ -234,10 +306,69 @@ public class GetPossibleMoves {
             rules = new Rules(mv);
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
-                possibleMovesGivenPushing.add(mv.board);
+
+                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                    capturing.add(mv.board);
+                }
+                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                    attacking.add(mv.board);
+                }
+                else { // if the move is neither capturing nor attacking, add it to the regular moves.
+                    possibleMovesGivenPushing.add(mv.board);
+                }
             }
         }
         return possibleMovesGivenPushing;
     }
+    /*checks if any of the opposing marbles moved. if they did it will return true and the move is a move that pushes*/
+    public boolean checkIfPushingMove(int[][] board, int[][] currentBoard, int playerTurn) {
+
+        int opponentPlayer;
+
+        if(playerTurn == 1) {
+            opponentPlayer = 2;
+        } else {
+            opponentPlayer = 1;
+        }
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] == opponentPlayer && currentBoard[i][j] != opponentPlayer) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    /*checks if the count of opposing marbles is the same before the turn as after the turn. If it's not, it will return true and the move scores*/
+    public boolean checkIfScoringMove(int[][] board, int[][] currentBoard, int playerTurn) {
+
+        int opponentPlayer;
+
+        if(playerTurn == 1) {
+            opponentPlayer = 2;
+        } else {
+            opponentPlayer = 1;
+        }
+
+        int boardCount = 0;
+        int currentBoardCount = 0;
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] == opponentPlayer) {
+                    boardCount++;
+                }
+                if (currentBoard[i][j] == opponentPlayer) {
+                    currentBoardCount++;
+                }
+            }
+        }
+        if(currentBoardCount == boardCount) {
+            return false;
+        }
+        return true;
+    }
 }
+
 
