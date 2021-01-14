@@ -63,10 +63,10 @@ public class MCTS {
         int stopCondition = timer;
         while ((System.currentTimeMillis() - b_time) < stopCondition) {
             Selection();
-            for (Node n : nodes) {
-                System.out.print(n.getTotalSimulation() + ", ");
-            }
-            System.out.println();
+            //for (Node n : nodes) {
+              //  System.out.print(n.getTotalSimulation() + ", ");
+            //}
+            //System.out.println();
             count++;
         }
         ArrayList<Node> rootChildren = getChildren(root);
