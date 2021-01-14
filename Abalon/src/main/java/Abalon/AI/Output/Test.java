@@ -4,7 +4,9 @@ import Abalon.AI.AB.AlphaBetaSearch;
 import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
 import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
 import Abalon.AI.MCTS.MCTS;
+import Abalon.AI.RB.RuleBased;
 import Abalon.AI.Tree.GameTree;
+import Abalon.UI.BoardUI;
 
 public class Test {
 
@@ -20,15 +22,15 @@ public class Test {
 
     public static int[][] rootCellColor = new int[][]{
 
-            {0, 2, 2, 2, 2, -1, -1, -1, -1},
-            {0, 2, 0, 0, 2,  2, -1, -1, -1},
-            {2, 0, 2, 2, 0,  0,  0, -1, -1},
-            {2, 0, 0, 1, 2,  0,  0,  0, -1},
-            {0, 0, 0, 1, 0,  2,  0,  0,  0},
-            {0, 0, 0, 1, 2,  0,  0,  1, -1},
-            {0, 0, 0, 1, 1,  0,  1, -1, -1},
-            {1, 1, 0, 0, 1,  0, -1, -1, -1},
-            {1, 1, 1, 1, 0, -1, -1, -1, -1}
+            {2, 2, 2, 2, 2, -1, -1, -1, -1},
+            {2, 2, 2, 2, 2,  2, -1, -1, -1},
+            {0, 0, 2, 2, 2,  0,  0, -1, -1},
+            {0, 0, 0, 0, 0,  0,  0,  0, -1},
+            {0, 0, 0, 0, 0,  0,  0,  0,  0},
+            {0, 0, 0, 0, 0,  0,  0,  0, -1},
+            {0, 0, 1, 1, 1,  0,  0, -1, -1},
+            {1, 1, 1, 1, 1,  1, -1, -1, -1},
+            {1, 1, 1, 1, 1, -1, -1, -1, -1}
 
     };
 
@@ -57,13 +59,68 @@ public class Test {
 
         //mctsVSmcts(5000, 1, 5, 6, 5000, 2, 5, 6);
 
-        MCTS monteCarlo = new MCTS(cellColor, 1, 10000, 30, 10, 1);
+        MCTS monteCarlo = new MCTS(cellColor, 1, 10000, 30, 10, 3);
         monteCarlo.start();
         System.out.println();
 
         //testWeights(10);
+
+        //testConfigurations();
     }
 
+    public static void testConfigurations() {
+
+        for (int sampleSize = 10; sampleSize <= 50; sampleSize+=10) {
+            for (int plays = 4; plays <= 20; plays+=4) {
+                System.out.println("------------------------");
+                System.out.println();
+                System.out.println("Configuration: ");
+                System.out.println();
+                System.out.println("sampleSize = " + sampleSize);
+                System.out.println("plays = " + plays);
+                System.out.println();
+                double winRate1 = 0;
+                double winRate2 = 0;
+                for (int i = 0; i < 5; i++) {
+                    int countTurn = 0;
+                    int currentPlayer = 1;
+                    int[][] bestBoard = rootCellColor;
+                    while (!BoardUI.isVictorious(bestBoard)) {
+                        if (currentPlayer == 1) {
+                            MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, sampleSize, plays, 1);
+                            monteCarlo.start();
+                            bestBoard = monteCarlo.getBestMove();
+                            currentPlayer = 2;
+                        } else {
+                            MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 30, 10, 1);
+                            monteCarlo.start();
+                            bestBoard = monteCarlo.getBestMove();
+                            currentPlayer = 1;
+                        }
+                        countTurn++;
+                    }
+                    if (currentPlayer == 1) {
+                        System.out.println("MCTS 2 won the game");
+                        winRate2++;
+                    }
+                    else {
+                        System.out.println("MCTS 1 won the game");
+                        winRate1++;
+                    }
+                    System.out.println();
+                    System.out.println("Number of turn: " + countTurn);
+                    System.out.println();
+                }
+                System.out.println("Win rate MCTS 1 = " + (winRate1/5));
+                System.out.println("Win rate MCTS 2 = " + (winRate2/5));
+                System.out.println();
+                System.out.println("------------------------");
+                System.out.println();
+            }
+        }
+    }
+
+    /*
     public static void testWeights(int plays) {
 
         double max = Double.NEGATIVE_INFINITY;
@@ -120,6 +177,7 @@ public class Test {
             }
         }
     }
+    */
 
 
 /*
