@@ -33,23 +33,15 @@ public class RuleBased {
         ArrayList<int[][]> pushingMoves = getPushingMoves(children, boardState, opponent);
 
         if(sumitoMoves.size() != 0){ // not empty
-            System.out.println("ejecting moves found!");
-
             int rand = new Random().nextInt(sumitoMoves.size());
             bestMove = sumitoMoves.get(rand);
 
         }else{
-            System.out.println("no sumito/ejecting moves yet");
-
             if(pushingMoves.size() != 0){ // not empty
-                System.out.println("pushing moves found!");
-
                 int rand = new Random().nextInt(pushingMoves.size());
                 bestMove = pushingMoves.get(rand);
 
             }else{
-                System.out.println("no pushing moves nor ejecting moves >> pick random triple move!");
-
                 ArrayList<int[][]> tripleMoves = getPossibleMoves.getTripleMarbleMoves(boardState, currentPlayer);
 
                 do{
@@ -67,7 +59,6 @@ public class RuleBased {
         for (int[][] child : children) {
             if (!OffensiveEvalFunct.checkOpponentMarble(board, child, opponentPlayer)) {
                 pushings.add(child);
-                System.out.println("pushings ++");
             }
         }
         return pushings;
@@ -79,7 +70,6 @@ public class RuleBased {
         for(int[][] child : children){
             if(NeutralEvalFunct.countMarbles(opponentPlayer, board) > NeutralEvalFunct.countMarbles(opponentPlayer, child)){
                 sumitos.add(child);
-                System.out.println("sumito ++");
             }
         }
         return sumitos;
