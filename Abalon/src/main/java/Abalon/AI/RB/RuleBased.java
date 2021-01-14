@@ -1,5 +1,7 @@
 package Abalon.AI.RB;
 
+import Abalon.AI.EvaluationFunction.NeutralEvalFunct;
+import Abalon.AI.EvaluationFunction.OffensiveEvalFunct;
 import Abalon.AI.Tree.GetPossibleMoves;
 
 import java.util.*;
@@ -7,12 +9,12 @@ import java.util.*;
 public class RuleBased {
 
     private int[][] boardState;
-    private int[][] bestMove;
+    private int[][] bestMove = new int[9][9];
     private int currentPlayer;
     private GetPossibleMoves getPossibleMoves = new GetPossibleMoves();
+    private int[][] previousMove;
 
     public RuleBased(int[][] boardState, int currentPlayer){
-
         this.boardState = boardState;
         this.currentPlayer = currentPlayer;
     }
@@ -26,57 +28,51 @@ public class RuleBased {
             opponent = 1;
         }
 
-        bestMove = new int[9][9];
-        int oppMarbles = countOpponentMarbles(opponent, boardState);
+        ArrayList<int[][]> children = getPossibleMoves.getPossibleMoves(boardState, currentPlayer);
+        ArrayList<int[][]> sumitoMoves = getSumitoMoves(children, boardState, opponent); //ejecting moves
+        ArrayList<int[][]> pushingMoves = getPushingMoves(children, boardState, opponent);
 
-        ArrayList<int[][]> tripleMovesEject = new ArrayList<>();
-        ArrayList<int[][]> tripleMoves = getPossibleMoves.getTripleMarbleMoves(boardState, currentPlayer);
+        if(sumitoMoves.size() != 0){ // not empty
+            int rand = new Random().nextInt(sumitoMoves.size());
+            bestMove = sumitoMoves.get(rand);
 
-        for(int[][] move : tripleMoves){
-            int oppMarblesAfterMove = countOpponentMarbles(opponent, move);
-            if(oppMarblesAfterMove < oppMarbles){
-                tripleMovesEject.add(move);
-            }
-        }
-        int bests3 = tripleMovesEject.size();
-        int triples = tripleMoves.size();
-
-        if(bests3 != 0){ // not empty
-            int rand = new Random().nextInt(bests3); //between 0 and bests
-            bestMove = tripleMovesEject.get(rand);
         }else{
-            ArrayList<int[][]> doubleMovesEject = new ArrayList<>();
-            ArrayList<int[][]> doubleMoves = getPossibleMoves.getDoubleMarbleMoves(boardState, currentPlayer);
+            if(pushingMoves.size() != 0){ // not empty
+                int rand = new Random().nextInt(pushingMoves.size());
+                bestMove = pushingMoves.get(rand);
 
-            for(int[][] move : doubleMoves){
-                int oppMarblesAfterMove = countOpponentMarbles(opponent, move);
-                if(oppMarblesAfterMove < oppMarbles){
-                    doubleMovesEject.add(move);
-                }
-            }
-            int bests2 = doubleMovesEject.size();
-
-            if(bests2 != 0){ // not empty
-                int rand = new Random().nextInt(bests2); //between 0 and bests
-                bestMove = doubleMovesEject.get(rand);
             }else{
-                int rand = new Random().nextInt(triples); //between 0 and triples
-                bestMove = tripleMoves.get(rand);
+                ArrayList<int[][]> tripleMoves = getPossibleMoves.getTripleMarbleMoves(boardState, currentPlayer);
+
+                do{
+                    bestMove = tripleMoves.get(new Random().nextInt(tripleMoves.size()));
+                } while(bestMove == previousMove);
             }
         }
+        previousMove = bestMove;
     }
 
-    private int countOpponentMarbles(int opponent, int[][] board) {
-        int count = 0;
 
-        for(int i=0; i < board.length; i++){
-            for (int j=0; j < board[0].length; j++){
-                if (board[i][j] == opponent){
-                    count ++;
-                }
+    public ArrayList<int[][]> getPushingMoves(ArrayList<int[][]> children, int[][] board, int opponentPlayer) {
+        ArrayList<int[][]> pushings = new ArrayList<>();
+
+        for (int[][] child : children) {
+            if (!OffensiveEvalFunct.checkOpponentMarble(board, child, opponentPlayer)) {
+                pushings.add(child);
             }
         }
-        return count;
+        return pushings;
+    }
+
+    public ArrayList<int[][]> getSumitoMoves(ArrayList<int[][]> children, int[][] board, int opponentPlayer){
+        ArrayList<int[][]> sumitos = new ArrayList<>();
+
+        for(int[][] child : children){
+            if(NeutralEvalFunct.countMarbles(opponentPlayer, board) > NeutralEvalFunct.countMarbles(opponentPlayer, child)){
+                sumitos.add(child);
+            }
+        }
+        return sumitos;
     }
 
     public int[][] getBestMove() {
