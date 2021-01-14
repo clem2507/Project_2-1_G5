@@ -1,6 +1,7 @@
 package Abalon.AI.Output;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
@@ -8,54 +9,113 @@ import java.io.PrintWriter;
  */
 public class OutputCSV {
 
-    private int totalSimulation;
-
-    private float[] ab_time_tab;
-    private float[] mcts_time_tab;
-    private double[] gt_nodes_tab;
-    private int[] numb_turn_tab;
-    private String[] first_marble_tab;
-    private String[] winner_tab;
-    private String[] winning_strategy_tab;
+//    private int totalSimulation;
+//
+//    private float[] ab_time_tab;
+//    private float[] mcts_time_tab;
+//    private double[] gt_nodes_tab;
+//    private int[] numb_turn_tab;
+//    private String[] first_marble_tab;
+//    private String[] winner_tab;
+//    private String[] winning_strategy_tab;
+//
+//    private int[] time_tab;
+//    private int[] sample_size_tab;
+//    private int[] plays_tab;
+//    private int[] win_rate_tab;
 
     private String fileName;
     private String stringHeaderResume;
 
-    public OutputCSV(int totalSimulation, String fileName, int choice) {
+    private String filePath;
+    private FileWriter fileWriter;
+    private BufferedWriter bufferedWriter;
+    private PrintWriter printWriter;
 
-        this.ab_time_tab = new float[totalSimulation];
-        this.mcts_time_tab = new float[totalSimulation];
-        this.gt_nodes_tab = new double[totalSimulation];
-        this.numb_turn_tab = new int[totalSimulation];
-        this.first_marble_tab = new String[totalSimulation];
-        this.winner_tab = new String[totalSimulation];
-        this.winning_strategy_tab = new String[totalSimulation];
 
-        this.totalSimulation = totalSimulation;
+    public OutputCSV(String fileName, String headerResume) {
+
+//        this.ab_time_tab = new float[totalSimulation];
+//        this.mcts_time_tab = new float[totalSimulation];
+//        this.gt_nodes_tab = new double[totalSimulation];
+//        this.numb_turn_tab = new int[totalSimulation];
+//        this.first_marble_tab = new String[totalSimulation];
+//        this.winner_tab = new String[totalSimulation];
+//        this.winning_strategy_tab = new String[totalSimulation];
+//
+//        this.time_tab = new int[totalSimulation];
+//        this.sample_size_tab = new int[totalSimulation];
+//        this.plays_tab = new int[totalSimulation];
+//
+//        this.totalSimulation = totalSimulation;
+//        this.fileName = fileName;
+
+        //if (choice == 1) {
+            //stringHeaderResume = "Alpha-Beta(time_avg), MCTS(time_avg), gt_nodes(avg), #turn, first_marble, winner, winning_strategy";
+        //}
+        //else {
         this.fileName = fileName;
+        this.stringHeaderResume = headerResume;
 
-        if (choice == 1) {
-            stringHeaderResume = "Alpha-Beta(time_avg), MCTS(time_avg), gt_nodes(avg), #turn, first_marble, winner, winning_strategy";
+        this.filePath = fileName;
+        try {
+            this.fileWriter = new FileWriter(filePath,false);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        else if (choice == 2) {
-            stringHeaderResume = "Alpha-Beta1(time_avg), Alpha-Beta2(time_avg), gt_nodes(avg), #turn, first_marble, winner, winning_strategy";
+        this.bufferedWriter = new BufferedWriter(fileWriter);
+        this.printWriter = new PrintWriter(bufferedWriter);
+        //}
+    }
+
+//    public void add(int index, float ab_time, float mcts_time, double gt_nodes, int numb_turn, String first_marble, String winner, String winning_strategy){
+//
+//        ab_time_tab[index] = ab_time;
+//        mcts_time_tab[index] = mcts_time;
+//        gt_nodes_tab[index] = gt_nodes;
+//        numb_turn_tab[index] = numb_turn;
+//        first_marble_tab[index] = first_marble;
+//        winner_tab[index] = winner;
+//        winning_strategy_tab[index] = winning_strategy;
+//    }
+//
+//    public void add1(int index, int time, int sampleSize, int plays, int numb_turn, String winner, int win_rate, String winning_strategy){
+//
+//        time_tab[index] = time;
+//        sample_size_tab[index] = sampleSize;
+//        plays_tab[index] = plays;
+//        numb_turn_tab[index] = numb_turn;
+//        winner_tab[index] = winner;
+//        win_rate_tab[index] = win_rate;
+//        winning_strategy_tab[index] = winning_strategy;
+//    }
+
+    public void writeResume(boolean open, boolean close, String[] data) {
+
+        try {
+            if (open) {
+                printWriter.println(stringHeaderResume);
+                printWriter.println();
+            }
+
+            for (int i = 0; i < data.length; i++) {
+                printWriter.print(data[i] + ", ");
+            }
+            printWriter.println();
+
+            if (close) {
+                printWriter.flush();
+                printWriter.close();
+                System.out.println();
+                System.out.println("Data is save in: " + fileName);
+            }
         }
-        else {
-            stringHeaderResume = "MCTS1(time_avg), MCTS2(time_avg), gt_nodes(avg), #turn, first_marble, winner, winning_strategy";
+        catch (Exception e) {
+            System.out.println("Recorded not save");
         }
     }
 
-    public void add(int index, float ab_time, float mcts_time, double gt_nodes, int numb_turn, String first_marble, String winner, String winning_strategy){
-
-        ab_time_tab[index] = ab_time;
-        mcts_time_tab[index] = mcts_time;
-        gt_nodes_tab[index] = gt_nodes;
-        numb_turn_tab[index] = numb_turn;
-        first_marble_tab[index] = first_marble;
-        winner_tab[index] = winner;
-        winning_strategy_tab[index] = winning_strategy;
-    }
-
+    /*
     public void writeResume() {
 
         String[][] data = new String[totalSimulation][7];
@@ -108,5 +168,6 @@ public class OutputCSV {
             System.out.println("Recorded not save");
         }
     }
+    */
 }
 

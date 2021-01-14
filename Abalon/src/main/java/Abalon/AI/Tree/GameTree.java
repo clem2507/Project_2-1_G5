@@ -29,12 +29,17 @@ public class GameTree {
     private HashTable table;
     private int prunedNodes = 0;
 
+    private boolean transpositionTable;
+
     private int strategy;
 
-    public GameTree(int strategy){
+    public GameTree(int strategy, boolean transpositionTable){
 
         //create the tree, start with the initial board
-        table = new HashTable();
+        this.transpositionTable = transpositionTable;
+        if (transpositionTable) {
+            table = new HashTable();
+        }
         this.strategy = strategy;
     }
 
@@ -65,11 +70,6 @@ public class GameTree {
             previousGeneration.clear();
             previousGeneration.addAll(currentGeneration);
         }
-
-        //for (Node node : nodes) {
-            // change the current player
-            //evaluateNodes(node, currentPlayer);
-        //}
     }
 
 
@@ -83,45 +83,55 @@ public class GameTree {
 
             double score = 0;
 
-            if (table.checkInTable(currentPlayer, child)) {
-                if (strategy == 1) {
-                    eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = eval.evaluate();
-                }
-                else if (strategy == 2) {
-                    eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = eval.evaluate();
-                }
-                else if (strategy == 3){
-                    eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = eval.evaluate();
-                }
-                else if (strategy == 4){
-                    //eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
-                    //score = eval.evaluate();
-                }
-                table.addInTable(score, generationCounter);
-            }
-            else {
-                if (generationCounter >= table.getTable()[table.index].getDepth()) {
-                    score = table.getTable()[table.index].getScore();
-                }
-                else {
+            if (transpositionTable) {
+                if (table.checkInTable(currentPlayer, child)) {
                     if (strategy == 1) {
                         eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
                         score = eval.evaluate();
-                    }
-                    else if (strategy == 2) {
+                    } else if (strategy == 2) {
                         eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
                         score = eval.evaluate();
-                    }
-                    else if(strategy == 3){
+                    } else if (strategy == 3) {
                         eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
                         score = eval.evaluate();
-                    }else if(strategy == 4){
-                        //eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
-                        //score = eval.evaluate();
+                    } else if (strategy == 4) {
+                        eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = eval.evaluate();
                     }
+                    table.addInTable(score, generationCounter);
+                } else {
+                    if (generationCounter >= table.getTable()[table.index].getDepth()) {
+                        score = table.getTable()[table.index].getScore();
+                    } else {
+                        if (strategy == 1) {
+                            eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                            score = eval.evaluate();
+                        } else if (strategy == 2) {
+                            eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                            score = eval.evaluate();
+                        } else if (strategy == 3) {
+                            eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                            score = eval.evaluate();
+                        } else if (strategy == 4) {
+                            eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                            score = eval.evaluate();
+                        }
+                    }
+                }
+            }
+            else {
+                if (strategy == 1) {
+                    eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
+                } else if (strategy == 2) {
+                    eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
+                } else if (strategy == 3) {
+                    eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
+                } else if (strategy == 4) {
+                    eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
                 }
             }
 

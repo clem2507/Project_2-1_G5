@@ -59,30 +59,25 @@ public class Test {
 
         //mctsVSmcts(5000, 1, 5, 6, 5000, 2, 5, 6);
 
-        MCTS monteCarlo = new MCTS(cellColor, 2, 10000, 30, 10, 3);
-        monteCarlo.start();
-        System.out.println();
+        //MCTS monteCarlo = new MCTS(rootCellColor, 1, 10000, 30, 10, 1);
+        //monteCarlo.start();
+
+        //System.out.println();
 
         //testWeights(10);
 
-        //testConfigurations();
+        mctsConfigurations();
     }
 
-    public static void testConfigurations() {
+    public static void mctsConfigurations() {
 
-        for (int sampleSize = 10; sampleSize <= 50; sampleSize+=10) {
-            for (int plays = 4; plays <= 20; plays+=4) {
-                System.out.println("------------------------");
-                System.out.println();
-                System.out.println("Configuration: ");
-                System.out.println();
-                System.out.println("sampleSize = " + sampleSize);
-                System.out.println("plays = " + plays);
-                System.out.println();
+        int count = 0;
+        OutputCSV out = new OutputCSV("MCTSvsMCTS.txt", "timer, sample_size, #plays, win_rate_1");
+        for (int sampleSize = 10; sampleSize <= 50; sampleSize+=20) {
+            for (int plays = 4; plays <= 20; plays+=8) {
                 double winRate1 = 0;
                 double winRate2 = 0;
                 for (int i = 0; i < 5; i++) {
-                    int countTurn = 0;
                     int currentPlayer = 1;
                     int[][] bestBoard = rootCellColor;
                     while (!BoardUI.isVictorious(bestBoard)) {
@@ -97,25 +92,25 @@ public class Test {
                             bestBoard = monteCarlo.getBestMove();
                             currentPlayer = 1;
                         }
-                        countTurn++;
                     }
                     if (currentPlayer == 1) {
-                        System.out.println("MCTS 2 won the game");
                         winRate2++;
                     }
                     else {
-                        System.out.println("MCTS 1 won the game");
                         winRate1++;
                     }
-                    System.out.println();
-                    System.out.println("Number of turn: " + countTurn);
-                    System.out.println();
                 }
-                System.out.println("Win rate MCTS 1 = " + (winRate1/5));
-                System.out.println("Win rate MCTS 2 = " + (winRate2/5));
-                System.out.println();
-                System.out.println("------------------------");
-                System.out.println();
+                count++;
+                String[] data = {"10", Integer.toString(sampleSize), Integer.toString(plays), Double.toString(winRate1/5)};
+                if (count == 1) {
+                    out.writeResume(true, false, data);
+                }
+                else if (count > 1 && count < 9) {
+                    out.writeResume(false, false, data);
+                }
+                else {
+                    out.writeResume(false, true, data);
+                }
             }
         }
     }

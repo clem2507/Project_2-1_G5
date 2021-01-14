@@ -112,7 +112,7 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					GameTree gameTree = new GameTree(strategy2);
+					GameTree gameTree = new GameTree(strategy2, true);
 					gameTree.createTree(board.getBoard(), currentPlayer, 3);
 					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
 					algo.start(true);
@@ -228,7 +228,7 @@ public class Abalon {
 				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				if (currentPlayer == 1) {
-					GameTree gameTree = new GameTree(1);
+					GameTree gameTree = new GameTree(1, true);
 					gameTree.createTree(board.getBoard(), currentPlayer, 3);
 					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
 					algo.start(true);

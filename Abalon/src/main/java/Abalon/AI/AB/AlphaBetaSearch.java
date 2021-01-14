@@ -18,13 +18,13 @@ public class AlphaBetaSearch {
     public AlphaBetaSearch(GameTree gameTree) {
 
         this.tree = gameTree;
-        System.out.println(tree.getNodes().size());
+        System.out.println("Number of nodes = " + tree.getNodes().size());
         this.totalDepth = gameTree.getGeneration();
     }
 
     public void start(boolean alphaBeta) {
 
-        rootChildren = tree.getChildren(tree.getNodes().get(0));
+        rootChildren = GameTree.getChildren(tree.getNodes().get(0));
 
         double bestScore;
         if (alphaBeta) {
@@ -49,7 +49,7 @@ public class AlphaBetaSearch {
         }
         
         if (maximizingPlayer) {
-            ArrayList<Node> children = tree.getChildren(position);
+            ArrayList<Node> children = GameTree.getChildren(position);
             double maxEvaluation = Double.NEGATIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = minimax(child, depth-1, false);
@@ -58,7 +58,7 @@ public class AlphaBetaSearch {
             return maxEvaluation;
         }
         else {
-            ArrayList<Node> children = tree.getChildren(position);
+            ArrayList<Node> children = GameTree.getChildren(position);
             double minEvaluation = Double.POSITIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = minimax(child, depth-1, true);
