@@ -60,7 +60,7 @@ public class Abalon {
 		if (gameMode.equals("Human vs Human")) {
 			for (int i = 0; !victory; i++) {
 				checkExitTheGame();
-				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				try {
 					Move mv = player[i & 1].collectMove();
 					mv.board = board.getBoard();
@@ -97,7 +97,7 @@ public class Abalon {
 			int index = 0;
 			while (!victory) {
 				checkExitTheGame();
-				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				if (currentPlayer == 1) {
 					try {
 						Move mv = player[index & 1].collectMove();
@@ -140,7 +140,7 @@ public class Abalon {
 			int index = 0;
 			while (!victory) {
 				checkExitTheGame();
-				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				if (currentPlayer == 1) {
 					try {
 						Move mv = player[index & 1].collectMove();
@@ -170,7 +170,7 @@ public class Abalon {
 			int index = 0;
 			while (!victory) {
 				checkExitTheGame();
-				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				if (currentPlayer == 1) {
 					try {
 						Move mv = player[index & 1].collectMove();
@@ -226,7 +226,7 @@ public class Abalon {
 			currentPlayer = 1;
 			while (!victory) {
 				checkExitTheGame();
-				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer) + "'s turn to play.");
+				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				if (currentPlayer == 1) {
 					GameTree gameTree = new GameTree(1);
 					gameTree.createTree(board.getBoard(), currentPlayer, 3);
