@@ -142,7 +142,7 @@ public class OffensiveEvalFunct extends EvaluationFunction{
 
         int count = 0;
         for(int[][] child : children){
-            if(NeutralEvalFunct.countMarbles(opponentPlayer, board) < NeutralEvalFunct.countMarbles(opponentPlayer, child)){
+            if(NeutralEvalFunct.countMarbles(opponentPlayer, board) > NeutralEvalFunct.countMarbles(opponentPlayer, child)){
                 count++;
             }
         }
@@ -160,7 +160,7 @@ public class OffensiveEvalFunct extends EvaluationFunction{
         return count;
     }
 
-    public boolean checkOpponentMarble(int[][] board, int[][] currentBoard, int opponentPlayer) {
+    public static boolean checkOpponentMarble(int[][] board, int[][] currentBoard, int opponentPlayer) {
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
