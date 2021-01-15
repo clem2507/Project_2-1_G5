@@ -31,6 +31,12 @@ public class MCTS {
     private int numOfPlays;
     private int strategy;
 
+    private double w1;
+    private double w2;
+    private double w5;
+    private double w7;
+    private double w8;
+
     public MCTS(int[][] rootState, int currentPlayer, int timer, int sampleSize, int numOfPlays, int strategy) {
 
         this.strategy = strategy;
@@ -179,6 +185,7 @@ public class MCTS {
             }
             else if (strategy == 2) {
                 evaluationFunction = new OffensiveEvalFunct(currentPlayer, actualBoard, root.getBoardState());
+                ((OffensiveEvalFunct) evaluationFunction).setWeights(w1,w2,w5,w7,w8);
                 simulationScore += ponderationFunction(rootScore, evaluationFunction.evaluate());
             }
             else if (strategy == 3) {
@@ -253,6 +260,15 @@ public class MCTS {
 
     public int[][] getBestMove() {
         return bestMove;
+    }
+
+    public void setWeights(double w1, double w2, double w5, double w7, double w8) {
+
+        this.w1 = w1;
+        this.w2 = w2;
+        this.w5 = w5;
+        this.w7 = w7;
+        this.w8 = w8;
     }
 }
 

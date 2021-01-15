@@ -177,5 +177,14 @@ public class OffensiveEvalFunct extends EvaluationFunction{
         computeValues();
         return w1 * v1bis + w2 * v2bis + w5 * v5 + w7 * v7 + w8 * v8;
     }
+
+    public void setWeights(double w1, double w2, double w5, double w7, double w8) {
+
+        this.w1 = w1;
+        this.w2 = w2;
+        this.w5 = w5;
+        this.w7 = w7;
+        this.w8 = w8;
+    }
 }
 

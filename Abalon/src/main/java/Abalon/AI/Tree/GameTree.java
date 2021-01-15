@@ -1,6 +1,9 @@
 package Abalon.AI.Tree;
 
 import Abalon.AI.EvaluationFunction.*;
+import Abalon.Main.Move;
+import Abalon.Main.MoveDirection;
+import Abalon.Main.Rules;
 
 import java.util.*;
 
@@ -13,8 +16,6 @@ public class GameTree {
      * each node represents a state
      * then the algorithms will take care of going through the tree and pick a move
      */
-
-    private ArrayList<int[][]> allPossibleMoves = new ArrayList<>();
 
     private Node root;
 
@@ -29,18 +30,17 @@ public class GameTree {
     private HashTable table;
     private int prunedNodes = 0;
 
+    private int strategy;
     private boolean transpositionTable;
 
-    private int strategy;
-
     public GameTree(int strategy, boolean transpositionTable){
-
         //create the tree, start with the initial board
+
+        this.strategy = strategy;
         this.transpositionTable = transpositionTable;
         if (transpositionTable) {
             table = new HashTable();
         }
-        this.strategy = strategy;
     }
 
     public void createTree(int[][] currentRoot, int currentPlayer, int depth){
@@ -76,63 +76,24 @@ public class GameTree {
     public void createChildren(Node parent, int[][] currentBoardState, int currentPlayer){
 
         ArrayList<int[][]> childrenStates = getPossibleMoves.getPossibleMoves(currentBoardState, currentPlayer);
-
         EvaluationFunction eval;
 
         for(int[][] child : childrenStates){
 
             double score = 0;
 
-            if (transpositionTable) {
-                if (table.checkInTable(currentPlayer, child)) {
-                    if (strategy == 1) {
-                        eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                        score = eval.evaluate();
-                    } else if (strategy == 2) {
-                        eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                        score = eval.evaluate();
-                    } else if (strategy == 3) {
-                        eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                        score = eval.evaluate();
-                    } else if (strategy == 4) {
-                        eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
-                        score = eval.evaluate();
-                    }
-                    table.addInTable(score, generationCounter);
-                } else {
-                    if (generationCounter >= table.getTable()[table.index].getDepth()) {
-                        score = table.getTable()[table.index].getScore();
-                    } else {
-                        if (strategy == 1) {
-                            eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                            score = eval.evaluate();
-                        } else if (strategy == 2) {
-                            eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                            score = eval.evaluate();
-                        } else if (strategy == 3) {
-                            eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                            score = eval.evaluate();
-                        } else if (strategy == 4) {
-                            eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
-                            score = eval.evaluate();
-                        }
-                    }
-                }
-            }
-            else {
-                if (strategy == 1) {
-                    eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = eval.evaluate();
-                } else if (strategy == 2) {
-                    eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = eval.evaluate();
-                } else if (strategy == 3) {
-                    eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = eval.evaluate();
-                } else if (strategy == 4) {
-                    eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
-                    score = eval.evaluate();
-                }
+            if (strategy == 1) {
+                eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                score = eval.evaluate();
+            } else if (strategy == 2) {
+                eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                score = eval.evaluate();
+            } else if (strategy == 3) {
+                eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                score = eval.evaluate();
+            } else if (strategy == 4) {
+                eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                score = eval.evaluate();
             }
 
             if(generationCounter == 1) {
@@ -143,40 +104,86 @@ public class GameTree {
                 Edge edge = new Edge(parent, node);
                 edges.add(edge);
 
+                if (transpositionTable) {
+                    table.checkInTable(currentPlayer, child, score);
+                }
+
                 previousGeneration.add(node);
             }
             else {
+                if (transpositionTable) {
+                    if (table.checkInTable(currentPlayer, child, score)) {
 
-                Node node = new Node(child, score);
-                nodes.add(node);
+                        Node node = new Node(child, score);
+                        nodes.add(node);
 
-                Edge edge = new Edge(parent, node);
-                edges.add(edge);
+                        Edge edge = new Edge(parent, node);
+                        edges.add(edge);
 
-                currentGeneration.add(node);
+                        currentGeneration.add(node);
+                    }
+                    else {
+                        prunedNodes++;
+                    }
+                }
+                else {
+                    Node node = new Node(child, score);
+                    nodes.add(node);
+
+                    Edge edge = new Edge(parent, node);
+                    edges.add(edge);
+
+                    currentGeneration.add(node);
+                }
             }
+
+
         }
     }
 
     /*
-    public void evaluateNodes(Node parent, int currentPlayer) {
+    public ArrayList<int[][]> findRandomPossibleMoves(int size) {
 
-        NeutralEvalFunct neutral;
-        OffensiveEvalFunct offensive;
-        DefensiveEvalFunct defensive;
-        if (strategy == 1) {
-            neutral = new NeutralEvalFunct(currentPlayer, parent.getBoardState(), root.getBoardState());
-            parent.setScore(neutral.evaluate());
-        }
-        else if (strategy == 2) {
+        ArrayList<int[][]> list = new ArrayList<>();
 
-            offensive = new OffensiveEvalFunct(parent, currentPlayer, parent.getBoardState(), root.getBoardState());
-            parent.setScore(offensive.evaluate());
+        for (int i = 0; i < size; i++) {
+            list.add(createRandomArray());
         }
-        else {
-            defensive = new DefensiveEvalFunct(currentPlayer, parent.getBoardState(), root.getBoardState());
-            parent.setScore(defensive.evaluate());
+        return list;
+    }
+
+    public int[][] createRandomArray() {
+
+        Random r = new Random();
+
+        int[][] randomCellColor = new int[9][9];
+
+        int[][] cellColor = new int[][] {
+
+                {1, 1, 1, 1, 1, -1, -1, -1, -1},
+                {1, 1, 1, 1, 1,  1, -1, -1, -1},
+                {0, 0, 1, 1, 1,  0,  0, -1, -1},
+                {0, 0, 0, 0, 0,  0,  0,  0, -1},
+                {0, 0, 0, 0, 0,  0,  0,  0,  0},
+                {0, 0, 0, 0, 0,  0,  0,  0, -1},
+                {0, 0, 2, 2, 2,  0,  0, -1, -1},
+                {2, 2, 2, 2, 2,  2, -1, -1, -1},
+                {2, 2, 2, 2, 2, -1, -1, -1, -1}
+
+        };
+
+        for (int j = 0; j < cellColor.length; j++) {
+            for (int k = 0; k < cellColor.length; k++) {
+                if (cellColor[j][k] == 0 || cellColor[j][k] == 1 || cellColor[j][k] == 2) {
+                    int randomNum = r.nextInt((2) + 1);
+                    randomCellColor[j][k] = randomNum;
+                }
+                else {
+                    randomCellColor[j][k] = -1;
+                }
+            }
         }
+        return randomCellColor;
     }
     */
 
@@ -199,7 +206,7 @@ public class GameTree {
 
     public List<Node> getNeighbours(Node v) { // String vertex
         // Returns all neighbours of a given vertex
-        List<Node> neighbours = new ArrayList<Node>();
+        List<Node> neighbours = new ArrayList<>();
 
         for (Edge e : edges){
             if(e.getSource() == v){
@@ -213,7 +220,7 @@ public class GameTree {
 
     public static ArrayList<Node> getChildren(Node v) { // String vertex
         // Returns all neighbours of a given vertex
-        ArrayList<Node> children = new ArrayList<Node>();
+        ArrayList<Node> children = new ArrayList<>();
 
         for (Edge e : edges){
             if(e.getSource() == v) {
@@ -243,5 +250,4 @@ public class GameTree {
         return table;
     }
 }
-
 

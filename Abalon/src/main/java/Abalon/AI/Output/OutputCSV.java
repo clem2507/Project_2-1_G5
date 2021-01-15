@@ -102,9 +102,9 @@ public class OutputCSV {
                 printWriter.print(data[i] + ", ");
             }
             printWriter.println();
+            printWriter.flush();
 
             if (close) {
-                printWriter.flush();
                 printWriter.close();
                 System.out.println();
                 System.out.println("Data is save in: " + fileName);

@@ -20,6 +20,28 @@ public class Test {
         }
     }
 
+    public static boolean checkWinCheat(int[][] board) {
+
+        int countP1 = 0;
+        int countP2 = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 1) {
+                    countP1++;
+                }
+                if (board[i][j] == 2) {
+                    countP2++;
+                }
+            }
+        }
+        if (countP1 < 12 || countP2 < 12) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public static int[][] rootCellColor = new int[][]{
 
             {2, 2, 2, 2, 2, -1, -1, -1, -1},
@@ -61,12 +83,19 @@ public class Test {
 
         //MCTS monteCarlo = new MCTS(rootCellColor, 1, 10000, 30, 10, 1);
         //monteCarlo.start();
-
         //System.out.println();
 
-        //testWeights(10);
 
-        mctsConfigurations();
+        //mctsConfigurations();
+        //testWeights(10, 3, 2);
+        // -> strategy = 2, offensive eval function
+        //testWeights(10, 3, 3);
+        // -> strategy = 3, defensive eval function
+        //testTimers(5);
+
+        GameTree gameTree = new GameTree(1, true);
+        gameTree.createTree(rootCellColor ,1, 3);
+        System.out.println(gameTree.getNodes().size());
     }
 
     public static void mctsConfigurations() {
@@ -115,64 +144,101 @@ public class Test {
         }
     }
 
-    /*
-    public static void testWeights(int plays) {
 
-        double max = Double.NEGATIVE_INFINITY;
+    public static void testWeights(int plays, int sampleSize, int strategy) {
+
+        OutputCSV out = new OutputCSV("testWeights.txt", "strategy, w1, w2, w5, w7, w8, mean_score");
         int count = 0;
         for (int w1 = -5; w1 < 0; w1++) {
             for (int w2 = 1; w2 < 5; w2++) {
-                for (int w5 = 1000; w5 <= 1000; w5+=0) {
-                    for (int w7 = 200; w7 < 400; w7+=50) {
-                        for (int w8 = 50; w8 < 100; w8+=10) {
-                            int currentPlayer = 1;
-                            int[][] bestBoard = rootCellColor;
-                            for (int i = 0; i < plays; i++) {
-                                if (currentPlayer == 1) {
-                                    MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 20, 10, 2);
-                                    monteCarlo.start();
-                                    bestBoard = monteCarlo.getBestMove();
-                                    currentPlayer = 2;
+                for (int w5 = 10000; w5 <= 10000; w5+=0) {
+                    for (int w7 = 200; w7 <= 400; w7+=100) {
+                        for (int w8 = 40; w8 <= 100; w8+=20) {
+                            double meanScore = 0;
+                            for (int i = 0; i < sampleSize; i++) {
+                                int currentPlayer = 1;
+                                int[][] bestBoard = rootCellColor;
+                                for (int j = 0; j < plays; j++) {
+                                    if (currentPlayer == 1) {
+                                        MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 20, 10, strategy);
+                                        monteCarlo.setWeights(w1, w2, w5, w7, w8);
+                                        monteCarlo.start();
+                                        bestBoard = monteCarlo.getBestMove();
+                                        currentPlayer = 2;
+                                    } else {
+                                        MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 20, 10, 1);
+                                        monteCarlo.start();
+                                        bestBoard = monteCarlo.getBestMove();
+                                        currentPlayer = 1;
+                                    }
                                 }
-                                else {
-                                    MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 20, 10, 1);
-                                    monteCarlo.start();
-                                    bestBoard = monteCarlo.getBestMove();
-                                    currentPlayer = 1;
-                                }
-                                //System.out.println("i = " + i);
+                                NeutralEvalFunct eval = new NeutralEvalFunct(1, bestBoard, rootCellColor);
+                                double currentScore = eval.evaluate();
+                                meanScore+=currentScore;
                             }
                             count++;
-                            System.out.println();
-                            System.out.println("count = " + count);
-                            System.out.println((500-count) + " configurations left");
-                            System.out.println();
-                            double currentScore;
-                            NeutralEvalFunct eval = new NeutralEvalFunct(1, bestBoard, rootCellColor);
-                            currentScore = eval.evaluate();
-                            if (max < currentScore) {
-
-                                System.out.println("-------------------");
-                                System.out.println();
-                                System.out.println("score = " + currentScore);
-                                System.out.println();
-                                System.out.println("w1 = " + w1);
-                                System.out.println("w2 = " + w2);
-                                System.out.println("w5 = " + w5);
-                                System.out.println("w7 = " + w7);
-                                System.out.println("w8 = " + w8);
-                                System.out.println();
-                                System.out.println("-------------------");
-
-                                max = currentScore;
+                            String[] data = {"Offensive", Double.toString(w1), Double.toString(w2), Double.toString(w5), Double.toString(w7), Double.toString(w8), Double.toString(meanScore/sampleSize)};
+                            if (count == 1) {
+                                out.writeResume(true, false, data);
                             }
+                            else if (count > 1 && count < 300) {
+                                out.writeResume(false, false, data);
+                            }
+                            else {
+                                out.writeResume(false, true, data);
+                            }
+                            System.out.println();
+                            System.out.println((300-count) + " simulations left");
+                            System.out.println();
                         }
                     }
                 }
             }
         }
     }
-    */
+
+    public static void testTimers(int sampleSize) {
+
+        OutputCSV out = new OutputCSV("testTimers.txt", "timer1, win_rate_1, timer2, win_rate_2");
+        int[] timers = {2, 5, 10, 20, 30};
+        for (int i = 0; i < 4; i++) {
+            double winRate1 = 0;
+            double winRate2 = 0;
+            for (int j = 0; j < sampleSize; j++) {
+                int currentPlayer = 1;
+                int[][] bestBoard = rootCellColor;
+                while (!BoardUI.isVictorious(bestBoard)) {
+                    if (currentPlayer == 1) {
+                        MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, timers[i], 30, 10, 1);
+                        monteCarlo.start();
+                        bestBoard = monteCarlo.getBestMove();
+                        currentPlayer = 2;
+                    } else {
+                        MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, timers[i+1], 30, 10, 1);
+                        monteCarlo.start();
+                        bestBoard = monteCarlo.getBestMove();
+                        currentPlayer = 1;
+                    }
+                }
+                if (currentPlayer == 1) {
+                    winRate2++;
+                }
+                else {
+                    winRate1++;
+                }
+            }
+            String[] data = {Integer.toString(timers[i]), Double.toString(winRate1/sampleSize), Integer.toString(timers[i+1]), Double.toString(winRate2/sampleSize)};
+            if (i == 0) {
+                out.writeResume(true, false, data);
+            }
+            else if (i < 3) {
+                out.writeResume(false, false, data);
+            }
+            else {
+                out.writeResume(false, true, data);
+            }
+        }
+    }
 
 
 /*
