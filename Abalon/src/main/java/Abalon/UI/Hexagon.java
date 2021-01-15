@@ -140,13 +140,13 @@ public class Hexagon extends Application {
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
 
-        Text pl1 = new Text(100, 170, player1);
+        Text pl1 = new Text(100, 210, player1);
         pl1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         pl1.setFill(Color.LIGHTSKYBLUE);
         pl1.setStrokeWidth(2);
         pane.getChildren().add(pl1);
 
-        Text pl2 = new Text(1036, 170, player2);
+        Text pl2 = new Text(1036, 210, player2);
         pl2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         pl2.setFill(Color.MEDIUMBLUE);
         pl2.setStrokeWidth(2);
