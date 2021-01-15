@@ -44,9 +44,24 @@ public class RuleBased {
             }else{
                 ArrayList<int[][]> tripleMoves = getPossibleMoves.getTripleMarbleMoves(boardState, currentPlayer);
 
-                do{
-                    bestMove = tripleMoves.get(new Random().nextInt(tripleMoves.size()));
-                } while(bestMove == previousMove);
+                if(tripleMoves.size() == 0){
+                    ArrayList<int[][]> doubleMoves = getPossibleMoves.getDoubleMarbleMoves(boardState, currentPlayer);
+
+                    if(doubleMoves.size() != 0){
+                        do{
+                            bestMove = doubleMoves.get(new Random().nextInt(doubleMoves.size()));
+                        } while(bestMove == previousMove && doubleMoves.size()!=1);
+                    }else{
+                        ArrayList<int[][]> singleMoves = getPossibleMoves.getSingleMarbleMoves(boardState, currentPlayer);
+                        do{
+                            bestMove = singleMoves.get(new Random().nextInt(singleMoves.size()));
+                        } while(bestMove == previousMove);
+                    }
+                }else{
+                    do{
+                        bestMove = tripleMoves.get(new Random().nextInt(tripleMoves.size()));
+                    } while(bestMove == previousMove && tripleMoves.size()!=1);
+                }
             }
         }
         previousMove = bestMove;

@@ -85,6 +85,12 @@ public class PlayerH implements Player {
 						setDone();
 					}
 					break;
+
+				case P:
+					if (dir != null) {
+						setDone();
+					}
+					break;
 			}
 		}
 	};

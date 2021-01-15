@@ -6,7 +6,6 @@ import Abalon.Main.PlayerH;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -15,7 +14,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -142,30 +140,17 @@ public class Hexagon extends Application {
             gameMode = new Text((String) HomePage.gameChoice.getValue());
         }
 
-        StackPane sp1 = new StackPane();
-        sp1.setPrefSize(100,100);
-        Text pl1 = new Text( player1);
-        pl1.setTranslateX(160);
-        pl1.setTranslateY(190);
-        sp1.getChildren().add(pl1);
+        Text pl1 = new Text(100, 210, player1);
         pl1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         pl1.setFill(Color.LIGHTSKYBLUE);
         pl1.setStrokeWidth(2);
-        sp1.setAlignment(pl1, Pos.CENTER);
+        pane.getChildren().add(pl1);
 
-        StackPane sp2 = new StackPane();
-        sp2.setPrefSize(100,100);
-        Text pl2 = new Text( player2);
-        pl2.setTranslateX(1096);
-        pl2.setTranslateY(190);
-        sp2.getChildren().add(pl2);
+        Text pl2 = new Text(1036, 210, player2);
         pl2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 26));
         pl2.setFill(Color.MEDIUMBLUE);
         pl2.setStrokeWidth(2);
-        sp2.setAlignment(pl2, Pos.CENTER);
-
-        pane.getChildren().add(sp1);
-        pane.getChildren().add(sp2);
+        pane.getChildren().add(pl2);
 
         gameMode.setTranslateX(485);
         gameMode.setTranslateY(70);
@@ -388,7 +373,7 @@ public class Hexagon extends Application {
         }
 
         // press ENTER
-        Text enter = new Text ("Press Enter to validate move.");
+        Text enter = new Text ("Press Enter/P to validate move.");
         enter.setX(70);
         enter.setY(420+(6*y));
         enter.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));

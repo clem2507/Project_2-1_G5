@@ -43,9 +43,6 @@ public class WinPage extends Application{
         message.setFont(f1);
         message.setForeground(c);
 
-        // TODO add timer
-
-
         JLabel turn = new JLabel("The game took "+ Abalon.numberOfTurn +" turns.", SwingConstants.CENTER);
         turn.setFont(f2);
         turn.setBounds(100, 100, 400, 200);
