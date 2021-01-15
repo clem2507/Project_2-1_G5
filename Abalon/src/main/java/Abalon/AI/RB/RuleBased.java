@@ -42,10 +42,10 @@ public class RuleBased {
                 bestMove = pushingMoves.get(rand);
 
             }else{
-                ArrayList<int[][]> tripleMoves = getPossibleMoves.getTripleMarbleMoves(boardState, currentPlayer);
+                ArrayList<int[][]> tripleMoves = getPossibleMoves.getTripleMarbleMoves(boardState, currentPlayer, true);
 
                 if(tripleMoves.size() == 0){
-                    ArrayList<int[][]> doubleMoves = getPossibleMoves.getDoubleMarbleMoves(boardState, currentPlayer);
+                    ArrayList<int[][]> doubleMoves = getPossibleMoves.getDoubleMarbleMoves(boardState, currentPlayer, true);
 
                     if(doubleMoves.size() != 0){
                         do{

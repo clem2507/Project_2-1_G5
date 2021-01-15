@@ -125,8 +125,8 @@ public class OffensiveEvalFunct extends EvaluationFunction{
     public ArrayList<int[][]> getPossiblePushingMoves(int[][] board, int currentPlayer) {
 
         GetPossibleMoves obj = new GetPossibleMoves();
-        ArrayList<int[][]> doubles = obj.getDoubleMarbleMoves(board, currentPlayer);
-        ArrayList<int[][]> triples = obj.getTripleMarbleMoves(board, currentPlayer);
+        ArrayList<int[][]> doubles = obj.getDoubleMarbleMoves(board, currentPlayer, false);
+        ArrayList<int[][]> triples = obj.getTripleMarbleMoves(board, currentPlayer, false);
 
         doubles.addAll(triples);
 
