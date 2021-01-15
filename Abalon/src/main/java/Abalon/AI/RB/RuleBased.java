@@ -50,7 +50,7 @@ public class RuleBased {
                     if(doubleMoves.size() != 0){
                         do{
                             bestMove = doubleMoves.get(new Random().nextInt(doubleMoves.size()));
-                        } while(bestMove == previousMove);
+                        } while(bestMove == previousMove && doubleMoves.size()!=1);
                     }else{
                         ArrayList<int[][]> singleMoves = getPossibleMoves.getSingleMarbleMoves(boardState, currentPlayer);
                         do{
@@ -60,7 +60,7 @@ public class RuleBased {
                 }else{
                     do{
                         bestMove = tripleMoves.get(new Random().nextInt(tripleMoves.size()));
-                    } while(bestMove == previousMove);
+                    } while(bestMove == previousMove && tripleMoves.size()!=1);
                 }
             }
         }
