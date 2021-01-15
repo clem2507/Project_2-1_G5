@@ -388,7 +388,7 @@ public class Hexagon extends Application {
         }
 
         // press ENTER
-        Text enter = new Text ("Press Enter to validate move.");
+        Text enter = new Text ("Press Enter/P to validate move.");
         enter.setX(70);
         enter.setY(420+(6*y));
         enter.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
