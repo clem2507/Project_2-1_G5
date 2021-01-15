@@ -236,7 +236,7 @@ public class Abalon {
 					//MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000,30,10, strategy1);
 					//monteCarlo.start();
 					//board.setBoard(monteCarlo.getBestMove());
-					//currentPlayer = 2;
+					currentPlayer = 2;
 				}
 				else {
 					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000,30,10, strategy2);

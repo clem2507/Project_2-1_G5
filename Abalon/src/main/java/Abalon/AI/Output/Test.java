@@ -87,15 +87,11 @@ public class Test {
 
 
         //mctsConfigurations();
-        //testWeights(10, 3, 2);
+        testWeights(10, 3, 2);
         // -> strategy = 2, offensive eval function
         //testWeights(10, 3, 3);
         // -> strategy = 3, defensive eval function
         //testTimers(5);
-
-        GameTree gameTree = new GameTree(1, true);
-        gameTree.createTree(rootCellColor ,1, 3);
-        System.out.println(gameTree.getNodes().size());
     }
 
     public static void mctsConfigurations() {
@@ -109,7 +105,7 @@ public class Test {
                 for (int i = 0; i < 5; i++) {
                     int currentPlayer = 1;
                     int[][] bestBoard = rootCellColor;
-                    while (!BoardUI.isVictorious(bestBoard)) {
+                    while (!checkWinCheat(bestBoard)) {
                         if (currentPlayer == 1) {
                             MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, sampleSize, plays, 1);
                             monteCarlo.start();
@@ -207,7 +203,7 @@ public class Test {
             for (int j = 0; j < sampleSize; j++) {
                 int currentPlayer = 1;
                 int[][] bestBoard = rootCellColor;
-                while (!BoardUI.isVictorious(bestBoard)) {
+                while (!checkWinCheat(bestBoard)) {
                     if (currentPlayer == 1) {
                         MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, timers[i], 30, 10, 1);
                         monteCarlo.start();

@@ -76,7 +76,7 @@ public class AlphaBetaSearch {
     // minimax algorithm with alpha-beta pruning implemented
     public double ab_minimax(Node position, int depth, boolean maximizingPlayer, double alpha, double beta) {
 
-        ArrayList<Node> children = tree.getChildren(position);
+        ArrayList<Node> children = GameTree.getChildren(position);
 
         if (depth == 0) {
             return position.getScore();
