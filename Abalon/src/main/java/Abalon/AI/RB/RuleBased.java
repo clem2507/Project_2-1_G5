@@ -6,6 +6,9 @@ import Abalon.AI.Tree.GetPossibleMoves;
 
 import java.util.*;
 
+/**
+ * This class defines the rule-based algorithm used by a bot to play the Abalon game
+ */
 public class RuleBased {
 
     private int[][] boardState;
