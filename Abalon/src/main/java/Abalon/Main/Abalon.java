@@ -34,8 +34,6 @@ public class Abalon {
 
 	private static String gameMode;
 
-	WinPage winPage;
-
 	/**
 	 * Returns a new object of class Abalon
 	 * @param p1 class that serves to perform the move of a real person OR an AI

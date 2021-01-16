@@ -52,6 +52,8 @@ public class Hexagon extends Application {
     public static ArrayList<Text> letters = new ArrayList<>();
     public static Text direction = null;
 
+    static MediaPlayer mediaPlayer;
+
     // Hexagon should access Board to obtain Marbles positions, color, etc
     // Board is a backend-only class, while Hexagon is so far the only UI class in the game (thus, we can consider renaming it)
 
@@ -64,19 +66,11 @@ public class Hexagon extends Application {
 
         this.primaryStage = primaryStage;
 
-        music();
+        addMusic();
 
-        try {
-            BufferedImage buffer = ImageIO.read(new File("./res/grey2.jpg"));
-            Image background = SwingFXUtils.toFXImage(buffer, null);
-            ImageView view = new ImageView(background);
-            pane.getChildren().addAll(view);
-        } catch (Exception e) {
-            System.out.println("file not found");
-            System.exit(0);
-        }
+        setBackground();
 
-        //Creating an object of Board, which construct a board
+        //Creating an object of Board, which constructs a board
         board = new BoardUI();
         pane.setCenter(board.hexagon);
 
@@ -91,6 +85,132 @@ public class Hexagon extends Application {
             pane.getChildren().add(board.scoredCircles[i][1]);
         }
 
+        addGameModeAndPlayersName();
+
+        addMusicButton();
+
+
+        // sketch buttons to know how to play the game
+        if (!HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")) {
+            sketchHowToPlay();
+        }
+
+        displayWhosePlaying();
+        displayWhoseTurn();
+
+        Scene scene = new Scene(pane, WIDTH, HEIGHT);
+        this.primaryStage.setResizable(false);
+        this.primaryStage.setTitle("Abalone");
+        this.primaryStage.setScene(scene);
+        this.primaryStage.show();
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE){
+                    primaryStage.close();
+                }
+            }
+        });
+
+        accessableScene = scene;
+
+        Player p1 = new PlayerH();
+        Player p2 = new PlayerH();
+
+        Thread gameThread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
+                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    game.runGame();
+                }
+                else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
+                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    game.runGame();
+                }
+                else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
+                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    game.runGame();
+                }
+                else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
+                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    game.runGame();
+                }
+                else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
+                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    game.runGame();
+                }
+            }
+        });
+        gameThread.setDaemon(false);
+        gameThread.start();
+    }
+
+    private void displayWhoseTurn() {
+        turnText = new Text ("Turn number 0");
+        turnText.setX(485);
+        turnText.setY(670);
+        turnText.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        turnText.setFill(Color.BLACK);
+        turnText.setStrokeWidth(2);
+        pane.getChildren().add(turnText);
+    }
+
+    /**
+     * displays message to indicate whose player is playing
+     */
+    private void displayWhosePlaying() {
+        whosePlaying = new Text (displayCurrentPlayer(1));
+        whosePlaying.setX(485);
+        whosePlaying.setY(640);
+        whosePlaying.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        whosePlaying.setFill(Color.BLACK);
+        whosePlaying.setStrokeWidth(2);
+        pane.getChildren().add(whosePlaying);
+    }
+
+    /**
+     * Adds of the button to pause and resume the music
+      */
+    private void addMusicButton() {
+        Button soundButton = new Button();
+        String pathSoundOn = "./res/soundOn.png";
+        String pathSoundOff = "./res/soundOff.png";
+        Image soundOn = new Image(Paths.get(pathSoundOn).toUri().toString());
+        Image soundOff = new Image(Paths.get(pathSoundOff).toUri().toString());
+        ImageView viewOn = new ImageView(soundOn);
+        ImageView viewOff = new ImageView(soundOff);
+        viewOn.setFitHeight(40);
+        viewOn.setPreserveRatio(true);
+        viewOff.setFitHeight(40);
+        viewOff.setPreserveRatio(true);
+        soundButton.setTranslateX(1160);
+        soundButton.setTranslateY(25);
+        soundButton.setPrefSize(40, 40);
+        soundButton.setGraphic(viewOn);
+
+        soundButton.setOnAction(
+                event -> {
+                    pressed = pressed + 1;
+                    if(pressed%2 == 0){
+                        mediaPlayer.pause();
+                        soundButton.setGraphic(viewOff);
+                    }
+                    else{
+                        mediaPlayer.play();
+                        soundButton.setGraphic(viewOn);
+                    }
+                });
+
+        Pane musicPane = new Pane();
+        musicPane.getChildren().add(soundButton);
+        pane.getChildren().add(musicPane);
+    }
+
+    private void addGameModeAndPlayersName() {
         Text gameMode = null;
 
         if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
@@ -160,145 +280,18 @@ public class Hexagon extends Application {
         //Setting the Stroke
         gameMode.setStrokeWidth(2);
         pane.getChildren().add(gameMode);
+    }
 
-        // Add of the button to pause and resume the music
-        Button soundButton = new Button();
-        String pathSoundOn = "./res/soundOn.png";
-        String pathSoundOff = "./res/soundOff.png";
-        Image soundOn = new Image(Paths.get(pathSoundOn).toUri().toString());
-        Image soundOff = new Image(Paths.get(pathSoundOff).toUri().toString());
-        ImageView viewOn = new ImageView(soundOn);
-        ImageView viewOff = new ImageView(soundOff);
-        viewOn.setFitHeight(40);
-        viewOn.setPreserveRatio(true);
-        viewOff.setFitHeight(40);
-        viewOff.setPreserveRatio(true);
-        soundButton.setTranslateX(1160);
-        soundButton.setTranslateY(25);
-        soundButton.setPrefSize(40, 40);
-        soundButton.setGraphic(viewOn);
-
-        soundButton.setOnAction(
-                event -> {
-                    pressed = pressed + 1;
-                    if(pressed%2 == 0){
-                        mediaPlayer.pause();
-                        soundButton.setGraphic(viewOff);
-                    }
-                    else{
-                        mediaPlayer.play();
-                        soundButton.setGraphic(viewOn);
-                    }
-                });
-
-        Pane musicPane = new Pane();
-        musicPane.getChildren().add(soundButton);
-        pane.getChildren().add(musicPane);
-
-        // sketch buttons to know how to play the game
-        if (!HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")) {
-            sketchHowToPlay();
+    private void setBackground() {
+        try {
+            BufferedImage buffer = ImageIO.read(new File("./res/grey2.jpg"));
+            Image background = SwingFXUtils.toFXImage(buffer, null);
+            ImageView view = new ImageView(background);
+            pane.getChildren().addAll(view);
+        } catch (Exception e) {
+            System.out.println("file not found");
+            System.exit(0);
         }
-
-        //displays message to indicate whose player is playing
-        whosePlaying = new Text (displayCurrentPlayer(1));
-        whosePlaying.setX(485);
-        whosePlaying.setY(640);
-        whosePlaying.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        whosePlaying.setFill(Color.BLACK);
-        whosePlaying.setStrokeWidth(2);
-        pane.getChildren().add(whosePlaying);
-
-        turnText = new Text ("Turn number 0");
-        turnText.setX(485);
-        turnText.setY(670);
-        turnText.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        turnText.setFill(Color.BLACK);
-        turnText.setStrokeWidth(2);
-        pane.getChildren().add(turnText);
-
-        Scene scene = new Scene(pane, WIDTH, HEIGHT);
-        this.primaryStage.setResizable(false);
-        this.primaryStage.setTitle("Abalone");
-        this.primaryStage.setScene(scene);
-        this.primaryStage.show();
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent t) {
-                KeyCode key = t.getCode();
-                if (key == KeyCode.ESCAPE){
-                    primaryStage.close();
-                }
-            }
-        });
-
-        accessableScene = scene;
-
-        Player p1 = new PlayerH();
-        Player p2 = new PlayerH();
-
-
-//        else if (HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-//            System.out.println("Choice of game: Alpha-Beta vs Human");
-//            p1 = new PlayerH();
-//
-//
-//            //player 2 a.k.a AI
-//            GameTree gameTree = new GameTree();
-//            AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
-//            algo.start(true);
-//            bestMove = algo.getBestMove();
-//
-//        }
-//        else if (HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-//            System.out.println("Choice of game: MCTS vs Human");
-//
-//            //player 2 a.k.a AI
-//            //MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
-//            //monteCarlo.start();
-//            //bestMove = monteCarlo.getBestMove();
-//
-//
-//        }
-//        else if (HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-//            System.out.println("Choice of game: Alpha-Beta vs MCTS");
-//
-//            GameTree gameTree = new GameTree();
-//            AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
-//            algo.start(true);
-//            bestMove = algo.getBestMove();
-//
-//        }
-
-        Thread gameThread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
-                    game.runGame();
-                }
-                else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
-                    game.runGame();
-                }
-                else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
-                    game.runGame();
-                }
-                else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
-                    game.runGame();
-                }
-                else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
-                    game.runGame();
-                }
-            }
-        });
-        gameThread.setDaemon(false);
-        gameThread.start();
     }
 
     private void sketchHowToPlay() {
@@ -394,30 +387,12 @@ public class Hexagon extends Application {
         return currentPlayer;
     }
 
-    static MediaPlayer mediaPlayer;
-    public static void music(){
+    public static void addMusic(){
         //Add of music in the game
         String musicFile = "./res/wii.mp3";
         Media media = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
-    }
-
-
-    static MediaPlayer mediaPlayerWin;
-
-    public static void winMusic(){
-        mediaPlayer.stop();
-        //Add of music in the game
-        String musicFile = "./res/win.mp3";
-        Media mediaWin = new Media(Paths.get(musicFile).toUri().toString());
-        mediaPlayerWin = new MediaPlayer(mediaWin);
-        mediaPlayerWin.play();
-        long time = System.currentTimeMillis();
-        while ((System.currentTimeMillis() - time) < 6600) {
-            // just a timer that waits the end of the win music
-        }
-        System.exit(0);
     }
 }
 

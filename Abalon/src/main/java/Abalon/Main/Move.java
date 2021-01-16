@@ -1,10 +1,6 @@
 package Abalon.Main;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import Abalon.UI.BoardUI;
 
 public class Move {
 	public MoveDirection dir;

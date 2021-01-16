@@ -71,18 +71,6 @@ public class BoardUI {
         else {
             return false;
         }
-
-        /*
-        int cnt1 = 0, cnt2 = 0;
-        for (int i = 0; i < 6; i++) {
-            if (scoredCirclesColors[i][0] > 0)
-                cnt1++;
-            if (scoredCirclesColors[i][1] > 0)
-                cnt2++;
-        }
-
-        return !(cnt1 == 6 || cnt2 == 6);
-         */
     }
 
     /**
@@ -217,8 +205,6 @@ public class BoardUI {
                     circle.setEffect(innerShadow);
                 }
 
-                //marbleSelecting(circle, (Color)circle.getFill(), BROWN, i, j);
-                //marbleHovering(circle, (Color)circle.getFill(), BROWN, i, j);
             }
             // update the number of circles per level
             if (i < 4) { // less than 9 holes at that level
@@ -446,38 +432,6 @@ public class BoardUI {
             drawScoredCell(i, 1); //uncomment when done with the second player side marbles
         }
     }
-
-    /*
-     * Enables the option of selecting a marble
-     * The selected marbles get highlighted in the selectionColor
-     * @param circle the circle to be selected
-     * @param originalColor the initial colour of the circle
-     * @param selectionColor the colour of the circled once selected
-     * @param i the index of the circle to be selected
-     * @param j the second index of the circle to be selected
-     */
-    /*private void marbleSelecting(Circle circle, Color originalColor, Color selectionColor, int i, int j){
-        circle.setOnMouseClicked(e -> {
-            counter[i][j]++;
-            if(counter[i][j] %2 != 0){ //if the count is odd, it means the marble has been selected and changes of color
-                selected[i][j] = true;
-                circle.setFill(selectionColor);
-            }
-            else{
-                selected[i][j] = false;
-                circle.setFill(originalColor);
-            }
-
-        });
-    }
-
-    /*private void marbleHovering(Circle circle, Color originalColor, Color hoveringColor, int i, int j) {
-        circle.setOnMouseEntered( e -> circle.setFill(hoveringColor));
-
-        if(!isSelected(i,j)) {
-            circle.setOnMouseExited(e -> circle.setFill(originalColor));
-        }
-    }*/
 
     /**
      * Checks whether a marble is selected or not

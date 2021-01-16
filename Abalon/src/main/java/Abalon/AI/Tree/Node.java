@@ -16,7 +16,7 @@ public class Node{
         this.score = score;
     }
 
-    // constructor used for the mcts tree
+    // constructor used for the MCTS tree
     public Node(int[][] boardState, int totalSimulation, double totalScore) {
         this.boardState = boardState;
         this.totalSimulation = totalSimulation;

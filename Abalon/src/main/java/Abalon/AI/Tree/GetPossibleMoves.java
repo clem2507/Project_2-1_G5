@@ -3,7 +3,7 @@ package Abalon.AI.Tree;
 import Abalon.Main.Move;
 import Abalon.Main.MoveDirection;
 import Abalon.Main.Rules;
-
+import java.util.Collections;
 import java.util.ArrayList;
 
 public class GetPossibleMoves {
@@ -26,9 +26,9 @@ public class GetPossibleMoves {
         oneMarbleMoving.clear();
 
         //three marbles capturing
-        threeMarblesMoving.addAll(getTripleMarbleMoves(board, playerTurn));
+        threeMarblesMoving.addAll(getTripleMarbleMoves(board, playerTurn, true));
 
-        twoMarblesMoving.addAll(getDoubleMarbleMoves(board, playerTurn));
+        twoMarblesMoving.addAll(getDoubleMarbleMoves(board, playerTurn, true));
 
         oneMarbleMoving.addAll(getSingleMarbleMoves(board, playerTurn));
 
@@ -51,8 +51,40 @@ public class GetPossibleMoves {
         return allPossibleMoves; //this will be an arraylist containing move objects
     }
 
-    public ArrayList<int[][]> getSingleMarbleMoves(int[][] board, int playerTurn) {
+    /**
+     * returns a list of all possible moves in this order: triples moves, double moves, single moves
+     */
+    public ArrayList<int[][]> getPossibleMovesPreviousOrdering(int[][] board, int playerTurn) {
+        allPossibleMoves.clear();
 
+        allPossibleMoves.addAll(getTripleMarbleMoves(board, playerTurn, false));
+        allPossibleMoves.addAll(getDoubleMarbleMoves(board, playerTurn, false));
+        allPossibleMoves.addAll(getSingleMarbleMoves(board, playerTurn));
+
+        return allPossibleMoves;
+
+    }
+
+    /**
+     * returns a list of move in a random order
+     * by shuffling the list so that we can compare with no ordering at all
+     */
+    public ArrayList<int[][]> getPossibleMovesNoOrdering(int[][] board, int playerTurn) {
+        allPossibleMoves.clear();
+
+        allPossibleMoves.addAll(getTripleMarbleMoves(board, playerTurn, false));
+        allPossibleMoves.addAll(getDoubleMarbleMoves(board, playerTurn, false));
+        allPossibleMoves.addAll(getSingleMarbleMoves(board, playerTurn));
+
+        Collections.shuffle(allPossibleMoves); //shuffle the list as it is currently ordered between 3, 2, and 1 marbles
+
+        return allPossibleMoves;
+    }
+
+    /**
+     * Returns a list of all possible moves using one single marble
+     */
+    public ArrayList<int[][]> getSingleMarbleMoves(int[][] board, int playerTurn) {
 
         ArrayList<int[][]> singleMarbleLocations = new ArrayList<>();
         for(int i = 0; i<board.length; i++) { // find every marble that belongs to the player and create a pushing array
@@ -65,10 +97,13 @@ public class GetPossibleMoves {
                 }
             }
         }
-        return possibleMovesGivenPushing(singleMarbleLocations, board, playerTurn);
+        return possibleMovesGivenPushing(singleMarbleLocations, board, playerTurn, false);
     }
 
-    public ArrayList<int[][]> getDoubleMarbleMoves(int[][] board, int playerTurn) {
+    /**
+     * Returns a list of all possible moves using two marbles
+     */
+    public ArrayList<int[][]> getDoubleMarbleMoves(int[][] board, int playerTurn, boolean ordering) {
         ArrayList<int[][]> combinationsOfMarbles = new ArrayList<>();
         Move justAMove = new Move();
         justAMove.pushing = new int[0][0];
@@ -115,10 +150,13 @@ public class GetPossibleMoves {
             }
         }
 
-        return possibleMovesGivenPushing(combinationsOfMarbles, board, playerTurn);
+        return possibleMovesGivenPushing(combinationsOfMarbles, board, playerTurn, ordering);
     }
 
-    public ArrayList<int[][]> getTripleMarbleMoves(int[][] board, int playerTurn) {
+    /**
+     * Returns a list of all possible moves using three marbles
+     */
+    public ArrayList<int[][]> getTripleMarbleMoves(int[][] board, int playerTurn, boolean ordering) {
         ArrayList<int[][]> combinationsOfMarbles = new ArrayList<>();
         Move justAMove = new Move();
         justAMove.pushing = new int[0][0];
@@ -175,10 +213,10 @@ public class GetPossibleMoves {
                 }
             }
         }
-        return possibleMovesGivenPushing(combinationsOfMarbles, board, playerTurn);
+        return possibleMovesGivenPushing(combinationsOfMarbles, board, playerTurn, ordering);
     }
 
-    public ArrayList<int[][]> possibleMovesGivenPushing(ArrayList<int[][]> possiblePushing, int[][] board, int playerTurn) {
+    public ArrayList<int[][]> possibleMovesGivenPushing(ArrayList<int[][]> possiblePushing, int[][] board, int playerTurn, boolean ordering) {
         ArrayList<int[][]> possibleMovesGivenPushing = new ArrayList<>();
         for(int i = 0; i<possiblePushing.size(); i++) {
             Move mv = new Move(); //create a move object
@@ -196,10 +234,10 @@ public class GetPossibleMoves {
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move(); //change the cloned board to the state after the move has been made
 
-                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                if(ordering && checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
                     capturing.add(mv.board);
                 }
-                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                else if(ordering && checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
                     attacking.add(mv.board);
                 }
                 else { // if the move is neither capturing nor attacking, add it to the regular moves.
@@ -219,10 +257,10 @@ public class GetPossibleMoves {
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
 
-                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                if(ordering && checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
                     capturing.add(mv.board);
                 }
-                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                else if(ordering && checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
                     attacking.add(mv.board);
                 }
                 else { // if the move is neither capturing nor attacking, add it to the regular moves.
@@ -241,10 +279,10 @@ public class GetPossibleMoves {
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
 
-                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                if(ordering && checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
                     capturing.add(mv.board);
                 }
-                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                else if(ordering && checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
                     attacking.add(mv.board);
                 }
                 else { // if the move is neither capturing nor attacking, add it to the regular moves.
@@ -263,10 +301,10 @@ public class GetPossibleMoves {
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
 
-                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                if(ordering && checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
                     capturing.add(mv.board);
                 }
-                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                else if(ordering && checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
                     attacking.add(mv.board);
                 }
                 else { // if the move is neither capturing nor attacking, add it to the regular moves.
@@ -285,10 +323,10 @@ public class GetPossibleMoves {
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
 
-                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                if(ordering && checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
                     capturing.add(mv.board);
                 }
-                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                else if(ordering && checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
                     attacking.add(mv.board);
                 }
                 else { // if the move is neither capturing nor attacking, add it to the regular moves.
@@ -307,10 +345,10 @@ public class GetPossibleMoves {
             if (rules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)) {
                 rules.move();
 
-                if(checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
+                if(ordering && checkIfScoringMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble off the board. if it does, add it to the capture move list.
                     capturing.add(mv.board);
                 }
-                else if(checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
+                else if(ordering && checkIfPushingMove(mv.board, board, playerTurn)) { //check if the move pushes an opponent's marble at all. if it does, add it to the attacking move list
                     attacking.add(mv.board);
                 }
                 else { // if the move is neither capturing nor attacking, add it to the regular moves.
@@ -320,7 +358,10 @@ public class GetPossibleMoves {
         }
         return possibleMovesGivenPushing;
     }
-    /*checks if any of the opposing marbles moved. if they did it will return true and the move is a move that pushes*/
+    /**
+     * checks if any of the opposing marbles moved.
+     * if they did it will return true and the move is a move that pushes
+     */
     public boolean checkIfPushingMove(int[][] board, int[][] currentBoard, int playerTurn) {
 
         int opponentPlayer;
@@ -340,7 +381,10 @@ public class GetPossibleMoves {
         }
         return false;
     }
-    /*checks if the count of opposing marbles is the same before the turn as after the turn. If it's not, it will return true and the move scores*/
+    /**
+     * checks if the count of opposing marbles is the same before the turn as after the turn.
+     * If it's not, it will return true and the move scores
+     */
     public boolean checkIfScoringMove(int[][] board, int[][] currentBoard, int playerTurn) {
 
         int opponentPlayer;
