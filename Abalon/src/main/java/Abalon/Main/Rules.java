@@ -89,15 +89,12 @@ public class Rules {
         switch(pushing.length) {
 
             case 1:
-                // System.out.println(checkSingleMarble(pushing[0], direction, board,playerTurn));
                 return checkSingleMarble(pushing[0], direction, board,playerTurn);
 
             case 2:
-                // System.out.println(checkTwoMarbles(pushing, direction, board, playerTurn));
                 return checkTwoMarbles(pushing, direction, board, playerTurn);
 
             case 3:
-                // System.out.println(checkThreeMarbles(pushing,direction,board,playerTurn));
                 return checkThreeMarbles(pushing,direction,board,playerTurn);
 
         }
@@ -108,89 +105,6 @@ public class Rules {
         return false;
 
     }
-
-    /*private  boolean checkSingleMarble(int[] marble, MoveDirection direction, int[][] board, int playerTurn) {
-        if(checkOutOfBounds(marble, direction, board)) { return false; }
-        switch(direction) {
-
-            case TOP_LEFT:
-
-                if(marble[0] >= 5) {
-                    switch(board[marble[0]-1][marble[1]]) {
-                        case 0: return true;
-                        case 1: return false;
-                        case 2: return false;
-                    }
-                }
-                else {
-                    switch(board[marble[0]-1][marble[1]-1]) {
-                        case 0: return true;
-                        case 1: return false;
-                        case 2: return false;
-                    }
-                }
-            case LEFT:
-                switch(board[marble[0]][marble[1]-1]) {
-                    case 0: return true;
-                    case 1: return false;
-                    case 2: return false;
-                }
-
-            case BOTTOM_LEFT:
-                if(marble[0] >= 4) {
-                    switch(board[marble[0]+1][marble[1]-1]) {
-                        case 0: return true;
-                        case 1: return false;
-                        case 2: return false;
-                    }
-                }
-                else {
-                    switch(board[marble[0]+1][marble[1]]) {
-                        case 0: return true;
-                        case 1: return false;
-                        case 2: return false;
-                    }
-                }
-            case BOTTOM_RIGHT:
-                if(marble[0] >= 4) {
-                    switch(board[marble[0]+1][marble[1]]) {
-                        case 0: return true;
-                        case 1: return false;
-                        case 2: return false;
-                    }
-                }
-                else {
-                    switch(board[marble[0]+1][marble[1]+1]) {
-                        case 0: return true;
-                        case 1: return false;
-                        case 2: return false;
-                    }
-                }
-            case RIGHT:
-                switch(board[marble[0]][marble[1]+1]) {
-                    case 0: return true;
-                    case 1: return false;
-                    case 2: return false;
-                }
-
-            case TOP_RIGHT:
-                if (marble[0] >= 5) {
-                    switch(board[marble[0]-1][marble[1]+1]) {
-                        case 0: return true;
-                        case 1: return false;
-                        case 2: return false;
-                    }
-                }
-                else {
-                    switch(board[marble[0]-1][marble[1]]) {
-                        case 0: return true;
-                        case 1: return false;
-                        case 2: return false;
-                    }
-                }
-        }
-        return false;
-    }*/
 
     private boolean checkTwoMarbles(int[][] pushing,  MoveDirection direction, int[][] board, int playerTurn) {
 
@@ -236,7 +150,6 @@ public class Rules {
                 }
 
         }
-        // System.out.println("?");
         return false;
     }
 
@@ -281,55 +194,6 @@ public class Rules {
         }
         return false;
     }
-
-    /**
-     checks what is behind a certain marble to be pushed
-     @param marblePushed An array storing the coordinates of the marble going to be pushed
-     @param direction A direction of the MoveDirection enum, Direction in which the selected marbles are going to push
-     @returns an int. 1 if there is a marble of player 1, 2 if it's player 2 marble, etc.
-     */
-//    public int checkSpotBehindPushedMarble(int[] marblePushed, MoveDirection direction, int[][] board, int playerTurn){
-//        switch (direction){
-//            case TOP_LEFT: return checkSquareForColor(marblePushed,MoveDirection.BOTTOM_RIGHT, board);
-//
-//            case TOP_RIGHT: return checkSquareForColor(marblePushed,MoveDirection.BOTTOM_LEFT,board);
-//
-//            case LEFT: return checkSquareForColor(marblePushed,MoveDirection.RIGHT,board);
-//
-//            case RIGHT: return checkSquareForColor(marblePushed,MoveDirection.LEFT,board);
-//
-//            case BOTTOM_LEFT: return checkSquareForColor(marblePushed,MoveDirection.TOP_RIGHT,board);
-//
-//            case BOTTOM_RIGHT: return checkSquareForColor(marblePushed,MoveDirection.TOP_LEFT,board);
-//
-//
-//        }
-//    }
-
-//    public MoveDirection getOppositeDirection(MoveDirection) {
-//        switch (direction) {
-//            case TOP_LEFT:
-//                return MoveDirection.BOTTOM_RIGHT;
-//
-//            case TOP_RIGHT:
-//                return MoveDirection.BOTTOM_LEFT;
-//
-//            case LEFT:
-//                return MoveDirection.RIGHT;
-//
-//            case RIGHT:
-//                return ,MoveDirection.LEFT;
-//
-//            case BOTTOM_LEFT:
-//                return MoveDirection.TOP_RIGHT;
-//
-//            case BOTTOM_RIGHT:
-//                return MoveDirection.TOP_LEFT;
-//
-//        }
-//    }
-
-
 
     /**
      checks if a suggested move will leave a marble out of bounds
@@ -617,35 +481,6 @@ public class Rules {
 
         }
     }
-    /** I used it because I thought I had to push/move the marbles in opposite directions but it is actually the same*/
-//    /** Perform the push of the marble that has to be pushed*/
-//    public void pushOneMarble(MoveDirection direction, int[][] board){
-//        switch (direction){
-//            case TOP_LEFT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.BOTTOM_RIGHT, board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//
-//            case TOP_RIGHT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.BOTTOM_LEFT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//
-//            case LEFT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.RIGHT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//
-//            case RIGHT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.LEFT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//
-//            case BOTTOM_LEFT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.TOP_RIGHT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//
-//            case BOTTOM_RIGHT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.TOP_LEFT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//        }
-//    }
 
     public void performMoveThree(int[] marble1, int[] marble2, int[] marble3, MoveDirection direction, int[][] board) {
         new_board[marble1[0]][marble1[1]] = 0;
@@ -674,9 +509,6 @@ public class Rules {
                 new_board[marblet1[0]][marblet1[1]] = 0;
             }
 
-            // System.out.println(marblet1[0] + " " + marblet1[1]);
-            // System.out.println(marblet2[0] + " " + marblet2[1]);
-
             if (marblet1[0] == marblet2[0] && marblet1[1] == marblet2[1]) { // 1 Marble is pushed
                 if (!checkOutOfBounds(marblet1, direction, board)) {
                     int[] t1Location = checkSquareForLocation(marblet1, direction, board);
@@ -700,64 +532,9 @@ public class Rules {
         }
     }
 
-    /** I used it because I thought I had to push/move the marbles in opposite directions but it is actually the same*/
-//    public void pushTwoMarble(MoveDirection direction, int[][] board){
-//        switch (direction){
-//            case TOP_LEFT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.BOTTOM_RIGHT, board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.BOTTOM_RIGHT, board);
-//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
-//
-//
-//            case TOP_RIGHT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.BOTTOM_LEFT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.BOTTOM_LEFT, board);
-//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
-//
-//
-//            case LEFT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.RIGHT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.RIGHT, board);
-//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
-//
-//            case RIGHT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.LEFT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.LEFT, board);
-//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
-//
-//            case BOTTOM_LEFT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.TOP_RIGHT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.TOP_RIGHT, board);
-//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
-//
-//            case BOTTOM_RIGHT:
-//                int[] nLocation = checkSquareForLocation(marblesToBePushed.get(0),MoveDirection.TOP_LEFT,board);
-//                moveMarble(marblesToBePushed.get(0),nLocation,board);
-//                int[] nLocation2 = checkSquareForLocation(marblesToBePushed.get(1),MoveDirection.TOP_LEFT board);
-//                moveMarble(marblesToBePushed.get(1),nLocation2,board);
-//        }
-//    }
-
-
     public void moveMarble(int[] marble, int[] location, int[][] board) {
-        /*if(playerTurn == 1)
-        {
-            new_board[location[0]][location[1]] = 1; // Then replace value of target direction to player's number. So here 1 because it is player 1 turn
-            //board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
-        }
-        else if(playerTurn == 2)
-        {
-            new_board[location[0]][location[1]] = 2; // Then replace value of target direction to player's number. So here 2 because it is player 2 turn
-            //board[marble[0]][marble[1]] = 0; // Set the old marble position to zero because it becomes an empty zone
-        }*/
         if (location[0] != -1 && location[1] != -1) {
             new_board[location[0]][location[1]] = board[marble[0]][marble[1]];
         }
     }
-
 }
