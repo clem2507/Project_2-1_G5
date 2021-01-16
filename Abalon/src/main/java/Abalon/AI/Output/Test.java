@@ -385,7 +385,7 @@ public class Test {
 
     public static void testAIvsAI(int strategy, int sampleSize) {
 
-        OutputCSV out = new OutputCSV("testAIvsAI.txt", "ABTS_win, MCTS_win, avg_time, #turn, strategy");
+        OutputCSV out = new OutputCSV("testAIvsAI.txt", "ABTS_win, MCTS_win, ABTS_marbles, MCTS_marbles, avg_time, #turn, strategy");
         for (int i = 0; i < sampleSize; i++) {
             long meanTimeABTS = 0;
             long turn = 0;
@@ -429,8 +429,10 @@ public class Test {
             else {
                 ABTSwin = true;
             }
+            int ABTSmarbles = NeutralEvalFunct.countMarbles(1, bestBoard);
+            int MCTSmarbles = NeutralEvalFunct.countMarbles(2, bestBoard);
             meanTimeABTS = meanTimeABTS/(turn/2);
-            String[] data = {Boolean.toString(ABTSwin), Boolean.toString(MCTSwin), Long.toString(meanTimeABTS), Double.toString(turn), Integer.toString(strategy)};
+            String[] data = {Boolean.toString(ABTSwin), Boolean.toString(MCTSwin), Long.toString(meanTimeABTS), Integer.toString(ABTSmarbles), Integer.toString(MCTSmarbles), Double.toString(turn), Integer.toString(strategy)};
             if (i == 0) {
                 out.writeResume(true, false, data);
             }
