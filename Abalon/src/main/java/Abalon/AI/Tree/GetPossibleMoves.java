@@ -50,7 +50,10 @@ public class GetPossibleMoves {
 
         return allPossibleMoves; //this will be an arraylist containing move objects
     }
-    //returns a list with the ordering we were using in phase 2
+
+    /**
+     * returns a list of all possible moves in this order: triples moves, double moves, single moves
+     */
     public ArrayList<int[][]> getPossibleMovesPreviousOrdering(int[][] board, int playerTurn) {
         allPossibleMoves.clear();
 
@@ -61,7 +64,11 @@ public class GetPossibleMoves {
         return allPossibleMoves;
 
     }
-    //shuffles the list so that we can compare with no ordering at all
+
+    /**
+     * returns a list of move in a random order
+     * by shuffling the list so that we can compare with no ordering at all
+     */
     public ArrayList<int[][]> getPossibleMovesNoOrdering(int[][] board, int playerTurn) {
         allPossibleMoves.clear();
 
@@ -74,8 +81,10 @@ public class GetPossibleMoves {
         return allPossibleMoves;
     }
 
+    /**
+     * Returns a list of all possible moves using one single marble
+     */
     public ArrayList<int[][]> getSingleMarbleMoves(int[][] board, int playerTurn) {
-
 
         ArrayList<int[][]> singleMarbleLocations = new ArrayList<>();
         for(int i = 0; i<board.length; i++) { // find every marble that belongs to the player and create a pushing array
@@ -91,6 +100,9 @@ public class GetPossibleMoves {
         return possibleMovesGivenPushing(singleMarbleLocations, board, playerTurn, false);
     }
 
+    /**
+     * Returns a list of all possible moves using two marbles
+     */
     public ArrayList<int[][]> getDoubleMarbleMoves(int[][] board, int playerTurn, boolean ordering) {
         ArrayList<int[][]> combinationsOfMarbles = new ArrayList<>();
         Move justAMove = new Move();
@@ -141,6 +153,9 @@ public class GetPossibleMoves {
         return possibleMovesGivenPushing(combinationsOfMarbles, board, playerTurn, ordering);
     }
 
+    /**
+     * Returns a list of all possible moves using three marbles
+     */
     public ArrayList<int[][]> getTripleMarbleMoves(int[][] board, int playerTurn, boolean ordering) {
         ArrayList<int[][]> combinationsOfMarbles = new ArrayList<>();
         Move justAMove = new Move();
@@ -343,7 +358,10 @@ public class GetPossibleMoves {
         }
         return possibleMovesGivenPushing;
     }
-    /*checks if any of the opposing marbles moved. if they did it will return true and the move is a move that pushes*/
+    /**
+     * checks if any of the opposing marbles moved.
+     * if they did it will return true and the move is a move that pushes
+     */
     public boolean checkIfPushingMove(int[][] board, int[][] currentBoard, int playerTurn) {
 
         int opponentPlayer;
@@ -363,7 +381,10 @@ public class GetPossibleMoves {
         }
         return false;
     }
-    /*checks if the count of opposing marbles is the same before the turn as after the turn. If it's not, it will return true and the move scores*/
+    /**
+     * checks if the count of opposing marbles is the same before the turn as after the turn.
+     * If it's not, it will return true and the move scores
+     */
     public boolean checkIfScoringMove(int[][] board, int[][] currentBoard, int playerTurn) {
 
         int opponentPlayer;

@@ -1,21 +1,17 @@
 package Abalon.AI.Tree;
 
 import Abalon.AI.EvaluationFunction.*;
-import Abalon.Main.Move;
-import Abalon.Main.MoveDirection;
-import Abalon.Main.Rules;
 
 import java.util.*;
 
+/**
+ * Creates the game tree data structure
+ * each node represents a state
+ * then the algorithms will take care of going through the tree and pick a move
+ */
 public class GameTree {
 
     GetPossibleMoves getPossibleMoves = new GetPossibleMoves();
-
-    /**
-     * Creates the game tree data structure
-     * each node represents a state
-     * then the algorithms will take care of going through the tree and pick a move
-     */
 
     private Node root;
 
@@ -34,7 +30,6 @@ public class GameTree {
     private boolean transpositionTable;
 
     public GameTree(int strategy, boolean transpositionTable){
-        //create the tree, start with the initial board
 
         this.strategy = strategy;
         this.transpositionTable = transpositionTable;
@@ -141,51 +136,6 @@ public class GameTree {
         }
     }
 
-    /*
-    public ArrayList<int[][]> findRandomPossibleMoves(int size) {
-
-        ArrayList<int[][]> list = new ArrayList<>();
-
-        for (int i = 0; i < size; i++) {
-            list.add(createRandomArray());
-        }
-        return list;
-    }
-
-    public int[][] createRandomArray() {
-
-        Random r = new Random();
-
-        int[][] randomCellColor = new int[9][9];
-
-        int[][] cellColor = new int[][] {
-
-                {1, 1, 1, 1, 1, -1, -1, -1, -1},
-                {1, 1, 1, 1, 1,  1, -1, -1, -1},
-                {0, 0, 1, 1, 1,  0,  0, -1, -1},
-                {0, 0, 0, 0, 0,  0,  0,  0, -1},
-                {0, 0, 0, 0, 0,  0,  0,  0,  0},
-                {0, 0, 0, 0, 0,  0,  0,  0, -1},
-                {0, 0, 2, 2, 2,  0,  0, -1, -1},
-                {2, 2, 2, 2, 2,  2, -1, -1, -1},
-                {2, 2, 2, 2, 2, -1, -1, -1, -1}
-
-        };
-
-        for (int j = 0; j < cellColor.length; j++) {
-            for (int k = 0; k < cellColor.length; k++) {
-                if (cellColor[j][k] == 0 || cellColor[j][k] == 1 || cellColor[j][k] == 2) {
-                    int randomNum = r.nextInt((2) + 1);
-                    randomCellColor[j][k] = randomNum;
-                }
-                else {
-                    randomCellColor[j][k] = -1;
-                }
-            }
-        }
-        return randomCellColor;
-    }
-    */
 
     public boolean adjacent(Node x, Node y)	{
         // Returns true when there’s an edge from x to y
