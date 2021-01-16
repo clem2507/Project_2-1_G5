@@ -17,9 +17,11 @@ public class GameTree {
      * then the algorithms will take care of going through the tree and pick a move
      */
 
+    private ArrayList<int[][]> allPossibleMoves = new ArrayList<>();
+
     private Node root;
 
-    private static ArrayList<Edge> edges = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<>();
     private ArrayList<Node> nodes = new ArrayList<>();
     private ArrayList<Node> previousGeneration = new ArrayList<>();
     private ArrayList<Node> currentGeneration = new ArrayList<>();
@@ -28,7 +30,7 @@ public class GameTree {
     private int generationCounter = 1;
 
     private HashTable table;
-    private int prunedNodes = 0;
+    private int investigatedNodes = 0;
 
     private int strategy;
     private boolean transpositionTable;
@@ -109,6 +111,7 @@ public class GameTree {
                 }
 
                 previousGeneration.add(node);
+                investigatedNodes++;
             }
             else {
                 if (transpositionTable) {
@@ -121,9 +124,7 @@ public class GameTree {
                         edges.add(edge);
 
                         currentGeneration.add(node);
-                    }
-                    else {
-                        prunedNodes++;
+                        investigatedNodes++;
                     }
                 }
                 else {
@@ -134,10 +135,9 @@ public class GameTree {
                     edges.add(edge);
 
                     currentGeneration.add(node);
+                    investigatedNodes++;
                 }
             }
-
-
         }
     }
 
@@ -206,7 +206,7 @@ public class GameTree {
 
     public List<Node> getNeighbours(Node v) { // String vertex
         // Returns all neighbours of a given vertex
-        List<Node> neighbours = new ArrayList<>();
+        List<Node> neighbours = new ArrayList<Node>();
 
         for (Edge e : edges){
             if(e.getSource() == v){
@@ -218,9 +218,9 @@ public class GameTree {
         return neighbours;
     }
 
-    public static ArrayList<Node> getChildren(Node v) { // String vertex
+    public ArrayList<Node> getChildren(Node v) { // String vertex
         // Returns all neighbours of a given vertex
-        ArrayList<Node> children = new ArrayList<>();
+        ArrayList<Node> children = new ArrayList<Node>();
 
         for (Edge e : edges){
             if(e.getSource() == v) {
@@ -238,16 +238,12 @@ public class GameTree {
         return edges;
     }
 
-    public int getPrunedNodes() {
-        return prunedNodes;
+    public int getInvestigatedNodes() {
+        return investigatedNodes;
     }
 
     public int getGeneration() {
         return generation;
-    }
-
-    public HashTable getTable() {
-        return table;
     }
 }
 

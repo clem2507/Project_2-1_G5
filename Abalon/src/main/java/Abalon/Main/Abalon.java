@@ -155,7 +155,7 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000, 30,10, strategy2);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000, 20,10, strategy2);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;
@@ -224,22 +224,23 @@ public class Abalon {
 			}
 
 			currentPlayer = 1;
+			long start = 0;
+			long end = 0;
 			while (!victory) {
 				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				if (currentPlayer == 1) {
+					start = System.currentTimeMillis();
 					GameTree gameTree = new GameTree(1, true);
 					gameTree.createTree(board.getBoard(), currentPlayer, 3);
 					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
 					algo.start(true);
 					board.setBoard(algo.getBestMove());
-					//MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000,30,10, strategy1);
-					//monteCarlo.start();
-					//board.setBoard(monteCarlo.getBestMove());
+					end = System.currentTimeMillis();
 					currentPlayer = 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000,30,10, strategy2);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer, (int) (end-start),20,10, strategy2);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;

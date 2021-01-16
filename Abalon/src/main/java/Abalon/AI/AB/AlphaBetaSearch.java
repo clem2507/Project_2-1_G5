@@ -13,18 +13,18 @@ public class AlphaBetaSearch {
     private ArrayList<Node> rootChildrenBoard = new ArrayList<>();
     private int[][] bestMove;
     private int index = 0;
-    private int prunedCount = 0;
+    private int investigatedNodes = 0;
 
     public AlphaBetaSearch(GameTree gameTree) {
 
         this.tree = gameTree;
-        System.out.println("Number of nodes = " + tree.getNodes().size());
+        //System.out.println("Number of nodes = " + tree.getNodes().size());
         this.totalDepth = gameTree.getGeneration();
     }
 
     public void start(boolean alphaBeta) {
 
-        rootChildren = GameTree.getChildren(tree.getNodes().get(0));
+        rootChildren = tree.getChildren(tree.getNodes().get(0));
 
         double bestScore;
         if (alphaBeta) {
@@ -44,25 +44,29 @@ public class AlphaBetaSearch {
     // minimax algorithm without alpha-beta pruning
     public double minimax(Node position, int depth, boolean maximizingPlayer) {
 
+        ArrayList<Node> children;
+
         if (depth == 0) {
             return position.getScore();
         }
         
         if (maximizingPlayer) {
-            ArrayList<Node> children = GameTree.getChildren(position);
+            children = tree.getChildren(position);
             double maxEvaluation = Double.NEGATIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = minimax(child, depth-1, false);
                 maxEvaluation = Double.max(maxEvaluation, evaluation);
+                investigatedNodes++;
             }
             return maxEvaluation;
         }
         else {
-            ArrayList<Node> children = GameTree.getChildren(position);
+            children = tree.getChildren(position);
             double minEvaluation = Double.POSITIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = minimax(child, depth-1, true);
                 minEvaluation = Double.min(minEvaluation, evaluation);
+                investigatedNodes++;
             }
             if (depth == totalDepth-1) {
                 Node node = new Node(rootChildren.get(index).getBoardState(), minEvaluation);
@@ -76,35 +80,37 @@ public class AlphaBetaSearch {
     // minimax algorithm with alpha-beta pruning implemented
     public double ab_minimax(Node position, int depth, boolean maximizingPlayer, double alpha, double beta) {
 
-        ArrayList<Node> children = GameTree.getChildren(position);
+        ArrayList<Node> children = tree.getChildren(position);
 
         if (depth == 0) {
             return position.getScore();
         }
 
         if (maximizingPlayer) {
+            //children = tree.getChildren(position);
             double maxEvaluation = Double.NEGATIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = ab_minimax(child, depth-1, false, alpha, beta);
                 maxEvaluation = Double.max(maxEvaluation, evaluation);
                 alpha = Math.max(alpha, evaluation);
                 if (beta <= alpha) {
-                    prunedCount++;
                     break;
                 }
+                investigatedNodes++;
             }
             return maxEvaluation;
         }
         else {
+            //children = tree.getChildren(position);
             double minEvaluation = Double.POSITIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = ab_minimax(child, depth-1, true, alpha, beta);
                 minEvaluation = Double.min(minEvaluation, evaluation);
                 beta = Math.min(beta, evaluation);
                 if (beta <= alpha) {
-                    prunedCount++;
                     break;
                 }
+                investigatedNodes++;
             }
             if (depth == totalDepth-1) {
                 Node node = new Node(rootChildren.get(index).getBoardState(), minEvaluation);
@@ -113,6 +119,10 @@ public class AlphaBetaSearch {
             }
             return minEvaluation;
         }
+    }
+
+    public int getInvestigatedNodes() {
+        return investigatedNodes;
     }
 
     public int[][] getBestMove() {
