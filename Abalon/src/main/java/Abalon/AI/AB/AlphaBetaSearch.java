@@ -49,9 +49,11 @@ public class AlphaBetaSearch {
         if (depth == 0) {
             return position.getScore();
         }
-        
-        if (maximizingPlayer) {
+        else {
             children = tree.getChildren(position);
+        }
+
+        if (maximizingPlayer) {
             double maxEvaluation = Double.NEGATIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = minimax(child, depth-1, false);
@@ -61,7 +63,6 @@ public class AlphaBetaSearch {
             return maxEvaluation;
         }
         else {
-            children = tree.getChildren(position);
             double minEvaluation = Double.POSITIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = minimax(child, depth-1, true);
@@ -80,7 +81,6 @@ public class AlphaBetaSearch {
     // minimax algorithm with alpha-beta pruning implemented
     public double ab_minimax(Node position, int depth, boolean maximizingPlayer, double alpha, double beta) {
 
-        //ArrayList<Node> children = tree.getChildren(position);
         ArrayList<Node> children;
 
         if (depth == 0) {
@@ -91,7 +91,6 @@ public class AlphaBetaSearch {
         }
 
         if (maximizingPlayer) {
-            //children = tree.getChildren(position);
             double maxEvaluation = Double.NEGATIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = ab_minimax(child, depth-1, false, alpha, beta);
@@ -105,7 +104,6 @@ public class AlphaBetaSearch {
             return maxEvaluation;
         }
         else {
-            //children = tree.getChildren(position);
             double minEvaluation = Double.POSITIVE_INFINITY;
             for (Node child : children) {
                 double evaluation = ab_minimax(child, depth-1, true, alpha, beta);

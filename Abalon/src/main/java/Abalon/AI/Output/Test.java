@@ -34,8 +34,7 @@ public class Test {
         }
         if (countP1 <= 8 || countP2 <= 8) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -43,32 +42,32 @@ public class Test {
     public static int[][] rootCellColor = new int[][]{
 
             {2, 2, 2, 2, 2, -1, -1, -1, -1},
-            {2, 2, 2, 2, 2,  2, -1, -1, -1},
-            {0, 0, 2, 2, 2,  0,  0, -1, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 0, 0, 0,  0,  0,  0,  0},
-            {0, 0, 0, 0, 0,  0,  0,  0, -1},
-            {0, 0, 1, 1, 1,  0,  0, -1, -1},
-            {1, 1, 1, 1, 1,  1, -1, -1, -1},
+            {2, 2, 2, 2, 2, 2, -1, -1, -1},
+            {0, 0, 2, 2, 2, 0, 0, -1, -1},
+            {0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {0, 0, 1, 1, 1, 0, 0, -1, -1},
+            {1, 1, 1, 1, 1, 1, -1, -1, -1},
             {1, 1, 1, 1, 1, -1, -1, -1, -1}
 
     };
 
     public static int[][] cellColor = new int[][]{
 
-            {0, 0, 0, 0, 2, -1, -1, -1, -1},
-            {0, 2, 2, 2, 0,  2, -1, -1, -1},
-            {0, 2, 2, 2, 2,  0,  0, -1, -1},
-            {0, 0, 2, 2, 2,  0,  0,  0, -1},
-            {0, 0, 1, 2, 2,  1,  0,  0,  0},
-            {0, 0, 1, 1, 0,  0,  0,  0, -1},
-            {0, 1, 1, 1, 0,  1,  0, -1, -1},
-            {0, 1, 1, 1, 0,  0, -1, -1, -1},
-            {1, 1, 1, 0, 0, -1, -1, -1, -1}
+            {0, 0, 0, 0, 0, -1, -1, -1, -1},
+            {0, 2, 2, 2, 0, 2, -1, -1, -1},
+            {0, 2, 2, 2, 2, 0, 0, -1, -1},
+            {0, 0, 2, 2, 2, 0, 0, 0, -1},
+            {0, 0, 1, 2, 2, 1, 0, 0, 0},
+            {0, 0, 1, 1, 0, 0, 0, 0, -1},
+            {0, 1, 1, 1, 0, 1, 0, -1, -1},
+            {0, 1, 1, 1, 0, 0, -1, -1, -1},
+            {0, 1, 1, 0, 0, -1, -1, -1, -1}
 
     };
 
-    public static void main(String[]args) {
+    public static void main(String[] args) {
 
 //        abVSmcts_Simulation(5, "Output1.txt", 2, 10, 1, 1);
 //        abVSmcts_Simulation(5, "Output2.txt", 2, 5, 1, 1);
@@ -91,8 +90,8 @@ public class Test {
         //testTimers(1, 100);
         //alphaBetaVSminimax(10);
         //testTranspositionTable(10);
-        //testAIvsAI(1, 10);
-        testMoveOrdering(10);
+        testAIvsAI(1, 10, false);
+        //testMoveOrdering(10);
 
 //        int currentPlayer = 1;
 //        int[][] bestBoard = rootCellColor;
@@ -135,7 +134,7 @@ public class Test {
 
         int counter = 0;
         OutputCSV out = new OutputCSV("testTimers2.txt", "timer, mean_score");
-        int[] timers = {2000, 5000, 10000, 20000, 30000};
+        int[] timers = {2000, 5000, 10000, 20000, 30000, 60000};
         for (int i = 0; i < timers.length; i++) {
             for (int j = 0; j < sampleSize; j++) {
                 double meanScore = 0;
@@ -167,7 +166,7 @@ public class Test {
                 String[] data = {Integer.toString(timers[i] / 1000), Double.toString(meanScore / ((double) plays / 2))};
                 if (counter == 1) {
                     out.writeResume(true, false, data);
-                } else if (counter > 1 && counter < timers.length*sampleSize) {
+                } else if (counter > 1 && counter < timers.length * sampleSize) {
                     out.writeResume(false, false, data);
                 } else {
                     out.writeResume(false, true, data);
@@ -178,12 +177,12 @@ public class Test {
 
     public static void alphaBetaVSminimax(int sampleSize) {
 
-        OutputCSV out = new OutputCSV("alphaBetaVSminimax.txt", "alphaBetaPruning, minimax, #game_tree_nodes, #investigated_nodes, #time");
+        OutputCSV out = new OutputCSV("alphaBetaVSminimax.txt", "alphaBetaPruning, minimax, #investigated_nodes, time");
         int currentPlayer = 1;
-        int[][] bestMove = rootCellColor;
+        int[][] bestMove = cellColor;
         for (int i = 0; i < sampleSize; i++) {
 
-            GameTree gameTree = new GameTree(1, 1, true);
+            GameTree gameTree = new GameTree(1, 1, false);
             gameTree.createTree(bestMove, currentPlayer, 3);
 
             long b_AlphaBetaTime = System.currentTimeMillis();
@@ -202,27 +201,28 @@ public class Test {
             long e_MinimaxTime = System.currentTimeMillis();
             long MinimaxDuration = (e_MinimaxTime - b_MinimaxTime);
 
+            System.out.println();
+            System.out.println("i = " + i);
+            System.out.println();
+
             bestMove = alphaBeta.getBestMove();
 
-            String[] data1 = {Boolean.toString(true), Boolean.toString(false), Integer.toString(gameTree.getNodes().size()), Integer.toString(alphaBeta.getInvestigatedNodes()), Long.toString(AlphaBetaDuration)};
-            String[] data2 = {Boolean.toString(false), Boolean.toString(true), Integer.toString(gameTree.getNodes().size()), Integer.toString(minimax.getInvestigatedNodes()), Long.toString(MinimaxDuration)};
+            String[] data1 = {Boolean.toString(true), Boolean.toString(false), Integer.toString(alphaBeta.getInvestigatedNodes()), Long.toString(AlphaBetaDuration)};
+            String[] data2 = {Boolean.toString(false), Boolean.toString(true), Integer.toString(minimax.getInvestigatedNodes()), Long.toString(MinimaxDuration)};
             if (i == 0) {
                 out.writeResume(true, false, data1);
                 out.writeResume(false, false, data2);
-            }
-            else if (i < sampleSize-1) {
+            } else if (i < sampleSize - 1) {
                 out.writeResume(false, false, data1);
                 out.writeResume(false, false, data2);
-            }
-            else {
+            } else {
                 out.writeResume(false, false, data1);
                 out.writeResume(false, true, data2);
             }
 
             if (currentPlayer == 1) {
                 currentPlayer = 2;
-            }
-            else {
+            } else {
                 currentPlayer = 1;
             }
         }
@@ -232,7 +232,7 @@ public class Test {
 
         OutputCSV out = new OutputCSV("testTranspositionTable.txt", "transposition_table, #investigated_nodes, #time");
         int currentPlayer = 1;
-        int[][] bestMove = rootCellColor;
+        int[][] bestMove = cellColor;
         for (int i = 0; i < sampleSize; i++) {
 
             long b_transpositionTime = System.currentTimeMillis();
@@ -262,12 +262,10 @@ public class Test {
             if (i == 0) {
                 out.writeResume(true, false, data1);
                 out.writeResume(false, false, data2);
-            }
-            else if (i < sampleSize-1) {
+            } else if (i < sampleSize - 1) {
                 out.writeResume(false, false, data1);
                 out.writeResume(false, false, data2);
-            }
-            else {
+            } else {
                 out.writeResume(false, false, data1);
                 out.writeResume(false, true, data2);
             }
@@ -276,16 +274,15 @@ public class Test {
 
             if (currentPlayer == 1) {
                 currentPlayer = 2;
-            }
-            else {
+            } else {
                 currentPlayer = 1;
             }
         }
     }
 
-    public static void testAIvsAI(int strategy, int sampleSize) {
+    public static void testAIvsAI(int strategy, int sampleSize, boolean fair) {
 
-        OutputCSV out = new OutputCSV("testAIvsAI5.txt", "ABTS_win, MCTS_win, ABTS_avg_time, MCTS_avg_time, ABTS_marbles, MCTS_marbles, #turn, strategy");
+        OutputCSV out = new OutputCSV("testAIvsAI5.txt", "ABTS_win, MCTS_win, ABTS_avg_time, MCTS_avg_time, ABTS_marbles, MCTS_marbles, #turn");
         for (int i = 0; i < sampleSize; i++) {
             float meanTimeABTS = 0;
             float meanTimeMCTS = 0;
@@ -315,11 +312,16 @@ public class Test {
                     meanTimeABTS += ABTS_duration;
                     turnABTS++;
                     currentPlayer = 2;
-                }
-                else {
+                } else {
                     MCTS monteCarlo;
-                    monteCarlo = new MCTS(bestBoard, currentPlayer, ABTS_duration, 10, 1);
-                    meanTimeMCTS+=ABTS_duration;
+                    if (fair) {
+                        monteCarlo = new MCTS(bestBoard, currentPlayer, ABTS_duration, 10, 1);
+                        meanTimeMCTS += ABTS_duration;
+                    }
+                    else {
+                        monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 10, 1);
+                        meanTimeMCTS += ABTS_duration;
+                    }
                     monteCarlo.start();
                     bestBoard = monteCarlo.getBestMove();
                     turnMCTS++;
@@ -332,22 +334,19 @@ public class Test {
             System.out.println();
             if (currentPlayer == 1) {
                 MCTSwin = true;
-            }
-            else {
+            } else {
                 ABTSwin = true;
             }
             int ABTSmarbles = NeutralEvalFunct.countMarbles(1, bestBoard);
             int MCTSmarbles = NeutralEvalFunct.countMarbles(2, bestBoard);
-            meanTimeABTS = (meanTimeABTS/(turnABTS))/1000f;
-            meanTimeMCTS = (meanTimeMCTS/(turnMCTS))/1000f;
-            String[] data = {Boolean.toString(ABTSwin), Boolean.toString(MCTSwin), Float.toString(meanTimeABTS), Float.toString(meanTimeMCTS), Integer.toString(ABTSmarbles), Integer.toString(MCTSmarbles), Double.toString(turn), Integer.toString(strategy)};
+            meanTimeABTS = (meanTimeABTS / (turnABTS)) / 1000f;
+            meanTimeMCTS = (meanTimeMCTS / (turnMCTS)) / 1000f;
+            String[] data = {Boolean.toString(ABTSwin), Boolean.toString(MCTSwin), Float.toString(meanTimeABTS), Float.toString(meanTimeMCTS), Integer.toString(ABTSmarbles), Integer.toString(MCTSmarbles), Double.toString(turn)};
             if (i == 0) {
                 out.writeResume(true, false, data);
-            }
-            else if (i < sampleSize-1) {
+            } else if (i < sampleSize - 1) {
                 out.writeResume(false, false, data);
-            }
-            else {
+            } else {
                 out.writeResume(false, true, data);
             }
         }
@@ -355,16 +354,16 @@ public class Test {
 
     public static void testMoveOrdering(int sampleSize) {
 
-        OutputCSV out = new OutputCSV("testMoveOrdering.txt", "best_ordering, simple_ordering, no_ordering, #investigated_nodes, #time");
+        OutputCSV out = new OutputCSV("testMoveOrdering2.txt", "best_ordering, simple_ordering, no_ordering, #investigated_nodes, #time");
         int currentPlayer = 1;
-        int[][] bestMove = rootCellColor;
+        int[][] bestMove = cellColor;
         AlphaBetaSearch ab;
         for (int i = 0; i < sampleSize; i++) {
 
-            long b_bestMoveOrdering = System.currentTimeMillis();
-
             GameTree bestOrdering = new GameTree(1, 1, false);
             bestOrdering.createTree(bestMove, currentPlayer, 3);
+
+            long b_bestMoveOrdering = System.currentTimeMillis();
 
             ab = new AlphaBetaSearch(bestOrdering);
             ab.start(true);
@@ -374,11 +373,10 @@ public class Test {
             long bestMoveOrderingDuration = (e_bestMoveOrdering - b_bestMoveOrdering);
 
 
-
-            long b_simpleMoveOrdering = System.currentTimeMillis();
-
             GameTree simpleOrdering = new GameTree(1, 2, false);
             simpleOrdering.createTree(bestMove, currentPlayer, 3);
+
+            long b_simpleMoveOrdering = System.currentTimeMillis();
 
             ab = new AlphaBetaSearch(simpleOrdering);
             ab.start(true);
@@ -388,11 +386,10 @@ public class Test {
             long simpleMoveOrderingDuration = (e_simpleMoveOrdering - b_simpleMoveOrdering);
 
 
-
-            long b_noMoveOrdering = System.currentTimeMillis();
-
             GameTree noOrdering = new GameTree(1, 3, false);
             noOrdering.createTree(bestMove, currentPlayer, 3);
+
+            long b_noMoveOrdering = System.currentTimeMillis();
 
             ab = new AlphaBetaSearch(noOrdering);
             ab.start(true);
@@ -400,7 +397,6 @@ public class Test {
 
             long e_noMoveOrdering = System.currentTimeMillis();
             long noMoveOrderingDuration = (e_noMoveOrdering - b_noMoveOrdering);
-
 
 
             MCTS mcts = new MCTS(bestMove, currentPlayer, 5000, 10, 1);
@@ -416,13 +412,11 @@ public class Test {
                 out.writeResume(true, false, data1);
                 out.writeResume(false, false, data2);
                 out.writeResume(false, false, data3);
-            }
-            else if (i < sampleSize-1) {
+            } else if (i < sampleSize - 1) {
                 out.writeResume(false, false, data1);
                 out.writeResume(false, false, data2);
                 out.writeResume(false, false, data3);
-            }
-            else {
+            } else {
                 out.writeResume(false, false, data1);
                 out.writeResume(false, false, data2);
                 out.writeResume(false, true, data3);
@@ -430,8 +424,7 @@ public class Test {
 
             if (currentPlayer == 1) {
                 currentPlayer = 2;
-            }
-            else {
+            } else {
                 currentPlayer = 1;
             }
         }
@@ -539,415 +532,4 @@ public class Test {
 //        }
 //    }
 
-
-/*
-
-    public static void mctsVSmcts(int timer1, int eval1, int sampleSize1, int numOfPlays1, int timer2, int eval2, int sampleSize2, int numOfPlays2) {
-
-        int turn = 0;
-        int currentPlayer = 1;
-        int[][] bestBoard = rootCellColor;
-        while (!BoardUI.isVictorious(bestBoard)) {
-            if (currentPlayer == 1) {
-                MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, timer1, eval1, sampleSize1, numOfPlays1);
-                monteCarlo.start();
-                bestBoard = monteCarlo.getBestMove();
-                //System.out.println();
-                currentPlayer = 2;
-            }
-            else {
-                MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, timer2, eval2, sampleSize2, numOfPlays2);
-                monteCarlo.start();
-                bestBoard = monteCarlo.getBestMove();
-                //System.out.println();
-                currentPlayer = 1;
-            }
-            System.out.println("turn = " + turn);
-            turn++;
-        }
-        if (currentPlayer == 1) {
-            System.out.println("MCTS 2 won the game in " + turn + " turns");
-            System.out.println("timer1 = " + timer1);
-            System.out.println("eval1 = " + eval1);
-            System.out.println("sampleSize1 = " + sampleSize1);
-            System.out.println("numOfPlays1 = " + numOfPlays1);
-            System.out.println("timer2 = " + timer2);
-            System.out.println("eval2 = " + eval2);
-            System.out.println("sampleSize2 = " + sampleSize2);
-            System.out.println("numOfPlays2 = " + numOfPlays2);
-            System.out.println();
-        }
-        else {
-            System.out.println("MCTS 1 won the game in " + turn + " turns");
-            System.out.println("timer1 = " + timer1);
-            System.out.println("eval1 = " + eval1);
-            System.out.println("sampleSize1 = " + sampleSize1);
-            System.out.println("numOfPlays1 = " + numOfPlays1);
-            System.out.println("timer2 = " + timer2);
-            System.out.println("eval2 = " + eval2);
-            System.out.println("sampleSize2 = " + sampleSize2);
-            System.out.println("numOfPlays2 = " + numOfPlays2);
-            System.out.println();
-        }
-    }
-*/
-
-
-    /*public static void abVSab_Simulation(int numSimulation, String fileName, int gtDepth, int gtStrategy1, int gtStrategy2) {
-
-        OutputCSV out = new OutputCSV(numSimulation, fileName, 2);
-        for (int i = 0; i < numSimulation; i++) {
-
-            int[][] bestMove = rootCellColor;
-            int currentPlayer = 1;
-            int turn = 1;
-            int ab_turn1 = 0;
-            int ab_turn2 = 0;
-            float ab_avg_time1 = 0;
-            float ab_avg_time2 = 0;
-            boolean checkFirstRemoved = false;
-            String firstMarble = "";
-            String winningStrategy;
-            String winner;
-
-            while (!BoardUI.isVictorious(bestMove)) {
-
-                if (turn > 1000) {
-                    break;
-                }
-
-                GameTree gameTree = new GameTree();
-
-                long b_gametreeTime = System.currentTimeMillis();
-
-                if (turn == 1) {
-                    gameTree.createTree(rootCellColor, currentPlayer, gtDepth, gtStrategy1);
-                } else {
-                    if (currentPlayer == 1) {
-                        gameTree.createTree(bestMove, currentPlayer, gtDepth, gtStrategy1);
-                    }
-                    else {
-                        gameTree.createTree(bestMove, currentPlayer, gtDepth, gtStrategy2);
-                    }
-                }
-
-                long e_gametreeTime = System.currentTimeMillis();
-                double gametreeDuration = (e_gametreeTime - b_gametreeTime);
-
-                if (currentPlayer == 1) {
-
-                    long b_minimaxTime = System.currentTimeMillis();
-
-                    AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
-                    algo.start(true);
-                    bestMove = algo.getBestMove();
-
-                    long e_minimaxTime = System.currentTimeMillis();
-                    double minimaxDuration = (e_minimaxTime - b_minimaxTime);
-
-                    ab_avg_time1 += (minimaxDuration + gametreeDuration);
-                    ab_turn1++;
-
-                } else {
-                    long b_minimaxTime = System.currentTimeMillis();
-
-                    AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
-                    algo.start(true);
-                    bestMove = algo.getBestMove();
-
-                    long e_minimaxTime = System.currentTimeMillis();
-                    double minimaxDuration = (e_minimaxTime - b_minimaxTime);
-
-                    ab_avg_time2 += (minimaxDuration + gametreeDuration);
-                    ab_turn2++;
-                }
-
-                if (!checkFirstRemoved) {
-                    if (Math.abs((NeutralEvalFunct.countMarbles(1, bestMove)-NeutralEvalFunct.countMarbles(2, bestMove))) > 0) {
-                        if (currentPlayer == 1) {
-                            firstMarble = "Alpha-Beta";
-                        }
-                        else {
-                            firstMarble = "Alpha-Beta";
-                        }
-                        checkFirstRemoved = true;
-                    }
-                }
-
-                if (currentPlayer == 1) {
-                    currentPlayer = 2;
-                } else {
-                    currentPlayer = 1;
-                }
-
-                turn++;
-            }
-
-            if (currentPlayer == 1) {
-                winner = "Alpha-Beta";
-                if (gtStrategy1==1) {
-                    winningStrategy = "Neutral";
-                }
-                else if (gtStrategy1==2) {
-                    winningStrategy = "Offensive";
-                }
-                else {
-                    winningStrategy = "Defensive";
-                }
-            }
-            else {
-                winner = "Alpha-Beta";
-                if (gtStrategy2==1) {
-                    winningStrategy = "Neutral";
-                }
-                else if (gtStrategy2==2) {
-                    winningStrategy = "Offensive";
-                }
-                else {
-                    winningStrategy = "Defensive";
-                }
-            }
-
-            ab_avg_time1 = (ab_avg_time1/ab_turn1)/1000f;
-            ab_avg_time2 = (ab_avg_time2/ab_turn2)/1000f;
-
-            out.add(i, ab_avg_time1, ab_avg_time2, 0, turn, firstMarble, winner, winningStrategy);
-            System.out.println("i = " + i);
-        }
-        out.writeResume();
-    }
-
-    public static void abVSmcts_Simulation(int numSimulation, String fileName, int gtDepth, int mctsDepth, int gtStrategy, int mctsStrategy) {
-
-        OutputCSV out = new OutputCSV(numSimulation, fileName, 1);
-        for (int i = 0; i < numSimulation; i++) {
-
-            int[][] bestMove = rootCellColor;
-            int currentPlayer = 1;
-            int turn = 1;
-            int ab_turn = 0;
-            int mcts_turn = 0;
-            double gt_nodes_avg = 0;
-            float ab_avg_time = 0;
-            float mcts_avg_time = 0;
-            boolean checkFirstRemoved = false;
-            String firstMarble = "";
-            String winningStrategy;
-            String winner;
-
-            while (!BoardUI.isVictorious(bestMove)) {
-                if (turn > 1000) {
-                    break;
-                }
-
-                GameTree gameTree = new GameTree();
-
-                long b_gametreeTime = System.currentTimeMillis();
-
-                if (turn == 1 && currentPlayer == 1) {
-                    gameTree.createTree(rootCellColor, currentPlayer, gtDepth, gtStrategy);
-                    gt_nodes_avg += gameTree.getNodes().size();
-                } else {
-                    if (currentPlayer == 1) {
-                        gameTree.createTree(bestMove, currentPlayer, gtDepth, gtStrategy);
-                        gt_nodes_avg += gameTree.getNodes().size();
-                    }
-                }
-
-                long e_gametreeTime = System.currentTimeMillis();
-                double gametreeDuration = (e_gametreeTime - b_gametreeTime);
-
-                if (currentPlayer == 1) {
-
-                    long b_minimaxTime = System.currentTimeMillis();
-
-                    AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
-                    algo.start(true);
-                    bestMove = algo.getBestMove();
-
-                    long e_minimaxTime = System.currentTimeMillis();
-                    double minimaxDuration = (e_minimaxTime - b_minimaxTime);
-
-                    ab_avg_time += (minimaxDuration + gametreeDuration);
-                    ab_turn++;
-
-                } else {
-                    long b_MCTStime = System.currentTimeMillis();
-
-                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
-                    monteCarlo.start();
-                    bestMove = monteCarlo.getBestMove();
-
-                    long e_MCTStime = System.currentTimeMillis();
-                    double MCTSDuration = (e_MCTStime - b_MCTStime);
-
-                    mcts_avg_time += MCTSDuration;
-                    mcts_turn++;
-                }
-
-                if (!checkFirstRemoved) {
-                    if (Math.abs((NeutralEvalFunct.countMarbles(1, bestMove)-NeutralEvalFunct.countMarbles(2, bestMove))) > 0) {
-                        if (currentPlayer == 1) {
-                            firstMarble = "Alpha-Beta";
-                        }
-                        else {
-                            firstMarble = "MCTS";
-                        }
-                        checkFirstRemoved = true;
-                    }
-                }
-
-                if (currentPlayer == 1) {
-                    currentPlayer = 2;
-                } else {
-                    currentPlayer = 1;
-                }
-
-                turn++;
-            }
-
-            if (currentPlayer == 1) {
-                winner = "MCTS";
-                if (mctsStrategy==1) {
-                    winningStrategy = "Neutral";
-                }
-                else if (mctsStrategy==2) {
-                    winningStrategy = "Offensive";
-                }
-                else {
-                    winningStrategy = "Defensive";
-                }
-            }
-            else {
-                winner = "Alpha-Beta";
-                if (gtStrategy==1) {
-                    winningStrategy = "Neutral";
-                }
-                else if (gtStrategy==2) {
-                    winningStrategy = "Offensive";
-                }
-                else {
-                    winningStrategy = "Defensive";
-                }
-            }
-
-            gt_nodes_avg = gt_nodes_avg/ab_turn;
-
-            ab_avg_time = (ab_avg_time/ab_turn)/1000f;
-            mcts_avg_time = (mcts_avg_time/mcts_turn)/1000f;
-
-            out.add(i, ab_avg_time, mcts_avg_time, gt_nodes_avg, turn, firstMarble, winner, winningStrategy);
-            System.out.println("i = " + i);
-        }
-        out.writeResume();
-    }
-
-    public static void mctsVSmcts_Simulation(int numSimulation, String fileName, int mctsDepth, int mctsStrategy1, int mctsStrategy2) {
-
-        OutputCSV out = new OutputCSV(numSimulation, fileName, 3);
-        for (int i = 0; i < numSimulation; i++) {
-
-            int[][] bestMove = rootCellColor;
-            int currentPlayer = 1;
-            int turn = 1;
-            int mcts_turn1 = 0;
-            int mcts_turn2 = 0;
-            float mcts_avg_time1 = 0;
-            float mcts_avg_time2 = 0;
-            boolean checkFirstRemoved = false;
-            String firstMarble = "";
-            String winningStrategy;
-            String winner;
-
-            while (!BoardUI.isVictorious(bestMove)) {
-
-                if (turn > 1000) {
-                    break;
-                }
-
-                if (currentPlayer == 1) {
-
-                    long b_MCTStime = System.currentTimeMillis();
-
-                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
-                    monteCarlo.start();
-                    bestMove = monteCarlo.getBestMove();
-
-                    long e_MCTStime = System.currentTimeMillis();
-                    double MCTSDuration = (e_MCTStime - b_MCTStime);
-
-                    mcts_avg_time1 += MCTSDuration;
-                    mcts_turn1++;
-
-                } else {
-                    long b_MCTStime = System.currentTimeMillis();
-
-                    MCTS monteCarlo = new MCTS(bestMove, currentPlayer);
-                    monteCarlo.start();
-                    bestMove = monteCarlo.getBestMove();
-
-                    long e_MCTStime = System.currentTimeMillis();
-                    double MCTSDuration = (e_MCTStime - b_MCTStime);
-
-                    mcts_avg_time2 += MCTSDuration;
-                    mcts_turn2++;
-                }
-
-                if (!checkFirstRemoved) {
-                    if (Math.abs((NeutralEvalFunct.countMarbles(1, bestMove)-NeutralEvalFunct.countMarbles(2, bestMove))) > 0) {
-                        if (currentPlayer == 1) {
-                            firstMarble = "MCTS";
-                        }
-                        else {
-                            firstMarble = "MCTS";
-                        }
-                        checkFirstRemoved = true;
-                    }
-                }
-
-                if (currentPlayer == 1) {
-                    currentPlayer = 2;
-                } else {
-                    currentPlayer = 1;
-                }
-
-                turn++;
-            }
-
-            if (currentPlayer == 1) {
-                winner = "MCTS";
-                if (mctsStrategy1==1) {
-                    winningStrategy = "Neutral";
-                }
-                else if (mctsStrategy1==2) {
-                    winningStrategy = "Offensive";
-                }
-                else {
-                    winningStrategy = "Defensive";
-                }
-            }
-            else {
-                winner = "MCTS";
-                if (mctsStrategy2==1) {
-                    winningStrategy = "Neutral";
-                }
-                else if (mctsStrategy2==2) {
-                    winningStrategy = "Offensive";
-                }
-                else {
-                    winningStrategy = "Defensive";
-                }
-            }
-
-            mcts_avg_time1 = (mcts_avg_time1/mcts_turn1)/1000f;
-            mcts_avg_time2 = (mcts_avg_time2/mcts_turn2)/1000f;
-
-            out.add(i, mcts_avg_time1, mcts_avg_time2, 0, turn, firstMarble, winner, winningStrategy);
-            System.out.println("i = " + i);
-        }
-        out.writeResume();
-    }*/
 }
-
-
-

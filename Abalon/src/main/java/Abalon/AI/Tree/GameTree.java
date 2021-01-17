@@ -33,10 +33,10 @@ public class GameTree {
     // moveOrdering = 3, random ordering
     private int moveOrdering;
 
-    public GameTree(int strategy, int moveOrdeing, boolean transpositionTable){
+    public GameTree(int strategy, int moveOrdering, boolean transpositionTable){
 
         this.strategy = strategy;
-        this.moveOrdering = moveOrdeing;
+        this.moveOrdering = moveOrdering;
         this.transpositionTable = transpositionTable;
         if (transpositionTable) {
             table = new HashTable();
@@ -85,6 +85,7 @@ public class GameTree {
         else {
             childrenStates = getPossibleMoves.getPossibleMovesNoOrdering(currentBoardState, currentPlayer);
         }
+
         EvaluationFunction eval;
 
         for(int[][] child : childrenStates){
@@ -106,6 +107,7 @@ public class GameTree {
                         eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
                         score = eval.evaluate();
                     }
+                    investigatedNodes++;
                     table.addInTable(score, generationCounter);
                 } else {
                     if (generationCounter >= table.getTable()[table.index].getDepth()) {
@@ -124,6 +126,7 @@ public class GameTree {
                             eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
                             score = eval.evaluate();
                         }
+                        investigatedNodes++;
                     }
                 }
             }
@@ -141,6 +144,7 @@ public class GameTree {
                     eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
                     score = eval.evaluate();
                 }
+                investigatedNodes++;
             }
 
             if(generationCounter == 1) {
