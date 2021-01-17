@@ -14,6 +14,7 @@ public class AlphaBetaSearch {
     private int[][] bestMove;
     private int index = 0;
     private int investigatedNodes = 0;
+    public double bestScore;
 
     public AlphaBetaSearch(GameTree gameTree) {
 
@@ -26,7 +27,6 @@ public class AlphaBetaSearch {
 
         rootChildren = tree.getChildren(tree.getNodes().get(0));
 
-        double bestScore;
         if (alphaBeta) {
             bestScore = ab_minimax(tree.getNodes().get(0), totalDepth, true, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
         }
@@ -80,10 +80,14 @@ public class AlphaBetaSearch {
     // minimax algorithm with alpha-beta pruning implemented
     public double ab_minimax(Node position, int depth, boolean maximizingPlayer, double alpha, double beta) {
 
-        ArrayList<Node> children = tree.getChildren(position);
+        //ArrayList<Node> children = tree.getChildren(position);
+        ArrayList<Node> children;
 
         if (depth == 0) {
             return position.getScore();
+        }
+        else {
+            children = tree.getChildren(position);
         }
 
         if (maximizingPlayer) {
@@ -127,5 +131,9 @@ public class AlphaBetaSearch {
 
     public int[][] getBestMove() {
         return bestMove;
+    }
+
+    public double getBestScore() {
+        return bestScore;
     }
 }

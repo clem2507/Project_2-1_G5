@@ -2,23 +2,26 @@ package Abalon.AI.Tree;
 
 public class HashTable {
 
+    public int index;
     public int arraySize;
-    public double[] table;
+    public Entry[] table;
     public Zorbist key;
 
     public HashTable() {
 
         key = new Zorbist();
         arraySize = (int) Math.pow(2, 26);
-        table = new double[arraySize];
+        table = new Entry[arraySize];
+        for (int i = 0; i < table.length; i++) {
+            table[i] = new Entry(0, 0);
+        }
     }
 
-    public boolean checkInTable(int currentPlayer, int[][] cellColor, double score) {
+    public boolean checkInTable(int currentPlayer, int[][] cellColor) {
 
-        int index = (int) key.getZorbistKey(currentPlayer, cellColor);
+        this.index = (int) key.getZorbistKey(currentPlayer, cellColor);
 
-        if (table[index] == 0) {
-            table[index] = score;
+        if (table[index].getScore() == 0) {
             return true;
         }
         else {
@@ -26,8 +29,13 @@ public class HashTable {
         }
     }
 
-    public double[] getTable() {
+    public void addInTable(double score, int depth) {
 
+        table[index].setScore(score);
+        table[index].setDepth(depth);
+    }
+
+    public Entry[] getTable() {
         return table;
     }
 }

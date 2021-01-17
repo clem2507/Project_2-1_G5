@@ -77,18 +77,56 @@ public class GameTree {
 
             double score = 0;
 
-            if (strategy == 1) {
-                eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
-                score = eval.evaluate();
-            } else if (strategy == 2) {
-                eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                score = eval.evaluate();
-            } else if (strategy == 3) {
-                eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
-                score = eval.evaluate();
-            } else if (strategy == 4) {
-                eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
-                score = eval.evaluate();
+            if (transpositionTable) {
+                if (table.checkInTable(currentPlayer, child)) {
+                    if (strategy == 1) {
+                        eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = eval.evaluate();
+                    } else if (strategy == 2) {
+                        eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = eval.evaluate();
+                    } else if (strategy == 3) {
+                        eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = eval.evaluate();
+                    } else if (strategy == 4) {
+                        eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                        score = eval.evaluate();
+                    }
+                    table.addInTable(score, generationCounter);
+                } else {
+                    if (generationCounter >= table.getTable()[table.index].getDepth()) {
+                        score = table.getTable()[table.index].getScore();
+                    } else {
+                        if (strategy == 1) {
+                            eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                            score = eval.evaluate();
+                        } else if (strategy == 2) {
+                            eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                            score = eval.evaluate();
+                        } else if (strategy == 3) {
+                            eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                            score = eval.evaluate();
+                        } else if (strategy == 4) {
+                            eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                            score = eval.evaluate();
+                        }
+                    }
+                }
+            }
+            else {
+                if (strategy == 1) {
+                    eval = new NeutralEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
+                } else if (strategy == 2) {
+                    eval = new OffensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
+                } else if (strategy == 3) {
+                    eval = new DefensiveEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
+                } else if (strategy == 4) {
+                    eval = new MixEvalFunct(currentPlayer, child, root.getBoardState());
+                    score = eval.evaluate();
+                }
             }
 
             if(generationCounter == 1) {
@@ -99,37 +137,17 @@ public class GameTree {
                 Edge edge = new Edge(parent, node);
                 edges.add(edge);
 
-                if (transpositionTable) {
-                    table.checkInTable(currentPlayer, child, score);
-                }
-
                 previousGeneration.add(node);
-                investigatedNodes++;
             }
             else {
-                if (transpositionTable) {
-                    if (table.checkInTable(currentPlayer, child, score)) {
 
-                        Node node = new Node(child, score);
-                        nodes.add(node);
+                Node node = new Node(child, score);
+                nodes.add(node);
 
-                        Edge edge = new Edge(parent, node);
-                        edges.add(edge);
+                Edge edge = new Edge(parent, node);
+                edges.add(edge);
 
-                        currentGeneration.add(node);
-                        investigatedNodes++;
-                    }
-                }
-                else {
-                    Node node = new Node(child, score);
-                    nodes.add(node);
-
-                    Edge edge = new Edge(parent, node);
-                    edges.add(edge);
-
-                    currentGeneration.add(node);
-                    investigatedNodes++;
-                }
+                currentGeneration.add(node);
             }
         }
     }

@@ -26,7 +26,7 @@ public class MCTS {
 
     private int count = 0;
 
-    private int timer;
+    private double timer;
     private int sampleSize;
     private int numOfPlays;
     private int strategy;
@@ -37,7 +37,7 @@ public class MCTS {
     private double w7;
     private double w8;
 
-    public MCTS(int[][] rootState, int currentPlayer, int timer, int sampleSize, int numOfPlays, int strategy) {
+    public MCTS(int[][] rootState, int currentPlayer, float timer, int numOfPlays, int strategy) {
 
         this.strategy = strategy;
         this.currentPlayer = currentPlayer;
@@ -59,18 +59,18 @@ public class MCTS {
         this.root = new Node(rootState, 0, 0);
         this.nodes.add(root);
         this.timer = timer;
-        this.sampleSize = sampleSize;
+        this.sampleSize = computeSampleSize(timer);
         this.numOfPlays = numOfPlays;
     }
 
     public void start() {
 
         long b_time = System.currentTimeMillis();
-        int stopCondition = timer;
+        double stopCondition = timer;
         while ((System.currentTimeMillis() - b_time) < stopCondition) {
             Selection();
             //for (Node n : nodes) {
-              //  System.out.print(n.getTotalSimulation() + ", ");
+                //System.out.print(n.getTotalSimulation() + ", ");
             //}
             //System.out.println();
             count++;
@@ -234,6 +234,12 @@ public class MCTS {
             score = -(Math.sqrt(Math.abs(currentScore-rootScore))/5);
         }
         return score;
+    }
+
+    public int computeSampleSize(double timer) {
+
+        timer = timer/1000;
+        return (int) Math.ceil(timer);
     }
 
     public ArrayList<Node> getChildren(Node n) {
