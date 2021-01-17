@@ -58,20 +58,36 @@ public class Abalon {
 
 		if (gameMode.equals("Human vs Human")) {
 			for (int i = 0; !victory; i++) {
+				int p;
 				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				try {
 					Move mv = player[i & 1].collectMove();
+					mv.turn = currentPlayer;
 					mv.board = board.getBoard();
 					Rules checkRules = new Rules(mv);
-					checkRules.move();
-					board.drawAllCells();
+					if(checkRules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)){
+						checkRules.move();
+						if (currentPlayer == 1) {
+							p = 2;
+						}
+						else {
+							p = 1;
+						}
+					}
+					else{
+						p = currentPlayer;
+						numberOfTurn--;
+					}
+
 					if (currentPlayer == 1) {
-						currentPlayer = 2;
+						currentPlayer = p;
 					}
 					else {
-						currentPlayer = 1;
+						currentPlayer = p;
 					}
+					board.drawAllCells();
+
 				} catch (InterruptedException e) {
 					System.out.println("concurrency problem, aborting...");
 					System.exit(0);
@@ -98,16 +114,25 @@ public class Abalon {
 				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				if (currentPlayer == 1) {
+					int p = 2;
 					try {
 						Move mv = player[index & 1].collectMove();
 						mv.board = board.getBoard();
 						Rules checkRules = new Rules(mv);
-						checkRules.move();
+
+						if(checkRules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)){
+							checkRules.move();
+						}
+						else{
+							p = 1;
+							numberOfTurn--;
+						}
+
 					} catch (InterruptedException e) {
 						System.out.println("concurrency problem, aborting...");
 						System.exit(0);
 					}
-					currentPlayer = 2;
+					currentPlayer = p;
 					index += 2;
 				}
 				else {
@@ -151,16 +176,25 @@ public class Abalon {
 				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				if (currentPlayer == 1) {
+					int p = 2;
 					try {
 						Move mv = player[index & 1].collectMove();
 						mv.board = board.getBoard();
 						Rules checkRules = new Rules(mv);
-						checkRules.move();
+
+						if(checkRules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)){
+							checkRules.move();
+						}
+						else{
+							p = 1;
+							numberOfTurn--;
+						}
+
 					} catch (InterruptedException e) {
 						System.out.println("concurrency problem, aborting...");
 						System.exit(0);
 					}
-					currentPlayer = 2;
+					currentPlayer = p;
 					index += 2;
 				}
 				else {
@@ -181,16 +215,24 @@ public class Abalon {
 				checkExitTheGame();
 				Hexagon.whosePlaying.setText("It is " + Hexagon.displayCurrentPlayer(currentPlayer).toUpperCase() + "'s turn to play.");
 				if (currentPlayer == 1) {
+					int p = 2;
 					try {
 						Move mv = player[index & 1].collectMove();
 						mv.board = board.getBoard();
 						Rules checkRules = new Rules(mv);
-						checkRules.move();
+
+						if(checkRules.checkMove(mv.pushing, mv.dir, mv.board, mv.turn)){
+							checkRules.move();
+						}
+						else{
+							p = 1;
+							numberOfTurn--;
+						}
 					} catch (InterruptedException e) {
 						System.out.println("concurrency problem, aborting...");
 						System.exit(0);
 					}
-					currentPlayer = 2;
+					currentPlayer = p;
 					index += 2;
 				}
 				else {

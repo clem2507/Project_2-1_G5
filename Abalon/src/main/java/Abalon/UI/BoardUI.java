@@ -172,8 +172,12 @@ public class BoardUI {
                     @Override
                     public void handle(MouseEvent e) {
                         if (!Abalon.getGameMode().equals("Alpha-Beta vs MCTS")) {
-                            if (cellColors[circle.x][circle.y] == Abalon.getCurrentPlayer()) {
-                                selected[circle.x][circle.y] ^= true;
+                            if (cellColors[circle.x][circle.y] == Abalon.getCurrentPlayer()  && !selected[circle.x][circle.y] && countSelected(getBoard()) < 3) {
+                                selected[circle.x][circle.y] = true;
+                                drawAllCells();
+                            }
+                            else if(selected[circle.x][circle.y] && cellColors[circle.x][circle.y] == Abalon.getCurrentPlayer() ){
+                                selected[circle.x][circle.y] = false;
                                 drawAllCells();
                             }
                         }
@@ -441,5 +445,18 @@ public class BoardUI {
      */
     private boolean isSelected(int i, int j){
         return selected[i][j];
+    }
+
+    public int countSelected(int[][] currentBoard){
+
+        int selectedCounter = 0;
+        for(int i = 0; i< currentBoard.length; i++){
+            for(int j = 0; j<currentBoard.length; j++){
+                if(selected[i][j]){
+                    selectedCounter ++;
+                }
+            }
+        }
+        return selectedCounter;
     }
 }
