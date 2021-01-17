@@ -31,6 +31,7 @@ public class Abalon {
 	public static int numberOfTurn = 0;
 	public int strategy1;
 	public int strategy2;
+	public int timer;
 
 	private static String gameMode;
 
@@ -135,6 +136,16 @@ public class Abalon {
 				strategy2 = 4;
 			}
 
+			if(HomePage.mctsDifficulty.getValue().equals("Easy")){
+				timer = 3000;
+			}
+			else if(HomePage.mctsDifficulty.getValue().equals("Neutral")){
+				timer = 10000;
+			}
+			else if(HomePage.mctsDifficulty.getValue().equals("Hard")){
+				timer = 20000;
+			}
+
 			int index = 0;
 			while (!victory) {
 				checkExitTheGame();
@@ -153,7 +164,7 @@ public class Abalon {
 					index += 2;
 				}
 				else {
-					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,10000,10, strategy2);
+					MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,timer,10, strategy2);
 					monteCarlo.start();
 					board.setBoard(monteCarlo.getBestMove());
 					currentPlayer = 1;

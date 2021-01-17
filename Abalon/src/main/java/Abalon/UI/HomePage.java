@@ -33,6 +33,7 @@ public class HomePage extends Application {
     public static ComboBox gameChoice = new ComboBox();
     public static ComboBox evaluationChoice1 = new ComboBox();
     public static ComboBox evaluationChoice2 = new ComboBox();
+    public static ComboBox mctsDifficulty = new ComboBox();
 
     public static TextField field1;
     public static TextField field2;
@@ -118,22 +119,52 @@ public class HomePage extends Application {
         setPlayersNames();
 
         gameChoice.setOnAction(e -> {
+
+            field1.setText("Human");
+            field2.setText("human");
+
+            pane.getChildren().remove(evaluationChoice2);
+            pane.getChildren().remove(evaluationChoice1);
+            pane.getChildren().remove(mctsDifficulty);
+
             if(gameChoice.getValue().equals("Alpha-Beta vs Human")){
+                field1.setText("Human");
                 field2.setText("Alpha Beta");
+                pane.getChildren().remove(evaluationChoice2);
+                pane.getChildren().remove(evaluationChoice1);
+                pane.getChildren().remove(mctsDifficulty);
                 pane.getChildren().add(evaluationChoice2);
+
             }
             else if(gameChoice.getValue().equals("MCTS vs Human")){
+                field1.setText("Human");
                 field2.setText("MCTS");
+                pane.getChildren().remove(evaluationChoice2);
+                pane.getChildren().remove(evaluationChoice1);
+                pane.getChildren().remove(mctsDifficulty);
+
                 pane.getChildren().add(evaluationChoice2);
+                pane.getChildren().add(mctsDifficulty);
             }
             else if(gameChoice.getValue().equals("Rule-Based vs Human")){
+                field1.setText("Human");
                 field2.setText("Rule-Based");
+                pane.getChildren().remove(evaluationChoice1);
+                pane.getChildren().remove(evaluationChoice2);
+                pane.getChildren().remove(mctsDifficulty);
+
             }
             else if(gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
                 field2.setText("MCTS");
                 field1.setText("Alpha Beta");
+
+                pane.getChildren().remove(evaluationChoice1);
+                pane.getChildren().remove(evaluationChoice2);
+                pane.getChildren().remove(mctsDifficulty);
+
                 pane.getChildren().add(evaluationChoice1);
                 pane.getChildren().add(evaluationChoice2);
+                pane.getChildren().add(mctsDifficulty);
             }
         });
 
@@ -214,6 +245,7 @@ public class HomePage extends Application {
         evaluationChoice1.setTranslateX(270);
         evaluationChoice1.setTranslateY(350);
         evaluationChoice1.setPrefSize(230, 35);
+
         evaluationChoice2.getItems().addAll(
                 "Neutral evaluation function" ,
                 "Offensive evaluation function",
@@ -224,6 +256,11 @@ public class HomePage extends Application {
         evaluationChoice2.setTranslateY(350);
         evaluationChoice2.setPrefSize(230, 35);
 
+        mctsDifficulty.getItems().addAll("Easy", "Neutral", "Hard");
+        mctsDifficulty.getSelectionModel().selectFirst();
+        mctsDifficulty.setTranslateX(800);
+        mctsDifficulty.setTranslateY(400);
+        mctsDifficulty.setPrefSize(230, 35);
     }
 
     /**
