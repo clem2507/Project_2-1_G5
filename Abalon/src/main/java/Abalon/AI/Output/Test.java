@@ -88,10 +88,11 @@ public class Test {
         // -> strategy = 2, offensive eval function
         //testWeights(10, 3, 3);
         // -> strategy = 3, defensive eval function
-        //      testTimers(3, 20);
+        //testTimers(1, 100);
         //alphaBetaVSminimax(10);
         //testTranspositionTable(10);
-        testAIvsAI(1, 10);
+        //testAIvsAI(1, 10);
+        testMoveOrdering(10);
 
 //        int currentPlayer = 1;
 //        int[][] bestBoard = rootCellColor;
@@ -130,109 +131,10 @@ public class Test {
 //        }
     }
 
-//    public static void mctsConfigurations() {
-//
-//        int count = 0;
-//        OutputCSV out = new OutputCSV("MCTSvsMCTS.txt", "timer, sample_size, #plays, win_rate_1");
-//        for (int sampleSize = 10; sampleSize <= 50; sampleSize+=20) {
-//            for (int plays = 4; plays <= 20; plays+=8) {
-//                double winRate1 = 0;
-//                double winRate2 = 0;
-//                for (int i = 0; i < 5; i++) {
-//                    int currentPlayer = 1;
-//                    int[][] bestBoard = rootCellColor;
-//                    while (!checkWinCheat(bestBoard)) {
-//                        if (currentPlayer == 1) {
-//                            MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, sampleSize, plays, 1);
-//                            monteCarlo.start();
-//                            bestBoard = monteCarlo.getBestMove();
-//                            currentPlayer = 2;
-//                        } else {
-//                            MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 30, 10, 1);
-//                            monteCarlo.start();
-//                            bestBoard = monteCarlo.getBestMove();
-//                            currentPlayer = 1;
-//                        }
-//                    }
-//                    if (currentPlayer == 1) {
-//                        winRate2++;
-//                    }
-//                    else {
-//                        winRate1++;
-//                    }
-//                }
-//                count++;
-//                String[] data = {"10", Integer.toString(sampleSize), Integer.toString(plays), Double.toString(winRate1/5)};
-//                if (count == 1) {
-//                    out.writeResume(true, false, data);
-//                }
-//                else if (count > 1 && count < 9) {
-//                    out.writeResume(false, false, data);
-//                }
-//                else {
-//                    out.writeResume(false, true, data);
-//                }
-//            }
-//        }
-//    }
-
-
-    public static void testWeights(int plays, int sampleSize, int strategy) {
-
-        OutputCSV out = new OutputCSV("testWeights.txt", "strategy, w1, w2, w5, w7, w8, mean_score");
-        int count = 0;
-        for (int w1 = -5; w1 < 0; w1++) {
-            for (int w2 = 1; w2 < 5; w2++) {
-                for (int w5 = 10000; w5 <= 10000; w5+=0) {
-                    for (int w7 = 200; w7 <= 400; w7+=100) {
-                        for (int w8 = 40; w8 <= 100; w8+=20) {
-                            double meanScore = 0;
-                            for (int i = 0; i < sampleSize; i++) {
-                                int currentPlayer = 1;
-                                int[][] bestBoard = rootCellColor;
-                                for (int j = 0; j < plays; j++) {
-                                    if (currentPlayer == 1) {
-                                        MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 10, strategy);
-                                        monteCarlo.setWeights(w1, w2, w5, w7, w8);
-                                        monteCarlo.start();
-                                        bestBoard = monteCarlo.getBestMove();
-                                        currentPlayer = 2;
-                                    } else {
-                                        MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 10, 1);
-                                        monteCarlo.start();
-                                        bestBoard = monteCarlo.getBestMove();
-                                        currentPlayer = 1;
-                                    }
-                                }
-                                NeutralEvalFunct eval = new NeutralEvalFunct(1, bestBoard, rootCellColor);
-                                double currentScore = eval.evaluate();
-                                meanScore+=currentScore;
-                            }
-                            count++;
-                            String[] data = {"Offensive", Double.toString(w1), Double.toString(w2), Double.toString(w5), Double.toString(w7), Double.toString(w8), Double.toString(meanScore/sampleSize)};
-                            if (count == 1) {
-                                out.writeResume(true, false, data);
-                            }
-                            else if (count > 1 && count < 300) {
-                                out.writeResume(false, false, data);
-                            }
-                            else {
-                                out.writeResume(false, true, data);
-                            }
-                            System.out.println();
-                            System.out.println((300-count) + " simulations left");
-                            System.out.println();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     public static void testTimers(int sampleSize, int plays) {
 
         int counter = 0;
-        OutputCSV out = new OutputCSV("testTimers.txt", "timer, mean_score");
+        OutputCSV out = new OutputCSV("testTimers2.txt", "timer, mean_score");
         int[] timers = {2000, 5000, 10000, 20000, 30000};
         for (int i = 0; i < timers.length; i++) {
             for (int j = 0; j < sampleSize; j++) {
@@ -249,7 +151,7 @@ public class Test {
                         meanScore += eval.evaluate();
                         currentPlayer = 2;
                     } else {
-                        GameTree gameTree = new GameTree(1, false);
+                        GameTree gameTree = new GameTree(1, 1, false);
                         gameTree.createTree(bestBoard, currentPlayer, 3);
                         AlphaBetaSearch alphaBeta = new AlphaBetaSearch(gameTree);
                         alphaBeta.start(true);
@@ -281,7 +183,7 @@ public class Test {
         int[][] bestMove = rootCellColor;
         for (int i = 0; i < sampleSize; i++) {
 
-            GameTree gameTree = new GameTree(1, true);
+            GameTree gameTree = new GameTree(1, 1, true);
             gameTree.createTree(bestMove, currentPlayer, 3);
 
             long b_AlphaBetaTime = System.currentTimeMillis();
@@ -335,7 +237,7 @@ public class Test {
 
             long b_transpositionTime = System.currentTimeMillis();
 
-            GameTree transpo = new GameTree(1, true);
+            GameTree transpo = new GameTree(1, 1, true);
             transpo.createTree(bestMove, currentPlayer, 3);
             int transpoNodes = transpo.getInvestigatedNodes();
 
@@ -344,7 +246,7 @@ public class Test {
 
             long b_noTranspositionTime = System.currentTimeMillis();
 
-            GameTree noTranspo = new GameTree(1, false);
+            GameTree noTranspo = new GameTree(1, 1, false);
             noTranspo.createTree(bestMove, currentPlayer, 3);
             int noTranspoNodes = noTranspo.getInvestigatedNodes();
 
@@ -383,7 +285,7 @@ public class Test {
 
     public static void testAIvsAI(int strategy, int sampleSize) {
 
-        OutputCSV out = new OutputCSV("testAIvsAI4.txt", "ABTS_win, MCTS_win, ABTS_avg_time, MCTS_avg_time, ABTS_marbles, MCTS_marbles, #turn, strategy");
+        OutputCSV out = new OutputCSV("testAIvsAI5.txt", "ABTS_win, MCTS_win, ABTS_avg_time, MCTS_avg_time, ABTS_marbles, MCTS_marbles, #turn, strategy");
         for (int i = 0; i < sampleSize; i++) {
             float meanTimeABTS = 0;
             float meanTimeMCTS = 0;
@@ -402,7 +304,7 @@ public class Test {
 
                     b_ABTS = System.currentTimeMillis();
 
-                    GameTree gameTree = new GameTree(strategy, false);
+                    GameTree gameTree = new GameTree(strategy, 1, false);
                     gameTree.createTree(bestBoard, currentPlayer, 3);
                     AlphaBetaSearch ABTS = new AlphaBetaSearch(gameTree);
                     ABTS.start(true);
@@ -450,6 +352,193 @@ public class Test {
             }
         }
     }
+
+    public static void testMoveOrdering(int sampleSize) {
+
+        OutputCSV out = new OutputCSV("testMoveOrdering.txt", "best_ordering, simple_ordering, no_ordering, #investigated_nodes, #time");
+        int currentPlayer = 1;
+        int[][] bestMove = rootCellColor;
+        AlphaBetaSearch ab;
+        for (int i = 0; i < sampleSize; i++) {
+
+            long b_bestMoveOrdering = System.currentTimeMillis();
+
+            GameTree bestOrdering = new GameTree(1, 1, false);
+            bestOrdering.createTree(bestMove, currentPlayer, 3);
+
+            ab = new AlphaBetaSearch(bestOrdering);
+            ab.start(true);
+            int bestOrderingInvestigatedNodes = ab.getInvestigatedNodes();
+
+            long e_bestMoveOrdering = System.currentTimeMillis();
+            long bestMoveOrderingDuration = (e_bestMoveOrdering - b_bestMoveOrdering);
+
+
+
+            long b_simpleMoveOrdering = System.currentTimeMillis();
+
+            GameTree simpleOrdering = new GameTree(1, 2, false);
+            simpleOrdering.createTree(bestMove, currentPlayer, 3);
+
+            ab = new AlphaBetaSearch(simpleOrdering);
+            ab.start(true);
+            int simpleOrderingInvestigatedNodes = ab.getInvestigatedNodes();
+
+            long e_simpleMoveOrdering = System.currentTimeMillis();
+            long simpleMoveOrderingDuration = (e_simpleMoveOrdering - b_simpleMoveOrdering);
+
+
+
+            long b_noMoveOrdering = System.currentTimeMillis();
+
+            GameTree noOrdering = new GameTree(1, 3, false);
+            noOrdering.createTree(bestMove, currentPlayer, 3);
+
+            ab = new AlphaBetaSearch(noOrdering);
+            ab.start(true);
+            int noOrderingInvestigatedNodes = ab.getInvestigatedNodes();
+
+            long e_noMoveOrdering = System.currentTimeMillis();
+            long noMoveOrderingDuration = (e_noMoveOrdering - b_noMoveOrdering);
+
+
+
+            MCTS mcts = new MCTS(bestMove, currentPlayer, 5000, 10, 1);
+            mcts.start();
+            bestMove = mcts.getBestMove();
+
+            System.out.println("i = " + i);
+
+            String[] data1 = {Boolean.toString(true), Boolean.toString(false), Boolean.toString(false), Integer.toString(bestOrderingInvestigatedNodes), Long.toString(bestMoveOrderingDuration)};
+            String[] data2 = {Boolean.toString(false), Boolean.toString(true), Boolean.toString(false), Integer.toString(simpleOrderingInvestigatedNodes), Long.toString(simpleMoveOrderingDuration)};
+            String[] data3 = {Boolean.toString(false), Boolean.toString(false), Boolean.toString(true), Integer.toString(noOrderingInvestigatedNodes), Long.toString(noMoveOrderingDuration)};
+            if (i == 0) {
+                out.writeResume(true, false, data1);
+                out.writeResume(false, false, data2);
+                out.writeResume(false, false, data3);
+            }
+            else if (i < sampleSize-1) {
+                out.writeResume(false, false, data1);
+                out.writeResume(false, false, data2);
+                out.writeResume(false, false, data3);
+            }
+            else {
+                out.writeResume(false, false, data1);
+                out.writeResume(false, false, data2);
+                out.writeResume(false, true, data3);
+            }
+
+            if (currentPlayer == 1) {
+                currentPlayer = 2;
+            }
+            else {
+                currentPlayer = 1;
+            }
+        }
+    }
+
+
+    //    public static void mctsConfigurations() {
+//
+//        int count = 0;
+//        OutputCSV out = new OutputCSV("MCTSvsMCTS.txt", "timer, sample_size, #plays, win_rate_1");
+//        for (int sampleSize = 10; sampleSize <= 50; sampleSize+=20) {
+//            for (int plays = 4; plays <= 20; plays+=8) {
+//                double winRate1 = 0;
+//                double winRate2 = 0;
+//                for (int i = 0; i < 5; i++) {
+//                    int currentPlayer = 1;
+//                    int[][] bestBoard = rootCellColor;
+//                    while (!checkWinCheat(bestBoard)) {
+//                        if (currentPlayer == 1) {
+//                            MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, sampleSize, plays, 1);
+//                            monteCarlo.start();
+//                            bestBoard = monteCarlo.getBestMove();
+//                            currentPlayer = 2;
+//                        } else {
+//                            MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 10000, 30, 10, 1);
+//                            monteCarlo.start();
+//                            bestBoard = monteCarlo.getBestMove();
+//                            currentPlayer = 1;
+//                        }
+//                    }
+//                    if (currentPlayer == 1) {
+//                        winRate2++;
+//                    }
+//                    else {
+//                        winRate1++;
+//                    }
+//                }
+//                count++;
+//                String[] data = {"10", Integer.toString(sampleSize), Integer.toString(plays), Double.toString(winRate1/5)};
+//                if (count == 1) {
+//                    out.writeResume(true, false, data);
+//                }
+//                else if (count > 1 && count < 9) {
+//                    out.writeResume(false, false, data);
+//                }
+//                else {
+//                    out.writeResume(false, true, data);
+//                }
+//            }
+//        }
+//    }
+
+
+//    public static void testWeights(int plays, int sampleSize, int strategy) {
+//
+//        OutputCSV out = new OutputCSV("testWeights1.txt", "strategy, w1, w2, w5, w7, w8, mean_score");
+//        int count = 0;
+//        for (int w1 = -5; w1 < 0; w1++) {
+//            for (int w2 = 1; w2 < 5; w2++) {
+//                for (int w5 = 10000; w5 <= 10000; w5+=0) {
+//                    for (int w7 = 200; w7 <= 400; w7+=100) {
+//                        for (int w8 = 40; w8 <= 100; w8+=20) {
+//                            double meanScore = 0;
+//                            for (int i = 0; i < sampleSize; i++) {
+//                                int currentPlayer = 1;
+//                                int[][] bestBoard = rootCellColor;
+//                                for (int j = 0; j < plays; j++) {
+//                                    if (currentPlayer == 1) {
+//                                        MCTS monteCarlo = new MCTS(bestBoard, currentPlayer, 5000, 10, strategy);
+//                                        monteCarlo.setWeights(w1, w2, w5, w7, w8);
+//                                        monteCarlo.start();
+//                                        bestBoard = monteCarlo.getBestMove();
+//                                        currentPlayer = 2;
+//                                    } else {
+//                                        GameTree gameTree = new GameTree(1, false);
+//                                        gameTree.createTree(bestBoard, currentPlayer, 3);
+//                                        AlphaBetaSearch ABTS = new AlphaBetaSearch(gameTree);
+//                                        ABTS.start(true);
+//                                        bestBoard = ABTS.getBestMove();
+//                                        currentPlayer = 1;
+//                                    }
+//                                }
+//                                NeutralEvalFunct eval = new NeutralEvalFunct(1, bestBoard, rootCellColor);
+//                                double currentScore = eval.evaluate();
+//                                meanScore+=currentScore;
+//                            }
+//                            count++;
+//                            String[] data = {"Offensive", Double.toString(w1), Double.toString(w2), Double.toString(w5), Double.toString(w7), Double.toString(w8), Double.toString(meanScore/sampleSize)};
+//                            if (count == 1) {
+//                                out.writeResume(true, false, data);
+//                            }
+//                            else if (count > 1 && count < 300) {
+//                                out.writeResume(false, false, data);
+//                            }
+//                            else {
+//                                out.writeResume(false, true, data);
+//                            }
+//                            System.out.println();
+//                            System.out.println((300-count) + " simulations left");
+//                            System.out.println();
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+
 
 /*
 

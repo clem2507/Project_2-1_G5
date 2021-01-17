@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class GameTree {
 
-    GetPossibleMoves getPossibleMoves = new GetPossibleMoves();
+    private GetPossibleMoves getPossibleMoves = new GetPossibleMoves();
 
     private Node root;
 
@@ -28,10 +28,15 @@ public class GameTree {
 
     private int strategy;
     private boolean transpositionTable;
+    // moveOrdering = 1, best ordering
+    // moveOrdering = 2, normal ordering
+    // moveOrdering = 3, random ordering
+    private int moveOrdering;
 
-    public GameTree(int strategy, boolean transpositionTable){
+    public GameTree(int strategy, int moveOrdeing, boolean transpositionTable){
 
         this.strategy = strategy;
+        this.moveOrdering = moveOrdeing;
         this.transpositionTable = transpositionTable;
         if (transpositionTable) {
             table = new HashTable();
@@ -70,7 +75,16 @@ public class GameTree {
 
     public void createChildren(Node parent, int[][] currentBoardState, int currentPlayer){
 
-        ArrayList<int[][]> childrenStates = getPossibleMoves.getPossibleMoves(currentBoardState, currentPlayer);
+        ArrayList<int[][]> childrenStates;
+        if (moveOrdering == 1) {
+            childrenStates = getPossibleMoves.getPossibleMoves(currentBoardState, currentPlayer);
+        }
+        else if (moveOrdering == 2) {
+            childrenStates = getPossibleMoves.getPossibleMovesPreviousOrdering(currentBoardState, currentPlayer);
+        }
+        else {
+            childrenStates = getPossibleMoves.getPossibleMovesNoOrdering(currentBoardState, currentPlayer);
+        }
         EvaluationFunction eval;
 
         for(int[][] child : childrenStates){
