@@ -137,13 +137,13 @@ public class Abalon {
 			}
 
 			if(HomePage.mctsDifficulty.getValue().equals("Easy")){
-				timer = 3000;
+				timer = 2000;
 			}
 			else if(HomePage.mctsDifficulty.getValue().equals("Neutral")){
-				timer = 10000;
+				timer = 5000;
 			}
 			else if(HomePage.mctsDifficulty.getValue().equals("Hard")){
-				timer = 20000;
+				timer = 10000;
 			}
 
 			int index = 0;
