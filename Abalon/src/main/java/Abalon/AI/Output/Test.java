@@ -111,10 +111,11 @@ public class Test {
 //            bestBoard = ab.getBestMove();
 //
 //            System.out.println("counter = " + ab.getInvestigatedNodes());
+//            System.out.println("ABTS score = " + ab.getBestScore());
 //
 //            long e_AlphaBetaTime = System.currentTimeMillis();
 //
-//            long AlphaBetaDuration = (e_AlphaBetaTime - b_AlphaBetaTime);
+//            long AlphaBetaDuration = (e_AlphaBetaTime - b_AlphaBetaTime)/5;
 //            System.out.println("AlphaBetaDuration = " + AlphaBetaDuration + " ms");
 //
 //            if (currentPlayer == 1) {
@@ -385,10 +386,11 @@ public class Test {
 
     public static void testAIvsAI(int strategy, int sampleSize) {
 
-        OutputCSV out = new OutputCSV("testAIvsAI.txt", "ABTS_win, MCTS_win, ABTS_marbles, MCTS_marbles, avg_time, #turn, strategy");
+        OutputCSV out = new OutputCSV("testAIvsAI2.txt", "ABTS_win, MCTS_win, avg_time, ABTS_marbles, MCTS_marbles, #turn, strategy");
         for (int i = 0; i < sampleSize; i++) {
-            long meanTimeABTS = 0;
-            long turn = 0;
+            float meanTimeABTS = 0;
+            int turn = 0;
+            int turnABTS = 0;
             int currentPlayer = 1;
             int[][] bestBoard = rootCellColor;
             boolean ABTSwin = false;
@@ -411,6 +413,7 @@ public class Test {
                     ABTS_duration = (e_ABTS - b_ABTS);
                     //System.out.println("ABTS_duration = " + ABTS_duration);
                     meanTimeABTS += ABTS_duration;
+                    turnABTS++;
                     currentPlayer = 2;
                 }
                 else {
@@ -422,7 +425,8 @@ public class Test {
                 turn++;
                 //System.out.println("turn = " + turn);
             }
-            //System.out.println("i = " + i);
+            System.out.println("i = " + i);
+            System.out.println();
             if (currentPlayer == 1) {
                 MCTSwin = true;
             }
@@ -431,8 +435,8 @@ public class Test {
             }
             int ABTSmarbles = NeutralEvalFunct.countMarbles(1, bestBoard);
             int MCTSmarbles = NeutralEvalFunct.countMarbles(2, bestBoard);
-            meanTimeABTS = meanTimeABTS/(turn/2);
-            String[] data = {Boolean.toString(ABTSwin), Boolean.toString(MCTSwin), Long.toString(meanTimeABTS), Integer.toString(ABTSmarbles), Integer.toString(MCTSmarbles), Double.toString(turn), Integer.toString(strategy)};
+            meanTimeABTS = (meanTimeABTS/(turnABTS))/1000f;
+            String[] data = {Boolean.toString(ABTSwin), Boolean.toString(MCTSwin), Float.toString(meanTimeABTS), Integer.toString(ABTSmarbles), Integer.toString(MCTSmarbles), Double.toString(turn), Integer.toString(strategy)};
             if (i == 0) {
                 out.writeResume(true, false, data);
             }
