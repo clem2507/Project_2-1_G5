@@ -45,6 +45,13 @@ public class HomePage extends Application {
     public static Button avatar4;
     public static Button avatar5;
     public static Button avatar6;
+    public static int avatarChoice1;
+    public static int avatarChoice2;
+
+    public static Image arrow1;
+    public static Image arrow2;
+    public static ImageView arrow1View;
+    public static ImageView arrow2View;
 
     public static Group pane = new Group();
 
@@ -159,16 +166,20 @@ public class HomePage extends Application {
 
         setPlayersNames();
 
-        //addAvatarButtons();
+        addAvatarButtons();
 
         gameChoice.setOnAction(e -> {
 
             field1.setText("Human");
             field2.setText("Human");
 
+            pane.getChildren().removeAll(avatar1, avatar2, avatar3);
+            pane.getChildren().removeAll(avatar4, avatar5, avatar6);
             pane.getChildren().remove(evaluationChoice2);
             pane.getChildren().remove(evaluationChoice1);
             pane.getChildren().remove(mctsDifficulty);
+            pane.getChildren().addAll(avatar1, avatar2, avatar3);
+            pane.getChildren().addAll(avatar4, avatar5, avatar6);
 
 
             if(gameChoice.getValue().equals("Alpha-Beta vs Human")){
@@ -178,6 +189,7 @@ public class HomePage extends Application {
                 pane.getChildren().remove(evaluationChoice1);
                 pane.getChildren().remove(mctsDifficulty);
                 pane.getChildren().add(evaluationChoice2);
+                pane.getChildren().removeAll(avatar4, avatar5, avatar6);
 
             }
             else if(gameChoice.getValue().equals("MCTS vs Human")){
@@ -186,6 +198,7 @@ public class HomePage extends Application {
                 pane.getChildren().remove(evaluationChoice2);
                 pane.getChildren().remove(evaluationChoice1);
                 pane.getChildren().remove(mctsDifficulty);
+                pane.getChildren().removeAll(avatar4, avatar5, avatar6);
 
                 pane.getChildren().add(evaluationChoice2);
                 pane.getChildren().add(mctsDifficulty);
@@ -196,6 +209,7 @@ public class HomePage extends Application {
                 pane.getChildren().remove(evaluationChoice1);
                 pane.getChildren().remove(evaluationChoice2);
                 pane.getChildren().remove(mctsDifficulty);
+                pane.getChildren().removeAll(avatar4, avatar5, avatar6);
 
             }
             else if(gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
@@ -209,6 +223,9 @@ public class HomePage extends Application {
                 pane.getChildren().add(evaluationChoice1);
                 pane.getChildren().add(evaluationChoice2);
                 pane.getChildren().add(mctsDifficulty);
+
+                pane.getChildren().removeAll(avatar1, avatar2, avatar3);
+                pane.getChildren().removeAll(avatar4, avatar5, avatar6);
             }
         });
 
@@ -334,6 +351,24 @@ public class HomePage extends Application {
     }
 
     private void addAvatarButtons() {
+        arrow1 = new Image(Paths.get("./res/arrow.png").toUri().toString());
+        arrow2 = new Image(Paths.get("./res/arrow.png").toUri().toString());
+
+        arrow1View = new ImageView(arrow1);
+        arrow2View = new ImageView(arrow2);
+
+        arrow1View.setFitHeight(20);
+        arrow1View.setPreserveRatio(true);
+        arrow1View.setTranslateX(360);
+        arrow1View.setTranslateY(400);
+        pane.getChildren().add(arrow1View);
+
+        arrow2View.setFitHeight(20);
+        arrow2View.setPreserveRatio(true);
+        arrow2View.setTranslateX(890);
+        arrow2View.setTranslateY(400);
+        pane.getChildren().add(arrow2View);
+
         String pathAvatar1 = "./res/ghost.png";
         String pathAvatar2 = "./res/mario.png";
         String pathAvatar3 = "./res/muscle.png";
@@ -368,29 +403,79 @@ public class HomePage extends Application {
         avatar3.setPrefSize(40, 40);
         avatar3.setGraphic(avatarView3);
 
-        /*avatar1.setOnAction(
-                event -> {
-                    if(){
-                        avatar1.setBackground();
-                    }
-                    else{
+        //Pane paneAvatars = new Pane();
+        //paneAvatars.setPrefWidth(300);
+        pane.getChildren().addAll(avatar1,avatar2,avatar3);
+        //pane.getChildren().add(paneAvatars);
 
-                    }
-                });*/
+        avatar1.setOnAction((EventHandler) e-> {
+            avatarChoice1 =1;
+            arrow1View.setTranslateX(360);
+        });
+        avatar2.setOnAction((EventHandler) e-> {
+            avatarChoice1 = 2;
+            arrow1View.setTranslateX(295);
+        });
+        avatar3.setOnAction((EventHandler) e-> {
+            avatarChoice1 = 3;
+            arrow1View.setTranslateX(425);
+        });
 
-        Pane paneAvatars = new Pane();
-        paneAvatars.getChildren().addAll(avatar1,avatar2,avatar3);
-        pane.getChildren().add(paneAvatars);
+        String pathAvatar4 = "./res/ghost.png";
+        String pathAvatar5 = "./res/mario.png";
+        String pathAvatar6 = "./res/muscle.png";
 
-        avatar4 = avatar1;
-        avatar5 = avatar2;
-        avatar6 = avatar3;
-        avatar4.setTranslateX(610);
-        avatar5.setTranslateX(480);
-        avatar6.setTranslateX(545);
-        Pane paneAvatarsBis = new Pane();
-        paneAvatarsBis.getChildren().addAll(avatar4,avatar5,avatar6);
-        pane.getChildren().add(paneAvatarsBis);
+        avatar4 = new Button();
+        Image avatarImage4 = new Image(Paths.get(pathAvatar4).toUri().toString());
+        ImageView avatarView4 = new ImageView(avatarImage4);
+        avatarView4.setFitHeight(40);
+        avatarView4.setPreserveRatio(true);
+        avatar4.setTranslateX(875);
+        avatar4.setTranslateY(350);
+        avatar4.setPrefSize(40, 40);
+        avatar4.setGraphic(avatarView4);
+
+        avatar5 = new Button();
+        Image avatarImage5 = new Image(Paths.get(pathAvatar5).toUri().toString());
+        ImageView avatarView5 = new ImageView(avatarImage5);
+        avatarView5.setFitHeight(40);
+        avatarView5.setPreserveRatio(true);
+        avatar5.setTranslateX(810);
+        avatar5.setTranslateY(350);
+        avatar5.setPrefSize(40, 40);
+        avatar5.setGraphic(avatarView5);
+
+        avatar6 = new Button();
+        Image avatarImage6 = new Image(Paths.get(pathAvatar6).toUri().toString());
+        ImageView avatarView6= new ImageView(avatarImage6);
+        avatarView6.setFitHeight(40);
+        avatarView6.setPreserveRatio(true);
+        avatar6.setTranslateX(940);
+        avatar6.setTranslateY(350);
+        avatar6.setPrefSize(40, 40);
+        avatar6.setGraphic(avatarView6);
+
+        //Pane paneAvatarsBis = new Pane();
+        //paneAvatarsBis.prefWidth(400);
+        pane.getChildren().addAll(avatar4,avatar5,avatar6);
+        //pane.getChildren().add(paneAvatarsBis);
+
+        avatar4.setOnAction((EventHandler) e-> {
+            avatarChoice2 = 1;
+            arrow2View.setTranslateX(890);
+        });
+
+        avatar5.setOnAction((EventHandler) e-> {
+            avatarChoice2 = 2;
+            arrow2View.setTranslateX(825);
+        });
+
+        avatar6.setOnAction((EventHandler) e-> {
+            avatarChoice2 = 3;
+            arrow2View.setTranslateX(955);
+        });
+
+
     }
 
     public static void main(String[] args) {

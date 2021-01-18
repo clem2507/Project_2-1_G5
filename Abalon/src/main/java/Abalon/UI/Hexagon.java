@@ -52,6 +52,12 @@ public class Hexagon extends Application {
     public static ArrayList<Text> letters = new ArrayList<>();
     public static Text direction = null;
 
+    public static Image avatar1;
+    public static Image avatar2;
+
+    public static ImageView avatar1View;
+    public static ImageView avatar2View;
+
     static MediaPlayer mediaPlayer;
 
     // Hexagon should access Board to obtain Marbles positions, color, etc
@@ -69,6 +75,8 @@ public class Hexagon extends Application {
         addMusic();
 
         setBackground();
+
+        addAvatar();
 
         //Creating an object of Board, which constructs a board
         board = new BoardUI();
@@ -392,6 +400,88 @@ public class Hexagon extends Application {
         Media media = new Media(Paths.get(musicFile).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+    }
+
+    public void addAvatar(){
+        String path1 = "./res/ghost.png";
+        String path2 = "./res/mario.png";
+        String path3 = "./res/muscle.png";
+
+        avatar1 =  new Image(Paths.get(path1).toUri().toString());
+        avatar2 = new Image(Paths.get(path1).toUri().toString());
+        avatar2View = new ImageView(avatar2);;
+
+        if(HomePage.gameChoice.getValue().equals("Human vs Human")){
+            if(HomePage.avatarChoice1 == 1 ){
+                avatar1 = new Image(Paths.get(path1).toUri().toString());
+
+            }
+            else if(HomePage.avatarChoice1 == 2 ){
+                avatar1 = new Image(Paths.get(path2).toUri().toString());
+            }
+            else if(HomePage.avatarChoice1 == 3 ){
+                avatar1 = new Image(Paths.get(path3).toUri().toString());
+            }
+
+            if( HomePage.avatarChoice2 == 1){
+                avatar2 = new Image(Paths.get(path1).toUri().toString());
+            }
+            else if(HomePage.avatarChoice2 == 2 ){
+                avatar2 = new Image(Paths.get(path2).toUri().toString());
+            }
+            else if(HomePage.avatarChoice2 == 3 ){
+                avatar2 = new Image(Paths.get(path3).toUri().toString());
+            }
+            avatar2View.setImage(avatar2);
+            avatar2View.setFitHeight(80);
+            avatar2View.setPreserveRatio(true);
+            avatar2View.setTranslateX(1050);
+            avatar2View.setTranslateY(100);
+            pane.getChildren().add(avatar2View);
+        }
+        else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
+            if(HomePage.avatarChoice1 == 1 ){
+                avatar1 = new Image(Paths.get(path1).toUri().toString());
+            }
+            else if(HomePage.avatarChoice1 == 2 ){
+                avatar1 = new Image(Paths.get(path2).toUri().toString());
+            }
+            else if(HomePage.avatarChoice1 == 3 ){
+                avatar1 = new Image(Paths.get(path3).toUri().toString());
+            }
+        }
+
+        else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
+            if(HomePage.avatarChoice1 == 1 ){
+                avatar1 = new Image(Paths.get(path1).toUri().toString());
+            }
+            else if(HomePage.avatarChoice1 == 2 ){
+                avatar1 = new Image(Paths.get(path2).toUri().toString());
+            }
+            else if(HomePage.avatarChoice1 == 3 ){
+                avatar1 = new Image(Paths.get(path3).toUri().toString());
+            }
+        }
+
+        else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
+            if(HomePage.avatarChoice1 == 1 ){
+                avatar1 = new Image(Paths.get(path1).toUri().toString());
+            }
+            else if(HomePage.avatarChoice1 == 2 ){
+                avatar1 = new Image(Paths.get(path2).toUri().toString());
+            }
+            else if(HomePage.avatarChoice1 == 3 ){
+                avatar1 = new Image(Paths.get(path3).toUri().toString());
+            }
+        }
+
+        avatar1View = new ImageView(avatar1);
+        avatar1View.setFitHeight(80);
+        avatar1View.setPreserveRatio(true);
+        avatar1View.setTranslateX(120);
+        avatar1View.setTranslateY(100);
+        pane.getChildren().add(avatar1View);
+
     }
 }
 
