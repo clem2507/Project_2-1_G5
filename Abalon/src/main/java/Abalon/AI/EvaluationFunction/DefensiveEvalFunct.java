@@ -32,10 +32,10 @@ public class DefensiveEvalFunct extends EvaluationFunction{
 
      WEIGHTS:
 
-     w1 = 3
-     w2 = 2
-     w4 = 3
-     w6 = 500
+     w1 = -10
+     w2 = 10
+     w4 = 150
+     w6 = -10000
 
      -----------------------------------------------------
      */
