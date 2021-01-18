@@ -185,10 +185,10 @@ public class MCTS {
         n.setTotalSimulation(n.getTotalSimulation() + 1);
         n.setTotalWin(n.getTotalScore() + simulationScore);
 
-        backPropagation(n, simulationScore);
+        Backpropagation(n, simulationScore);
     }
 
-    public void backPropagation(Node n, double simulationScore) {
+    public void Backpropagation(Node n, double simulationScore) {
 
         while (getParent(n) != null) {
             n = getParent(n);
