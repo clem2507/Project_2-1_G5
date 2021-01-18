@@ -1,34 +1,13 @@
 package Abalon.AI.EvaluationFunction;
 
-import Abalon.AI.Tree.GameTree;
 import Abalon.AI.Tree.GetPossibleMoves;
-import Abalon.AI.Tree.Node;
-import Abalon.Main.Abalon;
 
 import java.util.ArrayList;
 
 public class OffensiveEvalFunct extends EvaluationFunction{
 
     /**
-
-     Heuristics that are good to use:
-
-     // add the number of pushing positions as an heuristics
-     // as well as the number of push out positions
-
-     // Possible sumito positions
-     // -> Try to have as much as possible sumito positions compared to the opponent
-     // As much as possible lost marbles for to the opponent
-
-     // -> v4, v5 to use from neutral strategy and sumito positions heuristic to introduce (let's call it v7)
-
-     // E(s) = w4*v4 + w5*v5 + w7*v7
-
      -----------------------------------------------------
-
-     RECAP:
-
-     Don't forget to let the neutral strategy play few turns at the beginning to get closer to the center
 
      HEURISTICS:
 
@@ -46,8 +25,9 @@ public class OffensiveEvalFunct extends EvaluationFunction{
      w7 = 300
      w8 = 70
 
-     -----------------------------------------------------
+     E(s) = w1*v1bis + w2*v2bis + w5*v5 + w7*v7 + w8*v8
 
+     -----------------------------------------------------
      */
 
     private ArrayList<int[][]> children;

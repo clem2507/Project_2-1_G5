@@ -104,7 +104,6 @@ public class MCTS {
     }
 
     public void Selection() {
-
         Node n = root;
         int actualPlayer = currentPlayer;
         if (count > 0) {
@@ -168,28 +167,28 @@ public class MCTS {
 
             if (strategy == 1) {
                 evaluationFunction = new NeutralEvalFunct(currentPlayer, actualBoard, root.getBoardState());
-                simulationScore += ponderationFunction(rootScore, evaluationFunction.evaluate());
+                simulationScore += weightingFunction(rootScore, evaluationFunction.evaluate());
             }
             else if (strategy == 2) {
                 evaluationFunction = new OffensiveEvalFunct(currentPlayer, actualBoard, root.getBoardState());
-                simulationScore += ponderationFunction(rootScore, evaluationFunction.evaluate());
+                simulationScore += weightingFunction(rootScore, evaluationFunction.evaluate());
             }
             else if (strategy == 3) {
                 evaluationFunction = new DefensiveEvalFunct(currentPlayer, actualBoard, root.getBoardState());
-                simulationScore += ponderationFunction(rootScore, evaluationFunction.evaluate());
+                simulationScore += weightingFunction(rootScore, evaluationFunction.evaluate());
             }
             else {
                 evaluationFunction = new MixEvalFunct(currentPlayer, actualBoard, root.getBoardState());
-                simulationScore += ponderationFunction(rootScore, evaluationFunction.evaluate());
+                simulationScore += weightingFunction(rootScore, evaluationFunction.evaluate());
             }
         }
         n.setTotalSimulation(n.getTotalSimulation() + 1);
         n.setTotalWin(n.getTotalScore() + simulationScore);
 
-        Backpropagation(n, simulationScore);
+        backPropagation(n, simulationScore);
     }
 
-    public void Backpropagation(Node n, double simulationScore) {
+    public void backPropagation(Node n, double simulationScore) {
 
         while (getParent(n) != null) {
             n = getParent(n);
@@ -208,7 +207,7 @@ public class MCTS {
         root.setTotalSimulation(sumSimulation);
     }
 
-    public double ponderationFunction(double rootScore, double currentScore) {
+    public double weightingFunction(double rootScore, double currentScore) {
 
         double score;
         if (currentScore > rootScore) {

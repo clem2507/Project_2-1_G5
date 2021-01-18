@@ -2,8 +2,14 @@ package Abalon.AI.EvaluationFunction;
 
 import Abalon.AI.Tree.GetPossibleMoves;
 
-public class MixEvalFunct extends EvaluationFunction{
+/**
+ * This class aims to use all three evaluation functions (Neutral, Offensive & Defensive) to form
+ * the Mix Evaluation Function. The Mix Evaluation Function adapts itself to the situation so that it
+ * uses the proper evaluation function at the proper time.
+ * Because it wasn't efficient enough, we've decided no to use this new evaluation function.
+ */
 
+public class MixEvalFunct extends EvaluationFunction{
 
     public MixEvalFunct(int currentPlayer, int[][] cellColor, int[][] rootCellColor) {
         super(currentPlayer, cellColor, rootCellColor);

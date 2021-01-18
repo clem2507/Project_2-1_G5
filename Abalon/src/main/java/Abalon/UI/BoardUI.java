@@ -27,9 +27,6 @@ public class BoardUI {
 
     public Polygon hexagon; // the board shaped like an hexagon
 
-    private int[][] counter = new int[9][9]; // counters associated to each cell, used to check how much time a cell
-    // has been clicked by the mouse
-
     private final double RADIUS = 22; // radius of the circles (marbles & holes)
 
     public BoardUI(){

@@ -3,23 +3,7 @@ package Abalon.AI.EvaluationFunction;
 public class DefensiveEvalFunct extends EvaluationFunction{
 
     /**
-
-    Heuristics that are good to use:
-
-    // Marbles grouped together
-    // Marbles centered on the board
-    // -> Important to avoid the opponent being centered grouped before us
-    // As few as possible lost marbles compared to the opponent
-
-    // -> v1, v2, v4, v6 to use from neutral strategy
-
-    // E(s) = w1*v1 + w2*v2 + w4*v4 + w5*v5
-
      -----------------------------------------------------
-
-     RECAP:
-
-     Don't forget to let the neutral strategy play few turns at the beginning to get closer to the center
 
      HEURISTICS:
 
@@ -34,6 +18,8 @@ public class DefensiveEvalFunct extends EvaluationFunction{
      w2 = 10
      w4 = 150
      w6 = -10000
+
+     E(s) = w1*v1 + w2*v2 + w4*v4 + w6*v6
 
      -----------------------------------------------------
      */

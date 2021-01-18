@@ -70,7 +70,9 @@ public class RuleBased {
         previousMove = bestMove;
     }
 
-
+    /**
+     * Computes the moves that displace an opponent's marble
+     */
     public ArrayList<int[][]> getPushingMoves(ArrayList<int[][]> children, int[][] board, int opponentPlayer) {
         ArrayList<int[][]> pushings = new ArrayList<>();
 
@@ -82,6 +84,9 @@ public class RuleBased {
         return pushings;
     }
 
+    /**
+     * Computes the moves that eject an opponent's marble
+     */
     public ArrayList<int[][]> getSumitoMoves(ArrayList<int[][]> children, int[][] board, int opponentPlayer){
         ArrayList<int[][]> sumitos = new ArrayList<>();
 
