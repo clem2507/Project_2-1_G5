@@ -40,11 +40,11 @@ public class OffensiveEvalFunct extends EvaluationFunction{
 
      WEIGHTS:
 
-     w1bis = -5
-     w2bis = 3
-     w5 = 500
-     w7 = 100
-     w8 = 40
+     w1 = -2
+     w2 = 3
+     w5 = 10000
+     w7 = 300
+     w8 = 70
 
      -----------------------------------------------------
 
