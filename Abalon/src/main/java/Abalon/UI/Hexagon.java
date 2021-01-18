@@ -89,7 +89,6 @@ public class Hexagon extends Application {
 
         addMusicButton();
 
-
         // sketch buttons to know how to play the game
         if (!HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")) {
             sketchHowToPlay();
