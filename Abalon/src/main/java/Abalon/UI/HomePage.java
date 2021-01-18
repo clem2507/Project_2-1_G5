@@ -173,13 +173,13 @@ public class HomePage extends Application {
             field1.setText("Human");
             field2.setText("Human");
 
-            pane.getChildren().removeAll(avatar1, avatar2, avatar3);
-            pane.getChildren().removeAll(avatar4, avatar5, avatar6);
+            pane.getChildren().removeAll(avatar1, avatar2, avatar3, arrow1View);
+            pane.getChildren().removeAll(avatar4, avatar5, avatar6, arrow2View);
             pane.getChildren().remove(evaluationChoice2);
             pane.getChildren().remove(evaluationChoice1);
             pane.getChildren().remove(mctsDifficulty);
-            pane.getChildren().addAll(avatar1, avatar2, avatar3);
-            pane.getChildren().addAll(avatar4, avatar5, avatar6);
+            pane.getChildren().addAll(avatar1, avatar2, avatar3, arrow1View);
+            pane.getChildren().addAll(avatar4, avatar5, avatar6, arrow2View);
 
 
             if(gameChoice.getValue().equals("Alpha-Beta vs Human")){
@@ -189,7 +189,7 @@ public class HomePage extends Application {
                 pane.getChildren().remove(evaluationChoice1);
                 pane.getChildren().remove(mctsDifficulty);
                 pane.getChildren().add(evaluationChoice2);
-                pane.getChildren().removeAll(avatar4, avatar5, avatar6);
+                pane.getChildren().removeAll(avatar4, avatar5, avatar6, arrow2View);
 
             }
             else if(gameChoice.getValue().equals("MCTS vs Human")){
@@ -198,7 +198,7 @@ public class HomePage extends Application {
                 pane.getChildren().remove(evaluationChoice2);
                 pane.getChildren().remove(evaluationChoice1);
                 pane.getChildren().remove(mctsDifficulty);
-                pane.getChildren().removeAll(avatar4, avatar5, avatar6);
+                pane.getChildren().removeAll(avatar4, avatar5, avatar6, arrow2View);
 
                 pane.getChildren().add(evaluationChoice2);
                 pane.getChildren().add(mctsDifficulty);
@@ -209,7 +209,7 @@ public class HomePage extends Application {
                 pane.getChildren().remove(evaluationChoice1);
                 pane.getChildren().remove(evaluationChoice2);
                 pane.getChildren().remove(mctsDifficulty);
-                pane.getChildren().removeAll(avatar4, avatar5, avatar6);
+                pane.getChildren().removeAll(avatar4, avatar5, avatar6, arrow2View);
 
             }
             else if(gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
@@ -224,8 +224,8 @@ public class HomePage extends Application {
                 pane.getChildren().add(evaluationChoice2);
                 pane.getChildren().add(mctsDifficulty);
 
-                pane.getChildren().removeAll(avatar1, avatar2, avatar3);
-                pane.getChildren().removeAll(avatar4, avatar5, avatar6);
+                pane.getChildren().removeAll(avatar1, avatar2, avatar3, arrow1View);
+                pane.getChildren().removeAll(avatar4, avatar5, avatar6, arrow2View);
             }
         });
 

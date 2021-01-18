@@ -482,6 +482,10 @@ public class Hexagon extends Application {
         avatar1View.setTranslateY(100);
         pane.getChildren().add(avatar1View);
 
+        if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
+            pane.getChildren().remove(avatar1View);
+        }
+
     }
 }
 
