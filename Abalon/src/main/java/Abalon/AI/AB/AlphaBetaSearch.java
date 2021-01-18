@@ -19,7 +19,6 @@ public class AlphaBetaSearch {
     public AlphaBetaSearch(GameTree gameTree) {
 
         this.tree = gameTree;
-        //System.out.println("Number of nodes = " + tree.getNodes().size());
         this.totalDepth = gameTree.getGeneration();
     }
 

@@ -1,7 +1,6 @@
 package Abalon.AI.MCTS;
 
 import Abalon.AI.EvaluationFunction.*;
-import Abalon.AI.Output.Test;
 import Abalon.AI.Tree.Edge;
 import Abalon.AI.Tree.GetPossibleMoves;
 import Abalon.AI.Tree.Node;
@@ -63,10 +62,6 @@ public class MCTS {
         double stopCondition = timer;
         while ((System.currentTimeMillis() - b_time) < stopCondition) {
             Selection();
-            //for (Node n : nodes) {
-                //System.out.print(n.getTotalSimulation() + ", ");
-            //}
-            //System.out.println();
             count++;
         }
         ArrayList<Node> rootChildren = getChildren(root);
@@ -77,8 +72,6 @@ public class MCTS {
                 bestMove = child.getBoardState();
             }
         }
-        //System.out.println("Simulations = " + nodes.get(0).getTotalSimulation());
-        //System.out.println();
     }
 
     public double uctValue(Node n) {
@@ -217,13 +210,10 @@ public class MCTS {
 
     public double ponderationFunction(double rootScore, double currentScore) {
 
-        double score = 0;
+        double score;
         if (currentScore > rootScore) {
-            //score = Math.log((Math.abs(currentScore-rootScore)) + 1) * scale;
             score = Math.sqrt(Math.abs(currentScore-rootScore))/5;
-            //score = Math.pow(Math.abs(currentScore-rootScore), (double) 2/3)/10;
-        }
-        else {
+        } else {
             score = -(Math.sqrt(Math.abs(currentScore-rootScore))/5);
         }
         return score;

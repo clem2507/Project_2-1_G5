@@ -68,8 +68,6 @@ public class MixEvalFunct extends EvaluationFunction{
             strategy = 1;
         }
 
-       // System.out.println("strategy = " + strategy);
-
         return strategy;
     }
 }

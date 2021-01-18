@@ -1,7 +1,5 @@
 package Abalon.AI.EvaluationFunction;
 
-import Abalon.Main.Abalon;
-
 public class DefensiveEvalFunct extends EvaluationFunction{
 
     /**
@@ -106,17 +104,10 @@ public class DefensiveEvalFunct extends EvaluationFunction{
 
     @Override
     public double evaluate(){
+        double score;
 
-        //int turn = Abalon.numberOfTurn;
-        double score = 0;
-
-        //if(turn <= 4){
-            //EvaluationFunction neut = new NeutralEvalFunct(currentPlayer, cellColor, rootCellColor);
-            //score = neut.evaluate();
-        //}else{
-            computeValues();
-            score = w1*v1 + w2*v2 + w4*v4 + w6*v6;
-        //}
+        computeValues();
+        score = w1*v1 + w2*v2 + w4*v4 + w6*v6;
 
         return score;
     }
