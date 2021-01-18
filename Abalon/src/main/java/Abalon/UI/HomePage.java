@@ -4,8 +4,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -16,12 +15,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.control.TextField;
 
 import java.io.File;
 import javafx.embed.swing.SwingFXUtils;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.file.Paths;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
@@ -37,6 +38,13 @@ public class HomePage extends Application {
 
     public static TextField field1;
     public static TextField field2;
+
+    public static Button avatar1;
+    public static Button avatar2;
+    public static Button avatar3;
+    public static Button avatar4;
+    public static Button avatar5;
+    public static Button avatar6;
 
     public static Group pane = new Group();
 
@@ -151,14 +159,17 @@ public class HomePage extends Application {
 
         setPlayersNames();
 
+        //addAvatarButtons();
+
         gameChoice.setOnAction(e -> {
 
             field1.setText("Human");
-            field2.setText("human");
+            field2.setText("Human");
 
             pane.getChildren().remove(evaluationChoice2);
             pane.getChildren().remove(evaluationChoice1);
             pane.getChildren().remove(mctsDifficulty);
+
 
             if(gameChoice.getValue().equals("Alpha-Beta vs Human")){
                 field1.setText("Human");
@@ -230,7 +241,7 @@ public class HomePage extends Application {
         player1Text.setFill(Color.BLACK);
         pane.getChildren().addAll(player1Text);
 
-        field1 = new TextField();
+        field1 = new TextField("Human");
         field1.setTranslateX(270);
         field1.setTranslateY(300);
         field1.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
@@ -244,7 +255,7 @@ public class HomePage extends Application {
         player2Text.setFill(Color.BLACK);
         pane.getChildren().addAll(player2Text);
 
-        field2 = new TextField();
+        field2 = new TextField("Human");
         field2.setTranslateX(800);
         field2.setTranslateY(300);
         field2.setFont(Font.font("Zorque", FontWeight.BOLD, FontPosture.REGULAR, 20));
@@ -320,6 +331,66 @@ public class HomePage extends Application {
             System.out.println("file not found");
             System.exit(0);
         }
+    }
+
+    private void addAvatarButtons() {
+        String pathAvatar1 = "./res/ghost.png";
+        String pathAvatar2 = "./res/mario.png";
+        String pathAvatar3 = "./res/muscle.png";
+
+        avatar1 = new Button();
+        Image avatarImage1 = new Image(Paths.get(pathAvatar1).toUri().toString());
+        ImageView avatarView1 = new ImageView(avatarImage1);
+        avatarView1.setFitHeight(40);
+        avatarView1.setPreserveRatio(true);
+        avatar1.setTranslateX(345);
+        avatar1.setTranslateY(350);
+        avatar1.setPrefSize(40, 40);
+        avatar1.setGraphic(avatarView1);
+
+        avatar2 = new Button();
+        Image avatarImage2 = new Image(Paths.get(pathAvatar2).toUri().toString());
+        ImageView avatarView2 = new ImageView(avatarImage2);
+        avatarView2.setFitHeight(40);
+        avatarView2.setPreserveRatio(true);
+        avatar2.setTranslateX(280);
+        avatar2.setTranslateY(350);
+        avatar2.setPrefSize(40, 40);
+        avatar2.setGraphic(avatarView2);
+
+        avatar3 = new Button();
+        Image avatarImage3 = new Image(Paths.get(pathAvatar3).toUri().toString());
+        ImageView avatarView3 = new ImageView(avatarImage3);
+        avatarView3.setFitHeight(40);
+        avatarView3.setPreserveRatio(true);
+        avatar3.setTranslateX(410);
+        avatar3.setTranslateY(350);
+        avatar3.setPrefSize(40, 40);
+        avatar3.setGraphic(avatarView3);
+
+        /*avatar1.setOnAction(
+                event -> {
+                    if(){
+                        avatar1.setBackground();
+                    }
+                    else{
+
+                    }
+                });*/
+
+        Pane paneAvatars = new Pane();
+        paneAvatars.getChildren().addAll(avatar1,avatar2,avatar3);
+        pane.getChildren().add(paneAvatars);
+
+        avatar4 = avatar1;
+        avatar5 = avatar2;
+        avatar6 = avatar3;
+        avatar4.setTranslateX(610);
+        avatar5.setTranslateX(480);
+        avatar6.setTranslateX(545);
+        Pane paneAvatarsBis = new Pane();
+        paneAvatarsBis.getChildren().addAll(avatar4,avatar5,avatar6);
+        pane.getChildren().add(paneAvatarsBis);
     }
 
     public static void main(String[] args) {
