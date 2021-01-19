@@ -2,9 +2,12 @@
 
 --> How to run the game?
 
+
 First, download the zip project file.
 
+
 Then, there are two different ways of compiling it:
+
 
 1)
     - Open your terminal 
@@ -18,6 +21,7 @@ Then, there are two different ways of compiling it:
     - Make sure to use a supported SDK that contains javaFX library (for example java 10)
     - Go into the UI package located inside the main Abalone folder
     - Run the HomePage.java class
+    
    
 From there, the code should run and you may play by pressing start! The rules are in the rule window, you can access them by clicking the "rule" button.
 
