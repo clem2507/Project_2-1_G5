@@ -14,6 +14,7 @@ Then, there are two different ways of compiling it:
     - Go to the Abalone folder (cd) and use the following commands: 
   
   gradle build
+  
   gradle run
 
 2) 
