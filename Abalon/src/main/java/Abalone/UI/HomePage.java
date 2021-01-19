@@ -109,22 +109,23 @@ public class HomePage extends Application {
                     dialog.initModality(Modality.APPLICATION_MODAL);
                     dialog.initOwner(primaryStage);
                     VBox dialogVbox = new VBox(20);
-                    Text text = new Text("The goal of the game is to eject 6 marbles of the \n opponent. " +
-                            "Each player waits for his turn to play. \n When it's its turn the player has three options: \n" +
-                            " moving 1, 2 or 3 marbles at the same \n time. Knowing that to displace opponent's \n marble," +
-                            "he needs to push them with more \n than the number of marbles that are going to \n be displaced. " +
-                            "A marble is ejected when it gets \n pushed out of the board. " +
-                            "To move \n the marbles, the user first needs to select \n the marbles to move and then press:" +
-                            "\n- Q to go TOP_LEFT \n" +
-                            "- A to go LEFT\n" +
-                            "- D to go RIGHT \n" +
-                            "- Z to go BOTTOM_LEFT \n" +
-                            "- C to go BOTTOM_RIGHT \n" +
-                            "- E to go TOP_RIGHT " +
-                            "\nThen press enter to confirm the move.");
+                    Text text = new Text("\n\n     Abalone is played on a hexagonal board containing sixty-one circular spaces, five spaces on each side."+
+                            "\n     The game opens with twenty-eight marbles on the board. Fourteen black marbles are disposed on the bottom rows \n     and fourteen white marbles on the top rows."+
+                            "\n     Player one controls the white marbles, player two controls the black marbles." +
+                            " Players are allowed to move between one and three marbles connected in a straight line. \n     Marbles can be moved sideways and in-line. In-line moves allow a player to push marbles belonging to another player.\n     Pushes are legal if the marbles are pushing a lower number of marbles than the pushed marbles."+
+                            " The two players alternate, making one move each turn." +
+                            " \n     The goal of the game is to push the opponent's marbles off the board. The game is won by pushing six marbles belonging to the opponent." +
+                            " \n     To move the marbles, the user first needs to select the marbles to move and then press:" +
+                            "\n     - Q to go TOP_LEFT \n" +
+                            "     - A to go LEFT\n" +
+                            "     - D to go RIGHT \n" +
+                            "     - Z to go BOTTOM_LEFT \n" +
+                            "     - C to go BOTTOM_RIGHT \n" +
+                            "     - E to go TOP_RIGHT " +
+                            "\n     Then press enter to confirm the move.");
                     text.setFont(Font.font("Arial", 13));
                     dialogVbox.getChildren().add(text);
-                    Scene dialogScene = new Scene(dialogVbox, 280, 400);
+                    Scene dialogScene = new Scene(dialogVbox, 1000, 300);
                     dialog.setScene(dialogScene);
                     dialog.setResizable(false);
                     dialog.show();
