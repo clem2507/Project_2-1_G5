@@ -11,7 +11,7 @@ Then, there are two different ways of compiling it:
 
 1)
     - Open your terminal 
-    - Go to the Abalone folder (cd) and use the following commands: 
+    - Go to the Abalon folder (cd) and use the following commands: 
   
             gradle build
   
@@ -20,7 +20,7 @@ Then, there are two different ways of compiling it:
 2) 
     - Import the project into your prefered java IDEA
     - Make sure to use a supported SDK that contains javaFX library (for example java 10)
-    - Go into the UI package located inside the main Abalone folder
+    - Go into the UI package located inside the main Abalon folder
     - Run the HomePage.java class
     
    
