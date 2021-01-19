@@ -10,8 +10,8 @@ Then, there are two different ways of compiling it:
     - Open your terminal 
     - Go to the Abalone folder (cd) and use the following commands: 
   
-      gradle build
-      gradle run
+  gradle build
+  gradle run
 
 2) 
     - Import the project into your prefered java IDEA
