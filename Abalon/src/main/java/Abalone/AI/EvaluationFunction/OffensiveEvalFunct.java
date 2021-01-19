@@ -4,7 +4,7 @@ import Abalone.AI.Tree.GetPossibleMoves;
 
 import java.util.ArrayList;
 
-public class OffensiveEvalFunct extends EvaluationFunction{
+public class OffensiveEvalFunct extends EvaluationFunction {
 
     /**
      -----------------------------------------------------
@@ -153,9 +153,21 @@ public class OffensiveEvalFunct extends EvaluationFunction{
     }
 
     public double evaluate() {
-
         computeValues();
         return w1 * v1bis + w2 * v2bis + w5 * v5 + w7 * v7 + w8 * v8;
+    }
+    
+    public void setWeights(double w1_, double w2_, double w3_, double w4_, double w5_) {
+        w1 = w1_;
+        w2 = w2_;
+        w5 = w3_;
+        w7 = w4_;
+        w8 = w5_;
+    }
+
+    @Override
+    public void setUnifiedWeights(double[] weights) {
+        setWeights(weights[0], weights[1], weights[2], weights[3], weights[4]);
     }
 }
 

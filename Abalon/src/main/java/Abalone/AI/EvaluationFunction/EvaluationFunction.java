@@ -27,4 +27,7 @@ public abstract class EvaluationFunction {
         return rootCellColor;
     }
 
+    public void setUnifiedWeights(double[] weights) {
+        
+    }
 }

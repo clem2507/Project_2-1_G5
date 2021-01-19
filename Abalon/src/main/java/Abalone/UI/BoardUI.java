@@ -315,7 +315,7 @@ public class BoardUI {
     /**
      * Creates the score circles
      */
-    private void createScoredCirclesColors(){
+    public void createScoredCirclesColors(){
         scoredCirclesColors = new int[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     }
 

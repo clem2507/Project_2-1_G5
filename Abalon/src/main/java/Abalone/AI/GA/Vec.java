@@ -1,4 +1,4 @@
-package Abalone.AI.GA;
+package Abalon.AI.GA;
 
 import java.lang.*;
 
@@ -98,5 +98,17 @@ public class Vec {
 			return false;
 		Vec r = (Vec)otherObject;
 		return (length == r.length && v == r.v);
+	}
+
+	@Override 
+	public String toString() {
+		String res = "[";
+		for (int i = 0; i < v.length; i++) {
+			res = res + String.valueOf(v[i]);
+			if (i != v.length - 1)
+				res = res + ", ";
+		}
+		res = res + "]";
+		return res;
 	}
 }

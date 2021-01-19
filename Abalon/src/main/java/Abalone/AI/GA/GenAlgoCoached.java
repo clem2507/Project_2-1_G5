@@ -1,8 +1,25 @@
-package Abalone.AI.GA;
+package Abalon.AI.GA;
 
 import Abalone.AI.EvaluationFunction.NeutralEvalFunct;
+import Abalone.AI.EvaluationFunction.OffensiveEvalFunct;
 import Abalone.AI.Tree.GetPossibleMoves;
+import Abalone.UI.BoardUI;
+import Abalone.AI.MCTS.MCTS;
 
+import javafx.stage.Stage;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.application.Platform;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+
+import java.io.File;
 import java.util.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -18,27 +35,86 @@ import java.security.SecureRandom;
  * mutation chance: 5%
  * replacement: 70% of population with worst scoreSum function
  */
-public class GenAlgoCoached {//extends Application {
 
-	GetPossibleMoves getPossibleMoves = new GetPossibleMoves();
+public class GenAlgoCoached {// extends Application {
 
-	public static void main(String[] args) {
-		GenAlgoCoached obj = new GenAlgoCoached();
+	public GetPossibleMoves getPossibleMoves = new GetPossibleMoves();
+	//public BorderPane pane = new BorderPane();
+	//public Stage primaryStage;
+	private final double WIDTH = 1270;
+    private final double HEIGHT = 700;
+
+    public Log logger = new Log();
+
+    //public BoardUI board;
+
+	/*public static void main(String[] args) {
+		launch();
+	}
+
+	@Override 
+	public void start(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+		try {
+            BufferedImage buffer = ImageIO.read(new File("./res/grey2.jpg"));
+            Image background = SwingFXUtils.toFXImage(buffer, null);
+            ImageView view = new ImageView(background);
+            pane.getChildren().addAll(view);
+        } catch (Exception e) {
+            System.out.println("file not found");
+            System.exit(0);
+        }
+
+        Scene scene = new Scene(pane, WIDTH, HEIGHT);
+        this.primaryStage.setResizable(false);
+        this.primaryStage.setTitle("Abalone");
+        this.primaryStage.setScene(scene);
+        this.primaryStage.show();
+        this.primaryStage.requestFocus();
+
+        board = new BoardUI();
+        pane.setCenter(board.hexagon);
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++)
+                if (board.circles[i][j] != null)
+                    pane.getChildren().add(board.circles[i][j]);
+        }
+
+        for (int i = 0; i < 6; i++){
+            pane.getChildren().add(board.scoredCircles[i][0]);
+            pane.getChildren().add(board.scoredCircles[i][1]);
+        }
+
+        Thread gaThread = new Thread(new Runnable() {
+        	@Override
+            public void run() {
+            	GenAlgoCoached obj = new GenAlgoCoached();
+            	obj.runGA(1, 0, board);
+            }
+        });
+        gaThread.setDaemon(false);
+        gaThread.start();
 		
+
 		//System.out.println();
 		//for (int i = 0; i < 100; i++) {
 		//	obj.GenAlgoCoached(i + 1);
 		//	System.out.println("population " + (i + 1) + " produced");
 		//}
+	}*/
 
-		obj.GenAlgoCoached(1);
+	public static void main(String[] args) {
+		GenAlgoCoached obj = new GenAlgoCoached();
+		obj.runGA(1, 1);
 	}
 
-	public void GenAlgoCoached(int gen_number) {
+	public void runGA(int gen_number, int postfix){//, BoardUI board) {
+		//this.board = board;
 		Vec[] population = new Vec[100];
 		try {
-			Log.init(gen_number);
-			population = Log.read();
+			logger.init(gen_number, postfix);
+			population = logger.read();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -49,6 +125,7 @@ public class GenAlgoCoached {//extends Application {
 			System.out.println(String.format("game #%d", i));
 			population[i].normalize();
 			scoreSum[i] = playGame(population[i]);	
+			System.out.println(scoreSum[i]);
 		}
 
 		ArrayList<Integer> order = new ArrayList<>();
@@ -111,7 +188,7 @@ public class GenAlgoCoached {//extends Application {
 			population[i] = offset[i];
 
 		try {
-			Log.writeResultPopulation(population);
+			logger.writeResultPopulation(population);
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -129,6 +206,8 @@ public class GenAlgoCoached {//extends Application {
 			val -= 0.2;
 			if (val == 0)
 				val = 0.2;
+			//if (val < 0)
+			//	val = 0;
 			int id = r.nextInt(v.length);
 			v.v[id] += val;
 			v.normalize();
@@ -156,14 +235,35 @@ public class GenAlgoCoached {//extends Application {
 
 	public int playGame(Vec p) {
 
+		//System.out.println(p.toString());
 		int[][] currentBoardState = getRootBoardState();
 		int[][] rootBoardState = getRootBoardState();
 		int currentPlayer = 1;
 
 		int move_cnt = 0;
 		boolean break_flag = false;
-		while (move_cnt < 1000) {	
+		
+		/*int[][] effectiveBoardState = new int[9][9];
+		for (int i = 0; i < 9; i++) 
+			for (int j = 0; j < 9; j++)
+				effectiveBoardState[i][j] = currentBoardState[i][j];
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				final int[][] boardCopy = effectiveBoardState;
+
+				//if (board == null)	
+				//	System.out.println("bad copy");
+
+				board.setBoard(boardCopy);
+				board.createScoredCirclesColors();
+				board.drawAllCells();
+			}
+		});*/
+
+		while (move_cnt < 200) {	
 			move_cnt++;
+			//System.out.println("move " + move_cnt);
 
 			int[][] nextBoardState = null;
 
@@ -172,20 +272,53 @@ public class GenAlgoCoached {//extends Application {
 
 				double max_score = Double.NEGATIVE_INFINITY;
 				for (int[][] child : childrenStates) {
-					NeutralEvalFunct func = new NeutralEvalFunct(currentPlayer, child, rootBoardState);
-					func.changeModus(p.toDouble());
+					OffensiveEvalFunct func = new OffensiveEvalFunct(currentPlayer, child, rootBoardState);
+					func.setUnifiedWeights(p.toDouble());
+					//Vec to_print = func.getModus();
+					//System.out.println("modus " + to_print.toString());
 
+					/*if (move_cnt > 300) {
+						int[][] effectiveBoardState2 = new int[9][9];
+						for (int i = 0; i < 9; i++) 
+							for (int j = 0; j < 9; j++)
+								effectiveBoardState2[i][j] = child[i][j];
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								final int[][] boardCopy = effectiveBoardState2;
+								//if (board == null)	
+								//	System.out.println("bad copy");
+								board.setBoard(boardCopy);
+								board.drawAllCells();
+							}
+						});
+
+						try {
+						    Thread.sleep(1000);
+						} catch(InterruptedException ex) {
+						    Thread.currentThread().interrupt();
+						}
+					}*/
 					if (NeutralEvalFunct.isWin(child)) {
+						nextBoardState = child;
 						break_flag = true;
 						break;
 					}
 
 					double score = func.evaluate();
+					//System.out.println(score);
 					if (score > max_score) {
 						nextBoardState = child;
 						max_score = score;
 					}
 				}
+
+				/*MCTS monteCarlo = new MCTS(currentBoardState, currentPlayer, 100, 10, 1);
+				monteCarlo.setUnifiedWeights(p.v);
+				monteCarlo.start();
+				nextBoardState = monteCarlo.getBestMove();
+				*/
+				//System.out.println("ga just made a move");
 			} else {
 				// here we dont use MiniMax explicitly since with its current speed we would be able to use it for subtrees of depth 2 maximum anyways
 				// hence, for optimization reasons we use default values in NeutralEvalFunct that are also used by default in MiniMax
@@ -194,9 +327,11 @@ public class GenAlgoCoached {//extends Application {
 
 				double max_score = Double.NEGATIVE_INFINITY;
 				for (int[][] child : childrenStates) {
-					NeutralEvalFunct func = new NeutralEvalFunct(currentPlayer, child, rootBoardState);
-					
+					OffensiveEvalFunct func = new OffensiveEvalFunct(currentPlayer, child, rootBoardState);
+					//System.out.println("modus " + func.getModus().toString());
+
 					if (NeutralEvalFunct.isWin(child)) {
+						nextBoardState = child;
 						break_flag = true;
 						break;
 					}
@@ -207,14 +342,57 @@ public class GenAlgoCoached {//extends Application {
 						max_score = score;
 					}
 				}
-			}
 
-			if (break_flag)
-				break;
+				/*MCTS monteCarlo = new MCTS(currentBoardState, currentPlayer, 100, 10, 1);
+				monteCarlo.start();
+				nextBoardState = monteCarlo.getBestMove();
+				*/
+			}
 
 			currentBoardState = nextBoardState;
 			currentPlayer = (currentPlayer == 1 ? 2 : 1);
+
+			if (break_flag) {
+				//System.out.println(move_cnt);
+				break;
+			}
+			
+			/*int[][] effectiveBoardState1 = new int[9][9];
+			for (int i = 0; i < 9; i++) 
+				for (int j = 0; j < 9; j++)
+					effectiveBoardState1[i][j] = currentBoardState[i][j];
+
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					final int[][] boardCopy = effectiveBoardState1;
+					//if (board == null)	
+					//	System.out.println("bad copy");
+					board.setBoard(boardCopy);
+					board.drawAllCells();
+				}
+			});*/
+
+			try {
+			    Thread.sleep(100);
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
 		}
+/*
+		MCTS monteCarlo = new MCTS(board.getBoard(), currentPlayer,timer,10, strategy2);
+					monteCarlo.start();
+					board.setBoard(monteCarlo.getBestMove());
+					currentPlayer = 1;
+*/
+					/*
+		GameTree gameTree = new GameTree(strategy2, 1, true);
+					gameTree.createTree(board.getBoard(), currentPlayer, 3);
+					AlphaBetaSearch algo = new AlphaBetaSearch(gameTree);
+					algo.start(true);
+					board.setBoard(algo.getBestMove());
+					currentPlayer = 1;
+					*/
 
 		int score1 = 14;
 		for (int i = 0; i < currentBoardState.length; i++) {
@@ -233,6 +411,12 @@ public class GenAlgoCoached {//extends Application {
                 }
             }
         }  
+
+        /*if (score1 >= score2) {
+        	System.out.println("first won");
+        } else {
+        	System.out.println("second won");
+        }*/
 
         if (score1 >= score2)
         	return score1;

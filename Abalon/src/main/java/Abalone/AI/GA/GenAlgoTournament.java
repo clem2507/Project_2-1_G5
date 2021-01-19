@@ -1,11 +1,30 @@
-package Abalone.AI.GA;
+package Abalon.AI.GA;
 
 import Abalone.AI.EvaluationFunction.NeutralEvalFunct;
 import Abalone.AI.Tree.GetPossibleMoves;
+import Abalone.UI.BoardUI;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.*;
+
+import javafx.stage.Stage;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.application.Platform;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+
+import java.io.File;
+import java.util.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 /** 
  * This class can produce new populations of evaluation function weights based on tournament selection.
@@ -17,28 +36,83 @@ import java.util.*;
  * mutation chance: 5%
  * replacement: 100% of population replaced with offset
  */
-public class GenAlgoTournament {//extends Application {
+public class GenAlgoTournament extends Application {
 
 	private GetPossibleMoves getPossibleMoves = new GetPossibleMoves();
+	public Log logger = new Log();
+
+	public BorderPane pane = new BorderPane();
+	public Stage primaryStage;
+	private final double WIDTH = 1270;
+    private final double HEIGHT = 700;
+
+    public BoardUI board;
 
 	public static void main(String[] args) {
-		GenAlgoTournament obj = new GenAlgoTournament();
-		
-		//System.out.println();
-		//for (int i = 0; i < 10; i++) {
-		//	obj.genAlgo(i + 1);
-		//	System.out.println("population " + (i + 1) + " produced");
-		//}
-
-		obj.genAlgo(1);
+		launch();
 	}
 
-	public void genAlgo(int gen_number) {
-		Vec[] population = new Vec[100];
-		
+	@Override 
+	public void start(Stage primaryStage) {
+		this.primaryStage = primaryStage;
 		try {
-			Log.init(gen_number);
-			population = Log.read();
+            BufferedImage buffer = ImageIO.read(new File("./res/grey2.jpg"));
+            Image background = SwingFXUtils.toFXImage(buffer, null);
+            ImageView view = new ImageView(background);
+            pane.getChildren().addAll(view);
+        } catch (Exception e) {
+            System.out.println("file not found");
+            System.exit(0);
+        }
+
+        Scene scene = new Scene(pane, WIDTH, HEIGHT);
+        this.primaryStage.setResizable(false);
+        this.primaryStage.setTitle("Abalone");
+        this.primaryStage.setScene(scene);
+        this.primaryStage.show();
+        this.primaryStage.requestFocus();
+
+        board = new BoardUI();
+        pane.setCenter(board.hexagon);
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++)
+                if (board.circles[i][j] != null)
+                    pane.getChildren().add(board.circles[i][j]);
+        }
+
+        for (int i = 0; i < 6; i++){
+            pane.getChildren().add(board.scoredCircles[i][0]);
+            pane.getChildren().add(board.scoredCircles[i][1]);
+        }
+
+        Thread gaThread = new Thread(new Runnable() {
+        	@Override
+            public void run() {
+            	GenAlgoTournament obj = new GenAlgoTournament();
+            	obj.runGA(51, 0, board);
+            }
+        });
+        gaThread.setDaemon(false);
+        gaThread.start();
+		
+
+		//System.out.println();
+		//for (int i = 0; i < 100; i++) {
+		//	obj.GenAlgoCoached(i + 1);
+		//	System.out.println("population " + (i + 1) + " produced");
+		//}
+	}	
+
+	private int score1, score2;
+
+	public void runGA(int gen_number, int postfix, BoardUI board) {
+		this.board = board;
+		Vec[] population = new Vec[100];
+
+		try {
+			logger.init(gen_number, postfix);
+			population = logger.read();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -78,7 +152,7 @@ public class GenAlgoTournament {//extends Application {
 			population[i] = offset[i];
 
 		try {
-			Log.writeResultPopulation(population);
+			logger.writeResultPopulation(population);
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -96,6 +170,8 @@ public class GenAlgoTournament {//extends Application {
 			val -= 0.2;
 			if (val == 0)
 				val = 0.2;
+			//if (val < 0)
+			//	val = 0;
 			int id = r.nextInt(v.length);
 			v.v[id] += val;
 			v.normalize();
@@ -119,12 +195,17 @@ public class GenAlgoTournament {//extends Application {
 
 				System.out.println("game #" + Integer.toString(game_id));
 
-				int score = playGame(p1, p2);
+				playGame(p1, p2);
 
-				if (score >= 0)
-					scores[i] += score;
+				if (score1 == score2) {
+					scores[i] += score1 / 2;
+					scores[j] += score2 / 2;
+				} else if (score1 > score2)
+					scores[i] += score1;
 				else
-					scores[j] += -score;
+					scores[j] += score2;
+
+				System.out.println(score1 + " " + score2);
 
 				game_id++;
 			}
@@ -154,7 +235,7 @@ public class GenAlgoTournament {//extends Application {
     	return rootCellColor;
 	}
 
-	public int playGame(Vec p1, Vec p2) {
+	public void playGame(Vec p1, Vec p2) {
 
 		int[][] currentBoardState = getRootBoardState();
 		int[][] rootBoardState = getRootBoardState();
@@ -162,8 +243,29 @@ public class GenAlgoTournament {//extends Application {
 
 		int move_cnt = 0;
 		boolean break_flag = false;
-		while (move_cnt < 4000) {	
+
+		int[][] effectiveBoardState = new int[9][9];
+		for (int i = 0; i < 9; i++) 
+			for (int j = 0; j < 9; j++)
+				effectiveBoardState[i][j] = currentBoardState[i][j];
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				final int[][] boardCopy = effectiveBoardState;
+
+				//if (board == null)	
+				//	System.out.println("bad copy");
+
+				board.setBoard(boardCopy);
+				board.createScoredCirclesColors();
+				board.drawAllCells();
+			}
+		});
+
+		while (move_cnt < 1000) {	
 			move_cnt++;
+			System.out.println("move " + move_cnt);
+
 
 			ArrayList<int[][]> childrenStates = getPossibleMoves.getPossibleMoves(currentBoardState, currentPlayer);
 
@@ -172,10 +274,31 @@ public class GenAlgoTournament {//extends Application {
 			for (int[][] child : childrenStates) {
 				NeutralEvalFunct func = new NeutralEvalFunct(currentPlayer, child, rootBoardState);
 
-				if (currentPlayer == 1) 
-					func.changeModus(p1.toDouble());
-				else
-					func.changeModus(p2.toDouble());
+				int[][] effectiveBoardState2 = new int[9][9];
+				for (int i = 0; i < 9; i++) 
+					for (int j = 0; j < 9; j++)
+						effectiveBoardState2[i][j] = child[i][j];
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						final int[][] boardCopy = effectiveBoardState2;
+						//if (board == null)	
+						//	System.out.println("bad copy");
+						board.setBoard(boardCopy);
+						board.drawAllCells();
+					}
+				});
+
+				try {
+				    Thread.sleep(1000);
+				} catch(InterruptedException ex) {
+				    Thread.currentThread().interrupt();
+				}
+
+				//if (currentPlayer == 1) 
+				//	func.setUnifiedWeights(p1.v);
+				//else
+				//	func.setUnifiedWeights(p2.v);
 
 				if (NeutralEvalFunct.isWin(child)) {
 					break_flag = true;
@@ -183,6 +306,8 @@ public class GenAlgoTournament {//extends Application {
 				}
 
 				double score = func.evaluate();
+				System.out.println("score " + score);
+
 				if (score > max_score) {
 					nextBoardState = child;
 					max_score = score;
@@ -194,9 +319,30 @@ public class GenAlgoTournament {//extends Application {
 			
 			if (break_flag)
 				break;
+
+			int[][] effectiveBoardState1 = new int[9][9];
+			for (int i = 0; i < 9; i++) 
+				for (int j = 0; j < 9; j++)
+					effectiveBoardState1[i][j] = currentBoardState[i][j];
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					final int[][] boardCopy = effectiveBoardState1;
+					//if (board == null)	
+					//	System.out.println("bad copy");
+					board.setBoard(boardCopy);
+					board.drawAllCells();
+				}
+			});
+
+			try {
+			    Thread.sleep(1000);
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
 		}
 
-		int score1 = 14;
+		score1 = 14;
 		for (int i = 0; i < currentBoardState.length; i++) {
             for (int j = 0; j < currentBoardState[0].length; j++) {
                 if (currentBoardState[i][j] == 2) {
@@ -205,17 +351,13 @@ public class GenAlgoTournament {//extends Application {
             }
         }
 
-		int score2 = 14;
+		score2 = 14;
 		for (int i = 0; i < currentBoardState.length; i++) {
             for (int j = 0; j < currentBoardState[0].length; j++) {
                 if (currentBoardState[i][j] == 1) {
                     score2--;
                 }
             }
-        }        
-
-        if (score1 >= score2)
-        	return score1;
-        return -score2;
+        }       
 	}
 }
