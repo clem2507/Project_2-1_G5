@@ -292,6 +292,7 @@ public class HomePage extends Application {
         gameChoice.setTranslateX(548);
         gameChoice.setTranslateY(250);
         gameChoice.setPrefSize(180, 35);
+        gameChoice.setStyle("-fx-font: 15px \"Arial\";");
         pane.getChildren().add(gameChoice);
 
         // create combo boxes to choose which evaluation function to use
@@ -303,6 +304,7 @@ public class HomePage extends Application {
         evaluationChoice1.getSelectionModel().selectFirst();
         evaluationChoice1.setTranslateX(270);
         evaluationChoice1.setTranslateY(350);
+        evaluationChoice1.setStyle("-fx-font: 15px \"Arial\";");
         evaluationChoice1.setPrefSize(230, 35);
 
         evaluationChoice2.getItems().addAll(
@@ -313,12 +315,14 @@ public class HomePage extends Application {
         evaluationChoice2.getSelectionModel().selectFirst();
         evaluationChoice2.setTranslateX(800);
         evaluationChoice2.setTranslateY(350);
+        evaluationChoice2.setStyle("-fx-font: 15px \"Arial\";");
         evaluationChoice2.setPrefSize(230, 35);
 
         mctsDifficulty.getItems().addAll("Easy", "Neutral", "Hard");
         mctsDifficulty.getSelectionModel().selectFirst();
         mctsDifficulty.setTranslateX(800);
         mctsDifficulty.setTranslateY(400);
+        mctsDifficulty.setStyle("-fx-font: 15px \"Arial\";");
         mctsDifficulty.setPrefSize(230, 35);
     }
 

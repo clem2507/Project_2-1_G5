@@ -308,6 +308,7 @@ public class Hexagon extends Application {
         Button qwertyToAzerty = new Button("AZERTY");
         qwertyToAzerty.setTranslateX(70);
         qwertyToAzerty.setTranslateY(670);
+        qwertyToAzerty.setStyle("-fx-font: 15px \"Arial\";");
         qwertyToAzerty.setPrefSize(100, 25);
 
         qwertyToAzerty.setOnAction(
