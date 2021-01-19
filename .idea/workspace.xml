@@ -1,15 +1,339 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dcdf7544-aa04-4718-b4c9-7045c4065a9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codestream.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Project_2-1_G5.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="ddb6e348-4918-4441-89ae-b392c54c5281" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/fileContent/fileContent.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/AB/AlphaBetaSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/EvaluationFunction/DefensiveEvalFunct.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/EvaluationFunction/EvaluationFunction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/EvaluationFunction/MixEvalFunct.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/EvaluationFunction/NeutralEvalFunct.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/EvaluationFunction/OffensiveEvalFunct.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/GA/GenAlgoCoached$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/GA/GenAlgoCoached.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/GA/GenAlgoTournament.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/GA/Log.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/GA/Vec.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/MCTS/MCTS.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/Output/OutputCSV.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/Output/Test.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/RB/RuleBased.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/Tree/Edge.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/Tree/Entry.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/Tree/GameTree.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/Tree/GetPossibleMoves.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/Tree/HashTable.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/Tree/Node.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/AI/Tree/Zorbist.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/Abalone.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/Move.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/MoveDirection.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/Player.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/PlayerH$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/PlayerH$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/PlayerH$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/PlayerH.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/Rules$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/Rules.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/Main/TestRules.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/UI/BoardUI$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/UI/BoardUI.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/UI/Hexagon$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/UI/Hexagon$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/UI/Hexagon.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/UI/HomePage$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/UI/HomePage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/UI/Marble.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/classes/java/main/Abalone/UI/WinPage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/distributions/Project2-1.tar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/distributions/Project2-1.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/libs/Project2-1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/scripts/Project2-1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/scripts/Project2-1.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/tmp/compileJava/source-classes-mapping.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/tmp/compileTestJava/source-classes-mapping.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/build/tmp/jar/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-1.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-101.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-101.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/Hexagon.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/Hexagon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/.idea/Abalon.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.idea/Abalon.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/aaron.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/aaron.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/arrow.png" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/arrow.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/background.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/background.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/fireworks.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/fireworks.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/game-background.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/game-background.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-1.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.gradle/6.6.1/gc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-10.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-10.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-100.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-100.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-101.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.gradle/configuration-cache/gc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-11.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-11.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-12.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-12.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-13.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-13.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-14.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-14.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-15.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-15.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-16.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-16.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-17.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-17.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-18.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-18.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-19.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-19.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-2.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-2.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-20.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-20.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-21.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-21.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-22.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-22.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-23.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-23.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-24.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-24.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-25.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-25.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-26.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-26.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-27.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-27.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-28.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-28.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-29.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-29.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-3.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-3.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-30.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-30.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-31.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-31.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-32.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-32.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-33.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-33.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-34.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-34.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-35.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-35.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-36.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-36.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-37.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-37.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-38.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-38.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-39.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-39.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-4.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-4.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-40.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-40.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-41.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-41.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-42.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-42.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-43.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-43.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-44.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-44.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-45.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-45.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-46.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-46.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-47.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-47.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-48.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-48.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-49.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-49.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-5.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-5.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-50.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-50.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-51.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-51.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-52.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-52.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-53.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-53.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-54.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-54.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-55.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-55.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-56.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-56.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-57.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-57.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-58.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-58.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-59.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-59.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-6.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-6.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-60.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-60.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-61.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-61.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-62.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-62.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-63.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-63.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-64.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-64.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-65.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-65.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-66.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-66.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-67.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-67.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-68.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-68.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-69.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-69.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-7.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-7.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-70.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-70.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-71.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-71.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-72.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-72.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-73.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-73.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-74.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-74.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-75.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-75.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-76.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-76.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-77.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-77.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-78.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-78.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-79.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-79.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-8.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-8.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-80.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-80.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-81.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-81.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-82.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-82.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-83.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-83.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-84.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-84.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-85.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-85.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-86.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-86.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-87.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-87.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-88.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-88.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-89.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-89.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-9.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-9.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-90.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-90.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-91.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-91.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-92.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-92.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-93.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-93.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-94.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-94.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-95.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-95.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-96.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-96.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-97.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-97.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-98.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-98.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-99.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-99.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-1.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-1.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-10.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-10.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-100.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-100.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-101.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-11.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-11.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-12.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-12.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-13.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-13.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-14.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-14.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-15.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-15.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-16.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-16.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-17.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-17.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-18.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-18.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-19.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-19.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-2.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-2.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-20.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-20.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-21.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-21.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-22.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-22.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-23.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-23.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-24.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-24.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-25.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-25.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-26.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-26.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-27.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-27.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-28.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-28.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-29.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-29.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-3.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-3.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-30.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-30.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-31.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-31.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-32.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-32.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-33.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-33.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-34.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-34.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-35.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-35.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-36.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-36.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-37.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-37.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-38.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-38.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-39.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-39.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-4.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-4.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-40.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-40.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-41.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-41.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-42.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-42.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-43.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-43.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-44.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-44.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-45.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-45.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-46.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-46.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-47.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-47.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-48.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-48.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-49.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-49.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-5.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-5.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-50.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-50.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-51.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-51.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-52.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-52.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-53.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-53.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-54.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-54.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-55.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-55.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-56.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-56.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-57.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-57.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-58.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-58.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-59.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-59.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-6.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-6.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-60.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-60.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-61.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-61.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-62.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-62.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-63.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-63.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-64.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-64.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-65.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-65.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-66.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-66.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-67.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-67.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-68.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-68.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-69.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-69.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-7.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-7.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-70.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-70.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-71.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-71.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-72.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-72.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-73.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-73.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-74.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-74.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-75.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-75.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-76.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-76.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-77.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-77.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-78.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-78.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-79.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-79.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-8.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-8.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-80.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-80.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-81.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-81.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-82.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-82.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-83.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-83.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-84.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-84.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-85.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-85.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-86.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-86.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-87.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-87.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-88.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-88.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-89.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-89.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-9.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-9.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-90.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-90.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-91.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-91.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-92.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-92.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-93.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-93.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-94.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-94.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-95.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-95.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-96.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-96.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-97.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-97.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-98.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-98.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/genalgo/generation-final-99.log" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/genalgo/generation-final-99.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/ghost.png" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/ghost.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/giphy.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/giphy.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/grey.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/grey.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/grey2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/grey2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/mario.png" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/mario.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/muscle.png" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/muscle.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/soundOff.png" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/soundOff.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/soundOn.png" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/soundOn.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/wii.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/wii.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/res/win.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/res/win.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/AB/AlphaBetaSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/AB/AlphaBetaSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/EvaluationFunction/DefensiveEvalFunct.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/EvaluationFunction/DefensiveEvalFunct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/EvaluationFunction/EvaluationFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/EvaluationFunction/EvaluationFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/EvaluationFunction/MixEvalFunct.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/EvaluationFunction/MixEvalFunct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/EvaluationFunction/NeutralEvalFunct.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/EvaluationFunction/NeutralEvalFunct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/EvaluationFunction/OffensiveEvalFunct.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/EvaluationFunction/OffensiveEvalFunct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/GA/GenAlgoCoached.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/GA/GenAlgoCoached.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/GA/GenAlgoTournament.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/GA/GenAlgoTournament.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/GA/Log.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/GA/Log.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/GA/Vec.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/GA/Vec.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/MCTS/MCTS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/MCTS/MCTS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/Output/OutputCSV.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/Output/OutputCSV.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/Output/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/Output/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/RB/RuleBased.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/RB/RuleBased.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/Tree/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/Tree/Edge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/Tree/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/Tree/Entry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/Tree/GameTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/Tree/GameTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/Tree/GetPossibleMoves.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/Tree/GetPossibleMoves.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/Tree/HashTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/Tree/HashTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/Tree/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/Tree/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/AI/Tree/Zorbist.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/AI/Tree/Zorbist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/Main/Abalone.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/Main/Abalone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/Main/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/Main/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/Main/MoveDirection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/Main/MoveDirection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/Main/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/Main/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/Main/PlayerH.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/Main/PlayerH.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/Main/Rules.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/Main/Rules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/Main/TestRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/Main/TestRules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/UI/BoardUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/UI/BoardUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/UI/Hexagon.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/UI/Hexagon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/UI/HomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/UI/HomePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/UI/Marble.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/UI/Marble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/main/java/Abalone/UI/WinPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/main/java/Abalone/UI/WinPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abalon/src/test/java/Abalon/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Abalone/src/test/java/Abalon/AppTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,46 +345,28 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/HomePage.java">
+        <entry file="file://$PROJECT_DIR$/Abalone/src/main/java/Abalone/Main/Abalone.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="44" column="43" selection-start-line="44" selection-start-column="43" selection-end-line="44" selection-end-column="43" />
+            <state relative-caret-position="88">
+              <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/Hexagon.java">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="373" column="55" selection-start-line="373" selection-start-column="55" selection-end-line="373" selection-end-column="55" />
+            <state relative-caret-position="-4284">
+              <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/AI/MCTS.java">
+        <entry file="file://$PROJECT_DIR$/Abalone/src/main/java/Abalone/UI/HomePage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="58" column="22" lean-forward="true" selection-start-line="58" selection-start-column="22" selection-end-line="58" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/Main/Abalon.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="75" column="16" lean-forward="true" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/BoardUI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="553">
-              <caret line="68" column="24" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
+            <state relative-caret-position="357">
+              <caret line="40" column="33" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -73,60 +379,77 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/BoardUI.java" />
-        <option value="$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/Hexagon.java" />
-        <option value="$PROJECT_DIR$/Abalon/src/main/java/Abalon/Main/Abalon.java" />
+        <option value="$PROJECT_DIR$/Abalon/src/main/java/Abalone/Main/Abalon.java" />
+        <option value="$PROJECT_DIR$/Abalon/src/main/java/Abalone/Main/Abalone.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="25" />
-    <option name="width" value="1792" />
-    <option name="height" value="1031" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="x" value="1792" />
+    <option name="y" value="40" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="code" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="code" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Abalone" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="b2602c69:ProjectViewProjectNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="b2602c69:ProjectViewProjectNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="b2602c69:ProjectViewProjectNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Abalon" type="462c0819:PsiDirectoryNode" />
+              <item name="Abalone" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="b2602c69:ProjectViewProjectNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Abalon" type="462c0819:PsiDirectoryNode" />
+              <item name="Abalone" type="462c0819:PsiDirectoryNode" />
               <item name="AI" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="b2602c69:ProjectViewProjectNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Abalon" type="462c0819:PsiDirectoryNode" />
+              <item name="Abalone" type="462c0819:PsiDirectoryNode" />
               <item name="Main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="b2602c69:ProjectViewProjectNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Abalon" type="462c0819:PsiDirectoryNode" />
+              <item name="Abalone" type="462c0819:PsiDirectoryNode" />
               <item name="UI" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -134,11 +457,10 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1606676485456" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1611057017848" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -154,11 +476,11 @@
   </component>
   <component name="RunManager">
     <configuration name="HomePage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Abalon.UI.HomePage" />
+      <option name="MAIN_CLASS_NAME" value="Abalone.UI.HomePage" />
       <module name="main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Abalon.UI.*" />
+          <option name="PATTERN" value="Abalone.UI.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -177,24 +499,24 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="dcdf7544-aa04-4718-b4c9-7045c4065a9c" name="Default Changelist" comment="" />
-      <created>1606641389787</created>
+      <changelist id="ddb6e348-4918-4441-89ae-b392c54c5281" name="Default Changelist" comment="" />
+      <created>1611056266494</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1606641389787</updated>
+      <updated>1611056266494</updated>
     </task>
-    <task id="LOCAL-00001" summary="Turn number text">
-      <created>1606642162005</created>
+    <task id="LOCAL-00001" summary="Abalon -&gt; Abalone">
+      <created>1611056446500</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1606642162005</updated>
+      <updated>1611056446500</updated>
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1792" height="1031" extended-state="0" />
+    <frame x="1792" y="40" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
@@ -202,15 +524,15 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20628572" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23269436" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" weight="0.21179885" />
+      <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" />
+      <window_info anchor="bottom" id="Messages" weight="0.32997987" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33151582" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.18008049" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -227,42 +549,53 @@
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Turn number text" />
-    <option name="LAST_COMMIT_MESSAGE" value="Turn number text" />
+    <MESSAGE value="Abalon -&gt; Abalone" />
+    <option name="LAST_COMMIT_MESSAGE" value="Abalon -&gt; Abalone" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/BoardUI.java">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Abalone/src/main/main.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Abalone/src/main/java/Abalone/UI/HomePage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="68" column="24" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
+        <state relative-caret-position="357">
+          <caret line="40" column="33" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/AI/MCTS.java">
+    <entry file="file://$PROJECT_DIR$/Abalone/src/main/java/Abalone/UI/BoardUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="58" column="22" lean-forward="true" selection-start-line="58" selection-start-column="22" selection-end-line="58" selection-end-column="22" />
+        <state relative-caret-position="105">
+          <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/HomePage.java">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="44" column="43" selection-start-line="44" selection-start-column="43" selection-end-line="44" selection-end-column="43" />
+        <state relative-caret-position="105">
+          <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/Main/Abalon.java">
+    <entry file="file://$PROJECT_DIR$/Abalone/src/main/java/Abalone/Main/Abalone.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="75" column="16" lean-forward="true" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="16" />
+        <state relative-caret-position="88">
+          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Abalon/src/main/java/Abalon/UI/Hexagon.java">
+    <entry file="file://$PROJECT_DIR$/.idea/uiDesigner.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="373" column="55" selection-start-line="373" selection-start-column="55" selection-end-line="373" selection-end-column="55" />
+        <state relative-caret-position="-1953" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4284">
+          <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
         </state>
       </provider>
     </entry>

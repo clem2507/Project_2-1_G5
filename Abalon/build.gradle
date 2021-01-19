@@ -37,21 +37,21 @@ dependencies {
 }
 
 run {
-    mainClassName = 'Abalon.UI.HomePage'
+    mainClassName = 'Abalone.UI.HomePage'
     standardInput = System.in
     classpath = sourceSets.main.runtimeClasspath
 }
 
 task(runRulesTest, dependsOn: 'classes', type: JavaExec) {
-    main = 'Abalon.Main.TestRules'
+    main = 'Abalone.Main.TestRules'
 }
 
 task(testCollect, dependsOn: 'classes', type: JavaExec) {
-    main = 'Abalon.Main.PlayerH'
+    main = 'Abalone.Main.PlayerH'
 }
 
 task(genLog, dependsOn: 'classes', type: JavaExec) {
-    main = 'Abalon.AI.GenAlgo'
+    main = 'Abalone.AI.GenAlgo'
 }
 
 java {
