@@ -20,7 +20,7 @@ import static javafx.scene.input.KeyCode.*;
 /**
  * Abalone class that serves to run a new game
  */
-public class Abalon {
+public class Abalone {
 
 	private static int currentPlayer = 1;
 
@@ -40,7 +40,7 @@ public class Abalon {
 	 * @param p1 class that serves to perform the move of a real person OR an AI
 	 * @param p2 class that serves to perform the move of a real person OR an AI
 	 */
-	public Abalon(BoardUI board, Player p1, Player p2, String gameMode) {
+	public Abalone(BoardUI board, Player p1, Player p2, String gameMode) {
 		this.board = board;
 		player[0] = p1;
 		player[1] = p2;

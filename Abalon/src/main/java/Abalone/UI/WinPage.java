@@ -1,6 +1,6 @@
 package Abalone.UI;
 
-import Abalone.Main.Abalon;
+import Abalone.Main.Abalone;
 import javafx.application.Application;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class WinPage extends Application{
 
-    Abalon abalon;
+    Abalone abalon;
 
     static MediaPlayer mediaPlayerWin;
     public static final Color VERYLIGHTBLUE = new Color(51,204,255);
@@ -43,7 +43,7 @@ public class WinPage extends Application{
         message.setFont(f1);
         message.setForeground(c);
 
-        JLabel turn = new JLabel("The game took "+ Abalon.numberOfTurn +" turns.", SwingConstants.CENTER);
+        JLabel turn = new JLabel("The game took "+ Abalone.numberOfTurn +" turns.", SwingConstants.CENTER);
         turn.setFont(f2);
         turn.setBounds(100, 100, 400, 200);
 

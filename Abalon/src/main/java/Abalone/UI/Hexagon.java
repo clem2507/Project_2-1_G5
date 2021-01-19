@@ -1,6 +1,6 @@
 package Abalone.UI;
 
-import Abalone.Main.Abalon;
+import Abalone.Main.Abalone;
 import Abalone.Main.Player;
 import Abalone.Main.PlayerH;
 import javafx.application.Application;
@@ -131,23 +131,23 @@ public class Hexagon extends Application {
             @Override
             public void run() {
                 if(HomePage.gameChoice.getValue().equals("Human vs Human")) {
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    Abalone game = new Abalone(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
                 }
                 else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs Human")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    Abalone game = new Abalone(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
                 }
                 else if(HomePage.gameChoice.getValue().equals("MCTS vs Human")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    Abalone game = new Abalone(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
                 }
                 else if(HomePage.gameChoice.getValue().equals("Rule-Based vs Human")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    Abalone game = new Abalone(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
                 }
                 else if(HomePage.gameChoice.getValue().equals("Alpha-Beta vs MCTS")){
-                    Abalon game = new Abalon(board, p1, p2, (String) HomePage.gameChoice.getValue());
+                    Abalone game = new Abalone(board, p1, p2, (String) HomePage.gameChoice.getValue());
                     game.runGame();
                 }
             }

@@ -1,6 +1,6 @@
 package Abalone.UI;
 
-import Abalone.Main.Abalon;
+import Abalone.Main.Abalone;
 import javafx.scene.effect.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -168,12 +168,12 @@ public class BoardUI {
                 circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent e) {
-                        if (!Abalon.getGameMode().equals("Alpha-Beta vs MCTS")) {
-                            if (cellColors[circle.x][circle.y] == Abalon.getCurrentPlayer()  && !selected[circle.x][circle.y] && countSelected(getBoard()) < 3) {
+                        if (!Abalone.getGameMode().equals("Alpha-Beta vs MCTS")) {
+                            if (cellColors[circle.x][circle.y] == Abalone.getCurrentPlayer()  && !selected[circle.x][circle.y] && countSelected(getBoard()) < 3) {
                                 selected[circle.x][circle.y] = true;
                                 drawAllCells();
                             }
-                            else if(selected[circle.x][circle.y] && cellColors[circle.x][circle.y] == Abalon.getCurrentPlayer() ){
+                            else if(selected[circle.x][circle.y] && cellColors[circle.x][circle.y] == Abalone.getCurrentPlayer() ){
                                 selected[circle.x][circle.y] = false;
                                 drawAllCells();
                             }
